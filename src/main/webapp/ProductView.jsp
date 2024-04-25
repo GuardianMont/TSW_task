@@ -49,9 +49,9 @@
     }
 %>
 			<td><img  src="data:image/jpeg;base64,<%= stockImg %>"  width=400px height=auto alt="no immagine" ></td>
-			<td><a href="product?action=delete&id=<%=bean.getId()%>">Delete</a><br>
+			<td><a href="product?opzione=delete&id=<%=bean.getId()%>">Delete</a><br>
 			<%//id del prodotto che vogliamo andare a cancellare %>
-				<a href="product?action=read&id=<%=bean.getId()%>">Details</a><br>
+				<a href="product?opzione=read&id=<%=bean.getId()%>">Details</a><br>
 				</td>
 		</tr>
 		<%
@@ -65,10 +65,9 @@
 			}
 		%>
 	</table>
-	
 	<h2>Insert</h2>
-	<form action="product" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="action" value="insert"> 
+	<form action="product" enctype="multipart/form-data" method="post" >
+		<input type="hidden" name="opzione" value="insert">
 		
 		<label for="nome">Nome:</label><br> 
 		<input id="nome" name="nome" type="text" maxlength="20" required placeholder="inserire nome"><br>
@@ -93,12 +92,11 @@
 		
 		<label for="colore">Colore</label><br> 
 		<input id="colore" name="colore" type="text" maxlength="40" required placeholder="inserire colore"><br>
-		
-		<label for="img">Image</label><br> 
+
+		<label for="img">Image</label><br>
 		<input id="img" name="img" type="file" accept="image/png, image/jpeg"><br>
 
 		<input type="submit" value="Add"><input type="reset" value="Reset">
 	</form>
-	
 </body>
 </html>

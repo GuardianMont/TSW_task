@@ -19,9 +19,20 @@ public class ProductBean implements Serializable {
     private byte[] immagineUrl; // Cambiato da byte[] a String per test
     //per ora riporto a byte
     //semplifica la comunicazione c
-    private String temp_url;
+   private String temp_url;
     // Costruttore vuoto
     public ProductBean() {
+        id=0;
+        nome="";
+        descrizione="";
+        prezzo=0;
+        fasciaIva=0;
+        dimensioni="";
+        disponibilita=0;
+        categoria="";
+        colore="";
+        immagineUrl=null;
+        temp_url=null;
     }
 
     // Metodi getter e setter per tutti gli attributi

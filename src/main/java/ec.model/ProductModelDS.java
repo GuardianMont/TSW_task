@@ -2,7 +2,6 @@ package ec.model;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -37,14 +36,12 @@ public class ProductModelDS implements ProductModel {
 
 	@Override
 	public synchronized void doSave(ProductBean product) throws SQLException {
-
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-
 		String insertSQL = "INSERT INTO " + ProductModelDS.TABLE_NAME
 				+ " (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine)"
 				+ " VALUES (?, ?, ?, ? ,? ,? ,? ,? , ?)";
 
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(insertSQL);
@@ -52,22 +49,18 @@ public class ProductModelDS implements ProductModel {
 			preparedStatement.setString(2, product.getDescrizione());
 			preparedStatement.setDouble(3, product.getPrezzo());
 			preparedStatement.setDouble(4, product.getFasciaIva());
-			preparedStatement.setString (5, product.getDimensioni());
+			preparedStatement.setString(5, product.getDimensioni());
 			preparedStatement.setInt(6, product.getDisponibilita());
 			preparedStatement.setString(7, product.getCategoria());
-			preparedStatement.setString (8, product.getColore());
-			String tempUrl = product.getTemp_url() != null ? product.getTemp_url() : "C:\\Users\\user\\Desktop\\no_img.jpg";
+			preparedStatement.setString(8, product.getColore());
+			String tempUrl = product.getTemp_url() != null ? product.getTemp_url() : "C:\\Users\\user\\Desktop\\TSW_guardian_ver\\TSW_task\\src\\main\\webapp\\uploadFile\\no_img.jpg";
 			File imageFile = new File(tempUrl);
 			try (FileInputStream fis = new FileInputStream(imageFile)) {
 				preparedStatement.setBinaryStream(9, fis, (int) imageFile.length());
-				preparedStatement.executeUpdate();
-				//connection.commit();
+				preparedStatement.executeUpdate(); // Esegui l'inserimento dei dati
 			} catch (IOException e) {
 				throw new SQLException("Error reading image file", e);
 			}
-			//preparedStatement.setBytes(9, product.getImmagineUrl());
-			preparedStatement.executeUpdate();
-			//connection.commit();
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -94,7 +87,6 @@ public class ProductModelDS implements ProductModel {
 			preparedStatement.setInt(1, code);
 
 			ResultSet rs = preparedStatement.executeQuery();
-
 			while (rs.next()) {
 				bean.setId(rs.getInt("id"));
 				bean.setNome(rs.getString("nome"));

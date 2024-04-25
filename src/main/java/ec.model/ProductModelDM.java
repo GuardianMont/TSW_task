@@ -18,46 +18,62 @@ public class ProductModelDM implements ProductModel {
 
 	@Override
 	public synchronized void doSave(ProductBean product) throws SQLException {
-
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-
 		String insertSQL = "INSERT INTO " + ProductModelDM.TABLE_NAME
-				+ " (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine)"
+		+ " (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine)"
 				+ " VALUES (?, ?, ?, ? ,? ,? ,? ,? , ?)";
+		try (Connection connection = ConnectionPool.getInstance().getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 
-		try {
-			connection = DriverManagerConnectionPool.getConnection();
-			preparedStatement = connection.prepareStatement(insertSQL);
 			preparedStatement.setString(1, product.getNome());
 			preparedStatement.setString(2, product.getDescrizione());
 			preparedStatement.setDouble(3, product.getPrezzo());
 			preparedStatement.setDouble(4, product.getFasciaIva());
-			preparedStatement.setString (5, product.getDimensioni());
+			preparedStatement.setString(5, product.getDimensioni());
 			preparedStatement.setInt(6, product.getDisponibilita());
 			preparedStatement.setString(7, product.getCategoria());
-			preparedStatement.setString (8, product.getColore());
-			String tempUrl = product.getTemp_url() != null ? product.getTemp_url() : "C:\\Users\\user\\Desktop\\no_img.jpg";
-			File imageFile = new File(tempUrl);
-			try (FileInputStream fis = new FileInputStream(imageFile)) {
-				preparedStatement.setBinaryStream(9, fis, (int) imageFile.length());
-				preparedStatement.executeUpdate();
-				//connection.commit();
-			} catch (IOException e) {
-				throw new SQLException("Error reading image file", e);
-			}
-			//preparedStatement.setBytes(9, product.getImmagineUrl());
+			preparedStatement.setString(8, product.getColore());
+			preparedStatement.setBytes(9, product.getImmagineUrl());
+
 			preparedStatement.executeUpdate();
-			//connection.commit();
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
 		}
+//		Connection connection = null;
+//		PreparedStatement preparedStatement = null;
+//
+//		String insertSQL = "INSERT INTO " + ProductModelDM.TABLE_NAME
+//				+ " (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine)"
+//				+ " VALUES (?, ?, ?, ? ,? ,? ,? ,? , ?)";
+//
+//		try {
+//			connection = DriverManagerConnectionPool.getConnection();
+//			preparedStatement = connection.prepareStatement(insertSQL);
+//			preparedStatement.setString(1, product.getNome());
+//			preparedStatement.setString(2, product.getDescrizione());
+//			preparedStatement.setDouble(3, product.getPrezzo());
+//			preparedStatement.setDouble(4, product.getFasciaIva());
+//			preparedStatement.setString (5, product.getDimensioni());
+//			preparedStatement.setInt(6, product.getDisponibilita());
+//			preparedStatement.setString(7, product.getCategoria());
+//			preparedStatement.setString (8, product.getColore());
+////			String tempUrl = product.getTemp_url() != null ? product.getTemp_url() :"C:\\Users\\user\\Desktop\\TSW_guardian_ver\\TSW_task\\src\\main\\webapp\\uploadFile";
+////			File imageFile = new File(tempUrl);
+////			try (FileInputStream fis = new FileInputStream(imageFile)) {
+////				preparedStatement.setBinaryStream(9, fis, (int) imageFile.length());
+////				preparedStatement.executeUpdate();
+////				//connection.commit();
+////			} catch (IOException e) {
+////				throw new SQLException("Error reading image file", e);
+////			}
+//			preparedStatement.setBytes(9, product.getImmagineUrl());
+////			preparedStatement.executeUpdate();
+//			connection.commit();
+//		} finally {
+//			try {
+//				if (preparedStatement != null)
+//					preparedStatement.close();
+//			} finally {
+//				DriverManagerConnectionPool.releaseConnection(connection);
+//			}
+//		}
 	}
 
 	@Override
@@ -131,7 +147,7 @@ public class ProductModelDM implements ProductModel {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		Collection<ProductBean> products = new LinkedList<ProductBean>();
+		Collection<ProductBean> products = new LinkedList<>();
 
 		String selectSQL = "SELECT * FROM " + ProductModelDM.TABLE_NAME;
 
@@ -144,7 +160,6 @@ public class ProductModelDM implements ProductModel {
 			selectSQL += " ORDER BY " + order;
 			}
 		}
-
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
