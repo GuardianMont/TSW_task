@@ -1,6 +1,5 @@
 package ec.model;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,7 +11,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 
-public class ProductModelDM implements ProductModel {
+public class ProductModelDM implements ProductDao {
 
 	private static final String TABLE_NAME = "Prodotto";
 
