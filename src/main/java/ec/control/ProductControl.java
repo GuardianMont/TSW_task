@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import ec.model.ProductModel;
+import ec.model.ProductDao;
 import ec.model.ProductModelDM;
 import ec.model.ProductModelDS;
 import ec.model.ProductBean;
@@ -25,8 +25,8 @@ import ec.model.FileManager;
 public class ProductControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String SAVE_DIR = "/uploadTemp";
-	private ProductModel model;
-	private ProductModel connten;
+	private ProductDao model;
+	private ProductDao connten;
 	public ProductControl() {
 		super();
 		model = new ProductModelDS(); //  DataSource model andrebbe

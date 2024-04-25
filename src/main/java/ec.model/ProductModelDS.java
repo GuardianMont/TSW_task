@@ -2,7 +2,6 @@ package ec.model;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -17,7 +16,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class ProductModelDS implements ProductModel {
+public class ProductModelDS implements ProductDao {
 
 	private static DataSource ds;
 
