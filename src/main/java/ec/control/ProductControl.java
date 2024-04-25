@@ -1,6 +1,7 @@
 package ec.control;
 
 
+import ec.model.*;
 import jakarta.servlet.http.*;
 
 import java.io.File;
@@ -14,11 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import ec.model.ProductModel;
-import ec.model.ProductModelDM;
-import ec.model.ProductModelDS;
-import ec.model.ProductBean;
-import ec.model.FileManager;
+
 
 import javax.swing.*;
 
@@ -28,7 +25,7 @@ import javax.swing.*;
 public class ProductControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String SAVE_DIR = "\\uploadFile";
-	private ProductModel model;
+	private ProductModelDS model;
 
 	public ProductControl() {
 		super();
