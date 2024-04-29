@@ -35,7 +35,7 @@
     </nav>
 </div>
 
-<div class = "outside-container">
+<div class = "outside-container" style="">
     <div class = "container">
         <form id = "login-form">
 
