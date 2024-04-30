@@ -27,5 +27,13 @@
     <servlet-name>ProductControl</servlet-name>
     <url-pattern>/product</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Cart</servlet-name>
+    <servlet-class>cart.control.Cart</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Cart</servlet-name>
+    <url-pattern>/carrello</url-pattern>
+  </servlet-mapping>
 </web-app>
 

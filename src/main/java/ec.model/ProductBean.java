@@ -3,6 +3,8 @@ package ec.model;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class ProductBean implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -123,4 +125,18 @@ public class ProductBean implements Serializable {
         return temp_url;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductBean that = (ProductBean) o;
+        return id == that.id && Double.compare(prezzo, that.prezzo) == 0 && Double.compare(fasciaIva, that.fasciaIva) == 0 && disponibilita == that.disponibilita && Objects.equals(nome, that.nome) && Objects.equals(descrizione, that.descrizione) && Objects.equals(dimensioni, that.dimensioni) && Objects.equals(categoria, that.categoria) && Objects.equals(colore, that.colore) && Arrays.equals(immagineUrl, that.immagineUrl) && Objects.equals(temp_url, that.temp_url);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, nome, descrizione, prezzo, fasciaIva, dimensioni, disponibilita, categoria, colore, temp_url);
+        result = 31 * result + Arrays.hashCode(immagineUrl);
+        return result;
+    }
 }

@@ -7,7 +7,6 @@
 		response.sendRedirect("./product");	
 		return;
 	}
-	ProductBean product = (ProductBean) request.getAttribute("product");
 %>
 
 <!DOCTYPE html>
@@ -21,6 +20,7 @@
 </head>
 
 <body>
+<a href="carrello"> visualizza carrello</a>
 	<h2>Products</h2>
 	<a href="product">List</a>
 	<table border="1">
@@ -52,6 +52,7 @@
 			<td><a href="product?opzione=delete&id=<%=bean.getId()%>">Delete</a><br>
 			<%//id del prodotto che vogliamo andare a cancellare %>
 				<a href="product?opzione=read&id=<%=bean.getId()%>">Details</a><br>
+				<a href="carrello?opzione=add&id=<%=bean.getId()%>">Add Cart</a>
 				</td>
 		</tr>
 		<%
