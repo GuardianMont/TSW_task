@@ -34,7 +34,6 @@ public class ProductControl extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		JOptionPane.showMessageDialog(null, "sono get");
 		processRequest(request, response);
 	}
 
@@ -45,17 +44,16 @@ public class ProductControl extends HttpServlet {
 		JOptionPane.showMessageDialog(null, "devo fare " + action);
 	}
 
+	//Metodo per gestire una richiesta generica (le immagini non vanno gestite in un get)
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getParameter("opzione");
-		JOptionPane.showMessageDialog(null, "devo fare " + action);
 		String dis = "/ProductView.jsp";
 
 		if (action != null) {
 			try {
 				switch (action.toLowerCase()) {
 					case "read":
-						JOptionPane.showMessageDialog(null, "sono qua");
 						handleReadAction(request);
 						dis = "/ProductDetail.jsp";
 						break;
@@ -63,9 +61,7 @@ public class ProductControl extends HttpServlet {
 						handleDeleteAction(request);
 						break;
 					case "insert":
-						JOptionPane.showMessageDialog(null, "sono qui");
 						handleInsertAction(request);
-						JOptionPane.showMessageDialog(null, "sto dopo!");
 						break;
 				}
 
