@@ -11,8 +11,9 @@
 
 <!DOCTYPE html>
 <html>
-<%@ page contentType="text/html; charset=UTF-8" import="java.util.*,cart.model.*"%>
-<%@ page import="cart.control.Cart" %>
+<%@ page contentType="text/html; charset=UTF-8" import="java.util.*"%>
+<%@ page import="ec.model.CartItem" %>
+<%@ page import="ec.model.ShoppingCart" %>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -54,10 +55,14 @@
             <a href="carrello?opzione=increment&id=<%=item.getItem().getId()%>">Add 1</a>
         </td>
     </tr>
-</table>
-    <tr>Spesa totale<%=cartItem.getPrezzoTot()%></tr>
     <%
-        }
+        } %>
+    <h3>Spesa totale<%=cartItem.getPrezzoTot()%></h3>
+    <form action="carrello" method="post">
+        <input type="hidden" action="opzione" value="acquisto">
+        <input type="submit" value="ACQUISTA">
+    </form>
+    <%
     } else {
     %>
     <tr>
@@ -66,6 +71,5 @@
     <%
         }
     %>
-
 </body>
 </html>

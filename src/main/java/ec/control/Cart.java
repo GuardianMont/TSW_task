@@ -1,10 +1,6 @@
-package cart.control;
+package ec.control;
 
-import cart.model.CartItem;
-import cart.model.ShoppingCart;
-import com.mysql.cj.Session;
-import ec.model.ProductBean;
-import ec.model.ProductModelDS;
+import ec.model.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -15,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Cart extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -60,6 +57,15 @@ public class Cart extends HttpServlet {
                             } catch (SQLException e) {
                                 throw new RuntimeException(e);
                             }
+                            break;
+                        case "acquisto":
+                            try{
+                                handleAcquistoAction(request);
+                            }catch (SQLException e){
+                                throw new RuntimeException(e);
+                            }
+                            session.setAttribute("cart", new ShoppingCart());
+                            break;
 
             }
         }
@@ -76,11 +82,22 @@ public class Cart extends HttpServlet {
     private void handleAddAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
         int id_item = Integer.parseInt(request.getParameter("id"));
-        ProductModelDS model = new ProductModelDS();
+        ProductModelDM model = new ProductModelDM();
         ProductBean item= model.doRetrieveByKey(id_item);
         ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
         cart.addItem(item);
         session.setAttribute("cart", cart);
+    }
+
+    private void handleAcquistoAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
+        HttpSession session = request.getSession();
+        CartModelDM model = new CartModelDM();
+        ShoppingCart carrello = (ShoppingCart) session.getAttribute("cart");
+        ArrayList<CartItem> Item_ordinati = carrello.getItem_ordinati();
+        for (var e : Item_ordinati){
+            model.doSave(e,"root");
+        }
+
     }
 
 

@@ -1,7 +1,4 @@
-package cart.model;
-
-import cart.control.Cart;
-import ec.model.ProductBean;
+package ec.model;
 
 import java.util.ArrayList;
 
@@ -81,4 +78,9 @@ public class ShoppingCart {
         if(this.Item_ordinati.isEmpty()) return true;
         else return false;
     }
+
+    public synchronized void CartItem(CartItem item){
+        this.Item_ordinati.add(item);
+    }
+
 }

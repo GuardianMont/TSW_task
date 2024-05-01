@@ -1,6 +1,4 @@
-package cart.model;
-
-import ec.model.ProductBean;
+package ec.model;
 
 import java.util.Objects;
 

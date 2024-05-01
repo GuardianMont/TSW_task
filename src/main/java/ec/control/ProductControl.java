@@ -25,11 +25,11 @@ import javax.swing.*;
 public class ProductControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String SAVE_DIR = "\\uploadFile";
-	private ProductModelDS model;
+	private ProductModelDM model;
 
 	public ProductControl() {
 		super();
-		model = new ProductModelDS(); //  DataSource model andrebbe
+		model = new ProductModelDM(); //  DataSource model andrebbe
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

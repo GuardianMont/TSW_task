@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<a href="carrello"> visualizza carrello</a>
+<a href="carrello"> <img src="src/main/webapp/uploadFile/cart.png" alt="carrello"></a>
 	<h2>Products</h2>
 	<a href="product">List</a>
 	<table border="1">
