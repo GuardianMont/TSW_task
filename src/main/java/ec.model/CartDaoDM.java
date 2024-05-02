@@ -6,13 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CartModelDM implements CartDao{
+public class CartDaoDM implements CartDao{
 
     private static final String TABLE_NAME= "Carrello";
 
     @Override
     public void doSave(CartItem Item, String codeUser ) throws SQLException {
-        String insertSQL = "INSERT INTO " + CartModelDM.TABLE_NAME
+        String insertSQL = "INSERT INTO " + CartDaoDM.TABLE_NAME
                 + " (prodotto_id, utente_id, quantita) "
                 + " VALUES (?, ?, ?) ";
 
@@ -32,7 +32,7 @@ public class CartModelDM implements CartDao{
     public boolean doDeleteItem(int codeItem, String codeUser) throws SQLException {
         int result = 0;
 
-        String deleteItemSQL = "DELETE FROM " + CartModelDM.TABLE_NAME
+        String deleteItemSQL = "DELETE FROM " + CartDaoDM.TABLE_NAME
                 + " WHERE prodotto_id =? AND utente_id=?";
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -50,7 +50,7 @@ public class CartModelDM implements CartDao{
     public boolean doDeleteCart(String codeUser) throws SQLException {
         int result = 0;
 
-        String deleteItemSQL = "DELETE FROM " + CartModelDM.TABLE_NAME
+        String deleteItemSQL = "DELETE FROM " + CartDaoDM.TABLE_NAME
                 + " WHERE utente_id=? ";
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -70,7 +70,7 @@ public class CartModelDM implements CartDao{
         ShoppingCart cart = new ShoppingCart();
 
         String selectSQL = "SELECT id, nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, immagine,  quantita " +
-                "FROM " + CartModelDM.TABLE_NAME +
+                "FROM " + CartDaoDM.TABLE_NAME +
                 " LEFT JOIN Prodotto On Carrello.prodotto_id = Prodotto.id AND Carello.utente_id=? ";
 
         try {

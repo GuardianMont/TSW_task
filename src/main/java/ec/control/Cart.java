@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -81,7 +80,7 @@ public class Cart extends HttpServlet {
     private void handleAddAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
         int id_item = Integer.parseInt(request.getParameter("id"));
-        ProductModelDM model = new ProductModelDM();
+        ProductDaoDM model = new ProductDaoDM();
         ProductBean item= model.doRetrieveByKey(id_item);
         ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
         cart.addItem(item);
@@ -91,7 +90,7 @@ public class Cart extends HttpServlet {
     private void handleAcquistoAction(HttpServletRequest request, HttpServletResponse response, String forward) throws SQLException, ServletException, IOException {
         JOptionPane.showMessageDialog(null, "sto qua");
         HttpSession session = request.getSession();
-        CartModelDM model = new CartModelDM();
+        CartDaoDM model = new CartDaoDM();
         ShoppingCart carrello = (ShoppingCart) session.getAttribute("cart");
         ArrayList<CartItem> Item_ordinati = carrello.getItem_ordinati();
 

@@ -9,13 +9,13 @@ import java.util.LinkedList;
 
 
 
-public class ProductModelDM implements ProductDao {
+public class ProductDaoDM implements ProductDao {
 
 	private static final String TABLE_NAME = "Prodotto";
 
 	@Override
 	public synchronized void doSave(ProductBean product) throws SQLException {
-		String insertSQL = "INSERT INTO " + ProductModelDM.TABLE_NAME
+		String insertSQL = "INSERT INTO " + ProductDaoDM.TABLE_NAME
 		+ " (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine)"
 				+ " VALUES (?, ?, ?, ? ,? ,? ,? ,? , ?)";
 		try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -43,7 +43,7 @@ public class ProductModelDM implements ProductDao {
 
 		ProductBean bean = new ProductBean();
 
-		String selectSQL = "select * from " + ProductModelDM.TABLE_NAME + " where id = ?";
+		String selectSQL = "select * from " + ProductDaoDM.TABLE_NAME + " where id = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
@@ -82,7 +82,7 @@ public class ProductModelDM implements ProductDao {
 
 		int result = 0;
 
-		String deleteSQL = "DELETE FROM " + ProductModelDM.TABLE_NAME + " WHERE CODE = ?";
+		String deleteSQL = "DELETE FROM " + ProductDaoDM.TABLE_NAME + " WHERE CODE = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
@@ -109,7 +109,7 @@ public class ProductModelDM implements ProductDao {
 
 		Collection<ProductBean> products = new LinkedList<>();
 
-		String selectSQL = "SELECT * FROM " + ProductModelDM.TABLE_NAME;
+		String selectSQL = "SELECT * FROM " + ProductDaoDM.TABLE_NAME;
 
 		try {
 
