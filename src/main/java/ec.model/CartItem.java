@@ -6,10 +6,16 @@ public class CartItem {
     //rappresentazione del prodotto nel carrello
     private int numItem;
     private ProductBean Item;
+    public CartItem (ProductBean item, int numItem){
+        this.Item= item;
+        this.numItem = numItem;
+    }
     public CartItem (ProductBean Item){
         this.Item= Item;
         numItem=1;
     }
+
+
 
     public void setNumItem(int numItem) {
         this.numItem = numItem;

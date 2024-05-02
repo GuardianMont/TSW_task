@@ -25,6 +25,14 @@
 <a href="product">catalogo</a>
 <h2>Prodotti carrello</h2>
 <%
+    Boolean buy = (Boolean) request.getAttribute("acquistoCompletato");
+    if (buy != null && buy.booleanValue()){
+%>
+<p>Acquisto completato con successo</p>
+<%
+    }
+%>
+<%
     if (cartItem != null && !cartItem.isEmpty()) {
         List <CartItem> items = cartItem.getItem_ordinati();
 %>
@@ -59,7 +67,7 @@
         } %>
     <h3>Spesa totale<%=cartItem.getPrezzoTot()%></h3>
     <form action="carrello" method="post">
-        <input type="hidden" action="opzione" value="acquisto">
+        <input type="hidden" name="opzione" value="acquisto">
         <input type="submit" value="ACQUISTA">
     </form>
     <%

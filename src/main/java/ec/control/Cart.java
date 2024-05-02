@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,10 +28,7 @@ public class Cart extends HttpServlet {
             if (action != null) {
                 String par_id = request.getParameter("id");
                 int id=0;
-                if (par_id==null){
-                    JOptionPane.showInputDialog(null,"id nullo del prodotto");
-                    return;
-                }else {
+                if (par_id!=null){
                     id = Integer.parseInt(request.getParameter("id"));
                 }
                     switch (action.toLowerCase()) {
@@ -60,11 +58,12 @@ public class Cart extends HttpServlet {
                             break;
                         case "acquisto":
                             try{
-                                handleAcquistoAction(request);
+                                handleAcquistoAction(request, response, dis);
                             }catch (SQLException e){
-                                throw new RuntimeException(e);
+                                e.printStackTrace();
+                                request.setAttribute("errorMessage", "Errore durante l'acquisto: " + e.getMessage());
+                                dis="/error.jsp";
                             }
-                            session.setAttribute("cart", new ShoppingCart());
                             break;
 
             }
@@ -89,16 +88,22 @@ public class Cart extends HttpServlet {
         session.setAttribute("cart", cart);
     }
 
-    private void handleAcquistoAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
+    private void handleAcquistoAction(HttpServletRequest request, HttpServletResponse response, String forward) throws SQLException, ServletException, IOException {
+        JOptionPane.showMessageDialog(null, "sto qua");
         HttpSession session = request.getSession();
         CartModelDM model = new CartModelDM();
         ShoppingCart carrello = (ShoppingCart) session.getAttribute("cart");
         ArrayList<CartItem> Item_ordinati = carrello.getItem_ordinati();
-        for (var e : Item_ordinati){
-            model.doSave(e,"root");
-        }
 
+        model.doDeleteCart("root");
+        //mi assicuro che ci sia solo un carrello per utente
+        for (var e : Item_ordinati) {
+                model.doSave(e, "root");
+            }
+        JOptionPane.showMessageDialog(null, "Acquisto completato");
+        session.setAttribute("cart", new ShoppingCart());
+        request.setAttribute("acquistoCompletato", true);
+        // Redirect alla stessa pagina per visualizzare l'aggiornamento
+        //response.sendRedirect(request.getContextPath() + forward);
     }
-
-
 }

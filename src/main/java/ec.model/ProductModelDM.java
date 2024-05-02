@@ -1,14 +1,12 @@
 package ec.model;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
+
 
 
 public class ProductModelDM implements ProductDao {
@@ -35,44 +33,7 @@ public class ProductModelDM implements ProductDao {
 
 			preparedStatement.executeUpdate();
 		}
-//		Connection connection = null;
-//		PreparedStatement preparedStatement = null;
-//
-//		String insertSQL = "INSERT INTO " + ProductModelDM.TABLE_NAME
-//				+ " (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine)"
-//				+ " VALUES (?, ?, ?, ? ,? ,? ,? ,? , ?)";
-//
-//		try {
-//			connection = DriverManagerConnectionPool.getConnection();
-//			preparedStatement = connection.prepareStatement(insertSQL);
-//			preparedStatement.setString(1, product.getNome());
-//			preparedStatement.setString(2, product.getDescrizione());
-//			preparedStatement.setDouble(3, product.getPrezzo());
-//			preparedStatement.setDouble(4, product.getFasciaIva());
-//			preparedStatement.setString (5, product.getDimensioni());
-//			preparedStatement.setInt(6, product.getDisponibilita());
-//			preparedStatement.setString(7, product.getCategoria());
-//			preparedStatement.setString (8, product.getColore());
-////			String tempUrl = product.getTemp_url() != null ? product.getTemp_url() :"C:\\Users\\user\\Desktop\\TSW_guardian_ver\\TSW_task\\src\\main\\webapp\\uploadFile";
-////			File imageFile = new File(tempUrl);
-////			try (FileInputStream fis = new FileInputStream(imageFile)) {
-////				preparedStatement.setBinaryStream(9, fis, (int) imageFile.length());
-////				preparedStatement.executeUpdate();
-////				//connection.commit();
-////			} catch (IOException e) {
-////				throw new SQLException("Error reading image file", e);
-////			}
-//			preparedStatement.setBytes(9, product.getImmagineUrl());
-////			preparedStatement.executeUpdate();
-//			connection.commit();
-//		} finally {
-//			try {
-//				if (preparedStatement != null)
-//					preparedStatement.close();
-//			} finally {
-//				DriverManagerConnectionPool.releaseConnection(connection);
-//			}
-//		}
+
 	}
 
 	@Override
