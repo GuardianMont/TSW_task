@@ -111,19 +111,24 @@ public class ProductModelDM implements ProductDao {
 
 		String selectSQL = "SELECT * FROM " + ProductModelDM.TABLE_NAME;
 
-		if (order != null && !order.equals("")) {
-			if (order.equals("prezzoDec")) {
-				//prezzo decrescente
-				selectSQL += "Order by prezzo desc";
-			}else {
-			//prezzo crescente e tutti gli altri
-			selectSQL += " ORDER BY " + order;
-			}
-		}
-
 		try {
+
 			connection = DriverManagerConnectionPool.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
+
+
+			if (order != null && !order.equals("")) {
+
+				preparedStatement = connection.prepareStatement(selectSQL + "ORDER BY ?");
+
+				if (order.equals("prezzoDec")) {
+					//prezzo decrescente
+					preparedStatement.setString(1, "prezzo desc");
+				}else {
+				//prezzo crescente e tutti gli altri
+					preparedStatement.setString(1, order);
+				}
+			}else
+				preparedStatement = connection.prepareStatement(selectSQL);
 
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -150,6 +155,7 @@ public class ProductModelDM implements ProductDao {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
+
 		return products;
 	}
 
