@@ -43,10 +43,12 @@ public class UserDaoDM implements UserDao {
             byte[] passwordHash = HashGenerator.generateHash(user.getPassword(), salt);
 
 
-            preparedStatement.setBytes(6, );
-            preparedStatement.setBytes(7, )
+            preparedStatement.setBytes(6, passwordHash);
+            preparedStatement.setBytes(7, salt);
 
             preparedStatement.executeUpdate();
+        }catch (BadAttributeValueExpException e){
+            e.printStackTrace();
         }
     }
 

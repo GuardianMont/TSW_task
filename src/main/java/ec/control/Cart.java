@@ -1,6 +1,6 @@
 package ec.control;
 
-import ec.model.ProductBean;
+import ec.model.product.ProductBean;
 import ec.model.cart.CartDaoDM;
 import ec.model.cart.CartItem;
 import ec.model.cart.ShoppingCart;

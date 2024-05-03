@@ -1,5 +1,7 @@
 package ec.model.cart;
 
+import ec.model.product.ProductBean;
+
 import java.util.Objects;
 
 public class CartItem {

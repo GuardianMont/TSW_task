@@ -1,6 +1,8 @@
 package ec.model.cart;
 
-import ec.model.cart.CartItem;
+import ec.model.cart.*;
+import ec.model.product.ProductBean;
+
 
 import java.util.ArrayList;
 
