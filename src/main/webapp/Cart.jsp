@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <%@ page contentType="text/html; charset=UTF-8" import="java.util.*"%>
-<%@ page import="ec.model.CartItem" %>
-<%@ page import="ec.model.ShoppingCart" %>
+<%@ page import="ec.model.cart.CartItem" %>
+<%@ page import="ec.model.cart.ShoppingCart" %>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

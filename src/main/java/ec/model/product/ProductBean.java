@@ -1,8 +1,6 @@
-package ec.model;
+package ec.model.product;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -21,7 +19,7 @@ public class ProductBean implements Serializable {
     private byte[] immagineUrl; // Cambiato da byte[] a String per test
     //per ora riporto a byte
     //semplifica la comunicazione c
-   private String temp_url;
+    private String temp_url;
     // Costruttore vuoto
     public ProductBean() {
         id=0;

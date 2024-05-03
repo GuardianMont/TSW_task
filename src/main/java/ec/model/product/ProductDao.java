@@ -1,4 +1,4 @@
-package ec.model;
+package ec.model.product;
 
 import java.sql.SQLException;
 

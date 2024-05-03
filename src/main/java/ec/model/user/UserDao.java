@@ -1,4 +1,6 @@
-package ec.model;
+package ec.model.user;
+
+import ec.model.user.UserBean;
 
 import java.sql.SQLException;
 import java.util.Collection;

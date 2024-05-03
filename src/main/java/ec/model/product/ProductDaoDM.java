@@ -1,4 +1,7 @@
-package ec.model;
+package ec.model.product;
+
+import ec.model.ConnectionPool;
+import ec.model.DriverManagerConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

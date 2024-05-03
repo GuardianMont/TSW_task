@@ -1,4 +1,4 @@
-package ec.model;
+package ec.model.user;
 
 public class UserBean {
     private String username;

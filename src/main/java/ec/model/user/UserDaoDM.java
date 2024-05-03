@@ -1,5 +1,17 @@
-package ec.model;
+package ec.model.user;
 
+import ec.model.ConnectionPool;
+import ec.model.DriverManagerConnectionPool;
+import ec.model.HashGenerator;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.management.BadAttributeValueExpException;
+import java.security.KeyStore;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.KeySpec;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,15 +19,17 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class UserDaoDM implements UserDao{
+public class UserDaoDM implements UserDao {
 
     private static final String TABLE_NAME = "Utente";
+
     @Override
     public synchronized void doSave(UserBean user) throws SQLException {
         String insertSQL = "INSERT INTO " + UserDaoDM.TABLE_NAME
-                + " (username, nome, cognome, email, n_telefono, pssw)"
+                + " (username, nome, cognome, email, n_telefono, pssw, salt)"
                 + " VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = ConnectionPool.getInstance().getConnection();
+
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 
             preparedStatement.setString(1, user.getUsername());
@@ -23,7 +37,14 @@ public class UserDaoDM implements UserDao{
             preparedStatement.setString(3, user.getCognome());
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.setString(5, user.getPhoneNumber());
-            preparedStatement.setString(6, user.getPassword());
+
+            //putting salt and hashing the password
+            byte[] salt = HashGenerator.generateSalt();
+            byte[] passwordHash = HashGenerator.generateHash(user.getPassword(), salt);
+
+
+            preparedStatement.setBytes(6, );
+            preparedStatement.setBytes(7, )
 
             preparedStatement.executeUpdate();
         }

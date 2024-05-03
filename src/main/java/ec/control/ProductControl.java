@@ -2,6 +2,8 @@ package ec.control;
 
 
 import ec.model.*;
+import ec.model.product.ProductBean;
+import ec.model.product.ProductDaoDM;
 import jakarta.servlet.http.*;
 
 import java.io.File;

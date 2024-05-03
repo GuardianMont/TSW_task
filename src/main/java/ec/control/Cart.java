@@ -1,6 +1,10 @@
 package ec.control;
 
-import ec.model.*;
+import ec.model.ProductBean;
+import ec.model.cart.CartDaoDM;
+import ec.model.cart.CartItem;
+import ec.model.cart.ShoppingCart;
+import ec.model.product.ProductDaoDM;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;

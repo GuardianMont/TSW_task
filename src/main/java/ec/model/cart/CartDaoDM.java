@@ -1,12 +1,15 @@
-package ec.model;
+package ec.model.cart;
 
+
+import ec.model.ConnectionPool;
+import ec.model.DriverManagerConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CartDaoDM implements CartDao{
+public class CartDaoDM implements CartDao {
 
     private static final String TABLE_NAME= "Carrello";
 
