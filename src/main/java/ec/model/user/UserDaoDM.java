@@ -4,14 +4,8 @@ import ec.model.ConnectionPool;
 import ec.model.DriverManagerConnectionPool;
 import ec.model.HashGenerator;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
+
 import javax.management.BadAttributeValueExpException;
-import java.security.KeyStore;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.KeySpec;
-import java.security.spec.PKCS8EncodedKeySpec;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -101,7 +95,8 @@ public class UserDaoDM implements UserDao {
                 bean.setNome(rs.getString("nome"));
                 bean.setCognome(rs.getString("cognome"));
                 bean.setEmail(rs.getString("email"));
-                bean.setPassword(rs.getString("pssw"));
+                bean.setPassword(rs.getBytes("pssw"));
+                bean.setSalt(rs.getBytes("salt"));
                 bean.setPhoneNumber(rs.getString("n_telefono"));
             }
 
@@ -140,7 +135,8 @@ public class UserDaoDM implements UserDao {
                 bean.setNome(rs.getString("nome"));
                 bean.setCognome(rs.getString("cognome"));
                 bean.setEmail(rs.getString("email"));
-                bean.setPassword(rs.getString("pssw"));
+                bean.setPassword(rs.getBytes("pssw"));
+                bean.setSalt(rs.getBytes("salt"));
                 bean.setPhoneNumber(rs.getString("n_telefono"));
                 users.add(bean);
             }
@@ -155,5 +151,17 @@ public class UserDaoDM implements UserDao {
         }
 
         return users;
+    }
+
+    @Override
+    public boolean checkPassword(String id, String password) {
+        UserBean user = null;
+        try {
+            user = doRetrieveByKey(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        String passwordHash = HashGenerator.generateHash(password, user.getSalt());
     }
 }

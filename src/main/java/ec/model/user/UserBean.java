@@ -6,7 +6,8 @@ public class UserBean {
     private String cognome;
     private String email; //check
     private String phoneNumber; //check
-    private String password; //check
+    private byte[] password; //check
+    private byte[] salt;
 
     public String getUsername() {
         return username;
@@ -48,11 +49,15 @@ public class UserBean {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPassword() {
+    public  byte[] getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public byte[] getSalt(){ return salt; };
+
+    public void setPassword(byte[] password) {
         this.password = password;
     }
+
+    public void setSalt(byte[] salt){ this.salt = salt; }
 }
