@@ -42,8 +42,6 @@ public class ProductControl extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processRequest(request, response);
-		String action = request.getParameter("nome");
-		JOptionPane.showMessageDialog(null, "devo fare " + action);
 	}
 
 	//Metodo per gestire una richiesta generica (le immagini non vanno gestite in un get)
@@ -134,7 +132,6 @@ public class ProductControl extends HttpServlet {
 				fileSaveDir.mkdir();
 			}
 		}
-
 		ProductBean bean = new ProductBean();
 		bean.setNome(name);
 		bean.setDescrizione(description);

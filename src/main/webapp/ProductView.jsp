@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<a href="carrello"> <img src="src/main/webapp/uploadFile/cart.png" alt="carrello"></a>
+<a href="carrello"> <img src="cart.png" alt="carrello"></a>
 	<h2>Products</h2>
 	<a href="product">List</a>
 			<h3>ID <a href="product?sort=id">Sort</a></h3>
@@ -65,8 +65,8 @@
 			}
 		%>
 
-	<h2>Insert</h2>
-	<form action="product" enctype="multipart/form-data" method="post" >
+<h2>Insert</h2>
+<form action="product" enctype="multipart/form-data" method="post" >
 		<input type="hidden" name="opzione" value="insert">
 		
 		<label for="nome">Nome:</label><br> 
