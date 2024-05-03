@@ -1,65 +1,44 @@
 @CHARSET "UTF-8";
 
-html {
-	width: 500px;
-	margin: 10px auto;
+html, body {
+	width: 100%; /* Rendi la pagina larga quanto il viewport */
+	margin:20px ; /* Rimuovi i margini predefiniti */
+	padding: 20px; /* Rimuovi il padding predefinito */
 }
 
-
-h2 {
-	text-align: center;
+body {
+	font-family: Arial, sans-serif;
 }
 
-a:link {
+a:link, a:visited, a:hover, a:active {
 	color: blue;
 	font-weight: bold;
+	text-decoration: none; /* Rimuovi il sottolineato dai link */
 }
 
-/* visited link */
-a:visited {
-	color: blue;
-	font-weight: bold;
+.container {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 20px;
+	padding: 20px;
 }
 
-/* mouse over link */
-a:hover {
-	color: red;
-	font-weight: bold;
+.product {
+	border: 1px solid #ccc;
+	margin-bottom: 20px; /* Aggiungiamo un margine sotto ogni prodotto per separare le righe */
 }
 
-a:active {
-	color: blue;
-	font-weight: bold;
+.product-content {
+	padding: 10px;
 }
 
-table {
-	width: 500px;
-}
-
-table, th, td {
-	text-align: center;
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
-th, td {
-	padding: 5px;
-}
-
-
-label {
-	font-weight: bold;
-}
-
-form input[type=text], form input[type=number], form input[type=password],
-	form input[type=date], form input[type=range], form input[type=email],
-	form input[type=url], form input[type=time], form input[list] {
-	width: 500px;
-	font-size: 1em;
+.product img {
+	width: 100%;
+	height: auto;
 }
 
 textarea {
-	width: 500px;
+	width: calc(100% - 22px); /* Riduci la larghezza per compensare il padding e il bordo */
 	height: 60px;
 	font-size: 1em;
 }

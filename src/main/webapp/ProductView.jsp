@@ -8,7 +8,6 @@
 		return;
 	}
 %>
-
 <!DOCTYPE html>
 <html>
 <%@ page contentType="text/html; charset=UTF-8" import="java.util.*,ec.model.ProductBean"%>
@@ -23,41 +22,41 @@
 <a href="carrello"> <img src="src/main/webapp/uploadFile/cart.png" alt="carrello"></a>
 	<h2>Products</h2>
 	<a href="product">List</a>
-	<table border="1">
-		<tr>
-			<th>ID <a href="product?sort=id">Sort</a></th>
-			<th>Nome <a href="product?sort=nome">Sort</a></th>
-			<th>Prezzo <a href="product?sort=prezzo">asc</a>/<a href="product?sort=prezzoDec">dec</a></th>
-			<th>Img </th>
-			<th>Action</th>
-		</tr>
+			<h3>ID <a href="product?sort=id">Sort</a></h3>
+			<h3>Nome <a href="product?sort=nome">Sort</a></h3>
+			<h3>Prezzo <a href="product?sort=prezzo">asc</a>/<a href="product?sort=prezzoDec">dec</a></h3>
+<div class="container">
 		<%
 			if (products != null && products.size() != 0) {
 				Iterator<?> it = products.iterator();
 				while (it.hasNext()) {
 					ProductBean bean = (ProductBean) it.next();
 		%>
-		<tr>
-			<td><%=bean.getId()%></td>
-			<td><%=bean.getNome()%></td>
-			<td><%=bean.getPrezzo()%></td>
-			<%
-   				String stockImg = "";
-   				byte[] imageData = bean.getImmagineUrl();
-    			if (imageData != null) {
-    		    stockImg = Base64.getEncoder().encodeToString(imageData);
-    }
-%>
-			<td><img  src="data:image/jpeg;base64,<%= stockImg %>"  width=400px height=auto alt="no immagine" ></td>
-			<td><a href="product?opzione=delete&id=<%=bean.getId()%>">Delete</a><br>
-			<%//id del prodotto che vogliamo andare a cancellare %>
-				<a href="product?opzione=read&id=<%=bean.getId()%>">Details</a><br>
-				<a href="carrello?opzione=add&id=<%=bean.getId()%>">Add Cart</a>
-				</td>
-		</tr>
+
+	<div class="product">
+		<div class="product-content">
+		<%
+			String stockImg = "";
+			byte[] imageData = bean.getImmagineUrl();
+			if (imageData != null) {
+				stockImg = Base64.getEncoder().encodeToString(imageData);
+			}
+		%>
+		<img  src="data:image/jpeg;base64,<%= stockImg %>" alt="<%=bean.getNome()%>">
+		<h2><%=bean.getNome()%></h2>
+		<p><%=bean.getPrezzo()%></p>
+		<p><a href="product?opzione=delete&id=<%=bean.getId()%>">Delete</a> <br>
+			<a href="product?opzione=read&id=<%=bean.getId()%>">Details</a><br>
+			<a href="carrello?opzione=add&id=<%=bean.getId()%>">Add to Cart</a>
+		</p>
+		</div>
+	</div>
+
 		<%
 				}
-			} else {
+			 %>
+</div>
+<% } else {
 		%>
 		<tr>
 			<td colspan="6">No products available</td>
@@ -65,7 +64,7 @@
 		<%
 			}
 		%>
-	</table>
+
 	<h2>Insert</h2>
 	<form action="product" enctype="multipart/form-data" method="post" >
 		<input type="hidden" name="opzione" value="insert">

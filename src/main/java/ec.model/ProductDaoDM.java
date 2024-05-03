@@ -108,28 +108,23 @@ public class ProductDaoDM implements ProductDao {
 		PreparedStatement preparedStatement = null;
 
 		Collection<ProductBean> products = new LinkedList<>();
-
 		String selectSQL = "SELECT * FROM " + ProductDaoDM.TABLE_NAME;
 
 		try {
-
 			connection = DriverManagerConnectionPool.getConnection();
 
-
 			if (order != null && !order.equals("")) {
-
-				preparedStatement = connection.prepareStatement(selectSQL + "ORDER BY ?");
+				selectSQL += " ORDER BY ";
 
 				if (order.equals("prezzoDec")) {
-					//prezzo decrescente
-					preparedStatement.setString(1, "prezzo desc");
-				}else {
-				//prezzo crescente e tutti gli altri
-					preparedStatement.setString(1, order);
+					// prezzo decrescente
+					selectSQL += "prezzo DESC";
+				} else {
+					// prezzo crescente e tutti gli altri
+					selectSQL += order;
 				}
-			}else
-				preparedStatement = connection.prepareStatement(selectSQL);
-
+			}
+			preparedStatement = connection.prepareStatement(selectSQL);
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
@@ -144,9 +139,9 @@ public class ProductDaoDM implements ProductDao {
 				bean.setCategoria(rs.getString("categoria"));
 				bean.setFasciaIva(rs.getDouble("fascia_iva"));
 				bean.setImmagineUrl(rs.getBytes("immagine"));
+
 				products.add(bean);
 			}
-
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -155,7 +150,6 @@ public class ProductDaoDM implements ProductDao {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
-
 		return products;
 	}
 
