@@ -19,7 +19,7 @@ public class UserDaoDM implements UserDao {
 
     @Override
     public synchronized void doSave(UserBean user) throws SQLException {
-        String insertSQL = "INSERT INTO " + UserDaoDM.TABLE_NAME
+        /*String insertSQL = "INSERT INTO " + UserDaoDM.TABLE_NAME
                 + " (username, nome, cognome, email, n_telefono, pssw, salt)"
                 + " VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -43,7 +43,7 @@ public class UserDaoDM implements UserDao {
             preparedStatement.executeUpdate();
         }catch (BadAttributeValueExpException e){
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override

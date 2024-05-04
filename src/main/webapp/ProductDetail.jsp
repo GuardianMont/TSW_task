@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.util.Base64,ec.model.ProductBean"%>
+    pageEncoding="ISO-8859-1" import="java.util.Base64,ec.model.product.ProductBean"%>
 <!DOCTYPE html>
 <html>
 <head>
