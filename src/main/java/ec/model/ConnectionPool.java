@@ -7,7 +7,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 public class ConnectionPool {
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/tavolando";
     private static final String JDBC_USER = "root";
-    private static final String JDBC_PASSWORD = "guardian";
+    private static final String JDBC_PASSWORD = "root";
 
     private static final DataSource dataSource;
 
