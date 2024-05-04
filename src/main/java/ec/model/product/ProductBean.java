@@ -107,7 +107,8 @@ public class ProductBean implements Serializable {
     public void setColore(String colore) {
         this.colore = colore;
     }
-
+    //rappresentazione in Byte dell'immagine.
+    //necessaria per class 64 se no non si vede niente
     public byte[] getImmagineUrl() {
         return immagineUrl;
     }
@@ -115,6 +116,8 @@ public class ProductBean implements Serializable {
     public void setImmagineUrl(byte[] immagineUrl){
         this.immagineUrl=immagineUrl;
     }
+
+    //temp_url fa riferimento al path dell'immagine all'interno del server
     public void setTemp_Url(String temp_url) {
         this.temp_url = temp_url;
     }

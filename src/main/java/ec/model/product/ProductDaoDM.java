@@ -3,6 +3,10 @@ package ec.model.product;
 import ec.model.ConnectionPool;
 import ec.model.DriverManagerConnectionPool;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,12 +36,18 @@ public class ProductDaoDM implements ProductDao {
 			preparedStatement.setInt(6, product.getDisponibilita());
 			preparedStatement.setString(7, product.getCategoria());
 			preparedStatement.setString(8, product.getColore());
-			preparedStatement.setBytes(9, product.getImmagineUrl());
+
+			File file = new File(product.getTemp_url());
+			FileInputStream fis = new FileInputStream(file);
+			preparedStatement.setBinaryStream(9, fis, fis.available());
 
 			preparedStatement.executeUpdate();
-		}
-
-	}
+			} catch (FileNotFoundException e) {
+				System.out.println(e);
+			} catch (IOException e) {
+				System.out.println(e);
+			}
+    }
 
 	@Override
 	public synchronized ProductBean doRetrieveByKey(int code) throws SQLException {
@@ -85,7 +95,7 @@ public class ProductDaoDM implements ProductDao {
 
 		int result = 0;
 
-		String deleteSQL = "DELETE FROM " + ProductDaoDM.TABLE_NAME + " WHERE CODE = ?";
+		String deleteSQL = "DELETE FROM " + ProductDaoDM.TABLE_NAME + " WHERE id = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
@@ -112,13 +122,11 @@ public class ProductDaoDM implements ProductDao {
 
 		Collection<ProductBean> products = new LinkedList<>();
 		String selectSQL = "SELECT * FROM " + ProductDaoDM.TABLE_NAME;
-
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 
 			if (order != null && !order.equals("")) {
 				selectSQL += " ORDER BY ";
-
 				if (order.equals("prezzoDec")) {
 					// prezzo decrescente
 					selectSQL += "prezzo DESC";
