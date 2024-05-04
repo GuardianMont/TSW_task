@@ -10,6 +10,12 @@
     <name>TSW_task</name>
     <packaging>war</packaging>
 
+    <repositories>
+        <repository>
+            <id>mysql</id>
+            <url>https://repo.mysql.com/maven2</url>
+        </repository>
+    </repositories>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>11</maven.compiler.target>
@@ -52,7 +58,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.19</version> <!-- O la versione più recente disponibile -->
+            <version>8.0.28</version>
         </dependency>
     </dependencies>
 

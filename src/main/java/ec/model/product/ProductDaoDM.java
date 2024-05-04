@@ -51,15 +51,14 @@ public class ProductDaoDM implements ProductDao {
 
 	@Override
 	public synchronized ProductBean doRetrieveByKey(int code) throws SQLException {
-		Connection connection = null;
+
 		PreparedStatement preparedStatement = null;
 
 		ProductBean bean = new ProductBean();
 
 		String selectSQL = "select * from " + ProductDaoDM.TABLE_NAME + " where id = ?";
 
-		try {
-			connection = DriverManagerConnectionPool.getConnection();
+		try(Connection connection = ConnectionPool.getInstance().getConnection()) {
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setInt(1, code);
 
@@ -81,24 +80,23 @@ public class ProductDaoDM implements ProductDao {
 			try {
 				if (preparedStatement != null)
 					preparedStatement.close();
-			} finally {
-				DriverManagerConnectionPool.releaseConnection(connection);
-			}
-		}
+			} catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
 		return bean;
 	}
 
 	@Override
 	public synchronized boolean doDelete(int code) throws SQLException {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		int result = 0;
 
 		String deleteSQL = "DELETE FROM " + ProductDaoDM.TABLE_NAME + " WHERE id = ?";
 
-		try {
-			connection = DriverManagerConnectionPool.getConnection();
+		try(Connection connection = ConnectionPool.getInstance().getConnection()) {
+
 			preparedStatement = connection.prepareStatement(deleteSQL);
 			preparedStatement.setInt(1, code);
 
@@ -108,8 +106,8 @@ public class ProductDaoDM implements ProductDao {
 			try {
 				if (preparedStatement != null)
 					preparedStatement.close();
-			} finally {
-				DriverManagerConnectionPool.releaseConnection(connection);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
 			}
 		}
 		return (result != 0);
@@ -117,14 +115,11 @@ public class ProductDaoDM implements ProductDao {
 
 	@Override
 	public synchronized Collection<ProductBean> doRetrieveAll(String order) throws SQLException {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		Collection<ProductBean> products = new LinkedList<>();
 		String selectSQL = "SELECT * FROM " + ProductDaoDM.TABLE_NAME;
-		try {
-			connection = DriverManagerConnectionPool.getConnection();
-
+		try(Connection connection = ConnectionPool.getInstance().getConnection()){
 			if (order != null && !order.equals("")) {
 				selectSQL += " ORDER BY ";
 				if (order.equals("prezzoDec")) {
@@ -157,10 +152,10 @@ public class ProductDaoDM implements ProductDao {
 			try {
 				if (preparedStatement != null)
 					preparedStatement.close();
-			} finally {
-				DriverManagerConnectionPool.releaseConnection(connection);
-			}
-		}
+			} catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
 		return products;
 	}
 

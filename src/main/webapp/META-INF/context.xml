@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Context>
-    <Resource name="jdbc/tavolando"
-        auth="Container"
-        driverClassName="com.mysql.cj.jdbc.Driver"
-        type="javax.sql.DataSource"
-        username="root"
-        password="guardian"
-        url="jdbc:mysql://localhost:3306/tavolando?serverTimezone=Europe/Rome;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+    <Resource name="jdbc/tavolando" auth="Container"
+              type="javax.sql.DataSource" driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/tavolando?serverTimezone=Europe/Rome"
+              username="root" password="guardian"
+              maxTotal="20" maxIdle="10" maxWaitMillis="-1"/>
 </Context>
