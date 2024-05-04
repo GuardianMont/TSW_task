@@ -162,6 +162,7 @@ public class UserDaoDM implements UserDao {
             e.printStackTrace();
         }
 
-        String passwordHash = HashGenerator.generateHash(password, user.getSalt());
+        //String passwordHash = HashGenerator.generateHash(password, user.getSalt());
+        return false;
     }
 }
