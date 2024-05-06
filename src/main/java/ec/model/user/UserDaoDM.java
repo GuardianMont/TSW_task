@@ -19,7 +19,7 @@ public class UserDaoDM implements UserDao {
 
     @Override
     public synchronized void doSave(UserBean user) throws SQLException {
-        /*String insertSQL = "INSERT INTO " + UserDaoDM.TABLE_NAME
+        String insertSQL = "INSERT INTO " + UserDaoDM.TABLE_NAME
                 + " (username, nome, cognome, email, n_telefono, pssw, salt)"
                 + " VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -31,19 +31,11 @@ public class UserDaoDM implements UserDao {
             preparedStatement.setString(3, user.getCognome());
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.setString(5, user.getPhoneNumber());
-
-            //putting salt and hashing the password
-            byte[] salt = HashGenerator.generateSalt();
-            byte[] passwordHash = HashGenerator.generateHash(user.getPassword(), salt);
-
-
-            preparedStatement.setBytes(6, passwordHash);
-            preparedStatement.setBytes(7, salt);
+            preparedStatement.setBytes(6, user.getPassword());
+            preparedStatement.setBytes(7, user.getSalt());
 
             preparedStatement.executeUpdate();
-        }catch (BadAttributeValueExpException e){
-            e.printStackTrace();
-        }*/
+        }
     }
 
     @Override

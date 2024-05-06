@@ -4,6 +4,6 @@
     <Resource name="jdbc/tavolando" auth="Container"
               type="javax.sql.DataSource" driverClassName="com.mysql.cj.jdbc.Driver"
               url="jdbc:mysql://localhost:3306/tavolando?serverTimezone=Europe/Rome"
-              username="root" password="guardian"
+              username="root" password="root"
               maxTotal="20" maxIdle="10" maxWaitMillis="-1"/>
 </Context>
