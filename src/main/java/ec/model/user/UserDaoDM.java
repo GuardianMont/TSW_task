@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -146,7 +147,7 @@ public class UserDaoDM implements UserDao {
     }
 
     @Override
-    public boolean checkPassword(String id, String password) {
+    public synchronized boolean checkPassword(String id, String pssw) {
         UserBean user = null;
         try {
             user = doRetrieveByKey(id);
@@ -154,7 +155,15 @@ public class UserDaoDM implements UserDao {
             e.printStackTrace();
         }
 
-        //String passwordHash = HashGenerator.generateHash(password, user.getSalt());
-        return false;
+        if(user == null)
+            return false;
+        //else
+        try{
+            // se l'hash calcolato sulla password passata è uguale a quello memorizzato sul database allora è true
+            if (Arrays.equals(HashGenerator.generateHash(pssw, user.getSalt()), user.getPassword()))
+                return true;
+        }finally {
+            return false;
+        }
     }
 }
