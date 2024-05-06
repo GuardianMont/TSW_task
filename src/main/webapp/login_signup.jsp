@@ -20,26 +20,6 @@
     <link rel = "stylesheet" href="Login_Signup.css">
 </head>
 <body>
-<div class="header-container">
-    <header class="Tavolando">Tavolando</header>
-    <nav>
-        <ul>
-            <li><a href="#">Home</a> </li>
-
-            <li><a href="#">Prodotti</a>
-
-                <ul>
-                    <li><a href="#">Prodotto 1</a> </li>
-                    <li><a href="#">Prodotto 2</a> </li>
-                    <li><a href="#">Prodotto 3</a> </li>
-                </ul>
-            </li>
-
-            <li><a href="#">Servizi</a> </li>
-            <li><a href="#">Contatti</a> </li>
-        </ul>
-    </nav>
-</div>
 
 <div class = "outside-container" style="">
     <div class = "container">
@@ -103,19 +83,6 @@
 
     </div>
 </div>
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <h3>Contatti</h3>
-            <p>Email:prova@gmail.com</p>
-            <p>Telefono:+39 1234567890</p>
-        </div>
-        <div class = "footer-bottom">
-            &copy; 2024 Tavolando. Tutti i diritti riservati.
-        </div>
-    </div>
-</footer>
-
 
 <script>
     document.getElementById("show-signup").addEventListener("change", function() {
