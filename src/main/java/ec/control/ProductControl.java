@@ -29,9 +29,10 @@ public class ProductControl extends HttpServlet {
 	private static final String SAVE_DIR = "\\uploadFile";
 	private ProductDaoDM model;
 
-	public ProductControl() {
-		super();
-		model = new ProductDaoDM(); //  DataSource model andrebbe
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		model = new ProductDaoDM();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

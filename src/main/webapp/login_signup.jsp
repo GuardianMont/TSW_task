@@ -6,6 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    if (request.getSession().getAttribute("userID")!=null){
+        RequestDispatcher dispatcher = request.getRequestDispatcher("");
+        dispatcher.forward(request, response);
+    }
+%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -61,7 +67,7 @@
             </div>
         </form>
 
-        <form id="signup-form" style="display: none">
+        <form id="signup-form" style="display: none" >
             <div class="form-group">
                 <label for = "signup-name"> Name:</label>
                 <input type="text" id="signup-name" name="signup-name" required>

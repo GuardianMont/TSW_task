@@ -8,7 +8,6 @@ public class UserBean {
     private String phoneNumber; //check
     private byte[] password; //check
     private byte[] salt;
-
     public String getUsername() {
         return username;
     }
