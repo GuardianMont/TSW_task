@@ -1,0 +1,36 @@
+body{
+    font-family: 'Open sans', Arial, serif;
+    background-color: #f5f5f5;
+}
+
+.catalogo{
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+
+.prodotti_carrello{
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.tabella{
+    text-align: center;
+    margin-left: 400px;
+    padding: 0;
+}
+
+.spesa_totale{
+    text-align: end;
+    position: relative;
+    top: 400px;
+    right: 60px;
+}
+
+.acquista{
+    text-align: end;
+    position: relative;
+    top: 420px;
+    margin-left: 85%;
+}

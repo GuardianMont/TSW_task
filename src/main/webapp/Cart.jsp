@@ -17,13 +17,13 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="ProductStyle.css" rel="stylesheet" type="text/css">
+    <link href="Cart.css" rel="stylesheet" type="text/css">
     <title>Storage DS/BF</title>
 </head>
 
 <body>
-<a href="product">catalogo</a>
-<h2>Prodotti carrello</h2>
+<a href="product" class="catalogo">catalogo</a>
+<h2 class="prodotti_carrello">Prodotti carrello</h2>
 <%
     Boolean buy = (Boolean) request.getAttribute("acquistoCompletato");
     if (buy != null && buy.booleanValue()){
@@ -36,7 +36,7 @@
     if (cartItem != null && !cartItem.isEmpty()) {
         List <CartItem> items = cartItem.getItem_ordinati();
 %>
-<table border="1">
+<table border="1" class="tabella">
     <tr>
         <th>ID </th>
         <th>img</th>
@@ -54,7 +54,7 @@
                 stockImg = Base64.getEncoder().encodeToString(imageData);
             }
         %>
-        <td><img  src="data:image/jpeg;base64,<%= stockImg %>"  width=400px height=auto alt="no immagine" ></td>
+        <td><img  src="C:\Users\mario\OneDrive\Desktop\prova\download.jpeg;base64,<%= stockImg %>"  width=400px height=auto alt="no immagine" ></td>
         <td><%=item.getItem().getNome()%></td>
         <td><%=item.getItem().getPrezzo() + "*" + item.getNumItem() + "=" + item.prezzoAllItem()%> </td>
         <td><a href="carrello?opzione=delete&id=<%=item.getItem().getId()%>">Delete from cart</a><br>
@@ -65,10 +65,10 @@
     </tr>
     <%
         } %>
-    <h3>Spesa totale<%=cartItem.getPrezzoTot()%></h3>
+    <h3 class="spesa_totale">Spesa totale <%=cartItem.getPrezzoTot()%></h3>
     <form action="carrello" method="post">
         <input type="hidden" name="opzione" value="acquisto">
-        <input type="submit" value="ACQUISTA">
+        <input type="submit" value="ACQUISTA" class="acquista">
     </form>
     <%
     } else {
