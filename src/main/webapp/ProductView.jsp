@@ -8,6 +8,7 @@
 		return;
 	}
 %>
+
 <!DOCTYPE html>
 <html>
 <%@ page contentType="text/html; charset=UTF-8" import="java.util.*,ec.model.product.ProductBean"%>
@@ -16,10 +17,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link href="ProductStyle.css" rel="stylesheet" type="text/css">
 	<title>Storage DS/BF</title>
+
 </head>
 
 <body>
-<a href="carrello"> <img src="cart.png" alt="carrello"></a>
+
+<jsp:include page="Header.jsp"/>
+<a href="carrello"> <img src="uploadFile/cart.png" width="30" height="auto" alt="carrello"></a>
 	<h2>Products</h2>
 	<a href="product">List</a>
 			<h3>ID <a href="product?sort=id">Sort</a></h3>
@@ -98,5 +102,7 @@
 
 		<input type="submit" value="Add"><input type="reset" value="Reset">
 	</form>
+
+<jsp:include page="Footer.jsp"/>
 </body>
 </html>

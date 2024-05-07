@@ -54,7 +54,7 @@
                 stockImg = Base64.getEncoder().encodeToString(imageData);
             }
         %>
-        <td><img  src="C:\Users\mario\OneDrive\Desktop\prova\download.jpeg;base64,<%= stockImg %>"  width=400px height=auto alt="no immagine" ></td>
+        <td><img  src="data:image/jpeg;base64,<%= stockImg %>"  width=400px height=auto alt="no immagine" ></td>
         <td><%=item.getItem().getNome()%></td>
         <td><%=item.getItem().getPrezzo() + "*" + item.getNumItem() + "=" + item.prezzoAllItem()%> </td>
         <td><a href="carrello?opzione=delete&id=<%=item.getItem().getId()%>">Delete from cart</a><br>
