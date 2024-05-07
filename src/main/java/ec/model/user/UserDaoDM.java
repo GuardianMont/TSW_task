@@ -183,8 +183,7 @@ public class UserDaoDM implements UserDao {
     }
 
     @Override
-    public synchronized boolean checkPassword(String token, String pssw) {
-
+    public synchronized UserBean getUserIfPasswordIsCorrect(String token, String pssw) {
         UserBean user = null;
         try {
             if (token.contains("@")) {
@@ -196,18 +195,15 @@ public class UserDaoDM implements UserDao {
             e.printStackTrace();
         }
 
-        if(user == null) {
-            return false;
-        }
         //else
         try{
             // se l'hash calcolato sulla password passata è uguale a quello memorizzato sul database allora è true
             if (Arrays.equals(HashGenerator.generateHash(pssw, user.getSalt()), user.getPassword()))
-                return true;
+                return user;
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return false;
+        return null;
     }
 }

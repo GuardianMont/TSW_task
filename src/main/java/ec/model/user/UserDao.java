@@ -16,7 +16,7 @@ public interface UserDao {
 
     public Collection<UserBean> doRetrieveAll(String order) throws SQLException;
 
-    public boolean checkPassword(String id, String password);
+    public UserBean getUserIfPasswordIsCorrect(String id, String password);
 
 
 }

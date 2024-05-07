@@ -42,12 +42,12 @@ public class LoginSignupControl extends HttpServlet {
     protected void doLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         String dis ="/ProductView.jsp";
-        String  name = req.getParameter("login-token");
+        String  token = req.getParameter("login-token");
         String password = req.getParameter("login-password");
 
-
-        if(userDao.checkPassword(name, password)){
-            session.setAttribute("userId", name);
+        UserBean user = userDao.getUserIfPasswordIsCorrect(token, password);
+        if(user != null){
+            session.setAttribute("userId", user.getUsername());
         }
         else{
             dis = "login_signup.jsp";
@@ -77,6 +77,9 @@ public class LoginSignupControl extends HttpServlet {
                 user.setSalt(salt);
 
                 userDao.doSave(user);
+
+                HttpSession session = req.getSession();
+                session.setAttribute("userId", user.getUsername());
             }catch (SQLIntegrityConstraintViolationException e){
                 dis = "/login_signup.jsp";
             }catch (BadAttributeValueExpException e){
@@ -84,6 +87,7 @@ public class LoginSignupControl extends HttpServlet {
             }catch (SQLException e){
                 e.printStackTrace();//potremmo voler dare un errore diverso, per ora lo lascio così
             }
+
         }else{
             dis = "/login_signup.jsp";
         }
