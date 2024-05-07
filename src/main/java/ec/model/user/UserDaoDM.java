@@ -18,7 +18,7 @@ public class UserDaoDM implements UserDao {
     public synchronized void doSave(UserBean user) throws SQLException {
         String insertSQL = "INSERT INTO " + UserDaoDM.TABLE_NAME
                 + " (username, nome, cognome, email, n_telefono, pssw, salt)"
-                + " VALUES (?, ?, ?, ?, ?, ?)";
+                + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         Connection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);
