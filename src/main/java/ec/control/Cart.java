@@ -92,7 +92,6 @@ public class Cart extends HttpServlet {
     }
 
     private void handleAcquistoAction(HttpServletRequest request, HttpServletResponse response, String forward) throws SQLException, ServletException, IOException {
-        JOptionPane.showMessageDialog(null, "sto qua");
         HttpSession session = request.getSession();
         CartDaoDM model = new CartDaoDM();
         ShoppingCart carrello = (ShoppingCart) session.getAttribute("cart");
@@ -103,9 +102,9 @@ public class Cart extends HttpServlet {
         for (var e : Item_ordinati) {
                 model.doSave(e, "root");
             }
-        JOptionPane.showMessageDialog(null, "Acquisto completato");
         session.setAttribute("cart", new ShoppingCart());
         request.setAttribute("acquistoCompletato", true);
+
         // Redirect alla stessa pagina per visualizzare l'aggiornamento
         //response.sendRedirect(request.getContextPath() + forward);
     }
