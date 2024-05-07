@@ -5,6 +5,7 @@ import ec.model.user.UserBean;
 import ec.model.user.UserDaoDM;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
+@WebServlet ("/LoginSignup")
 public class LoginSignupControl extends HttpServlet {
 
     private UserDaoDM userDao;
@@ -50,7 +52,7 @@ public class LoginSignupControl extends HttpServlet {
             session.setAttribute("userId", user.getUsername());
         }
         else{
-            dis = "login_signup.jsp";
+            dis = "/login_signup.jsp";
         }
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(dis);

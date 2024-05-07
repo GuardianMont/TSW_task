@@ -23,11 +23,11 @@
 
 <div class = "outside-container" style="">
     <div class = "container">
-        <form id = "login-form">
+        <form id = "login-form" action="LoginSignup" method="post">
             <input type="hidden" id="login-option" name="option" value="login">
             <div class = "form-group">
                 <label for = "login-token"> Email</label>
-                <input type="email" id = "login-token" name = "login-token" required>
+                <input type="text" id = "login-token" name = "login-token" required>
             </div>
 
             <div class = "form-group">
@@ -47,7 +47,7 @@
             </div>
         </form>
 
-        <form id="signup-form" style="display: none" >
+        <form id="signup-form" style="display: none" action="LoginSignup" method="post" >
             <input type="hidden" id="signup-option" name="option" value="signup">
             <div class="form-group">
                 <label for = "signup-username"> Username:</label>
