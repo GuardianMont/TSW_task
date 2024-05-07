@@ -26,8 +26,8 @@
         <form id = "login-form">
 
             <div class = "form-group">
-                <label for = "login-email"> Email</label>
-                <input type="email" id = "login-email" name = "login-email" required>
+                <label for = "login-name"> Email</label>
+                <input type="email" id = "login-name" name = "login-name" required>
             </div>
 
             <div class = "form-group">
