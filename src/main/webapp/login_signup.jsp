@@ -24,7 +24,7 @@
 <div class = "outside-container" style="">
     <div class = "container">
         <form id = "login-form">
-
+            <input type="hidden" id="login-option" name="option" value="login">
             <div class = "form-group">
                 <label for = "login-token"> Email</label>
                 <input type="email" id = "login-token" name = "login-token" required>
@@ -48,6 +48,12 @@
         </form>
 
         <form id="signup-form" style="display: none" >
+            <input type="hidden" id="signup-option" name="option" value="signup">
+            <div class="form-group">
+                <label for = "signup-username"> Username:</label>
+                <input type="text" id="signup-username" name="signup-username" required>
+            </div>
+
             <div class="form-group">
                 <label for = "signup-name"> Name:</label>
                 <input type="text" id="signup-name" name="signup-name" required>
@@ -64,8 +70,12 @@
             </div>
 
             <div class="form-group">
-                <label for = "signup-password"> password:</label>
+                <label for = "signup-password"> Password:</label>
                 <input type="text" id="signup-password" name="signup-password" required>
+            </div>
+            <div class="form-group">
+                <label for = "signup-rep_password"> Repeat Password:</label>
+                <input type="text" id="signup-rep_password" name="signup-rep_password" required>
             </div>
 
             <div class="form-group">
