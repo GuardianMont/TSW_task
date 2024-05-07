@@ -74,9 +74,10 @@ public class CartDaoDM implements CartDao {
 
         ShoppingCart cart = new ShoppingCart();
 
-        String selectSQL = "SELECT id, nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, immagine,  quantita " +
-                "FROM " + CartDaoDM.TABLE_NAME +
-                " LEFT JOIN Prodotto On Carrello.prodotto_id = Prodotto.id AND Carello.utente_id=? ";
+        String selectSQL = "SELECT p.id, p.nome, p.descrizione, p.prezzo, p.fascia_iva, p.dimensioni, p.disponibilita, p.categoria, p.immagine, p.colore, c.quantita "
+       + " FROM " + CartDaoDM.TABLE_NAME + " AS c "
+       + " LEFT JOIN Prodotto AS p ON c.prodotto_id = p.id "
+       +" WHERE c.utente_id = ? ";
 
         try {
             connection = DriverManagerConnectionPool.getConnection();
@@ -95,6 +96,7 @@ public class CartDaoDM implements CartDao {
                 item.setDimensioni(rs.getString("dimensioni"));
                 item.setDisponibilita(rs.getInt("disponibilita"));
                 item.setCategoria(rs.getString("categoria"));
+                item.setColore(rs.getString("colore"));
                 item.setImmagineUrl(rs.getBytes("immagine"));
 
                 CartItem carrello = new CartItem(item, rs.getInt("quantita"));

@@ -49,9 +49,10 @@
 		<img  src="data:image/jpeg;base64,<%= stockImg %>" alt="<%=bean.getNome()%>">
 		<h2><%=bean.getNome()%></h2>
 		<p><%=bean.getPrezzo()%></p>
-		<p><a href="product?opzione=delete&id=<%=bean.getId()%>">Delete</a> <br>
+		<p><a  href="product?opzione=delete&id=<%=bean.getId()%>">Delete</a> <br>
 			<a href="product?opzione=read&id=<%=bean.getId()%>">Details</a><br>
-			<a href="carrello?opzione=add&id=<%=bean.getId()%>">Add to Cart</a>
+			<a href="carrello?opzione=add&id=<%=bean.getId()%>">Add to Cart</a><br>
+			<a href="product?opzione=show&id=<%=bean.getId()%>">Modifica</a>
 		</p>
 		</div>
 	</div>
