@@ -5,7 +5,6 @@ import ec.model.DriverManagerConnectionPool;
 import ec.model.HashGenerator;
 
 
-import javax.management.BadAttributeValueExpException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -105,6 +104,43 @@ public class UserDaoDM implements UserDao {
     }
 
     @Override
+    public synchronized UserBean doRetrieveByEmail(String email) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        UserBean bean = new UserBean();
+
+        String selectSQL = "select * from " + UserDaoDM.TABLE_NAME + " where email = ?";
+
+        try {
+            connection = DriverManagerConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, email);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                bean.setUsername(rs.getString("username"));
+                bean.setNome(rs.getString("nome"));
+                bean.setCognome(rs.getString("cognome"));
+                bean.setEmail(rs.getString("email"));
+                bean.setPassword(rs.getBytes("pssw"));
+                bean.setSalt(rs.getBytes("salt"));
+                bean.setPhoneNumber(rs.getString("n_telefono"));
+            }
+
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
+        }
+        return bean;
+    }
+
+    @Override
     public Collection<UserBean> doRetrieveAll(String order) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -147,23 +183,31 @@ public class UserDaoDM implements UserDao {
     }
 
     @Override
-    public synchronized boolean checkPassword(String id, String pssw) {
+    public synchronized boolean checkPassword(String token, String pssw) {
+
         UserBean user = null;
         try {
-            user = doRetrieveByKey(id);
+            if (token.contains("@")) {
+                user = doRetrieveByEmail(token);
+            } else {
+                user = doRetrieveByKey(token);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        if(user == null)
+        if(user == null) {
             return false;
+        }
         //else
         try{
             // se l'hash calcolato sulla password passata è uguale a quello memorizzato sul database allora è true
             if (Arrays.equals(HashGenerator.generateHash(pssw, user.getSalt()), user.getPassword()))
                 return true;
-        }finally {
-            return false;
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
+        return false;
     }
 }

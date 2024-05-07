@@ -12,7 +12,7 @@ CREATE TABLE Utente(
                        username VARCHAR(255) PRIMARY KEY,
                        nome VARCHAR(255) NOT NULL,
                        cognome VARCHAR(255) NOT NULL,
-                       email VARCHAR(255) NOT NULL,
+                       email VARCHAR(255) UNIQUE NOT NULL,
                        n_telefono CHAR(10) NOT NULL,
                        pssw CHAR(255) NOT NULL
 );

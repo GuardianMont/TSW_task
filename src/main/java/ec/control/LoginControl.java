@@ -29,12 +29,12 @@ public class LoginControl extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         String dis ="/ProductView.jsp";
-        String id = req.getParameter("login-name");
+        String  name = req.getParameter("login-token");
         String password = req.getParameter("login-password");
 
-        if(userDao.checkPassword(id, password)){
-            session.setAttribute("userId", id);
 
+        if(userDao.checkPassword(name, password)){
+            session.setAttribute("userId", name);
         }
         else{
             dis = "login_signup.jsp";
