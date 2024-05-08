@@ -67,12 +67,16 @@ public class Cart extends HttpServlet {
                             }
                             break;
                         case "acquisto":
-                            try{
-                                handleAcquistoAction(request);
-                            }catch (SQLException e){
-                                e.printStackTrace();
-                                request.setAttribute("errorMessage", "Errore durante l'acquisto: " + e.getMessage());
-                                dis="/error.jsp";
+                            if(request.getSession().getAttribute("userId")!=null) {
+                                try {
+                                    handleAcquistoAction(request);
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                    request.setAttribute("errorMessage", "Errore durante l'acquisto: " + e.getMessage());
+                                    dis = "/error.jsp";
+                                }
+                            }else{
+                                dis ="/login_signup.jsp";
                             }
                             break;
                         case "update":

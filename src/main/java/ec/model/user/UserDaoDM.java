@@ -5,6 +5,7 @@ import ec.model.DriverManagerConnectionPool;
 import ec.model.HashGenerator;
 
 
+import javax.management.BadAttributeValueExpException;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Collection;
@@ -73,7 +74,7 @@ public class UserDaoDM implements UserDao {
 
         UserBean bean = new UserBean();
 
-        String selectSQL = "select * from " + UserDaoDM.TABLE_NAME + " where username = ?";
+        String selectSQL = "select * from " + UserDaoDM.TABLE_NAME + " where username = ? ";
 
         try {
             connection = DriverManagerConnectionPool.getConnection();
@@ -184,7 +185,7 @@ public class UserDaoDM implements UserDao {
 
     @Override
     public synchronized UserBean getUserIfPasswordIsCorrect(String token, String pssw) {
-        UserBean user = null;
+        UserBean user = new UserBean();
         try {
             if (token.contains("@")) {
                 user = doRetrieveByEmail(token);
@@ -194,16 +195,18 @@ public class UserDaoDM implements UserDao {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         //else
-        try{
-            // se l'hash calcolato sulla password passata è uguale a quello memorizzato sul database allora è true
-            if (Arrays.equals(HashGenerator.generateHash(pssw, user.getSalt()), user.getPassword()))
-                return user;
-        }catch (Exception e){
+        try {
+            if (user.getSalt() != null) {
+                // se l'hash calcolato sulla password passata è uguale a quello memorizzato sul database allora è true
+                byte[] hash = HashGenerator.generateHash(pssw, user.getSalt());
+                if (Arrays.equals(hash, user.getPassword())){
+                    return user;
+                }
+            }
+        } catch (BadAttributeValueExpException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 }

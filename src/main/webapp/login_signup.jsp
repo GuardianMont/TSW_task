@@ -1,14 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: mauri
-  Date: 29/04/2024
-  Time: 17:50
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if (request.getSession().getAttribute("userID")!=null){
-        RequestDispatcher dispatcher = request.getRequestDispatcher("");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/ProductView.jsp");
         dispatcher.forward(request, response);
     }
 %>
@@ -23,6 +17,7 @@
 
 <div class = "outside-container" style="">
     <div class = "container">
+
         <form id = "login-form" action="LoginSignup" method="post">
             <input type="hidden" id="login-option" name="option" value="login">
             <div class = "form-group">

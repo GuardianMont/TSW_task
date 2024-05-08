@@ -18,7 +18,7 @@
         <ul>
             <li><a href="#">Home</a> </li>
 
-            <li><a href="#">Prodotti</a>
+            <li><a href="product">Prodotti</a>
 
                 <ul>
                     <li><a href="#">Prodotto 1</a> </li>
@@ -29,6 +29,7 @@
 
             <li><a href="#">Servizi</a> </li>
             <li><a href="#">Contatti</a> </li>
+            <li><a href="carrello"> <img src="uploadFile/cart.png" width="30" height="auto" alt="carrello" class="carrello"></a></li>
         </ul>
     </nav>
 </div>

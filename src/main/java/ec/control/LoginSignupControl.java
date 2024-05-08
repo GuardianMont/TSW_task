@@ -13,13 +13,13 @@ import jakarta.servlet.http.*;
 
 
 import javax.management.BadAttributeValueExpException;
+import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 @WebServlet ("/LoginSignup")
 public class LoginSignupControl extends HttpServlet {
-
     private UserDaoDM userDao;
     @Override
     public void init() throws ServletException {
@@ -35,39 +35,53 @@ public class LoginSignupControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String option = req.getParameter("option");
-        if(option.equals("login"))
-            doLogin(req, resp);
-        else if(option.equals("signup"))
-            doSignup(req, resp);
+        //caso tutto apposto
+        String dis = "/ProductView.jsp";
+        JOptionPane.showMessageDialog(null, "sono qui:" + option);
+//        if(option.equals("login"))
+//            doLogin(req, resp);
+//        else if(option.equals("signup"))
+//            doSignup(req, resp);
+        if (option!=null){
+            switch (option){
+                case "login":
+                    if(!doLogin(req,resp)){
+                        dis="/login_signup.jsp";
+                    }
+                    JOptionPane.showMessageDialog(null, "fatto login");
+                    break;
+                case "signup":
+                    if (!doSignup(req,resp)){
+                        dis="/login_signup.jsp";
+                    }
+                    JOptionPane.showMessageDialog(null, "fatto sign");
+            }
+        }
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(dis);
+        dispatcher.forward(req, resp);
     }
 
-    protected void doLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected boolean doLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        String dis ="/ProductView.jsp";
         String  token = req.getParameter("login-token");
         String password = req.getParameter("login-password");
 
         UserBean user = userDao.getUserIfPasswordIsCorrect(token, password);
         if(user != null){
             session.setAttribute("userId", user.getUsername());
+            return true;
         }
         else{
-            dis = "/login_signup.jsp";
+            return false;
         }
-
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(dis);
-        dispatcher.forward(req, resp);
-
     }
 
-    protected void doSignup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected boolean doSignup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String dis = "/ProductView.jsp";
-
-        if(req.getParameter("signup-password").equals(req.getParameter("signup-rep-password"))){
-
+        if (req.getParameter("signup-password").equals(req.getParameter("signup-rep-password"))) {
             try {
-
                 UserBean user = new UserBean();
                 user.setUsername((String) req.getAttribute("signup-username"));
                 user.setNome((String) req.getAttribute("signup-name"));
@@ -82,19 +96,18 @@ public class LoginSignupControl extends HttpServlet {
 
                 HttpSession session = req.getSession();
                 session.setAttribute("userId", user.getUsername());
-            }catch (SQLIntegrityConstraintViolationException e){
-                dis = "/login_signup.jsp";
-            }catch (BadAttributeValueExpException e){
+                return true;
+            } catch (SQLIntegrityConstraintViolationException e) {
                 e.printStackTrace();
-            }catch (SQLException e){
+            } catch (BadAttributeValueExpException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
                 e.printStackTrace();//potremmo voler dare un errore diverso, per ora lo lascio così
+            } finally {
+                return false;
             }
-
-        }else{
-            dis = "/login_signup.jsp";
         }
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(dis);
-        dispatcher.forward(req, resp);
-
+        return false;
     }
+
 }

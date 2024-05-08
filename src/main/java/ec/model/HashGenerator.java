@@ -3,7 +3,9 @@ package ec.model;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.management.BadAttributeValueExpException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
 public class HashGenerator {
@@ -19,6 +21,8 @@ public class HashGenerator {
         try{
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             result = factory.generateSecret(spec).getEncoded();
+        }catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            e.printStackTrace(); // Attenzione: gestire meglio gli errori!
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -31,7 +35,6 @@ public class HashGenerator {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
-
         return salt;
     }
 

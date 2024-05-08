@@ -25,7 +25,7 @@
 <jsp:include page="Header.jsp"/>
 
 <div class="generale">
-	<a href="carrello"> <img src="uploadFile/cart.png" width="30" height="auto" alt="carrello" class="carrello"></a>
+
 		<h2 class="prodotti">Products</h2>
 
 	<div class="sorting-dropdown">

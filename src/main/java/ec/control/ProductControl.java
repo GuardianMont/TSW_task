@@ -83,7 +83,6 @@ public class ProductControl extends HttpServlet {
 				throw new ServletException("Database error", e);
 			}
 		}
-
 		try {
 			String sort = request.getParameter("sort");
 			request.setAttribute("products", model.doRetrieveAll(sort));
