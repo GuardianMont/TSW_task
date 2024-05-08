@@ -27,6 +27,7 @@
             <th>Descrizione</th>
             <th>Quantità</th>
             <th>Prezzo</th>
+            <th>Colore</th>
         </tr>
         
         <tr>
@@ -34,6 +35,7 @@
             <td><%= product.getDescrizione() %></td>
             <td><%= product.getDisponibilita() %></td>
             <td><%= product.getPrezzo() %></td>
+            <td><%=product.getColore()%></td>
         </tr>
         <%
             }

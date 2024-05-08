@@ -2,6 +2,10 @@ package ec.control;
 
 
 import ec.model.*;
+import ec.model.cart.CartDao;
+import ec.model.cart.CartDaoDM;
+import ec.model.cart.CartItem;
+import ec.model.cart.ShoppingCart;
 import ec.model.product.ProductBean;
 import ec.model.product.ProductDaoDM;
 import jakarta.servlet.http.*;
@@ -9,6 +13,7 @@ import jakarta.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
@@ -21,9 +26,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import javax.swing.*;
 
-/**
- * Servlet implementation class ProductControl
- */
 public class ProductControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String SAVE_DIR = "\\uploadFile";
@@ -64,6 +66,17 @@ public class ProductControl extends HttpServlet {
 					case "insert":
 						handleInsertAction(request);
 						break;
+					case "show":
+						handleReadAction(request);
+						dis = "/update.jsp";
+						break;
+					case "update":
+						if(handleUpdateAction(request)){
+							dis="/carrello";
+							request.setAttribute("opzione","update");
+						}
+						break;
+
 				}
 
 			} catch (SQLException e) {
@@ -88,18 +101,36 @@ public class ProductControl extends HttpServlet {
 		request.setAttribute("product", model.doRetrieveByKey(id));
 	}
 
-	private void handleDeleteAction(HttpServletRequest request) throws SQLException {
+	private void handleDeleteAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
 		//azione di cancellazione
 		int id = Integer.parseInt(request.getParameter("id"));
-		model.doDelete(id);
+		ProductBean b = handleBeanCreation(request);
+		JOptionPane.showMessageDialog(null, b.getNome());
 	}
 
-	private void handleInsertAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
-		//inserimento
-//		if (!request.getMethod().equalsIgnoreCase("POST")) {
-//			//mi devo accertare che la richiesta sia di tipo post
-//			throw new ServletException("La richiesta deve essere di tipo POST");
-//		}
+	private boolean handleUpdateAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
+		//azione di modifica
+		boolean update= false;
+		int id = Integer.parseInt(request.getParameter("identificatore"));
+        ProductBean bean = handleBeanCreation(request);
+        bean.setId(id);
+		// Eseguo l'aggiornamento nel database
+		model.doUpdate(bean);
+		//mi assicuro di aggiornare anche i prodotti nel carrello
+		//per farlo nel caso in cui l'oggetto che sto aggiornando fa parte del carrello di sessione
+		//induco il salvataggio delle informazioni del carrello nel db dove la reference del prodotto
+		// è in base al id e non alle specifiche, ricarico il carrello in modo che in automatico si aggiorna il tutto
+		ShoppingCart cart = (ShoppingCart)request.getSession().getAttribute("cart");
+		if (cart!=null){
+			if(cart.getItem(id)!=null) {
+				update = true;
+			}
+		}
+		return update;
+	  }
+
+
+	private ProductBean handleBeanCreation(HttpServletRequest request) throws SQLException, ServletException, IOException{
 		String name = request.getParameter("nome");
 		String description = request.getParameter("descrizione");
 		double price = Double.parseDouble(request.getParameter("prezzo"));
@@ -123,7 +154,11 @@ public class ProductControl extends HttpServlet {
 				if (filePart.getName().equals("img")) { // il nome campo input è img !!
 					String fileName = FileManager.extractFileName(filePart);
 					if (fileName != null && !fileName.equals("")) {
-						filePart.write(savePath + File.separator + fileName);
+						File existingFile = new File(savePath, fileName);
+						if (!existingFile.exists()) {
+							//se esiste già un file con lo stesso nome non aggiungerà l'immagine
+							filePart.write(savePath + File.separator + fileName);
+						}
 						ablPath = savePath + File.separator + fileName;
 					}
 				}
@@ -143,6 +178,14 @@ public class ProductControl extends HttpServlet {
 		bean.setCategoria(category);
 		bean.setDimensioni(dimension);
 		bean.setTemp_Url(ablPath);
-		model.doSave(bean);
+		return bean;
+	}
+	private void handleInsertAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
+		//inserimento
+//		if (!request.getMethod().equalsIgnoreCase("POST")) {
+//			//mi devo accertare che la richiesta sia di tipo post
+//			throw new ServletException("La richiesta deve essere di tipo POST");
+//		}
+		model.doSave(handleBeanCreation(request));
 	}
 }

@@ -12,7 +12,11 @@ public interface UserDao {
 
     public UserBean doRetrieveByKey(String id) throws SQLException;
 
+    public UserBean doRetrieveByEmail(String email) throws SQLException;
+
     public Collection<UserBean> doRetrieveAll(String order) throws SQLException;
 
-    public boolean checkPassword(String id, String password);
+    public UserBean getUserIfPasswordIsCorrect(String id, String password);
+
+
 }

@@ -18,6 +18,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Cart extends HttpServlet {
+    private CartDaoDM model;
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        model = new CartDaoDM();
+    }
+
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String dis="/Cart.jsp";
@@ -61,15 +68,22 @@ public class Cart extends HttpServlet {
                             break;
                         case "acquisto":
                             try{
-                                handleAcquistoAction(request, response, dis);
+                                handleAcquistoAction(request);
                             }catch (SQLException e){
                                 e.printStackTrace();
                                 request.setAttribute("errorMessage", "Errore durante l'acquisto: " + e.getMessage());
                                 dis="/error.jsp";
                             }
                             break;
+                        case "update":
+                            try {
+                                handleUpdateAction(request);
+                                dis= "/ProductView.jsp";
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
 
-            }
+                    }
         }
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
@@ -81,7 +95,7 @@ public class Cart extends HttpServlet {
         doGet(request, response);
     }
 
-    private void handleAddAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
+    private void handleAddAction(HttpServletRequest request) throws SQLException{
         HttpSession session = request.getSession();
         int id_item = Integer.parseInt(request.getParameter("id"));
         ProductDaoDM model = new ProductDaoDM();
@@ -91,9 +105,8 @@ public class Cart extends HttpServlet {
         session.setAttribute("cart", cart);
     }
 
-    private void handleAcquistoAction(HttpServletRequest request, HttpServletResponse response, String forward) throws SQLException, ServletException, IOException {
+    private void handleAcquistoAction(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession();
-        CartDaoDM model = new CartDaoDM();
         ShoppingCart carrello = (ShoppingCart) session.getAttribute("cart");
         ArrayList<CartItem> Item_ordinati = carrello.getItem_ordinati();
 
@@ -107,5 +120,19 @@ public class Cart extends HttpServlet {
 
         // Redirect alla stessa pagina per visualizzare l'aggiornamento
         //response.sendRedirect(request.getContextPath() + forward);
+    }
+
+    private void handleUpdateAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
+        HttpSession session = request.getSession();
+        CartDaoDM model = new CartDaoDM();
+        ShoppingCart carrello = (ShoppingCart) session.getAttribute("cart");
+        ArrayList<CartItem> Item_ordinati = carrello.getItem_ordinati();
+
+        model.doDeleteCart("root");
+        //mi assicuro che ci sia solo un carrello per utente
+        for (var e : Item_ordinati) {
+            model.doSave(e, "root");
+        }
+        session.setAttribute("cart", model.retriveItem("root"));
     }
 }
