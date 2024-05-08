@@ -18,25 +18,21 @@ public class UserDaoDM implements UserDao {
     @Override
     public synchronized void doSave(UserBean user) throws SQLException {
         String insertSQL = "INSERT INTO " + UserDaoDM.TABLE_NAME
-                + " (username, nome, cognome, email, n_telefono, pssw, salt)"
+                + " (username, nome, cognome, email, n_telefono, password_hash, salt)"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try( Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);){
 
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getNome());
+            preparedStatement.setString(3, user.getCognome());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(5, user.getPhoneNumber());
+            preparedStatement.setBytes(6, user.getPassword());
+            preparedStatement.setBytes(7, user.getSalt());
 
-        preparedStatement.setString(1, user.getUsername());
-        preparedStatement.setString(2, user.getNome());
-        preparedStatement.setString(3, user.getCognome());
-        preparedStatement.setString(4, user.getEmail());
-        preparedStatement.setString(5, user.getPhoneNumber());
-        preparedStatement.setBytes(6, user.getPassword());
-        preparedStatement.setBytes(7, user.getSalt());
-
-        preparedStatement.executeUpdate();
-
-        if(connection != null)
-            connection.close();
-
+            preparedStatement.executeUpdate();
+        }
     }
 
     @Override

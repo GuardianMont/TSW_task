@@ -37,7 +37,6 @@ public class LoginSignupControl extends HttpServlet {
         String option = req.getParameter("option");
         //caso tutto apposto
         String dis = "/ProductView.jsp";
-        JOptionPane.showMessageDialog(null, "sono qui:" + option);
 //        if(option.equals("login"))
 //            doLogin(req, resp);
 //        else if(option.equals("signup"))
@@ -48,13 +47,11 @@ public class LoginSignupControl extends HttpServlet {
                     if(!doLogin(req,resp)){
                         dis="/login_signup.jsp";
                     }
-                    JOptionPane.showMessageDialog(null, "fatto login");
                     break;
                 case "signup":
                     if (!doSignup(req,resp)){
                         dis="/login_signup.jsp";
                     }
-                    JOptionPane.showMessageDialog(null, "fatto sign");
             }
         }
         resp.setContentType("text/plain");
@@ -79,23 +76,36 @@ public class LoginSignupControl extends HttpServlet {
     }
 
     protected boolean doSignup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        if (req.getParameter("signup-password").equals(req.getParameter("signup-rep-password"))) {
+        String password = req.getParameter("signup-password");
+        if (password != null) {
+            password = password.trim();
+        } else {
+            return false;
+        }
+        String repPassword = req.getParameter("signup-rep-password");
+        if (repPassword != null) {
+            repPassword = repPassword.trim();
+        } else {
+            return false;
+        }
+        if (password.equals(repPassword)) {
             try {
                 UserBean user = new UserBean();
-                user.setUsername((String) req.getAttribute("signup-username"));
-                user.setNome((String) req.getAttribute("signup-name"));
-                user.setCognome((String) req.getAttribute("signup-surname"));
-                user.setEmail((String) req.getAttribute("signup-email"));
+
+                user.setUsername(req.getParameter("signup-username"));
+                user.setNome(req.getParameter("signup-name"));
+                user.setCognome( req.getParameter("signup-surname"));
+                user.setEmail( req.getParameter("signup-email"));
+                user.setPhoneNumber(req.getParameter("signup-phone"));
                 byte[] salt = HashGenerator.generateSalt();
-                byte[] passwordHash = HashGenerator.generateHash((String) req.getAttribute("signup-password"), salt);
+                byte[] passwordHash = HashGenerator.generateHash(req.getParameter("signup-password"), salt);
                 user.setPassword(passwordHash);
                 user.setSalt(salt);
-
                 userDao.doSave(user);
 
                 HttpSession session = req.getSession();
                 session.setAttribute("userId", user.getUsername());
+
                 return true;
             } catch (SQLIntegrityConstraintViolationException e) {
                 e.printStackTrace();

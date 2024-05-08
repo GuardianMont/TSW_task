@@ -60,6 +60,11 @@
             </div>
 
             <div class="form-group">
+                <label for = "signup-phone"> Numero Telefono</label>
+                <input type="tel" id="signup-phone" name="signup-phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="Formato: 1234567890" required>
+            </div>
+
+            <div class="form-group">
                 <label for = "signup-email"> Email:</label>
                 <input type="text" id="signup-email" name="signup-email" required>
             </div>
@@ -69,8 +74,8 @@
                 <input type="text" id="signup-password" name="signup-password" required>
             </div>
             <div class="form-group">
-                <label for = "signup-rep_password"> Repeat Password:</label>
-                <input type="text" id="signup-rep_password" name="signup-rep_password" required>
+                <label for = "signup-rep-password"> Repeat Password:</label>
+                <input type="text" id="signup-rep-password" name="signup-rep-password" required>
             </div>
 
             <div class="form-group">
