@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS tavolando;
+DROP DATABASE IF EXISTS tavolando;
+CREATE DATABASE tavolando;
 USE tavolando;
 
 CREATE TABLE Ordine(
@@ -12,9 +13,10 @@ CREATE TABLE Utente(
                        username VARCHAR(255) PRIMARY KEY,
                        nome VARCHAR(255) NOT NULL,
                        cognome VARCHAR(255) NOT NULL,
-                       email VARCHAR(255) UNIQUE NOT NULL,
+                       email VARCHAR(255) NOT NULL,
                        n_telefono CHAR(10) NOT NULL,
-                       pssw CHAR(255) NOT NULL
+                       password_hash VARBINARY(255) NOT NULL,
+                       salt VARBINARY(16) NOT NULL
 );
 CREATE TABLE Prodotto(
                          id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
