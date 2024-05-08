@@ -15,7 +15,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="ProductStyle.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="ProductView.css">
 	<title>Storage DS/BF</title>
 
 </head>
@@ -23,12 +23,22 @@
 <body>
 
 <jsp:include page="Header.jsp"/>
-<a href="carrello"> <img src="uploadFile/cart.png" width="30" height="auto" alt="carrello"></a>
-	<h2>Products</h2>
-	<a href="product">List</a>
-			<h3>ID <a href="product?sort=id">Sort</a></h3>
-			<h3>Nome <a href="product?sort=nome">Sort</a></h3>
-			<h3>Prezzo <a href="product?sort=prezzo">asc</a>/<a href="product?sort=prezzoDec">dec</a></h3>
+
+<div class="generale">
+	<a href="carrello"> <img src="uploadFile/cart.png" width="30" height="auto" alt="carrello" class="carrello"></a>
+		<h2 class="prodotti">Products</h2>
+
+	<div class="sorting-dropdown">
+		<select onchange="window.location.href=this.value" class="select-sorting">
+			<option value="#">Ordina per</option>
+			<option value="product?sort=id">ID</option>
+			<option value="product?sort=nome">Nome</option>
+			<option value="product?sort=prezzo">Prezzo (Ascendente)</option>
+			<option value="product?sort=prezzoDec">Prezzo (Decrescente)</option>
+		</select>
+	</div>
+</div>
+
 <div class="container">
 		<%
 			if (products != null && products.size() != 0) {
@@ -46,7 +56,7 @@
 				stockImg = Base64.getEncoder().encodeToString(imageData);
 			}
 		%>
-		<img  src="data:image/jpeg;base64,<%= stockImg %>" alt="<%=bean.getNome()%>">
+		<img  src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="<%=bean.getNome()%>">
 		<h2><%=bean.getNome()%></h2>
 		<p><%=bean.getPrezzo()%></p>
 		<p><a href="product?opzione=delete&id=<%=bean.getId()%>">Delete</a> <br>
@@ -70,14 +80,14 @@
 		%>
 
 <h2>Insert</h2>
-<form action="product" enctype="multipart/form-data" method="post" >
+<form action="product" enctype="multipart/form-data" method="post" style="" >
 		<input type="hidden" name="opzione" value="insert">
 		
 		<label for="nome">Nome:</label><br> 
 		<input id="nome" name="nome" type="text" maxlength="20" required placeholder="inserire nome"><br>
 		
 		<label for="descrizione">Descrizione:</label><br>
-		<textarea id="descrizione" name="descrizione" maxlength="100" rows="3" required placeholder="inserire descrizione"></textarea><br>
+		<textarea class="textarea" id="descrizione" name="descrizione" maxlength="30" required placeholder="inserire descrizione"></textarea><br>
 		
 		<label for="prezzo">Prezzo:</label><br> 
 		<input id="prezzo" name="prezzo" type="number" min="0" value="0" required><br>
@@ -102,6 +112,14 @@
 
 		<input type="submit" value="Add"><input type="reset" value="Reset">
 	</form>
+
+
+<script>
+	// JavaScript per gestire il click sul pulsante
+	document.querySelector(".dropdown-btn").addEventListener("click", function() {
+		this.parentElement.classList.toggle("active");
+	});
+</script>
 
 <jsp:include page="Footer.jsp"/>
 </body>

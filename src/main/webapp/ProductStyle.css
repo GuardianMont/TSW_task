@@ -1,13 +1,16 @@
 @CHARSET "UTF-8";
 
 html, body {
-	width: 100%; /* Rendi la pagina larga quanto il viewport */
-	margin:20px ; /* Rimuovi i margini predefiniti */
-	padding: 20px; /* Rimuovi il padding predefinito */
+	width: 100%;  /*Rendi la pagina larga quanto il viewport */
+	margin: 0;  /*Rimuovi i margini predefiniti */
+	padding: 0; /* Rimuovi il padding predefinito */
+
 }
 
 body {
 	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
 }
 
 a:link, a:visited, a:hover, a:active {
@@ -20,12 +23,13 @@ a:link, a:visited, a:hover, a:active {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	gap: 20px;
-	padding: 20px;
+	margin:0;
+	padding: 10px;
 }
 
 .product {
 	border: 1px solid #ccc;
-	margin-bottom: 20px; /* Aggiungiamo un margine sotto ogni prodotto per separare le righe */
+	margin-bottom: 0; /* Aggiungiamo un margine sotto ogni prodotto per separare le righe */
 }
 
 .product-content {
@@ -37,8 +41,8 @@ a:link, a:visited, a:hover, a:active {
 	height: auto;
 }
 
-textarea {
-	width: calc(100% - 22px); /* Riduci la larghezza per compensare il padding e il bordo */
+.textarea {
+	width: 5%;/*calc(100% - 22px);  Riduci la larghezza per compensare il padding e il bordo */
 	height: 60px;
 	font-size: 1em;
 }

@@ -14,7 +14,7 @@
 <body>
 <footer>
     <div class="footer-content">
-        <div class="footer-section">
+        <div class="footer-section contact-info">
             <h3>Contatti</h3>
             <p>Email:prova@gmail.com</p>
             <p>Telefono:+39 1234567890</p>
