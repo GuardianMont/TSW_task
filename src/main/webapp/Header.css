@@ -3,32 +3,35 @@ body{
     background-color: #f5f5f5;
 }
 
-.form-container{
+/*.form-container{
     text-align: center;
     align-self: center;
 }
-
+*/
 .header-container{
-    display: block;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5%;
+    margin-bottom: 0;
     text-align: center;
 }
 
 .Tavolando{
-    color: black;
+    color: green;
+    text-align: center;
+    align-items: center;
 }
 
 nav ul{
     list-style: none;
     padding: 0;
-    margin-bottom: 80px;
+    margin: 0;
+    /*margin-bottom: 80px;*/
     background-color: #f2f2f2;
 }
 
 nav ul li{
     display: inline-block;
+    position: relative;
 }
 
 nav ul li a{
@@ -45,6 +48,8 @@ nav ul li:hover > ul{
 nav ul ul{
     display: none;
     position: absolute;
+    top: 100%;
+    left: 0;
     background-color: #f2f2f2;
 }
 
@@ -61,56 +66,42 @@ nav ul ul li a:hover{
     background-color: #add;
 }
 /*per la search bar*/
-.search-box {
-    position:absolute;
-    top: 9%;
-    left: 72%;
-    transform:translate(10%, 20%);
-    background:#2f3640;
-    border-radius:40px;
-   /* height:30px;
-    padding:7px;*/
-    box-shadow:0px 0px 10px 0px rgba(0,0,0,0.2);
+.barra-ricerca {
+    position: absolute;
+    top: 4%;
+    left: 20px; /* Posiziona la barra di ricerca 20px dal bordo sinistro */
+    margin-top: 0; /* Aggiunge un margine superiore di 10px per separare dalla cima */
 }
 
-.search-btn {
-    border:none;
-    background:crimson;
-    border-radius:50%;
-    float:right;
-    display:flex;
-    width:30px;
-    height:30px;
-    justify-content:center;
-    align-items:center;
-    outline:none;
-    transition:0.6s;
-    font-weight:bold;
-    color:#FFFFFF;
-    box-shadow:0px 0px 10px 0px crimson;
+.barra-ricerca form {
+    display: flex; /* Permette di allineare gli elementi del form */
 }
 
-.search-txt {
-    background:none;
-    border:none;
-    outline:none;
-    float:left;
-    padding:0px;
-    font-size:16px;
-    transition:0.6s;
-    color:crimson;
-    font-weight:bold;
-    line-height:30px;
-    width:0px;
+.barra-ricerca input[type="text"] {
+    padding: 8px;
+    width: 200px; /* Imposta la larghezza desiderata per il campo di ricerca */
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
-.search-box:hover > .search-txt {
-    width:240px;
-    padding:0 6px;
+.barra-ricerca input[type="submit"] {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.search-box:hover > .search-btn {
-    background:crimson;
-    color:#FFFFFF;
-    box-shadow:0px 5px 20px 0px crimson;
+.barra-ricerca input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+@media screen and (max-width: 1200px) {
+.barra-ricerca {
+    position: relative; /* Cambia la posizione in relativa quando la larghezza è inferiore a 768px */
+    top: auto; /* Rimuove la posizione verticale impostata in modo assoluto */
+    left: auto; /* Rimuove la posizione orizzontale impostata in modo assoluto */
+    margin-top: 10px; /* Aggiunge un margine superiore per separare la barra di ricerca dagli altri elementi */
+}
 }

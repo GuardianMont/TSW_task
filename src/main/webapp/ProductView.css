@@ -2,7 +2,6 @@ body{
     background-color: #f2f2f2;
     font-family: 'Open sans', Arial, serif;
     zoom: 1.2;
-    margin: 0;
 }
 /*Per il carrello, il sorting e il titolo*/
 .generale{
@@ -10,14 +9,13 @@ body{
     text-align: center;
     align-items: center;
     justify-content: space-between;
-    margin:0;
+    margin-bottom:0;
     padding: 0;
 }
 
 .carrello{
     position: relative;
     left: 3%;
-    margin-top: 1%;
     justify-content: left;
     text-align: left;
     margin-left: 10px;
