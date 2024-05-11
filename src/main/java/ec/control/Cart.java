@@ -47,6 +47,7 @@ public class Cart extends HttpServlet {
                             session.setAttribute("cart", cart);
                             break;
                         case "delete":
+
                             CartItem do_delete;
                             if ((do_delete= cart.getItem(id))!=null){
                                 do_delete.cancelOrder();
@@ -68,6 +69,7 @@ public class Cart extends HttpServlet {
                             break;
                         case "acquisto":
                             if(request.getSession().getAttribute("userId")!=null) {
+                                //mi assicuro che l'utente sia loggato prima di effettuare un acquisto
                                 try {
                                     handleAcquistoAction(request);
                                 } catch (SQLException e) {
@@ -76,15 +78,19 @@ public class Cart extends HttpServlet {
                                     dis = "/error.jsp";
                                 }
                             }else{
+
                                 dis ="/login_signup.jsp";
                             }
                             break;
                         case "update":
-                            try {
-                                handleUpdateAction(request);
-                                dis= "/ProductView.jsp";
-                            } catch (SQLException e) {
-                                throw new RuntimeException(e);
+                            if(request.getSession().getAttribute("userId")!=null) {
+                                //mi assicuro che l'utente sia loggato prima di effettuare un aggiornamento del cart
+                                try {
+                                    handleUpdateAction(request);
+                                    dis = "/ProductView.jsp";
+                                } catch (SQLException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
 
                     }
@@ -114,10 +120,10 @@ public class Cart extends HttpServlet {
         ShoppingCart carrello = (ShoppingCart) session.getAttribute("cart");
         ArrayList<CartItem> Item_ordinati = carrello.getItem_ordinati();
 
-        model.doDeleteCart("root");
+        model.doDeleteCart((String) request.getSession().getAttribute("userId"));
         //mi assicuro che ci sia solo un carrello per utente
         for (var e : Item_ordinati) {
-                model.doSave(e, "root");
+                model.doSave(e, (String)request.getSession().getAttribute("userId"));
             }
         session.setAttribute("cart", new ShoppingCart());
         request.setAttribute("acquistoCompletato", true);
@@ -131,12 +137,12 @@ public class Cart extends HttpServlet {
         CartDaoDM model = new CartDaoDM();
         ShoppingCart carrello = (ShoppingCart) session.getAttribute("cart");
         ArrayList<CartItem> Item_ordinati = carrello.getItem_ordinati();
-
-        model.doDeleteCart("root");
+        String root= (String) request.getSession().getAttribute("userId");
+        model.doDeleteCart(root);
         //mi assicuro che ci sia solo un carrello per utente
         for (var e : Item_ordinati) {
-            model.doSave(e, "root");
+            model.doSave(e, root);
         }
-        session.setAttribute("cart", model.retriveItem("root"));
+        session.setAttribute("cart", model.retriveItem(root));
     }
 }
