@@ -1,5 +1,6 @@
 package ec.model.cart;
 
+import ec.control.Cart;
 import ec.model.cart.*;
 import ec.model.product.ProductBean;
 
@@ -9,7 +10,6 @@ import java.util.ArrayList;
 public class ShoppingCart {
     private ArrayList<CartItem> Item_ordinati;
     private double prezzoTot;
-
     public ShoppingCart() {
         Item_ordinati = new ArrayList<CartItem>();
         prezzoTot = 0;
@@ -61,6 +61,16 @@ public class ShoppingCart {
             prezzo = prezzo + Cart_I.prezzoAllItem();
         }
         return prezzo;
+    }
+
+    public int getNumProdottiTot(){
+        CartItem Cart_I;
+        int numTot =0;
+        for(int i=0; i<Item_ordinati.size(); i++){
+            Cart_I = (CartItem) Item_ordinati.get(i);
+            numTot= numTot + Cart_I.getNumItem();
+        }
+        return numTot;
     }
 
     public void setPrezzoTot(double prezzoTot) {

@@ -1,4 +1,4 @@
-<%--
+<%@ page import="ec.model.cart.ShoppingCart" %><%--
   Created by IntelliJ IDEA.
   User: mario
   Date: 06/05/2024
@@ -30,7 +30,19 @@
 
             <li><a href="#">Servizi</a> </li>
             <li><a href="#">Contatti</a> </li>
-            <li><a href="carrello"> <img src="uploadFile/cart.png" width="30" height="auto" alt="carrello" class="carrello"></a></li>
+            <li>
+                <div id="carrello">
+                    <a href="carrello">
+                        <img src="uploadFile/cart.png" width="30" height="auto" alt="carrello" class="carrello" id="carrelloIcon">
+                    <% ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
+                        if (cart != null && cart.getNumProdottiTot() > 0) {
+                    %>
+                    <span class="numeroProdotti"><%= cart.getNumProdottiTot() %></span>
+                    <% }
+                    %>
+                    </a>
+                </div>
+            </li>
         </ul>
 
         <!--per la search bar-->
