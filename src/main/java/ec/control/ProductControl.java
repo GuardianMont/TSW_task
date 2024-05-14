@@ -103,8 +103,7 @@ public class ProductControl extends HttpServlet {
 	private void handleDeleteAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
 		//azione di cancellazione
 		int id = Integer.parseInt(request.getParameter("id"));
-		ProductBean b = handleBeanCreation(request);
-		JOptionPane.showMessageDialog(null, b.getNome());
+		model.doDelete(id);
 	}
 
 	private boolean handleUpdateAction(HttpServletRequest request) throws SQLException, ServletException, IOException {

@@ -15,9 +15,14 @@
 </head>
 <body>
 
+<jsp:include page="Header.jsp"/>
+
 <div class = "outside-container" style="">
     <div class = "container">
-
+        <% String errorMessage = (String) request.getAttribute("errorMessage");
+            if (errorMessage != null && !errorMessage.isEmpty()) { %>
+        <p style="color: red;"><%= errorMessage %></p>
+        <% } %>
         <form id = "login-form" action="LoginSignup" method="post">
             <input type="hidden" id="login-option" name="option" value="login">
             <div class = "form-group">
@@ -35,10 +40,7 @@
             </div>
 
             <div class="form-group">
-                <div class="form-switch">
-                    <input type = "checkbox" id="show-signup">
-                    <label for="show-signup"> Create an account</label>
-                </div>
+                <a href="#" id="show-signup-link">Create an account</a>
             </div>
         </form>
 
@@ -83,10 +85,7 @@
             </div>
 
             <div class="form-group">
-                <div class="form-switch">
-                    <input type="checkbox" id="show-login">
-                    <label for="show-login">Already have an account?</label>
-                </div>
+                <a href="#" id="show-login-link">Already have an account?</a>
             </div>
 
         </form>
@@ -94,17 +93,22 @@
     </div>
 </div>
 
+<jsp:include page="Footer.jsp"/>
+
 <script>
-    document.getElementById("show-signup").addEventListener("change", function() {
-        document.getElementById("login-form").style.display = this.checked ? "none" : "block";
-        document.getElementById("signup-form").style.display = this.checked ? "block" : "none";
+    document.getElementById("show-signup-link").addEventListener("click", function(event) {
+        event.preventDefault(); // Evita il comportamento predefinito del link
+        document.getElementById("login-form").style.display = "none";
+        document.getElementById("signup-form").style.display = "block";
     });
 
-    document.getElementById("show-login").addEventListener("change", function() {
-        document.getElementById("signup-form").style.display = this.checked ? "none" : "block";
-        document.getElementById("login-form").style.display = this.checked ? "block" : "none";
+    document.getElementById("show-login-link").addEventListener("click", function(event) {
+        event.preventDefault(); // Evita il comportamento predefinito del link
+        document.getElementById("signup-form").style.display = "none";
+        document.getElementById("login-form").style.display = "block";
     });
 </script>
+
 
 </body>
 </html>

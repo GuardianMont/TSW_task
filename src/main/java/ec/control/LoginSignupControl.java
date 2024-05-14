@@ -21,6 +21,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @WebServlet ("/LoginSignup")
 public class LoginSignupControl extends HttpServlet {
     private UserDaoDM userDao;
+
     @Override
     public void init() throws ServletException {
         userDao = new UserDaoDM();
@@ -29,7 +30,7 @@ public class LoginSignupControl extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //todo
+        doPost(req,resp);
     }
 
     @Override
@@ -37,23 +38,23 @@ public class LoginSignupControl extends HttpServlet {
         String option = req.getParameter("option");
         //caso tutto apposto
         String dis = "/ProductView.jsp";
-//        if(option.equals("login"))
-//            doLogin(req, resp);
-//        else if(option.equals("signup"))
-//            doSignup(req, resp);
+        String errorMessage="";
         if (option!=null){
             switch (option){
                 case "login":
                     if(!doLogin(req,resp)){
                         dis="/login_signup.jsp";
+                        errorMessage="Login fallito. username o password errati";
                     }
                     break;
                 case "signup":
                     if (!doSignup(req,resp)){
                         dis="/login_signup.jsp";
+                        errorMessage="registrazione fallita";
                     }
             }
         }
+        req.setAttribute("errorMessage", errorMessage);
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(dis);
