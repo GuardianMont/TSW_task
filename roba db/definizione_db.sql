@@ -66,7 +66,7 @@ CREATE TABLE Carrello(
                          prodotto_id INT UNSIGNED NOT NULL,
                          utente_id VARCHAR(255) NOT NULL,
                          quantita INT NOT NULL,
-                         FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id),
+                         FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id) ON DELETE cascade,
                          FOREIGN KEY (utente_id) REFERENCES Utente(username),
                          PRIMARY KEY(prodotto_id, utente_id)
 );

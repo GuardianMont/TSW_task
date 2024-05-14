@@ -60,13 +60,15 @@ public class Cart extends HttpServlet {
                             session.setAttribute("cart", cart);
                             break;
                         case "add":
-                            dis = "/ProductView.jsp";
                             try {
-                                handleAddAction(request);
+                                handleAddAction(request,response);
+                                return;
+                                //mi assicuro che il redirect avvenga rispetto ad
+                                // una pagina che cambia in base al contesto
+                                //e non una pagina settata a priori
                             } catch (SQLException e) {
                                 throw new RuntimeException(e);
                             }
-                            break;
                         case "acquisto":
                             if(request.getSession().getAttribute("userId")!=null) {
                                 //mi assicuro che l'utente sia loggato prima di effettuare un acquisto
@@ -105,7 +107,7 @@ public class Cart extends HttpServlet {
         doGet(request, response);
     }
 
-    private void handleAddAction(HttpServletRequest request) throws SQLException{
+    private void handleAddAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         HttpSession session = request.getSession();
         int id_item = Integer.parseInt(request.getParameter("id"));
         ProductDaoDM model = new ProductDaoDM();
@@ -113,6 +115,8 @@ public class Cart extends HttpServlet {
         ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
         cart.addItem(item);
         session.setAttribute("cart", cart);
+        String referer = request.getHeader("referer");
+        response.sendRedirect(referer);
     }
 
     private void handleAcquistoAction(HttpServletRequest request) throws SQLException {

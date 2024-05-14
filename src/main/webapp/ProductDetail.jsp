@@ -8,6 +8,7 @@
 <link href="ProductStyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<jsp:include page="Header.jsp"/>
 	<%
             ProductBean product = (ProductBean) request.getAttribute("product");
             if (product != null) {
@@ -37,10 +38,13 @@
             <td><%= product.getPrezzo() %></td>
             <td><%=product.getColore()%></td>
         </tr>
+        <a href="carrello?opzione=add&id=<%=product.getId()%>">Add to Cart</a><br>
         <%
             }
         %>
     </table>
     <a href="./product"> return</a>
+
+<jsp:include page="Footer.jsp"/>
 </body>
 </html>
