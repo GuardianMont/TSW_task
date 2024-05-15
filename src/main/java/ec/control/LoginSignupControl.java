@@ -66,6 +66,8 @@ public class LoginSignupControl extends HttpServlet {
         String  token = req.getParameter("login-token");
         String password = req.getParameter("login-password");
 
+        if(password.length()>=100) return false;
+
         UserBean user = userDao.getUserIfPasswordIsCorrect(token, password);
         if(user != null){
             session.setAttribute("userId", user.getUsername());
@@ -77,29 +79,34 @@ public class LoginSignupControl extends HttpServlet {
     }
 
     protected boolean doSignup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String password = req.getParameter("signup-password");
-        if (password != null) {
-            password = password.trim();
-        } else {
+
+        String username = req.getParameter("signup-username").trim();
+        if(!username.replaceAll(" ", "").equals(username))
             return false;
-        }
-        String repPassword = req.getParameter("signup-rep-password");
-        if (repPassword != null) {
-            repPassword = repPassword.trim();
-        } else {
-            return false;
-        }
+
+        String name = req.getParameter("signup-name").trim();
+
+        String surname = req.getParameter("signup-surname").trim();
+
+        String email = req.getParameter("signup-email").trim();
+
+        String phoneN = req.getParameter("signup-phone").trim();
+
+        String password = req.getParameter("signup-password").trim();
+
+        String repPassword = req.getParameter("signup-rep-password").trim();
+
         if (password.equals(repPassword)) {
             try {
                 UserBean user = new UserBean();
 
-                user.setUsername(req.getParameter("signup-username"));
-                user.setNome(req.getParameter("signup-name"));
-                user.setCognome( req.getParameter("signup-surname"));
-                user.setEmail( req.getParameter("signup-email"));
-                user.setPhoneNumber(req.getParameter("signup-phone"));
+                user.setUsername(username);
+                user.setNome(name);
+                user.setCognome(surname);
+                user.setEmail(email);
+                user.setPhoneNumber(phoneN);
                 byte[] salt = HashGenerator.generateSalt();
-                byte[] passwordHash = HashGenerator.generateHash(req.getParameter("signup-password"), salt);
+                byte[] passwordHash = HashGenerator.generateHash(password, salt);
                 user.setPassword(passwordHash);
                 user.setSalt(salt);
                 userDao.doSave(user);
