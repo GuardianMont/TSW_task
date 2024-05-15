@@ -104,6 +104,17 @@ public class ProductControl extends HttpServlet {
 		//azione di cancellazione
 		int id = Integer.parseInt(request.getParameter("id"));
 		model.doDelete(id);
+		//nel model mi accerto di eliminare anche le reference al medesimo
+		//prodotto in possibili carrelli già salvati
+		ShoppingCart cart =  (ShoppingCart) request.getSession().getAttribute("cart");
+		CartItem doDelete;
+		if (cart!=null && (doDelete=cart.getItem(id))!=null){
+			//cancello riferimenti ai prodotti nella sessione corrente
+			doDelete.cancelOrder();
+			cart.deleteItem(id);
+			request.getSession().setAttribute("cart",cart);
+		}
+
 	}
 
 	private boolean handleUpdateAction(HttpServletRequest request) throws SQLException, ServletException, IOException {

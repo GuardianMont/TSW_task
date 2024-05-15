@@ -45,6 +45,8 @@ public class ShoppingCart {
 
     }
 
+
+
     public ArrayList<CartItem> getItem_ordinati() {
         return Item_ordinati;
     }
