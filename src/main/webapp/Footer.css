@@ -4,21 +4,21 @@ body {
     padding: 0;
     min-height: 100vh;
     position: relative;
-
 }
 
-footer {
+.footer {
     background-color: #333;
     color: #fff;
-    position: absolute;
+    /*position: absolute;*/
     bottom: 0;
     width: 100%;
 }
 
 .footer-content {
-    display: flex;
+    display: block;
     justify-content: space-between;
     padding: 20px;
+    margin-top: 100%;
     box-sizing: border-box;
 }
 

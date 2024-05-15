@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="Footer.css">
 </head>
 <body>
-<footer>
+<footer class="footer">
     <div class="footer-content">
         <div class="footer-section contact-info">
             <h3>Contatti</h3>
