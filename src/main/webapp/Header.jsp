@@ -16,6 +16,14 @@
 <div class="header-container">
     <header class="Tavolando">Tavolando</header>
     <nav>
+
+        <!--per la search bar-->
+        <div class="barra-ricerca">
+            <form class="ricerca">
+                <input id="cerca" type="text" placeholder="Cerca nel sito" required>
+                <input id="submit" type="submit" value="Cerca">
+            </form>
+        </div>
         <ul>
             <li><a href="#">Home</a> </li>
 
@@ -31,7 +39,7 @@
             <li><a href="#">Servizi</a> </li>
             <li><a href="#">Contatti</a> </li>
             <li>
-                <div id="carrello">
+                <div class="carrello">
                     <a href="carrello">
                         <img src="uploadFile/cart.png" width="30" height="auto" alt="carrello" class="carrello" id="carrelloIcon">
                     <% ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
@@ -45,13 +53,6 @@
             </li>
         </ul>
 
-        <!--per la search bar-->
-        <div class="barra-ricerca">
-            <form class="ricerca">
-                <input id="cerca" type="text" placeholder="Cerca nel sito" required>
-                <input id="submit" type="submit" value="Cerca">
-            </form>
-        </div>
 
     </nav>
 </div>

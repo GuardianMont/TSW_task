@@ -25,7 +25,6 @@
 <jsp:include page="Header.jsp"/>
 
 <div class="generale">
-	<h2 class="prodotti">Products</h2>
 	<div class="sorting-dropdown">
 		<select onchange="window.location.href=this.value" class="select-sorting">
 			<option value="#">Ordina per</option>

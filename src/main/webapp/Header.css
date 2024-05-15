@@ -8,6 +8,7 @@ body{
     align-self: center;
 }
 */
+
 .header-container{
     justify-content: space-between;
     align-items: center;
@@ -21,8 +22,14 @@ body{
     align-items: center;
 }
 .carrello{
-    position:relative;
-    display: inline-block;
+    /*position:relative;
+    display: inline-block;*/
+    position: relative;
+    left: 3%;
+    justify-content: right;
+    text-align: right;
+    margin-left: 500%;
+    margin-top: 1%;
 }
 .numeroProdotti {
     position: absolute;
