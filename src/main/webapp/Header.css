@@ -97,7 +97,7 @@ nav ul ul li a:hover{
 
 .barra-ricerca input[type="text"] {
     padding: 8px;
-    width: 200px; /* Imposta la larghezza desiderata per il campo di ricerca */
+    width: 150px; /* Imposta la larghezza desiderata per il campo di ricerca */
     border-radius: 5px;
     border: 1px solid #ccc;
 }
