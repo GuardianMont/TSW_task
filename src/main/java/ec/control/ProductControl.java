@@ -8,6 +8,7 @@ import ec.model.cart.CartItem;
 import ec.model.cart.ShoppingCart;
 import ec.model.product.ProductBean;
 import ec.model.product.ProductDaoDM;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.*;
 
 import java.io.File;
@@ -73,7 +74,8 @@ public class ProductControl extends HttpServlet {
 					case "update":
 						if(handleUpdateAction(request)){
 							dis="/carrello";
-							request.setAttribute("opzione","update");
+							ServletContext context = getServletContext();
+							context.setAttribute("op", "update");
 						}
 						break;
 
@@ -156,18 +158,17 @@ public class ProductControl extends HttpServlet {
 		String savePath= appPath+ File.separator + SAVE_DIR;
 		String ablPath = null;
 		List<Part> fileParts = request.getParts().stream().filter(part -> "img".equals(part.getName()) && part.getSize() > 0).toList();
-		if (fileParts.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "no files");
-		}else {
+		if (!fileParts.isEmpty()) {
 			for (Part filePart : fileParts) {
 				if (filePart.getName().equals("img")) { // il nome campo input è img !!
 					String fileName = FileManager.extractFileName(filePart);
 					if (fileName != null && !fileName.equals("")) {
-						File existingFile = new File(savePath, fileName);
-						if (!existingFile.exists()) {
-							//se esiste già un file con lo stesso nome non aggiungerà l'immagine
-							filePart.write(savePath + File.separator + fileName);
-						}
+//						File existingFile = new File(savePath, fileName);
+//						if (!existingFile.exists()) {
+//							//se esiste già un file con lo stesso nome non aggiungerà l'immagine
+//							filePart.write(savePath + File.separator + fileName);
+//						}
+						filePart.write(savePath + File.separator + fileName);
 						ablPath = savePath + File.separator + fileName;
 					}
 				}

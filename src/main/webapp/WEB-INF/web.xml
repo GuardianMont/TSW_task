@@ -38,5 +38,6 @@
     <servlet-name>Cart</servlet-name>
     <url-pattern>/carrello</url-pattern>
   </servlet-mapping>
+
 </web-app>
 

@@ -46,7 +46,7 @@ public class LoginSignupControl extends HttpServlet {
                         dis="/login_signup.jsp";
                         errorMessage="Login fallito. username o password errati";
                     }
-                    break;
+                    return;
                 case "signup":
                     if (!doSignup(req,resp)){
                         dis="/login_signup.jsp";
@@ -71,6 +71,8 @@ public class LoginSignupControl extends HttpServlet {
         UserBean user = userDao.getUserIfPasswordIsCorrect(token, password);
         if(user != null){
             session.setAttribute("userId", user.getUsername());
+            String referer = req.getHeader("referer");
+            resp.sendRedirect(referer);
             return true;
         }
         else{

@@ -1,5 +1,9 @@
 package ec.model.user;
 
+import ec.model.address.AddressUs;
+
+import java.util.ArrayList;
+
 public class UserBean {
     private String username;
     private String nome;
@@ -8,6 +12,8 @@ public class UserBean {
     private String phoneNumber; //check
     private byte[] password; //check
     private byte[] salt;
+
+    private ArrayList<AddressUs> indirizzi;
     public String getUsername() {
         return username;
     }
@@ -59,4 +65,12 @@ public class UserBean {
     }
 
     public void setSalt(byte[] salt){ this.salt = salt; }
+
+    public ArrayList<AddressUs> getIndirizzi(){ return indirizzi;}
+
+    public void addIndirizzo (AddressUs Indirizzo){
+        if (!indirizzi.contains(Indirizzo)){
+            indirizzi.add(Indirizzo);
+        }
+    }
 }

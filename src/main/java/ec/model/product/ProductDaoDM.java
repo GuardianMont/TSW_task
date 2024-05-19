@@ -36,10 +36,11 @@ public class ProductDaoDM implements ProductDao {
 			preparedStatement.setInt(6, product.getDisponibilita());
 			preparedStatement.setString(7, product.getCategoria());
 			preparedStatement.setString(8, product.getColore());
-
-			File file = new File(product.getTemp_url());
-			FileInputStream fis = new FileInputStream(file);
-			preparedStatement.setBinaryStream(9, fis, fis.available());
+            if (product.getTemp_url()!=null) {
+				File file = new File(product.getTemp_url());
+				FileInputStream fis = new FileInputStream(file);
+				preparedStatement.setBinaryStream(9, fis, fis.available());
+			}else preparedStatement.setBinaryStream(9,null);
 
 			int row = preparedStatement.executeUpdate();
 			if (row == 1) {

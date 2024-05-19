@@ -6,6 +6,7 @@ import ec.model.cart.CartItem;
 import ec.model.cart.ShoppingCart;
 import ec.model.product.ProductDaoDM;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,65 +38,77 @@ public class Cart extends HttpServlet {
         String action = request.getParameter("opzione");
             if (action != null) {
                 String par_id = request.getParameter("id");
-                int id=0;
-                if (par_id!=null){
-                    id = Integer.parseInt(request.getParameter("id"));
+                int id = 0;
+                if (par_id != null) {
+                    id = Integer.parseInt(par_id);
                 }
-                    switch (action.toLowerCase()) {
-                        case "decrement":
+                switch (action.toLowerCase()) {
+                    case "decrement":
+                        cart.deleteItem(id);
+                        session.setAttribute("cart", cart);
+                        break;
+                    case "delete":
+
+                        CartItem do_delete;
+                        if ((do_delete = cart.getItem(id)) != null) {
+                            do_delete.cancelOrder();
                             cart.deleteItem(id);
                             session.setAttribute("cart", cart);
-                            break;
-                        case "delete":
-
-                            CartItem do_delete;
-                            if ((do_delete= cart.getItem(id))!=null){
-                                do_delete.cancelOrder();
-                                cart.deleteItem(id);
-                                session.setAttribute("cart", cart);
-                            }
-                            break;
-                        case "increment":
-                            cart.incrementItem(id);
-                            session.setAttribute("cart", cart);
-                            break;
-                        case "add":
+                        }
+                        break;
+                    case "increment":
+                        cart.incrementItem(id);
+                        session.setAttribute("cart", cart);
+                        break;
+                    case "add":
+                        try {
+                            handleAddAction(request, response);
+                            return;
+                            //mi assicuro che il redirect avvenga rispetto ad
+                            // una pagina che cambia in base al contesto
+                            //e non una pagina settata a priori
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    case "acquisto":
+                        if (request.getSession().getAttribute("userId") != null) {
+                            //mi assicuro che l'utente sia loggato prima di effettuare un acquisto
                             try {
-                                handleAddAction(request,response);
-                                return;
-                                //mi assicuro che il redirect avvenga rispetto ad
-                                // una pagina che cambia in base al contesto
-                                //e non una pagina settata a priori
+                                handleAcquistoAction(request);
+                                //è la servelet cart che si occupa di reindirizzare
+                                //verso la servlet address per fare il fetch degli indirizzi
+                                //e proseguire verso la finalizzazione dell'acquisto
+                                ServletContext context = getServletContext();
+                                context.setAttribute("op", "show");
+                                dis = "/AddressManagement";
                             } catch (SQLException e) {
-                                throw new RuntimeException(e);
+                                e.printStackTrace();
+                                request.setAttribute("errorMessage", "Errore durante l'acquisto: " + e.getMessage());
+                                dis = "/error.jsp";
                             }
-                        case "acquisto":
-                            if(request.getSession().getAttribute("userId")!=null) {
-                                //mi assicuro che l'utente sia loggato prima di effettuare un acquisto
-                                try {
-                                    handleAcquistoAction(request);
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                    request.setAttribute("errorMessage", "Errore durante l'acquisto: " + e.getMessage());
-                                    dis = "/error.jsp";
-                                }
-                            }else{
+                        } else {
+                            dis = "/login_signup.jsp";
+                        }
+                        break;
 
-                                dis ="/login_signup.jsp";
-                            }
-                            break;
-                        case "update":
-                            if(request.getSession().getAttribute("userId")!=null) {
-                                //mi assicuro che l'utente sia loggato prima di effettuare un aggiornamento del cart
-                                try {
-                                    handleUpdateAction(request);
-                                    dis = "/ProductView.jsp";
-                                } catch (SQLException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-
+                }
+            }
+        ServletContext context = getServletContext();
+        String value = (String) context.getAttribute("op");
+        if (value!=null){
+            switch (value){
+                case "update":
+                    if (request.getSession().getAttribute("userId") != null) {
+                        //mi assicuro che l'utente sia loggato prima di effettuare un aggiornamento del cart
+                        try {
+                            handleUpdateAction(request);
+                            dis = "/ProductView.jsp";
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
+                    break;
+            }
         }
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
@@ -129,8 +142,8 @@ public class Cart extends HttpServlet {
         for (var e : Item_ordinati) {
                 model.doSave(e, (String)request.getSession().getAttribute("userId"));
             }
-        session.setAttribute("cart", new ShoppingCart());
-        request.setAttribute("acquistoCompletato", true);
+        //session.setAttribute("cart", new ShoppingCart());
+        //request.setAttribute("acquistoCompletato", true);
 
         // Redirect alla stessa pagina per visualizzare l'aggiornamento
         //response.sendRedirect(request.getContextPath() + forward);
