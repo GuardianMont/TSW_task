@@ -142,6 +142,7 @@ public class UserDaoDM implements UserDao {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
+
         Collection<UserBean> users = new LinkedList<>();
 
         String selectSQL = "SELECT * FROM " + UserDaoDM.TABLE_NAME;
