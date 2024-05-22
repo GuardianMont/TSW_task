@@ -13,16 +13,6 @@ body{
     padding: 0;
 }
 
-/*.carrello{
-    position: relative;
-    left: 3%;
-    justify-content: left;
-    text-align: left;
-    margin-left: 10px;
-    margin-top: 1%;
-    margin-right: 1%;
-}
-*/
 .sorting-dropdown{
     text-align: right;
     justify-content: right;

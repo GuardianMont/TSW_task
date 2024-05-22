@@ -41,7 +41,7 @@
             <li>
                 <div class="carrello">
                     <a href="carrello">
-                        <img src="uploadFile/cart.png" width="30" height="auto" alt="carrello" class="carrello" id="carrelloIcon">
+                        <img src="uploadFile/cart.png" width="30" height="auto" alt="carrello" class="carrelloImg" id="carrelloIcon">
                     <% ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
                         if (cart != null && cart.getNumProdottiTot() > 0) {
                     %>

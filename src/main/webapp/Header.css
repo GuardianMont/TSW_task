@@ -28,7 +28,6 @@ body{
     left: 3%;
     justify-content: right;
     text-align: right;
-    margin-left: 500%;
     margin-top: 1%;
 }
 .numeroProdotti {
@@ -93,9 +92,10 @@ nav ul ul li a:hover{
 /*per la search bar*/
 .barra-ricerca {
     position: absolute;
-    top: 4%;
+    top: 7%;
     left: 20px; /* Posiziona la barra di ricerca 20px dal bordo sinistro */
     margin-top: 0; /* Aggiunge un margine superiore di 10px per separare dalla cima */
+
 }
 
 .barra-ricerca form {
@@ -104,9 +104,11 @@ nav ul ul li a:hover{
 
 .barra-ricerca input[type="text"] {
     padding: 8px;
-    width: 150px; /* Imposta la larghezza desiderata per il campo di ricerca */
+    width: 90px; /* Imposta la larghezza desiderata per il campo di ricerca */
     border-radius: 5px;
     border: 1px solid #ccc;
+    justify-items: center;
+    text-align: center;
 }
 
 .barra-ricerca input[type="submit"] {
@@ -116,18 +118,150 @@ nav ul ul li a:hover{
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 50px;
+    justify-items: center;
+    text-align: center;
 }
 
 .barra-ricerca input[type="submit"]:hover {
     background-color: #45a049;
 }
 
-@media screen and (max-width: 1200px) {
-.barra-ricerca {
-    position: relative; /* Cambia la posizione in relativa quando la larghezza è inferiore a 768px */
-    top: auto; /* Rimuove la posizione verticale impostata in modo assoluto */
-    left: auto; /* Rimuove la posizione orizzontale impostata in modo assoluto */
-    margin-top: 10px; /* Aggiunge un margine superiore per separare la barra di ricerca dagli altri elementi */
-}
+/* Media Queries per PC */
+@media screen and (min-width: 1200px) {
+    .header-container {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 20px 50px;
+    }
+
+    .Tavolando {
+        font-size: 1.9em;
+    }
+
+    nav ul {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    nav ul li {
+        margin: 0 15px;
+    }
+
+    .barra-ricerca {
+        order: 0;
+        margin-top: 0;
+        margin-right: 8%;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .barra-ricerca input[type="text"] {
+        width: 130px;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .barra-ricerca input[type="submit"]{
+        width: 70px;
+        height: 40px;
+        justify-items: center;
+        text-align: center;
+    }
 }
 
+/* Media Queries per tablet */
+@media screen and (max-width: 1199px) and (min-width: 600px) {
+    .header-container {
+        padding: 20px;
+    }
+
+    .Tavolando {
+        font-size: 1.3em;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    .barra-ricerca {
+        order: 0;
+        margin-top: 0;
+        margin-right: 8%;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .barra-ricerca input[type="text"] {
+        width: 50%;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .barra-ricerca input[type="submit"]{
+        width: 50px;
+        height: 30px;
+        margin-right: 8%;
+        justify-items: center;
+        text-align: center;
+    }
+
+}
+
+/* Media Queries per telefoni */
+@media screen and (max-width: 599px) {
+    .header-container {
+        padding: 10px;
+    }
+
+    .Tavolando {
+        font-size: 1.5em;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .carrello {
+        margin-top: 6%;
+    }
+
+    .numeroProdotti {
+        font-size: 10px;
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+    }
+
+    .barra-ricerca {
+        order: 0;
+        margin-top: 0;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .barra-ricerca input[type="submit"]{
+        width: 60px;
+        height: 40px;
+        justify-items: center;
+        text-align: center;
+        margin-right: 8%;
+    }
+
+    .barra-ricerca input[type="text"] {
+        width: 60px;
+        justify-items: center;
+        text-align: center;
+    }
+}
