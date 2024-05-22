@@ -45,6 +45,8 @@ public class LoginSignupControl extends HttpServlet {
                     if(!doLogin(req,resp)){
                         dis="/login_signup.jsp";
                         errorMessage="Login fallito. username o password errati";
+                    }else{
+                        return;
                     }
                     break;
                 case "signup":
@@ -81,8 +83,8 @@ public class LoginSignupControl extends HttpServlet {
     protected boolean doSignup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String username = req.getParameter("signup-username").trim();
-        if(!username.replaceAll(" ", "").equals(username))
-            return false;
+//        if(!username.replaceAll(" ", "").equals(username))
+//            return false;
 
         String name = req.getParameter("signup-name").trim();
 

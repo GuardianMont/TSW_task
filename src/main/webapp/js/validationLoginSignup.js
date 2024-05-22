@@ -22,20 +22,18 @@ document.addEventListener('DOMContentLoaded', function() {
         //validation email?
     });
 
-    signupForm.addEventListener('submit', function(event) {
+    document.getElementById("signup-form").addEventListener("submit", function(event) {
         const email = document.getElementById('signup-email');
         const password = document.getElementById('signup-password');
         const repPassword = document.getElementById('signup-rep-password');
         const emailError = document.getElementById('signup-email-error');
         const passwordError = document.getElementById('signup-password-error');
-        const repPasswordError = document.getElementById('signup-rep-password-error');
 
         email.classList.remove('error');
         password.classList.remove('error');
         repPassword.classList.remove('error');
         emailError.style.display = 'none';
         passwordError.style.display = 'none';
-        repPasswordError.style.display = 'none';
 
         let isValid = true;
 
@@ -48,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
             password.classList.add('error');
             repPassword.classList.add('error');
             passwordError.style.display = 'block';
-            repPasswordError.style.display = 'block';
             isValid = false;
         }
 

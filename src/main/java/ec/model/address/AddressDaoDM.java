@@ -103,8 +103,10 @@ public class AddressDaoDM implements AddressDao{
         int n = 0;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlCount)){
+            preparedStatement.setString(1,userId);
             ResultSet ret = preparedStatement.executeQuery();
             while (ret.next()){
+
                  n  = ret.getInt("numero_indirizzi");
             }
         }

@@ -30,7 +30,6 @@ public class Address extends HttpServlet {
 
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String opzione = request.getParameter("opzione");
-        System.out.println("Opzione: " + opzione); // Debugging
         String dis = "/Cart.jsp";
         String errorMessage="";
         ServletContext context = getServletContext();
@@ -40,7 +39,6 @@ public class Address extends HttpServlet {
                 case "add":
                     if(request.getSession().getAttribute("userId")!=null) {
                         try {
-                            JOptionPane.showMessageDialog(null, "sono qui");
                             handleAddAction(request,response);
                         } catch (SQLException e) {
                             throw new RuntimeException(e);

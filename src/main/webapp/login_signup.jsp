@@ -12,6 +12,17 @@
     <meta charset="UTF-8">
     <title>Login_Signup</title>
     <link rel = "stylesheet" href="Login_Signup.css">
+    <script src="js/validationLoginSignup.js"></script>
+    <style>
+        .error {
+            color: red;
+            border-color: red;
+        }
+        .error-message {
+            color: red;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -27,12 +38,12 @@
             <input type="hidden" id="login-option" name="option" value="login">
             <div class = "form-group">
                 <label for = "login-token"> Email</label>
-                <input type="text" id = "login-token" name = "login-token" required placeholder="rossi@gmail.com">
+                <input type="text" id = "login-token" name = "login-token" required>
             </div>
 
             <div class = "form-group">
                 <label for = "login-password"> Password</label>
-                <input type="password" id="login-password" name="login-password" required placeholder="Abc1234@">
+                <input type="password" id="login-password" name="login-password" required>
             </div>
 
             <div class="form-group">
@@ -44,21 +55,21 @@
             </div>
         </form>
 
-        <form id="signup-form" style="display: none" action="LoginSignup" method="post" >
+        <form id="signup-form" style="display:none" action="LoginSignup" method="post" >
             <input type="hidden" id="signup-option" name="option" value="signup">
             <div class="form-group">
                 <label for = "signup-username"> Username:</label>
-                <input type="text" id="signup-username" name="signup-username" required placeholder="Mario.zurolo">
+                <input type="text" id="signup-username" name="signup-username" required>
             </div>
 
             <div class="form-group">
                 <label for = "signup-name"> Name:</label>
-                <input type="text" id="signup-name" name="signup-name" required placeholder="Mario">
+                <input type="text" id="signup-name" name="signup-name" required>
             </div>
 
             <div class="form-group">
                 <label for = "signup-surname"> Surname:</label>
-                <input type="text" id="signup-surname" name="signup-surname" required placeholder="Zurolo">
+                <input type="text" id="signup-surname" name="signup-surname" required>
             </div>
 
             <div class="form-group">
@@ -68,16 +79,18 @@
 
             <div class="form-group">
                 <label for = "signup-email"> Email:</label>
-                <input type="text" id="signup-email" name="signup-email" required placeholder="rossi@gmail.com">
+                <input type="text" id="signup-email" name="signup-email" required>
+                <span id="signup-email-error" class="error-message">Inserisci un indirizzo email valido.</span>
             </div>
 
             <div class="form-group">
                 <label for = "signup-password"> Password:</label>
-                <input type="text" id="signup-password" name="signup-password" required placeholder="Abc123@">
+                <input type="text" id="signup-password" name="signup-password" required>
             </div>
             <div class="form-group">
                 <label for = "signup-rep-password"> Repeat Password:</label>
-                <input type="text" id="signup-rep-password" name="signup-rep-password" required placeholder="Abc123@">
+                <input type="text" id="signup-rep-password" name="signup-rep-password" required>
+                <span id="signup-password-error" class="error-message">Le password non coincidono.</span>
             </div>
 
             <div class="form-group">
