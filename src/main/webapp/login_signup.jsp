@@ -27,12 +27,12 @@
             <input type="hidden" id="login-option" name="option" value="login">
             <div class = "form-group">
                 <label for = "login-token"> Email</label>
-                <input type="text" id = "login-token" name = "login-token" required>
+                <input type="text" id = "login-token" name = "login-token" required placeholder="rossi@gmail.com">
             </div>
 
             <div class = "form-group">
                 <label for = "login-password"> Password</label>
-                <input type="password" id="login-password" name="login-password" required>
+                <input type="password" id="login-password" name="login-password" required placeholder="Abc1234@">
             </div>
 
             <div class="form-group">
@@ -48,17 +48,17 @@
             <input type="hidden" id="signup-option" name="option" value="signup">
             <div class="form-group">
                 <label for = "signup-username"> Username:</label>
-                <input type="text" id="signup-username" name="signup-username" required>
+                <input type="text" id="signup-username" name="signup-username" required placeholder="Mario.zurolo">
             </div>
 
             <div class="form-group">
                 <label for = "signup-name"> Name:</label>
-                <input type="text" id="signup-name" name="signup-name" required>
+                <input type="text" id="signup-name" name="signup-name" required placeholder="Mario">
             </div>
 
             <div class="form-group">
                 <label for = "signup-surname"> Surname:</label>
-                <input type="text" id="signup-surname" name="signup-surname" required>
+                <input type="text" id="signup-surname" name="signup-surname" required placeholder="Zurolo">
             </div>
 
             <div class="form-group">
@@ -68,16 +68,16 @@
 
             <div class="form-group">
                 <label for = "signup-email"> Email:</label>
-                <input type="text" id="signup-email" name="signup-email" required>
+                <input type="text" id="signup-email" name="signup-email" required placeholder="rossi@gmail.com">
             </div>
 
             <div class="form-group">
                 <label for = "signup-password"> Password:</label>
-                <input type="text" id="signup-password" name="signup-password" required>
+                <input type="text" id="signup-password" name="signup-password" required placeholder="Abc123@">
             </div>
             <div class="form-group">
                 <label for = "signup-rep-password"> Repeat Password:</label>
-                <input type="text" id="signup-rep-password" name="signup-rep-password" required>
+                <input type="text" id="signup-rep-password" name="signup-rep-password" required placeholder="Abc123@">
             </div>
 
             <div class="form-group">
