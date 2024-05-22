@@ -10,11 +10,12 @@
 <head>
     <title>Inserimento prodotti</title>
     <link rel="stylesheet" href="ProductStyle.css">
+
 </head>
 <body>
 <a href="product" class="catalogo">catalogo</a>
 <h2>Insert</h2>
-<form action="product" enctype="multipart/form-data" method="post" style="" >
+<form action="product" enctype="multipart/form-data" method="post" style="" onsubmit="handleSubmit(event)">
     <input type="hidden" name="opzione" value="insert">
 
     <label for="nome">Nome:</label><br>

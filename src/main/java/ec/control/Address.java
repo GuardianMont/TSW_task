@@ -78,7 +78,8 @@ public class Address extends HttpServlet {
         ad.setPreferenze(request.getParameter("preferenze"));
         ad.setVia(request.getParameter("via"));
         ad.setProvincia(request.getParameter("provincia"));
-        ad.setNum_ID(1);
+        int n = model.checkNum((String) request.getSession().getAttribute("userId"));
+        ad.setNum_ID(n+1);
         model.doSave(ad, (String) request.getSession().getAttribute("userId"), ad.getNum_ID());
 
     }

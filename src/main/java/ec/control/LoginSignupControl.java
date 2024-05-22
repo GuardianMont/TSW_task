@@ -46,7 +46,7 @@ public class LoginSignupControl extends HttpServlet {
                         dis="/login_signup.jsp";
                         errorMessage="Login fallito. username o password errati";
                     }
-                    return;
+                    break;
                 case "signup":
                     if (!doSignup(req,resp)){
                         dis="/login_signup.jsp";
@@ -75,9 +75,7 @@ public class LoginSignupControl extends HttpServlet {
             resp.sendRedirect(referer);
             return true;
         }
-        else{
-            return false;
-        }
+        return false;
     }
 
     protected boolean doSignup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

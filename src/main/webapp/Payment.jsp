@@ -31,7 +31,7 @@
             <input type="checkbox" name="selectedAddress" value="<%= ad.getNum_ID() %>">
             <%= ad.toString()%>
         </div>
-        <%      } //chudo while
+        <%      } //chiudo while
              } //chiuso if
         %>
     </div>
