@@ -22,6 +22,7 @@
 </head>
 
 <body>
+<jsp:include page="Header.jsp"/>
 <a href="product" class="catalogo">catalogo</a>
 <h2 class="prodotti_carrello">Prodotti carrello</h2>
 <%
@@ -73,11 +74,12 @@
     <%
     } else {
     %>
-    <tr>
-        <td colspan="6">No products in CART</td>
-    </tr>
+
+    <div class="no_product"> <img src="uploadFile/piangi.jpg" alt="no img">No product in CART</div>
     <%
         }
     %>
+
+    <jsp:include page="Footer.jsp"/>
 </body>
 </html>

@@ -34,3 +34,10 @@ body{
     top: 420px;
     margin-left: 85%;
 }
+
+.no_product{
+    justify-items: center;
+    text-align: center;
+    margin: 50px;
+
+}
