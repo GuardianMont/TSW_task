@@ -23,6 +23,8 @@
 
 <body>
 <jsp:include page="Header.jsp"/>
+
+
 <a href="product" class="catalogo">catalogo</a>
 <h2 class="prodotti_carrello">Prodotti carrello</h2>
 <%
@@ -66,6 +68,7 @@
     </tr>
     <%
         } %>
+</table>
     <h3 class="spesa_totale">Spesa totale <%=cartItem.getPrezzoTot()%></h3>
     <form action="carrello" method="post">
         <input type="hidden" name="opzione" value="acquisto">
@@ -79,7 +82,6 @@
     <%
         }
     %>
-
-    <jsp:include page="Footer.jsp"/>
+<jsp:include page="Footer.jsp"/>
 </body>
 </html>
