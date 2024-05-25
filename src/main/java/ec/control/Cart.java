@@ -78,9 +78,9 @@ public class Cart extends HttpServlet {
                                 //è la servelet cart che si occupa di reindirizzare
                                 //verso la servlet address per fare il fetch degli indirizzi
                                 //e proseguire verso la finalizzazione dell'acquisto
-                                ServletContext context = getServletContext();
-                                context.setAttribute("op", "show");
-                                dis = "/AddressManagement";
+//                                ServletContext context = getServletContext();
+//                                context.setAttribute("op", "show");
+                                dis = "/Payment.jsp";
                             } catch (SQLException e) {
                                 e.printStackTrace();
                                 request.setAttribute("errorMessage", "Errore durante l'acquisto: " + e.getMessage());

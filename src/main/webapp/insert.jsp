@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Inserimento prodotti</title>
-    <link rel="stylesheet" href="ProductStyle.css">
+    <link rel="stylesheet" href="css/ProductStyle.css">
 
 </head>
 <body>

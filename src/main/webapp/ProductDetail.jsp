@@ -5,7 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Dettaglio prodotto</title>
-<link href="ProductStyle.css" rel="stylesheet" type="text/css">
+<link href="css/ProductStyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <jsp:include page="Header.jsp"/>

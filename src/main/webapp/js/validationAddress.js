@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
-    function validateForm() {
+
+    function validateFormAd() {
         var isValid = true;
 
         var via = document.getElementById("via").value;
@@ -12,17 +12,19 @@ document.addEventListener('DOMContentLoaded', function() {
         // Regular expressions for validation
         var capPattern = /^[0-9]{5}$/;
         var provinciaPattern = /^[A-Za-z]{2}$/;
-        var civicoPattern =/^[0-9]{4}$/
+        var civicoPattern =/^[0-9]{1,4}$/
         clearErrors(); // per la cancellazione di errori
         //se prima ce ne erano altri
 
         if (via.trim() === "") {
             showError(document.getElementById("via"), "via-error");
+            console.log("Errore nella validazione: via");
             isValid = false;
         }
 
         if (nCivico.trim() === "" || isNaN(nCivico) || parseInt(nCivico) <= 0 || !civicoPattern.test(nCivico)) {
             showError(document.getElementById("n_civico"), "n_civico-error");
+            console.log("Errore nella validazione: numero civico");
             isValid = false;
         }
 
@@ -40,7 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
             showError(document.getElementById("provincia"), "provincia-error");
             isValid = false;
         }
-
+        if (isValid) {
+            console.log("Form valido, invio della richiesta AJAX...");
+        }
         return isValid;  // Se tutti i campi sono validi
     }
 
@@ -60,7 +64,3 @@ document.addEventListener('DOMContentLoaded', function() {
             element.style.display = "none";
         });
     }
-
-    window.validateForm = validateForm;
-
-});

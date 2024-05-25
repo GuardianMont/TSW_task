@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login_Signup</title>
-    <link rel = "stylesheet" href="Login_Signup.css">
+    <link rel = "stylesheet" href="css/Login_Signup.css">
     <script src="js/validationLoginSignup.js"></script>
     <style>
         .error {

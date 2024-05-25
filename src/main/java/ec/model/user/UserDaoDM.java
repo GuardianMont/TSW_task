@@ -121,7 +121,7 @@ public class UserDaoDM implements UserDao {
                 bean.setNome(rs.getString("nome"));
                 bean.setCognome(rs.getString("cognome"));
                 bean.setEmail(rs.getString("email"));
-                bean.setPassword(rs.getBytes("pssw"));
+                bean.setPassword(rs.getBytes("password_hash"));
                 bean.setSalt(rs.getBytes("salt"));
                 bean.setPhoneNumber(rs.getString("n_telefono"));
             }

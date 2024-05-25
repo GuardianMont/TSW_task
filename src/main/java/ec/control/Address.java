@@ -1,20 +1,24 @@
 package ec.control;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import ec.model.address.AddressDaoDM;
 import ec.model.address.AddressUs;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-
-import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
-@WebServlet ("/AddressManagement")
+import java.util.Collection;
+
+
+
+@WebServlet("/AddressManagement")
 public class Address extends HttpServlet {
     private AddressDaoDM model;
 
@@ -23,49 +27,56 @@ public class Address extends HttpServlet {
         super.init();
         model = new AddressDaoDM();
     }
-
-    public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
     }
 
-    public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String opzione = request.getParameter("opzione");
-        String dis = "/Cart.jsp";
-        String errorMessage="";
-        ServletContext context = getServletContext();
-        String value = (String) context.getAttribute("op");
+        HttpSession session = request.getSession(false);
+
+        if (session == null || session.getAttribute("userId") == null) {
+            sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Sessione non valida o utente non loggato");
+            return;
+        }
+
         if (opzione != null) {
-            switch (opzione){
+            switch (opzione) {
                 case "add":
-                    if(request.getSession().getAttribute("userId")!=null) {
-                        try {
-                            handleAddAction(request,response);
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                    try {
+                        handleAddAction(request, response);
+                    } catch (SQLException | IOException e) {
+                        e.printStackTrace();
+                        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        response.setContentType("application/json");
+                        response.setCharacterEncoding("UTF-8");
+                        response.getWriter().write("{\"success\": false, \"error\": \"" + e.getMessage() + "\"}");
                     }
                     break;
-            }
-        }
-        if (value!=null){
-            switch (value){
                 case "show":
                     try {
-                        request.setAttribute("addresses", model.doRetrieveAll((String) request.getSession().getAttribute("userId")));
-                        dis="/Payment.jsp";
+                        handleShowAction(request, response);
                     } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
+                        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        response.setContentType("application/json");
+                        response.setCharacterEncoding("UTF-8");
+                        response.getWriter().write("{\"success\": false, \"error\": \"" + e.getMessage() + "\"}");
                     }
                     break;
+                default:
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write("{\"success\": false, \"error\": \"Opzione non valida\"}");
+                    break;
             }
-
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"success\": false, \"error\": \"Opzione non fornita\"}");
         }
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(dis);
-        dispatcher.forward(request, response);
     }
 
     private void handleAddAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -77,9 +88,32 @@ public class Address extends HttpServlet {
         ad.setVia(request.getParameter("via"));
         ad.setProvincia(request.getParameter("provincia"));
         int n = model.checkNum((String) request.getSession().getAttribute("userId"));
-        ad.setNum_ID(n+1);
+        ad.setNum_ID(n + 1);
         model.doSave(ad, (String) request.getSession().getAttribute("userId"), ad.getNum_ID());
 
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"success\": true}");
     }
 
+    private void handleShowAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        Collection<AddressUs> addresses = model.doRetrieveAll((String) request.getSession().getAttribute("userId"));
+
+        sendJsonResponse(response, addresses);
+    }
+
+    private void sendJsonResponse(HttpServletResponse response, Object responseObject) throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(new Gson().toJson(responseObject));
+    }
+
+    private void sendErrorResponse(HttpServletResponse response, int statusCode, String errorMessage) throws IOException {
+        JsonObject errorResponse = new JsonObject();
+        errorResponse.addProperty("success", false);
+        errorResponse.addProperty("error", errorMessage);
+
+        response.setStatus(statusCode);
+        sendJsonResponse(response, errorResponse);
+    }
 }

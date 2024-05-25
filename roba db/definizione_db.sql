@@ -49,6 +49,8 @@ CREATE TABLE MetodoPagamento(
                                 num_carta CHAR(16) NOT NULL,
                                 data_scadenza DATE NOT NULL,
                                 titolare_carta BIGINT NOT NULL,
+                                cvv_hash VARBINARY(255) NOT NULL,
+                                salt_cvv VARBINARY(16) NOT NULL,
                                 FOREIGN KEY (utente_id) REFERENCES Utente(username),
                                 PRIMARY KEY(utente_id, num)
 );
