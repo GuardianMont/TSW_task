@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS tavolando;
+DROP database IF EXISTS tavolando;
 CREATE DATABASE tavolando;
 USE tavolando;
 
@@ -13,7 +13,7 @@ CREATE TABLE Utente(
                        username VARCHAR(255) PRIMARY KEY,
                        nome VARCHAR(255) NOT NULL,
                        cognome VARCHAR(255) NOT NULL,
-                       email VARCHAR(255) NOT NULL,
+                       email VARCHAR(255) NOT NULL unique,
                        n_telefono CHAR(10) NOT NULL,
                        password_hash VARBINARY(255) NOT NULL,
                        salt VARBINARY(16) NOT NULL
@@ -47,8 +47,8 @@ CREATE TABLE MetodoPagamento(
                                 num SMALLINT NOT NULL,
                                 circuito VARCHAR(255) NOT NULL,
                                 num_carta CHAR(16) NOT NULL,
-                                data_scadenza DATE NOT NULL,
-                                titolare_carta BIGINT NOT NULL,
+                                data_scadenza CHAR (5) NOT NULL,
+                                titolare_carta CHAR(255) NOT NULL,
                                 cvv_hash VARBINARY(255) NOT NULL,
                                 salt_cvv VARBINARY(16) NOT NULL,
                                 FOREIGN KEY (utente_id) REFERENCES Utente(username),
