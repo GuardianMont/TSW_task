@@ -32,20 +32,7 @@
 <div class="section_1">
     <h2>Indirizzo di Spedizione</h2>
     <div id="shipping-addresses">
-        <!--- aggiungo le informazioni con Ajax
-<%--        <%
-<%--            if (addresses != null && addresses.size() != 0) {
-<%--                Iterator<?> it = addresses.iterator();
-<%--                while (it.hasNext()) {
-<%--                    AddressUs ad = (AddressUs) it.next();
-<%--        %>
-<%--        <div>
-<%--            <input type="checkbox" name="selectedAddress" value="<%=ad.getNum_ID() %>">
-<%--            <%=ad.toString()%>
-<%--        </div>
-<%--        <%      } //chiudo while
-<%--        } //chiuso if
-<%--        %>--%>-->
+        <!--immetto le informazioni con ajax -->
     </div>
     <button class="add-button" onclick="aggiungiIndirizzo()">Aggiungi Nuovo Indirizzo</button>
     <div id="new-address-form" class="hidden">
@@ -83,21 +70,7 @@
 <div class="section_2">
     <h2>Metodo di Pagamento</h2>
     <div id="shipping-payment">
-        <!-- Aggiungo le info con ajax
-<%--        <%--%>
-<%--            if (payMethods != null && payMethods.size() != 0) {--%>
-<%--                Iterator<?> it = payMethods.iterator();--%>
-<%--                while (it.hasNext()) {--%>
-<%--                    PayMethod pay = (PayMethod) it.next();--%>
-        %>
-<%--        <div>--%>
-<%--            <input type="checkbox" name="selectedPayMethod" value="<%= pay.getNumId() %>">
-<%--            <%= pay.toString()%>
-<%--         </div>
-<%--         <% //     } //chiudo while
-<%--         //} //chiuso if
-<%--         %>
-<%--         --%>-->
+        <!--immetto le informazioni con ajax -->
     </div>
     <button class="add-button" onclick="aggiungiPayMethods()">Aggiungi Nuovo Metodo di pagamento</button>
     <div id="new-payMethod-form" class="hidden">

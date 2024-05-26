@@ -71,7 +71,7 @@ function loadAddresses() {
             $('#shipping-addresses').empty();
             response.forEach(function(AddressUs) {
                 $('#shipping-addresses').append(
-                    '<div><input type="checkbox" name="selectedAddress" value="' + AddressUs.numId + '">' + AddressUs.toString() + '</div>'
+                    '<div><input type="radio" name="selectedAddress" value="' + AddressUs.numId + '">' + AddressUs.toString() + '</div>'
                 );
             });
         },
@@ -91,7 +91,7 @@ function loadPaymentMethods() {
             $('#shipping-payment').empty();
             response.forEach(function(payMethod) {
                 $('#shipping-payment').append(
-                    '<div><input type="checkbox" name="selectedPayMethod" value="' + payMethod.numId + '"> Numero carta: ' + payMethod.numCarta +
+                    '<div><input type="radio" name="selectedPayMethod" value="' + payMethod.numId + '"> Numero carta: ' + payMethod.numCarta +
                     '<br> Data scadenza: ' + payMethod.dataScadenza +
                     'Titolare Carta: ' + payMethod.titolareCarta + '</div>'
                 );
