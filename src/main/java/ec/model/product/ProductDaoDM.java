@@ -24,7 +24,7 @@ public class ProductDaoDM implements ProductDao {
 		int generatedId = -1;
 		String insertSQL = "INSERT INTO " + ProductDaoDM.TABLE_NAME
 				+ " (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine)"
-				+ " VALUES (?, ?, ?, ? ,? ,? ,? ,? , ?)";
+				+ " VALUES (?, ?, ?, ? ,? ,? ,? ,? , ?) ";
 		try (Connection connection = ConnectionPool.getInstance().getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 
