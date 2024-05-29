@@ -1,4 +1,4 @@
-package ec.model.PaymentMethod;
+/*package ec.model.PaymentMethod;
 
 import ec.model.ConnectionPool;
 import ec.model.address.AddressDaoDM;
@@ -112,3 +112,4 @@ public class PaymentDaoDM implements PaymentDao {
     }
 }
 
+*/
