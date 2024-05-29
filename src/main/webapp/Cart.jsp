@@ -78,7 +78,6 @@
     } else {
     %>
 
-    <h1>PRova</h1>
     <div class="no_product"> <img src="uploadFile/piangi.jpg" alt="no img">No product in CART</div>
     <%
         }
