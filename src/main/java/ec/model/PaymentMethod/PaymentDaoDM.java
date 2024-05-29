@@ -1,8 +1,6 @@
 /*package ec.model.PaymentMethod;
 
 import ec.model.ConnectionPool;
-import ec.model.address.AddressDaoDM;
-import ec.model.address.AddressUs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,9 +12,9 @@ import java.util.LinkedList;
 public class PaymentDaoDM implements PaymentDao {
     private static  final String  TABLE_NAME="MetodoPagamento";
 
-    public void doSave (PayMethod pay, String userID, int num) throws SQLException {
+    public boolean doSave (PayMethod pay, String userID, int num) throws SQLException {
         String sqlInsert = "Insert into " + PaymentDaoDM.TABLE_NAME +
-                " (utente_id, num, circuito, num_carta, data_scadenza, titolare_carta) " +
+                " (utente_id, num, circuito, num_carta, data_scadenza, titolare_carta, cvv_hash, salt_cvv) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert)) {
@@ -26,8 +24,11 @@ public class PaymentDaoDM implements PaymentDao {
             preparedStatement.setString(4,pay.getNumCarta());
             preparedStatement.setString(5,pay.getDataScadenza());
             preparedStatement.setString(6,pay.getTitolareCarta());
+            preparedStatement.setBytes(7,pay.getCvv());
+            preparedStatement.setBytes(8,pay.getSalt());
 
             preparedStatement.executeUpdate();
+            return true;
         }
     }
 
@@ -57,13 +58,13 @@ public class PaymentDaoDM implements PaymentDao {
 
             while (res.next()){
                 PayMethod pay = new PayMethod();
-
+                pay.setNumId(res.getInt("num"));
                 pay.setCircuito(res.getString("circuito"));
                 pay.setDataScadenza(res.getString("data_scadenza"));
                 pay.setTitolareCarta(res.getString("titolare_carta"));
-                pay.setCvv(res.getString("cvv"));
+                pay.setCvv(res.getBytes("cvv_hash"));
                 pay.setNumCarta(res.getString("num_carta"));
-
+                pay.setSalt(res.getBytes("salt_cvv"));
                 payMeds.add(pay);
             }
 
@@ -85,7 +86,8 @@ public class PaymentDaoDM implements PaymentDao {
                 pay.setCircuito(res.getString("circuito"));
                 pay.setDataScadenza(res.getString("data_scadenza"));
                 pay.setTitolareCarta(res.getString("titolare_carta"));
-                pay.setCvv(res.getString("cvv"));
+                pay.setCvv(res.getBytes("cvv_hash"));
+                pay.setSalt(res.getBytes("salt_cvv"));
                 pay.setNumCarta(res.getString("num_carta"));
             }
 

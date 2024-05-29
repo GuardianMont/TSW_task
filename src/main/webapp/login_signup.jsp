@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login_Signup</title>
-    <link rel = "stylesheet" href="Login_Signup.css">
+    <link rel = "stylesheet" href="css/Login_Signup.css">
     <script src="js/validationLoginSignup.js"></script>
     <style>
         .error {
@@ -43,7 +43,7 @@
 
             <div class = "form-group">
                 <label for = "login-password"> Password</label>
-                <input type="password" id="login-password" name="login-password" required>
+                <input type="password" id="login-password" name="login-password" required autocomplete="current-password">
             </div>
 
             <div class="form-group">
@@ -60,6 +60,7 @@
             <div class="form-group">
                 <label for = "signup-username"> Username:</label>
                 <input type="text" id="signup-username" name="signup-username" required>
+                <span id="signup-username-error" class="error-message">Username già in uso.</span>
             </div>
 
             <div class="form-group">

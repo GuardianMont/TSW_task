@@ -12,7 +12,7 @@ import java.util.LinkedList;
 public class AddressDaoDM implements AddressDao{
     private static  final String  TABLE_NAME="indirizzo";
 
-    public void doSave (AddressUs ad, String userID, int num) throws SQLException {
+    public boolean doSave (AddressUs ad, String userID, int num) throws SQLException {
         String sqlInsert = "Insert into " + AddressDaoDM.TABLE_NAME +
                 " (utente_id, num, cap, citta, provincia, via, n_civico, preferenze) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
@@ -28,6 +28,7 @@ public class AddressDaoDM implements AddressDao{
             preparedStatement.setString(8,ad.getPreferenze());
 
             preparedStatement.executeUpdate();
+            return true;
         }
     }
 

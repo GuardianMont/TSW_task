@@ -21,7 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const password = document.getElementById('login-password').value;
         //validation email?
     });
-
+    document.getElementById('signup-email').addEventListener('blur', function() {
+        checkEmailAvailability(this.value);
+    });
+    document.getElementById('signup-username').addEventListener('blur', function() {
+        checkUsernameAvailability(this.value);
+    });
     document.getElementById("signup-form").addEventListener("submit", function(event) {
         const email = document.getElementById('signup-email');
         const password = document.getElementById('signup-password');
@@ -58,4 +63,58 @@ document.addEventListener('DOMContentLoaded', function() {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     }
+
+    function checkEmailAvailability(email) {
+        const xhr = new XMLHttpRequest();
+        const params = `email=${encodeURIComponent(email)}&opzione=checkEmail`;
+
+        xhr.open('POST', 'checkAvailable', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                const emailError = document.getElementById('signup-email-error');
+
+                if (!response.isAvailable) {
+                    emailError.style.display = 'block';
+                    emailError.textContent = 'Email già in uso.';
+                } else {
+                    emailError.style.display = 'none';
+                }
+            }
+        };
+
+        xhr.send(params);
+    }
+
+
+    function checkUsernameAvailability(username) {
+        const xhr = new XMLHttpRequest();
+        const params = `username=${encodeURIComponent(username)}&opzione=checkUser`;
+
+        xhr.open('POST', 'checkAvailable', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                const usernameError = document.getElementById('signup-username-error');
+
+                if (!response.isAvailable) {
+                    usernameError.style.display = 'block';
+                    usernameError.textContent = 'Nome utente già in uso.';
+                } else {
+                    usernameError.style.display = 'none';
+                }
+            }
+        };
+
+        xhr.send(params);
+    }
+
 });
+
+//check per l'email
+
+

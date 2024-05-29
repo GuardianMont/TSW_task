@@ -17,11 +17,20 @@ body{
 }
 
 .Tavolando{
-    color: green;
+    /*color: green;*/
     text-align: center;
     align-items: center;
 }
 .carrello{
+    /*position:relative;
+    display: inline-block;*/
+    position: relative;
+    left: 3%;
+    justify-content: right;
+    text-align: right;
+    margin-top: 1%;
+}
+.utente{
     /*position:relative;
     display: inline-block;*/
     position: relative;

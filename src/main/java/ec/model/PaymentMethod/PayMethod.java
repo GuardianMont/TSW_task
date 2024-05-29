@@ -1,5 +1,6 @@
 package ec.model.PaymentMethod;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class PayMethod {
@@ -10,14 +11,18 @@ public class PayMethod {
 
     private String titolareCarta;
 
-    private String cvv;
+    private byte[] cvvHash;
+    private byte[] saltCvv;
+    private int numId;
 
     public PayMethod() {
         this.circuito = "";
         this.numCarta = "";
         this.dataScadenza = "";
         this.titolareCarta = "";
-        this.cvv = "";
+        this.cvvHash = null;
+        this.saltCvv=null;
+        this.numId=-1;
     }
 
     public String getCircuito() {
@@ -52,12 +57,28 @@ public class PayMethod {
         this.titolareCarta = titolareCarta;
     }
 
-    public String getCvv() {
-        return cvv;
+    public byte[] getCvv() {
+        return cvvHash;
     }
 
-    public void setCvv(String cvv) {
-        this.cvv = cvv;
+    public void setCvv(byte[] cvv) {
+        this.cvvHash = cvv;
+    }
+
+    public byte[] getSalt() {
+        return saltCvv;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.saltCvv = salt;
+    }
+
+    public int getNumId() {
+        return numId;
+    }
+
+    public void setNumId(int numId) {
+        this.numId = numId;
     }
 
     @Override
@@ -65,11 +86,24 @@ public class PayMethod {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PayMethod payMethod = (PayMethod) o;
-        return Objects.equals(circuito, payMethod.circuito) && Objects.equals(numCarta, payMethod.numCarta) && Objects.equals(dataScadenza, payMethod.dataScadenza) && Objects.equals(titolareCarta, payMethod.titolareCarta) && Objects.equals(cvv, payMethod.cvv);
+        return numId == payMethod.numId && Objects.equals(circuito, payMethod.circuito) && Objects.equals(numCarta, payMethod.numCarta) && Objects.equals(dataScadenza, payMethod.dataScadenza) && Objects.equals(titolareCarta, payMethod.titolareCarta) && Arrays.equals(cvvHash, payMethod.cvvHash) && Arrays.equals(saltCvv, payMethod.saltCvv);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(circuito, numCarta, dataScadenza, titolareCarta, cvv);
+        int result = Objects.hash(circuito, numCarta, dataScadenza, titolareCarta, numId);
+        result = 31 * result + Arrays.hashCode(cvvHash);
+        result = 31 * result + Arrays.hashCode(saltCvv);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PayMethod{" +
+                "circuito='" + circuito + '\'' +
+                ", numCarta='" + numCarta + '\'' +
+                ", dataScadenza='" + dataScadenza + '\'' +
+                ", titolareCarta='" + titolareCarta + '\'' +
+                '}';
     }
 }

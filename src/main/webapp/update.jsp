@@ -5,7 +5,7 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Dettaglio prodotto</title>
-    <link href="ProductStyle.css" rel="stylesheet" type="text/css">
+    <link href="css/ProductStyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <%
@@ -35,7 +35,7 @@
     <label for="prezzo">Prezzo:</label><br>
     <input id="prezzo" name="prezzo" type="number" min="0" required value="<%=product.getPrezzo()%>"><br>
 
-    <label for="quantita">Disponibilità</label><br>
+    <label for="quantita">Disponibilitï¿½</label><br>
     <input id="quantita" name="quantita" type="number" min="1" required value="<%=product.getDisponibilita()%>"><br>
 
     <label for="iva">Fascia_iva</label><br>

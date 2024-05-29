@@ -63,7 +63,7 @@ public class LoginSignupControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    protected boolean doLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected boolean doLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
         String  token = req.getParameter("login-token");
         String password = req.getParameter("login-password");
@@ -83,25 +83,21 @@ public class LoginSignupControl extends HttpServlet {
     protected boolean doSignup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String username = req.getParameter("signup-username").trim();
-//        if(!username.replaceAll(" ", "").equals(username))
-//            return false;
-
         String name = req.getParameter("signup-name").trim();
-
         String surname = req.getParameter("signup-surname").trim();
-
         String email = req.getParameter("signup-email").trim();
-
         String phoneN = req.getParameter("signup-phone").trim();
-
         String password = req.getParameter("signup-password").trim();
-
         String repPassword = req.getParameter("signup-rep-password").trim();
+
+        // Aggiunta controlli per evitare spazi nei campi username ed email
+        if (username.contains(" ") || email.contains(" ")) {
+            return false;
+        }
 
         if (password.equals(repPassword)) {
             try {
                 UserBean user = new UserBean();
-
                 user.setUsername(username);
                 user.setNome(name);
                 user.setCognome(surname);
@@ -123,8 +119,6 @@ public class LoginSignupControl extends HttpServlet {
                 e.printStackTrace();
             } catch (SQLException e) {
                 e.printStackTrace();//potremmo voler dare un errore diverso, per ora lo lascio così
-            } finally {
-                return false;
             }
         }
         return false;

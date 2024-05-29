@@ -9,12 +9,12 @@
 <html>
 <head>
     <title>Header</title>
-    <link rel="stylesheet" href="Header.css">
+    <link rel="stylesheet" href="css/Header.css">
 </head>
 <body>
 
 <div class="header-container">
-    <header class="Tavolando">Tavolando</header>
+    <header class="Tavolando"><img src="uploadFile/loghino.svg" width="350" height="auto" alt="Tavolando" class="carrelloImg" id="TavilandoIcon"></header>
     <nav>
 
         <!--per la search bar-->
@@ -25,7 +25,7 @@
             </form>
         </div>
         <ul>
-            <li><a href="#">Home</a> </li>
+            <li><a href="product">Home</a> </li>
 
             <li><a href="product">Prodotti</a>
 
@@ -48,6 +48,13 @@
                     <span class="numeroProdotti"><%= cart.getNumProdottiTot() %></span>
                     <% }
                     %>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="utente">
+                    <a href="#">
+                        <img src="uploadFile/profile-user-svgrepo-com.svg" width="30" height="auto" alt="carrello" class="carrelloImg" id="userIcon">
                     </a>
                 </div>
             </li>
