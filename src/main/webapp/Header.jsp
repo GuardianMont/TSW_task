@@ -8,13 +8,11 @@
 <body>
 
 <div class="header-container">
-    <!--<header class="Tavolando">
-        <img src="uploadFile/loghino.svg" width="350" height="auto" alt="Tavolando" class="carrelloImg" id="TavilandoIcon">
-    </header>-->
+    <header class="Tavolando">
+        <img src="uploadFile/loghino.svg" width="350" height="auto" alt="Tavolando" class="TavolandImg" id="TavilandoIcon">
+    </header>
     <nav>
         <ul class="nav-menu">
-
-            <!-- Inserisci la barra di ricerca nel menu di navigazione -->
             <li class="barra-ricerca">
                 <form class="ricerca">
                     <input id="cerca" type="text" placeholder="Cerca nel sito" required>
@@ -23,7 +21,7 @@
             </li>
             <li><a href="product">Home</a></li>
             <li><a href="product">Prodotti</a>
-                <ul>
+                <ul class = "submenu">
                     <li><a href="#">Prodotto 1</a></li>
                     <li><a href="#">Prodotto 2</a></li>
                     <li><a href="#">Prodotto 3</a></li>
