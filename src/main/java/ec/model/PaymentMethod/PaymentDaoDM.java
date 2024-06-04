@@ -1,5 +1,4 @@
-/*package ec.model.PaymentMethod;
-
+package ec.model.PaymentMethod;
 import ec.model.ConnectionPool;
 
 import java.sql.Connection;
@@ -113,5 +112,3 @@ public class PaymentDaoDM implements PaymentDao {
         return n;
     }
 }
-
-*/
