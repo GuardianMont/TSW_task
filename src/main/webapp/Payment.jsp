@@ -1,7 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if (request.getSession().getAttribute("userId") == null){
+    if (request.getSession().getAttribute("userId") == null ){
         RequestDispatcher dispatcher = request.getRequestDispatcher("/login_signup.jsp");
+        dispatcher.forward(request, response);
+    }
+    if (request.getSession().getAttribute("cart")==null){
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/ProductView.jsp");
         dispatcher.forward(request, response);
     }
 %>
@@ -29,12 +33,19 @@
 <body>
 <jsp:include page="Header.jsp"/>
 
+<form id="check-out-form" >
+    <!--action="CheckoutServlet" method="post"-->
 <div class="section_1">
     <h2>Indirizzo di Spedizione</h2>
     <div id="shipping-addresses">
         <!--immetto le informazioni con ajax -->
     </div>
-    <button class="add-button" onclick="aggiungiIndirizzo()">Aggiungi Nuovo Indirizzo</button>
+    <div id = "add-button" class="">
+        <button class="add-button" onclick="aggiungiIndirizzo()">Aggiungi Nuovo Indirizzo</button>
+    </div>
+    <div id="remove-button"  class="hidden">
+        <button class="remove-button" onclick="removeForm()">X</button>
+    </div>
     <div id="new-address-form" class="hidden">
         <!--form per l'aggiunta di un nuovo indirizzo celato se l'utente non clicca il bottone-->
         <form id="addressForm" action="AddressManagement" method="post" onsubmit="return validateFormAd()">
@@ -72,7 +83,12 @@
     <div id="shipping-payment">
         <!--immetto le informazioni con ajax -->
     </div>
-    <button class="add-button" onclick="aggiungiPayMethods()">Aggiungi Nuovo Metodo di pagamento</button>
+    <div id="add-pay-button" class="">
+        <button class="add-button" onclick="aggiungiPayMethods()">Aggiungi Nuovo Metodo di pagamento</button>
+    </div>
+    <div id ="remove-pay-form" class="hidden">
+        <button class="remove-button" onclick="removePayForm()">X</button>
+    </div>
     <div id="new-payMethod-form" class="hidden">
         <!--form per l'aggiunta di un nuovo metodo di pagamento celato se l'utente non clicca il bottone-->
         <form id="payMethodsForm" action="payMethodsManager" method="post" onsubmit="return validateFormPM()">
@@ -105,6 +121,9 @@
         </form>
     </div>
 </div>
+    <br>
+    <input type="submit" value="Proceed">
+</form>
 <jsp:include page="Footer.jsp"/>
 </body>
 </html>

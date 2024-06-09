@@ -84,7 +84,7 @@ public class Cart extends HttpServlet {
                             } catch (SQLException e) {
                                 e.printStackTrace();
                                 request.setAttribute("errorMessage", "Errore durante l'acquisto: " + e.getMessage());
-                                dis = "/error.jsp";
+                                dis = "/error500.jsp";
                             }
                         } else {
                             dis = "/login_signup.jsp";
