@@ -80,7 +80,7 @@
 
             <div class="form-group">
                 <label for = "signup-email"> Email:</label>
-                <input type="text" id="signup-email" name="signup-email" pattern = "/^[^\s@]+@[^\s@]+\.[^\s@]+$/" title="Email valida: email@valid.it" placeholder="email@valid.it" required>
+                <input type="text" id="signup-email" name="signup-email" title="Email valida: email@valid.it" placeholder="email@valid.it" required>
                 <span id="signup-email-error" class="error-message">Inserisci un indirizzo email valido.</span>
             </div>
 

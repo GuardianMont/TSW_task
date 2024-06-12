@@ -24,64 +24,69 @@
 <body>
 <jsp:include page="Header.jsp"/>
 
-
-<a href="product" class="catalogo">catalogo</a>
-<h2 class="prodotti_carrello">Prodotti carrello</h2>
-<%
-    Boolean buy = (Boolean) request.getAttribute("acquistoCompletato");
-    if (buy != null && buy.booleanValue()){
-%>
-<p>Acquisto completato con successo</p>
-<%
-    }
-%>
-<%
-    if (cartItem != null && !cartItem.isEmpty()) {
-        List <CartItem> items = cartItem.getItem_ordinati();
-%>
-<table border="1" class="tabella">
-    <tr>
-        <th>ID </th>
-        <th>img</th>
-        <th>Nome </th>
-        <th>Spesa totale </th>
-        <th>Action</th>
-    </tr>
-        <% for (CartItem item : items) { %>
-    <tr>
-        <td><%=item.getItem().getId()%></td>
-        <%
-            String stockImg = "";
-            byte[] imageData = item.getItem().getImmagineUrl();
-            if (imageData != null) {
-                stockImg = Base64.getEncoder().encodeToString(imageData);
-            }
-        %>
-        <td><img  src="data:image/jpeg;base64,<%= stockImg %>"  width=400px height=auto alt="no immagine" ></td>
-        <td><%=item.getItem().getNome()%></td>
-        <td><%=item.getItem().getPrezzo() + "*" + item.getNumItem() + "=" + item.prezzoAllItem()%> </td>
-        <td><a href="carrello?opzione=delete&id=<%=item.getItem().getId()%>">Delete from cart</a><br>
-            <%//id del prodotto che vogliamo andare a cancellare %>
-            <a href="carrello?opzione=decrement&id=<%=item.getItem().getId()%>">Remove 1</a><br>
-            <a href="carrello?opzione=increment&id=<%=item.getItem().getId()%>">Add 1</a>
-        </td>
-    </tr>
+<div class="container">
+    <a href="product" class="catalogo">Catalogo</a>
+    <h2 class="prodotti_carrello">Prodotti nel Carrello</h2>
     <%
-        } %>
-</table>
-    <h3 class="spesa_totale">Spesa totale <%=cartItem.getPrezzoTot()%></h3>
-    <form action="carrello" method="post">
+        Boolean buy = (Boolean) request.getAttribute("acquistoCompletato");
+        if (buy != null && buy.booleanValue()){
+    %>
+    <p class="success-message">Acquisto completato con successo</p>
+    <%
+        }
+    %>
+    <%
+        if (cartItem != null && !cartItem.isEmpty()) {
+            List<CartItem> items = cartItem.getItem_ordinati();
+    %>
+    <table class="tabella">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Immagine</th>
+            <th>Nome</th>
+            <th>Azioni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (CartItem item : items) { %>
+        <tr>
+            <td><%=item.getItem().getId()%></td>
+            <%
+                String stockImg = "";
+                byte[] imageData = item.getItem().getImmagineUrl();
+                if (imageData != null) {
+                    stockImg = Base64.getEncoder().encodeToString(imageData);
+                }
+            %>
+            <td><img src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="Immagine prodotto"></td>
+            <td><%=item.getItem().getNome()%></td>
+            <td>
+                <a href="carrello?opzione=delete&id=<%=item.getItem().getId()%>" class="action-button delete">Rimuovi dal carrello</a>
+                <a href="carrello?opzione=decrement&id=<%=item.getItem().getId()%>" class="action-button decrement">Rimuovi 1</a>
+                <a href="carrello?opzione=increment&id=<%=item.getItem().getId()%>" class="action-button increment">Aggiungi 1</a>
+            </td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+    <h3 class="spesa_totale">Spesa totale: €<%=cartItem.getPrezzoTot()%></h3>
+    <form action="carrello" method="post" class="acquista-form">
         <input type="hidden" name="opzione" value="acquisto">
-        <input type="submit" value="ACQUISTA" class="acquista">
+        <input type="submit" value="ACQUISTA" class="acquista-button">
     </form>
     <%
     } else {
     %>
-
-    <div class="no_product"> <img src="uploadFile/piangi.jpg" alt="no img">No product in CART</div>
+    <div class="no_product">
+        <img src="uploadFile/piangi.jpg" alt="No product image" class="no-product-image">
+        <p>Non ci sono prodotti nel carrello</p>
+    </div>
     <%
         }
     %>
+</div>
+
 <jsp:include page="Footer.jsp"/>
 </body>
 </html>
