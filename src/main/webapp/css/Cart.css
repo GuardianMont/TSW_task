@@ -103,6 +103,46 @@ body {
 .action-button:hover {
     opacity: 0.8;
 }
+.quantity-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.quantity-form input[type="text"] {
+    width: 40px; /* Riduce la larghezza dell'input */
+    padding: 8px;
+    margin: 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    background-color: #f5f5f5;
+}
+
+.quantity-form input[type="text"]:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.quantity-form button {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0;
+}
+
+.quantity-form button:hover {
+    background-color: #45a049;
+    opacity: 1.9;
+}
+
 
 .no_product {
     text-align: center;

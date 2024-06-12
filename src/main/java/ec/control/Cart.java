@@ -70,6 +70,19 @@ public class Cart extends HttpServlet {
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
+                    case "aggiornaquantita":
+                        int quantita = Integer.parseInt(request.getParameter("quantity"));
+                        CartItem item = cart.getItem(id);
+                        if (item != null) {
+                            if (quantita == 0) {
+                                item.cancelOrder();
+                                cart.deleteItem(id);
+                            } else {
+                                item.setNumItem(quantita);
+                            }
+                            session.setAttribute("cart", cart);
+                        }
+                        break;
                     case "acquisto":
                         if (request.getSession().getAttribute("userId") != null) {
                             //mi assicuro che l'utente sia loggato prima di effettuare un acquisto

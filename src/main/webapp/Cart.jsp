@@ -19,6 +19,40 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="css/Cart.css" rel="stylesheet" type="text/css">
     <title>Storage DS/BF</title>
+    <script>
+        function checkValidityQuantity(input) {
+            var value = parseInt(input.value);
+            if (value < parseInt(input.min)) {
+                input.value = input.min; // Imposta il valore al minimo ovvero 1
+            }
+            if (value > parseInt(input.max)) {
+                input.value = input.max; // Imposta il valore al massimo (in base al prodoott)
+            }
+        }
+        function incrementQuantity(button) {
+            var input = button.previousElementSibling;
+            var max = parseInt(input.max);
+            var currentValue = parseInt(input.value);
+            if (currentValue < max) {
+                input.value = currentValue + 1;
+                updateQuantity(input.form);
+            }
+        }
+
+        function decrementQuantity(button) {
+            var input = button.nextElementSibling;
+            var min = parseInt(input.min);
+            var currentValue = parseInt(input.value);
+            if (currentValue > min) {
+                input.value = currentValue - 1;
+                updateQuantity(input.form);
+            }
+        }
+
+        function updateQuantity(form) {
+            form.submit();
+        }
+    </script>
 </head>
 
 <body>
@@ -42,16 +76,17 @@
     <table class="tabella">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Immagine</th>
             <th>Nome</th>
+            <th>Immagine</th>
+            <th>prezzo</th>
+            <th>quantità</th>
             <th>Azioni</th>
         </tr>
         </thead>
         <tbody>
         <% for (CartItem item : items) { %>
         <tr>
-            <td><%=item.getItem().getId()%></td>
+            <td><%=item.getItem().getNome()%></td>
             <%
                 String stockImg = "";
                 byte[] imageData = item.getItem().getImmagineUrl();
@@ -60,12 +95,17 @@
                 }
             %>
             <td><img src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="Immagine prodotto"></td>
-            <td><%=item.getItem().getNome()%></td>
+            <td><%=item.getItem().getPrezzo()%></td>
             <td>
-                <a href="carrello?opzione=delete&id=<%=item.getItem().getId()%>" class="action-button delete">Rimuovi dal carrello</a>
-                <a href="carrello?opzione=decrement&id=<%=item.getItem().getId()%>" class="action-button decrement">Rimuovi 1</a>
-                <a href="carrello?opzione=increment&id=<%=item.getItem().getId()%>" class="action-button increment">Aggiungi 1</a>
+                <form action="carrello" method="post" class="quantity-form">
+                    <input type="hidden" name="opzione" value="aggiornaQuantita">
+                    <input type="hidden" name="id" value="<%=item.getItem().getId()%>">
+                    <button type="button" onclick="decrementQuantity(this)">-</button>
+                    <input type="text" name="quantity" value="<%=item.getNumItem()%>" min="0" max="<%=item.getItem().getDisponibilita()%>" oninput="checkValidityQuantity(this)" onchange="updateQuantity(this.form)">
+                    <button type="button" onclick="incrementQuantity(this)">+</button>
+                </form>
             </td>
+            <td><a href="carrello?opzione=delete&id=<%=item.getItem().getId()%>" class="action-button delete">X</a></td>
         </tr>
         <% } %>
         </tbody>
