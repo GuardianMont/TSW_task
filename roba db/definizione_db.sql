@@ -1,39 +1,17 @@
-DROP database IF EXISTS tavolando;
+DROP DATABASE IF EXISTS tavolando;
 CREATE DATABASE tavolando;
 USE tavolando;
 
-CREATE TABLE Ordine(
-                       codice_fattura int auto_increment PRIMARY KEY,
-                       utente_id VARCHAR(255) NOT NULL,
-                       cod_address smallint not null,
-                       cod_method smallint not null,
-                       data DATE NOT NULL,
-                       foreign key(utente_id) references Utente(username),
-                       foreign key(utente_id, cod_address) references Indirizzo( utente_id, num),
-                       foreign Key (utente_id, cod_method) references MetodoPagamento (utente_id, num)
-
-);
 CREATE TABLE Utente(
                        username VARCHAR(255) PRIMARY KEY,
                        nome VARCHAR(255) NOT NULL,
                        cognome VARCHAR(255) NOT NULL,
-                       email VARCHAR(255) NOT NULL unique,
+                       email VARCHAR(255) NOT NULL UNIQUE,
                        n_telefono CHAR(10) NOT NULL,
                        password_hash VARBINARY(255) NOT NULL,
                        salt VARBINARY(16) NOT NULL
 );
-CREATE TABLE Prodotto(
-                         id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                         nome VARCHAR(255) NOT NULL,
-                         descrizione VARCHAR(255) NOT NULL,
-                         prezzo DOUBLE NOT NULL,
-                         fascia_iva DOUBLE NOT NULL,
-                         dimensioni CHAR(10) NOT NULL,
-                         disponibilita SMALLINT NOT NULL,
-                         categoria VARCHAR(255) NOT NULL,
-                         colore VARCHAR(255) NOT NULL,
-                         immagine MEDIUMBLOB
-);
+
 CREATE TABLE Indirizzo(
                           utente_id VARCHAR(255) NOT NULL,
                           num SMALLINT NOT NULL,
@@ -46,38 +24,65 @@ CREATE TABLE Indirizzo(
                           FOREIGN KEY (utente_id) REFERENCES Utente(username),
                           PRIMARY KEY (utente_id, num)
 );
+
 CREATE TABLE MetodoPagamento(
                                 utente_id VARCHAR(255) NOT NULL,
                                 num SMALLINT NOT NULL,
                                 circuito VARCHAR(255) NOT NULL,
                                 num_carta CHAR(16) NOT NULL,
-                                data_scadenza CHAR (5) NOT NULL,
+                                data_scadenza CHAR(5) NOT NULL,
                                 titolare_carta CHAR(255) NOT NULL,
                                 cvv_hash VARBINARY(255) NOT NULL,
                                 salt_cvv VARBINARY(16) NOT NULL,
                                 FOREIGN KEY (utente_id) REFERENCES Utente(username),
-                                PRIMARY KEY(utente_id, num)
+                                PRIMARY KEY (utente_id, num)
 );
+
+CREATE TABLE Prodotto(
+                         id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                         nome VARCHAR(255) NOT NULL,
+                         descrizione VARCHAR(255) NOT NULL,
+                         prezzo DOUBLE NOT NULL,
+                         fascia_iva DOUBLE NOT NULL,
+                         dimensioni CHAR(10) NOT NULL,
+                         disponibilita SMALLINT NOT NULL,
+                         categoria VARCHAR(255) NOT NULL,
+                         colore VARCHAR(255) NOT NULL,
+                         immagine MEDIUMBLOB
+);
+
+CREATE TABLE Ordine(
+                       codice_fattura VARCHAR(255) PRIMARY KEY,
+                       utente_id VARCHAR(255) NOT NULL,
+                       cod_address SMALLINT NOT NULL,
+                       cod_method SMALLINT NOT NULL,
+                       data DATE NOT NULL,
+                       FOREIGN KEY (utente_id) REFERENCES Utente(username),
+                       FOREIGN KEY (utente_id, cod_address) REFERENCES Indirizzo(utente_id, num),
+                       FOREIGN KEY (utente_id, cod_method) REFERENCES MetodoPagamento(utente_id, num)
+);
+
 CREATE TABLE StoricoProdotti(
                                 codice_fattura VARCHAR(255) NOT NULL,
-                                prodotto_id INT NOT NULL,
+                                prodotto_id INT UNSIGNED NOT NULL,
                                 iva DOUBLE NOT NULL,
                                 prezzo_unitario DOUBLE NOT NULL,
                                 quantita INT NOT NULL,
                                 sconto DOUBLE NOT NULL,
-                                utente_id VARCHAR(255) not null,
-                                FOREIGN KEY (utente_id)REFERENCES Utente(username),
+                                utente_id VARCHAR(255) NOT NULL,
+                                FOREIGN KEY (utente_id) REFERENCES Utente(username),
                                 FOREIGN KEY (codice_fattura) REFERENCES Ordine(codice_fattura),
                                 FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id) ON DELETE RESTRICT,
                                 PRIMARY KEY (codice_fattura, prodotto_id)
 );
+
 CREATE TABLE Carrello(
                          prodotto_id INT UNSIGNED NOT NULL,
                          utente_id VARCHAR(255) NOT NULL,
                          quantita INT NOT NULL,
-                         FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id) ON DELETE cascade,
+                         FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id) ON DELETE CASCADE,
                          FOREIGN KEY (utente_id) REFERENCES Utente(username),
-                         PRIMARY KEY(prodotto_id, utente_id)
+                         PRIMARY KEY (prodotto_id, utente_id)
 );
 
 CREATE TABLE Preferiti(
@@ -87,3 +92,10 @@ CREATE TABLE Preferiti(
                           FOREIGN KEY (utente_id) REFERENCES Utente(username),
                           PRIMARY KEY (prodotto_id, utente_id)
 );
+
+
+INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('T-Shirt', 'Maglietta bianca con logo', 15.99, 22.0, 'M', 100, 'Abbigliamento', 'Bianco', NULL);
+INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('Jeans', 'Jeans blu scuro', 29.99, 22.0, '32', 50, 'Abbigliamento', 'Blu', NULL);
+INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('Borsa', 'Borsa a tracolla nera', 39.50, 22.0, '30x20x10', 30, 'Accessori', 'Nero', NULL);
+INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('Scarpe', 'Sneakers bianche', 49.99, 22.0, '41', 20, 'Scarpe', 'Bianco', NULL);
+INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('Orologio', 'Orologio da polso nero', 79.90, 22.0, 'Unica', 10, 'Accessori', 'Nero', NULL);
