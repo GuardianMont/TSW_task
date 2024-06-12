@@ -9,7 +9,7 @@
 
 <div class="header-container">
     <header class="Tavolando">
-        <img src="uploadFile/loghino.svg" width="350" height="auto" alt="Tavolando" class="TavolandImg" id="TavilandoIcon">
+        <img src="uploadFile/loghino.svg" alt="Tavolando" class="TavolandImg" id="TavilandoIcon">
     </header>
     <nav>
         <ul class="nav-menu">

@@ -33,6 +33,7 @@ body{
     padding: 20px;
     justify-content: space-around;
     align-items: center; /* Centra verticalmente i contenuti */
+    flex-grow: 1; /*Assicura che il contenuto cresca per riempire lo spazio che ha a disposizione*/
 }
 
 .product{
