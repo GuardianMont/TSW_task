@@ -19,14 +19,44 @@ document.addEventListener('DOMContentLoaded', function() {
     loginForm.addEventListener('submit', function(event) {
         const email = document.getElementById('login-token').value;
         const password = document.getElementById('login-password').value;
-        //validation email?
+        const emailError = document.getElementById('login-email-error');
+        emailError.style.display = 'none';
+        let isValid = true;
+
+        if (email.includes("@")) {
+            if ( !validateEmail(email)) {
+                emailError.style.display = 'block';
+                emailError.textContent = 'Inserisci un indirizzo email valido.';
+                isValid = false;
+            }
+        }else if (email.includes(" ")){
+            emailError.style.display = 'block';
+            emailError.textContent = 'Inserisci un indirizzo email valido.';
+            isValid = false;
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+        }
     });
+
     document.getElementById('signup-email').addEventListener('blur', function() {
         checkEmailAvailability(this.value);
     });
     document.getElementById('signup-username').addEventListener('blur', function() {
+        let error_user = document.getElementById("signup-username-error");
+
+        if (this.value.includes(" ")) {
+            error_user.style.display = "block";
+            error_user.textContent = "L'username non può contenere spazi";
+            return;
+        } else {
+            error_user.style.display = "none";
+        }
+
         checkUsernameAvailability(this.value);
     });
+
     document.getElementById("signup-form").addEventListener("submit", function(event) {
         const email = document.getElementById('signup-email');
         const password = document.getElementById('signup-password');
@@ -45,12 +75,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!validateEmail(email.value)) {
             email.classList.add('error');
             emailError.style.display = 'block';
+            emailError.textContent = 'Inserisci un indirizzo email valido.';
             isValid = false;
         }
         if (password.value !== repPassword.value) {
             password.classList.add('error');
             repPassword.classList.add('error');
             passwordError.style.display = 'block';
+            passwordError.textContent = 'Le password non coincidono.';
             isValid = false;
         }
 

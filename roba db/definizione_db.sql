@@ -61,6 +61,8 @@ CREATE TABLE StoricoProdotti(
                                 prezzo_unitario DOUBLE NOT NULL,
                                 quantita INT NOT NULL,
                                 sconto DOUBLE NOT NULL,
+                                utente_id VARCHAR(255) not null,
+                                FOREIGN KEY (utente_id)REFERENCES Utente(username),
                                 FOREIGN KEY (codice_fattura) REFERENCES Ordine(codice_fattura),
                                 PRIMARY KEY (codice_fattura, prodotto_id)
 );

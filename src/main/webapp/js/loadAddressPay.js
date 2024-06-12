@@ -4,6 +4,23 @@ $(document).ready(function() {
     loadAddresses();
     loadPaymentMethods();
 
+    $('#check-out-form').on("submit", function(event){
+        let addressSelected = $("input[name='selectedAddress']:checked").val();
+        let paymentSelected = $("input[name='selectedPayMethod']:checked").val();
+
+        if (!addressSelected) {
+            alert("Per proseguire selezionare un indirizzo");
+            return false;
+        }
+
+        if (!paymentSelected) {
+            alert("Per proseguire selezionare un metodo di pagamento");
+            return false;
+        }
+
+        return true;
+    });
+
     // Submit address form via AJAX
     $('#addressForm').on('submit', function(event) {
         event.preventDefault();
@@ -59,6 +76,8 @@ $(document).ready(function() {
             });
         }
     });
+
+
 });
 
 function loadAddresses() {
@@ -105,9 +124,25 @@ function loadPaymentMethods() {
 
 function aggiungiIndirizzo() {
     document.getElementById("new-address-form").classList.remove("hidden");
+    document.getElementById("remove-button").classList.remove("hidden");
+    document.getElementById("add-button").classList.add("hidden");
+}
+
+function removeForm(){
+    document.getElementById("new-address-form").classList.add("hidden");
+    document.getElementById("remove-button").classList.add("hidden");
+    document.getElementById("add-button").classList.remove("hidden");
 }
 function aggiungiPayMethods() {
     document.getElementById("new-payMethod-form").classList.remove("hidden");
+    document.getElementById("remove-pay-form").classList.remove("hidden");
+    document.getElementById("add-pay-button").classList.add("hidden");
+}
+
+function removePayForm(){
+    document.getElementById("new-payMethod-form").classList.add("hidden");
+    document.getElementById("remove-pay-form").classList.add("hidden");
+    document.getElementById("add-pay-button").classList.remove("hidden");
 }
 
 function resetAddressForm() {
@@ -116,4 +151,21 @@ function resetAddressForm() {
 
 function resetPaymentForm() {
     $('#payMethodsForm')[0].reset();
+}
+
+function validateSelections(){
+    let addressSelected = $("input[name='selectedAddress']:checked").val();
+    let paymentSelected = $("input[name='selectedPayMethod']:checked").val();
+
+    if (!addressSelected) {
+        alert("Per proseguire selezionare un indirizzo");
+        return false;
+    }
+
+    if (!paymentSelected) {
+        alert("Per proseguire selezionare un metodo di pagamento");
+        return false;
+    }
+
+    return true;
 }

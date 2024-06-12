@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if (request.getSession().getAttribute("userID")!=null){
@@ -39,6 +38,7 @@
             <div class = "form-group">
                 <label for = "login-token"> Email</label>
                 <input type="text" id = "login-token" name = "login-token" required>
+                <span id="login-email-error" class="error-message">Inserisci un indirizzo email valido.</span>
             </div>
 
             <div class = "form-group">
@@ -59,38 +59,38 @@
             <input type="hidden" id="signup-option" name="option" value="signup">
             <div class="form-group">
                 <label for = "signup-username"> Username:</label>
-                <input type="text" id="signup-username" name="signup-username" required>
+                <input type="text" id="signup-username" name="signup-username" required pattern="^[a-zA-Z0-9]+$" title="username alfanumerico senza spazi" placeholder="user1234">
                 <span id="signup-username-error" class="error-message">Username già in uso.</span>
             </div>
 
             <div class="form-group">
                 <label for = "signup-name"> Name:</label>
-                <input type="text" id="signup-name" name="signup-name" required>
+                <input type="text" id="signup-name" name="signup-name" required title="nome utente" placeholder="Mario">
             </div>
 
             <div class="form-group">
                 <label for = "signup-surname"> Surname:</label>
-                <input type="text" id="signup-surname" name="signup-surname" required>
+                <input type="text" id="signup-surname" name="signup-surname" required title="cognome utente" placeholder="Del Santo">
             </div>
 
             <div class="form-group">
                 <label for = "signup-phone"> Numero Telefono</label>
-                <input type="tel" id="signup-phone" name="signup-phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="Formato: 1234567890" required>
+                <input type="tel" id="signup-phone" name="signup-phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="Formato: 1234567890" required title="Formato valido: 1234567890">
             </div>
 
             <div class="form-group">
                 <label for = "signup-email"> Email:</label>
-                <input type="text" id="signup-email" name="signup-email" required>
+                <input type="text" id="signup-email" name="signup-email" pattern = "/^[^\s@]+@[^\s@]+\.[^\s@]+$/" title="Email valida: email@valid.it" placeholder="email@valid.it" required>
                 <span id="signup-email-error" class="error-message">Inserisci un indirizzo email valido.</span>
             </div>
 
             <div class="form-group">
                 <label for = "signup-password"> Password:</label>
-                <input type="text" id="signup-password" name="signup-password" required>
+                <input type="text" id="signup-password" name="signup-password" required pattern="^[a-zA-Z0-9.?!\$%&()=[]]+$" title="password alfanumerica senza spazi" placeholder="pAssword1234">
             </div>
             <div class="form-group">
                 <label for = "signup-rep-password"> Repeat Password:</label>
-                <input type="text" id="signup-rep-password" name="signup-rep-password" required>
+                <input type="text" id="signup-rep-password" name="signup-rep-password" pattern="^[a-zA-Z0-9.?!\$%&()=[]]+$" title="ripeti password" placeholder="pAssword1234" required>
                 <span id="signup-password-error" class="error-message">Le password non coincidono.</span>
             </div>
 
