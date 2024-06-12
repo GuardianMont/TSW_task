@@ -105,7 +105,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
+                // ready=state=$ significa che l'operazione è stata completata
+                //status invece è un valore intero che indica l'esito della rihiesta: 200 indica il successo
                 const response = JSON.parse(xhr.responseText);
+                // responseText contiene la risposta solo nel caso di interazione ultimata
                 const emailError = document.getElementById('signup-email-error');
 
                 if (!response.isAvailable) {

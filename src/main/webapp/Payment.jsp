@@ -33,7 +33,7 @@
 <body>
 <jsp:include page="Header.jsp"/>
 
-<form id="check-out-form" >
+<form id="check-out-form" action="CheckoutServlet" method="post">
     <!--action="CheckoutServlet" method="post"-->
 <div class="section_1">
     <h2>Indirizzo di Spedizione</h2>

@@ -32,14 +32,14 @@ public class CheckoutServlet extends HttpServlet {
         if (cart==null){
             //tecnicemente impossibile arrivare qui senza cart
             throw new RuntimeException();
-            //comuque va fatto un dispach ad una pagina di errore nel caso
         }
         String userId = (String) session.getAttribute("userId");
         if (userId==null){
             //tecnicamente impossibile arrivare qua senza userID
             throw new RuntimeException();
-            //comunque va fatto un dispach ad una pagina di errore in ogni caso
         }
 
+        String selectedAddress = request.getParameter("selectedAddress");
+        String selectedPaymentMethod = request.getParameter("selectedPaymentMethod");
     }
 }

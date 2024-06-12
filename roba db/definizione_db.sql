@@ -3,11 +3,15 @@ CREATE DATABASE tavolando;
 USE tavolando;
 
 CREATE TABLE Ordine(
-                       codice_fattura VARCHAR(255) PRIMARY KEY,
+                       codice_fattura int auto_increment PRIMARY KEY,
                        utente_id VARCHAR(255) NOT NULL,
+                       cod_address smallint not null,
+                       cod_method smallint not null,
                        data DATE NOT NULL,
-                       costo_totale DOUBLE NOT NULL,
-                       informazioni TEXT NOT NULL
+                       foreign key(utente_id) references Utente(username),
+                       foreign key(utente_id, cod_address) references Indirizzo( utente_id, num),
+                       foreign Key (utente_id, cod_method) references MetodoPagamento (utente_id, num)
+
 );
 CREATE TABLE Utente(
                        username VARCHAR(255) PRIMARY KEY,
@@ -38,7 +42,7 @@ CREATE TABLE Indirizzo(
                           provincia VARCHAR(255) NOT NULL,
                           via VARCHAR(255) NOT NULL,
                           n_civico SMALLINT NOT NULL,
-                          preferenze TEXT NOT NULL,
+                          preferenze TEXT,
                           FOREIGN KEY (utente_id) REFERENCES Utente(username),
                           PRIMARY KEY (utente_id, num)
 );
@@ -64,6 +68,7 @@ CREATE TABLE StoricoProdotti(
                                 utente_id VARCHAR(255) not null,
                                 FOREIGN KEY (utente_id)REFERENCES Utente(username),
                                 FOREIGN KEY (codice_fattura) REFERENCES Ordine(codice_fattura),
+                                FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id) ON DELETE RESTRICT,
                                 PRIMARY KEY (codice_fattura, prodotto_id)
 );
 CREATE TABLE Carrello(
@@ -74,10 +79,11 @@ CREATE TABLE Carrello(
                          FOREIGN KEY (utente_id) REFERENCES Utente(username),
                          PRIMARY KEY(prodotto_id, utente_id)
 );
+
 CREATE TABLE Preferiti(
                           prodotto_id INT UNSIGNED NOT NULL,
                           utente_id VARCHAR(255) NOT NULL,
-                          FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id),
+                          FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id) ON DELETE CASCADE,
                           FOREIGN KEY (utente_id) REFERENCES Utente(username),
                           PRIMARY KEY (prodotto_id, utente_id)
 );
