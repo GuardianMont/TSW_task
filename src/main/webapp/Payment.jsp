@@ -12,23 +12,11 @@
 <html>
 <head>
     <title>Indirizzo di Spedizione</title>
-    <!-- questo va messo nel css relativo alla spedizione-->
-    <style>
-        .hidden {
-            display: none;
-        }
-        .error {
-            border-color: red;
-        }
-        .error-message {
-            color: red;
-            display: none;
-        }
-    </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/validationAddress.js"></script>
     <script src="js/validationPayMathods.js"></script>
     <script src="js/loadAddressPay.js"></script>
+    <link rel="stylesheet" href="css/Payment.css">
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
@@ -41,9 +29,9 @@
         <!--immetto le informazioni con ajax -->
     </div>
     <div id = "add-button" class="">
-        <button class="add-button" onclick="aggiungiIndirizzo()">Aggiungi Nuovo Indirizzo</button>
+        <button class="add-button add-methods-button" onclick="aggiungiIndirizzo()">Aggiungi Nuovo Indirizzo</button>
     </div>
-    <div id="remove-button"  class="hidden">
+    <div id="remove-button" class="hidden">
         <button class="remove-button" onclick="removeForm()">X</button>
     </div>
     <div id="new-address-form" class="hidden">
@@ -74,7 +62,7 @@
             <input id="provincia" name="provincia" type="text" maxlength="2" ><br>
             <span id="provincia-error" class="error-message">Inserisci una provincia valida (2 lettere).</span><br>
 
-            <input type="submit" value="Add Adress"><input type="reset" value="Reset">
+            <input type="submit" value="Add Adress" class="add-address-button"><input type="reset" value="Reset">
         </form>
     </div>
 </div>
@@ -84,7 +72,7 @@
         <!--immetto le informazioni con ajax -->
     </div>
     <div id="add-pay-button" class="">
-        <button class="add-button" onclick="aggiungiPayMethods()">Aggiungi Nuovo Metodo di pagamento</button>
+        <button class="add-button add-methods-button" onclick="aggiungiPayMethods()">Aggiungi Nuovo Metodo di pagamento</button>
     </div>
     <div id ="remove-pay-form" class="hidden">
         <button class="remove-button" onclick="removePayForm()">X</button>
@@ -115,14 +103,14 @@
 
             <label for="titolareCarta">Titolare Carta:</label><br>
             <input id="titolareCarta" name="titolareCarta" type="text" placeholder="nome cognome" > <br>
-            <span id="titolareError" class="error-message">Il campo Titolare Carta è obbligatorio.</span><br>
+            <span id="titolareError" class="error-message">Il campo Titolare Carta è obbligatoria.</span><br>
 
-            <input type="submit" value="Add Methods"><input type="reset" value="Reset">
+            <input type="submit" value="Add Methods" class="add-methods-button"><input type="reset" value="Reset">
         </form>
     </div>
 </div>
     <br>
-    <input type="submit" value="Proceed">
+    <input type="submit" value="Proceed" class="proceed-button">
 </form>
 <jsp:include page="Footer.jsp"/>
 </body>

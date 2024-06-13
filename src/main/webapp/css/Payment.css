@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.section_1,
+.section_2 {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea {
+    width: calc(100% - 10px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.error-message {
+    color: red;
+    display: none;
+}
+
+.button-container {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.add-button,
+.remove-button,
+input[type="reset"] {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-button:hover,
+.remove-button:hover,
+input[type="reset"]:hover {
+    background-color: #45a049;
+}
+
+.add-address-button,
+.add-methods-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-address-button:hover,
+.add-methods-button:hover {
+    background-color: #45a049;
+}
+
+.proceed-button {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Differente colore per il pulsante Proceed */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 20px auto; /* Centra il pulsante */
+}
+
+.proceed-button:hover {
+    background-color: #4CAF50; /* Differente colore per il pulsante Proceed al passaggio del mouse */
+}
+
+.hidden {
+    display: none;
+}
