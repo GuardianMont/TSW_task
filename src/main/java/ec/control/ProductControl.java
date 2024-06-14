@@ -2,8 +2,7 @@ package ec.control;
 
 
 import ec.model.*;
-import ec.model.cart.CartDao;
-import ec.model.cart.CartDaoDM;
+
 import ec.model.cart.CartItem;
 import ec.model.cart.ShoppingCart;
 import ec.model.product.ProductBean;
@@ -14,7 +13,6 @@ import jakarta.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;

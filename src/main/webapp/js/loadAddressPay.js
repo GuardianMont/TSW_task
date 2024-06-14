@@ -1,125 +1,182 @@
 
-$(document).ready(function() {
-    // Load existing addresses and payment methods on page load
+document.addEventListener('DOMContentLoaded', function() {
     loadAddresses();
     loadPaymentMethods();
+    document.getElementById('addressForm').addEventListener('onsubmit', submitAddressForm);
+    document.getElementById('payMethodsForm').addEventListener('onsubmit', submitPaymentForm);
+});
+   function checkoutForm(){
+        let addressSelected = document.querySelector("input[name='selectedAddress']:checked");
+        let paymentSelected = document.querySelector("input[name='selectedPayMethod']:checked");
 
-    $('#check-out-form').on("submit", function(event){
-        let addressSelected = $("input[name='selectedAddress']:checked").val();
-        let paymentSelected = $("input[name='selectedPayMethod']:checked").val();
+        if (!addressSelected && !paymentSelected ){
+            var notification = document.getElementById("notificationAD");
+            var notificationText = document.getElementById('notification-textAD');
+            notificationText.textContent = "Per proseguire selezionare un indirizzo e un metodo di pagamento";
+            notification.style.display = "flex";
+            setTimeout(function() {
+                notification.style.display = "none";
+            }, 5000);
+            return  false;
+        }
 
         if (!addressSelected) {
-            alert("Per proseguire selezionare un indirizzo");
-            return false;
+            var notification = document.getElementById("notificationAD");
+            var notificationText = document.getElementById('notification-textAD');
+            notificationText.textContent = "Per proseguire selezionare un indirizzo";
+            notification.style.display = "flex";
+            setTimeout(function() {
+                notification.style.display = "none";
+            }, 5000);
+            return  false;
         }
 
         if (!paymentSelected) {
-            alert("Per proseguire selezionare un metodo di pagamento");
-            return false;
+            var notification = document.getElementById("notificationPM");
+            var notificationText = document.getElementById('notification-textPM');
+            notificationText.textContent= "Per proseguire selezionare un metodo di pagamento";
+            notification.style.display = "flex";
+            setTimeout(function() {
+                notification.style.display = "none";
+            }, 5000);
+            return   false;
         }
 
         return true;
-    });
+    }
 
     // Submit address form via AJAX
-    $('#addressForm').on('submit', function(event) {
-        event.preventDefault();
-        if (validateFormAd()) {
-            var formData = $(this).serialize();
-            console.log("Sending data:", formData);
-            $.ajax({
-                contentType:"application/x-www-form-urlencoded; charset=UTF-8",
-                url: "AddressManagement",
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    if(response.success){
-                        console.log("Operazione completata con successo")
-                        $('#new-address-form').addClass('hidden');
-                        loadAddresses();
-                        resetAddressForm();
-                    }else{
-                        alert('Errore: ' + response.error);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error adding address:', error);
-                    alert('Errore durante l\'aggiunta dell\'indirizzo: ' + xhr.responseText);
-                }
-            });
+
+function submitAddressForm(event) {
+    event.preventDefault();
+    if (validateFormAd()) {
+        var formData = new FormData(document.getElementById('addressForm'));
+        console.log("Sending data:");
+        formData.forEach((value, key) => {
+            console.log(key + ": " + value);
+        });
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'AddressManagement');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                console.log("Operazione completata con successo");
+                document.getElementById('new-address-form').classList.add('hidden');
+                loadAddresses();
+                resetAddressForm();
+            } else {
+                alert('Errore: ' + response.error);
+            }
+        } else {
+            console.error('Request failed. Status:', xhr.status);
         }
-    });
-
-    $('#payMethodsForm').on('submit', function(event) {
-        event.preventDefault();
-        if (validateFormPM()) {
-            var formData = $(this).serialize();
-            console.log("Sending data:", formData);
-            $.ajax({
-                contentType:"application/x-www-form-urlencoded; charset=utf-8",
-                url: 'payMethodsManager',
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    if (response && response.success){
-                        console.log("Operazione completata con successo")
-                        $('#new-payMethod-form').addClass('hidden');
-                        loadPaymentMethods();
-                        resetPaymentForm();
-                    }else{
-                        alert('Errore durante l\'aggiunta del metodo di pagamento: ' + response.error);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error adding payment method:', error);
-                }
-            });
-        }
-    });
-
-
-});
-
-function loadAddresses() {
-    $.ajax({
-        url: 'AddressManagement',
-        type: 'POST',
-        data: {opzione: "show"},
-        dataType: 'json',
-        success: function(response) {
-            $('#shipping-addresses').empty();
-            response.forEach(function(AddressUs) {
-                $('#shipping-addresses').append(
-                    '<div><input type="radio" name="selectedAddress" value="' + AddressUs.numId + '">' + AddressUs.toString() + '</div>'
-                );
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error('Error loading addresses:', error);
-        }
-    });
+    };
+    xhr.onerror = function() {
+        console.error('Request failed. Network error.');
+    };
+    xhr.send(formData);
+    }
 }
 
-function loadPaymentMethods() {
-    $.ajax({
-        url: 'payMethodsManager',
-        type: 'POST',
-        data: {opzione: "show"},
-        dataType: 'json',
-        success: function(response) {
-            $('#shipping-payment').empty();
-            response.forEach(function(payMethod) {
-                $('#shipping-payment').append(
-                    '<div><input type="radio" name="selectedPayMethod" value="' + payMethod.numId + '"> Numero carta: ' + payMethod.numCarta +
-                    '<br> Data scadenza: ' + payMethod.dataScadenza +
-                    'Titolare Carta: ' + payMethod.titolareCarta + '</div>'
-                );
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error('Error loading payment methods:', error);
+function submitPaymentForm(event) {
+    event.preventDefault();
+    if (validateFormPM()) {
+        var formData = new FormData(document.getElementById('payMethodsForm'));
+        console.log("Sending data:", formData);
+        formData.forEach((value, key) => {
+            console.log(key + ": " + value);
+        });
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'payMethodsManager');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    console.log("Operazione completata con successo");
+                    document.getElementById('new-payMethod-form').classList.add('hidden');
+                    loadPaymentMethods();
+                    resetPaymentForm();
+                } else {
+                    alert('Errore: ' + response.error);
+                }
+            } else {
+                console.error('Request failed. Status:', xhr.status);
+            }
+        };
+        xhr.onerror = function() {
+            console.error('Request failed. Network error.');
+        };
+        xhr.send(formData);
+    }
+}
+
+
+function loadAddresses() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'AddressManagement');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                var addresses = response.data;
+                const container = document.getElementById("shipping-addresses");
+                container.innerHTML = '';
+                addresses.forEach(function(address) {
+                    let div = document.createElement('div');
+                    div.innerHTML = '<div></div><input type="radio" name="selectedAddress" value="' + address.num_ID + '"> Indirizzo: ' + address.via + ' , num: ' +
+                        address.numCiv + '<br> citta: ' + address.citta + ', provincia: ' + address.provincia + ', cap:' + address.cap +
+                        '<br>preferenze:' + address.preferenze + '</div>';
+                    container.appendChild(div);
+                });
+            } else {
+                console.error('Error loading addresses:', response.error);
+            }
+        } else {
+            console.error('Request failed. Status:', xhr.status);
         }
-    });
+    };
+    xhr.onerror = function() {
+        console.error('Request failed. Network error.');
+    };
+    var data = 'opzione=show';
+    xhr.send(data);
+}
+
+
+function loadPaymentMethods() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'payMethodsManager');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                var payMethod = response.data;
+                const container = document.getElementById("shipping-payment");
+                container.innerHTML = '';
+                payMethod.forEach(function(payMethod) {
+                    let div = document.createElement('div');
+                    div.innerHTML =  '<div><input type="radio" name="selectedPayMethod" value="' + payMethod.numId + '"> Numero carta: ' + payMethod.numCarta +
+                        '<br> Data scadenza: ' + payMethod.dataScadenza +
+                        'Titolare Carta: ' + payMethod.titolareCarta + '</div>';
+                    container.appendChild(div);
+                });
+            } else {
+                console.error('Error loading metodo di pagamento:', response.error);
+            }
+        } else {
+            console.error('Request failed. Status:', xhr.status);
+        }
+    };
+    xhr.onerror = function() {
+        console.error('Request failed. Network error.');
+    };
+    var data = 'opzione=show';
+    xhr.send(data);
 }
 
 function aggiungiIndirizzo() {

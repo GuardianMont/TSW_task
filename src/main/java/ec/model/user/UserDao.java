@@ -18,5 +18,7 @@ public interface UserDao {
 
     public UserBean getUserIfPasswordIsCorrect(String id, String password);
 
+    public boolean doUpdate(UserBean user) throws SQLException;
+
 
 }

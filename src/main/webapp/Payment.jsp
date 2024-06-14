@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if (request.getSession().getAttribute("userId") == null ){
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/login_signup.jsp");
-        dispatcher.forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/login_signup.jsp");
+        return;
     }
     if (request.getSession().getAttribute("cart")==null){
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/ProductView.jsp");
-        dispatcher.forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/Cart.jsp");
+        return;
     }
 %>
 <html>
@@ -16,12 +16,20 @@
     <script src="js/validationAddress.js"></script>
     <script src="js/validationPayMathods.js"></script>
     <script src="js/loadAddressPay.js"></script>
+    <link rel="stylesheet" href="css/notificaADPM.css">
     <link rel="stylesheet" href="css/Payment.css">
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
+<div class="notification" id="notificationAD">
+    <img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="20" height="20">
+    <span id="notification-textAD"></span>
+</div>
+<div class="notification" id="notificationPM">
+    <img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="20" height="20">
+    <span id="notification-textPM"></span>
+</div>
 
-<form id="check-out-form" action="CheckoutServlet" method="post">
     <!--action="CheckoutServlet" method="post"-->
 <div class="section_1">
     <h2>Indirizzo di Spedizione</h2>
@@ -36,7 +44,7 @@
     </div>
     <div id="new-address-form" class="hidden">
         <!--form per l'aggiunta di un nuovo indirizzo celato se l'utente non clicca il bottone-->
-        <form id="addressForm" action="AddressManagement" method="post" onsubmit="return validateFormAd()">
+        <form id="addressForm" action="AddressManagement" method="POST">
             <input type="hidden" name="opzione" value="add">
 
             <label for="via">Via:</label><br>
@@ -79,7 +87,7 @@
     </div>
     <div id="new-payMethod-form" class="hidden">
         <!--form per l'aggiunta di un nuovo metodo di pagamento celato se l'utente non clicca il bottone-->
-        <form id="payMethodsForm" action="payMethodsManager" method="post" onsubmit="return validateFormPM()">
+        <form id="payMethodsForm" action="payMethodsManager" method="post">
             <input type="hidden" name="opzione" value="add">
 
             <label for="NumeroCarta">Numero Carta:</label><br>
@@ -109,8 +117,9 @@
         </form>
     </div>
 </div>
-    <br>
-    <input type="submit" value="Proceed" class="proceed-button">
+
+<form id="check-out-form" onsubmit="return checkoutForm()">
+    <input type="submit" value="Procedi al checkOut" class="proceed-button">
 </form>
 <jsp:include page="Footer.jsp"/>
 </body>

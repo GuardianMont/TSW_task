@@ -24,7 +24,6 @@ CREATE TABLE Indirizzo(
                           FOREIGN KEY (utente_id) REFERENCES Utente(username),
                           PRIMARY KEY (utente_id, num)
 );
-
 CREATE TABLE MetodoPagamento(
                                 utente_id VARCHAR(255) NOT NULL,
                                 num SMALLINT NOT NULL,
@@ -49,6 +48,15 @@ CREATE TABLE Prodotto(
                          categoria VARCHAR(255) NOT NULL,
                          colore VARCHAR(255) NOT NULL,
                          immagine MEDIUMBLOB
+);
+
+CREATE TABLE Sconto(
+    prodotto INT UNSIGNED PRIMARY KEY,
+    percentuale_sconto INT UNSIGNED,
+    FOREIGN KEY prodotto REFERENCES Prodotto(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CHECK (percentuale_sconto >= 0 AND percentuale_sconto <=100)
 );
 
 CREATE TABLE Ordine(

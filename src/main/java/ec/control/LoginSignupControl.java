@@ -48,12 +48,15 @@ public class LoginSignupControl extends HttpServlet {
                     }else{
                         return;
                     }
-                    break;
+                    return;
                 case "signup":
                     if (!doSignup(req,resp)){
                         dis="/login_signup.jsp";
                         errorMessage="registrazione fallita";
+                    }else{
+                        return;
                     }
+                    break;
             }
         }
         req.setAttribute("errorMessage", errorMessage);
@@ -74,7 +77,11 @@ public class LoginSignupControl extends HttpServlet {
         if(user != null){
             session.setAttribute("userId", user.getUsername());
             String referer = req.getHeader("referer");
-            resp.sendRedirect(referer);
+            if (referer.equals(req.getContextPath() + "/login_signup.jsp")){
+                resp.sendRedirect(req.getContextPath() + "/ProductView.jsp");
+            }else resp.sendRedirect(referer);
+            session.setAttribute("signupSuccess", true);
+
             return true;
         }
         return false;
@@ -111,7 +118,8 @@ public class LoginSignupControl extends HttpServlet {
 
                 HttpSession session = req.getSession();
                 session.setAttribute("userId", user.getUsername());
-
+                session.setAttribute("signupSuccess", true);
+                resp.sendRedirect(req.getContextPath() + "/ProductView.jsp");
                 return true;
             } catch (SQLIntegrityConstraintViolationException e) {
                 e.printStackTrace();

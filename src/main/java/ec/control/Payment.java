@@ -37,10 +37,7 @@ public class Payment extends HttpServlet {
         String opzione = request.getParameter("opzione");
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("userId") == null) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("{\"success\": false, \"error\": \"Sessione non valida o utente non loggato\"}");
+            sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Sessione non valida o utente non loggato");
             return;
         }
         if (opzione != null) {
@@ -50,43 +47,25 @@ public class Payment extends HttpServlet {
                         try {
                             handleAddAction(request,response);
                         } catch (SQLException | IOException e) {
-                            e.printStackTrace();
-                            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                            response.setContentType("application/json");
-                            response.setCharacterEncoding("UTF-8");
-                            response.getWriter().write("{\"success\": false, \"error\": \"" + e.getMessage() + "\"}");
+                            sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
                         }
                     }
                     break;
                 case "show":
                     try {
-                        //request.setAttribute("payMethods", model.doRetrieveAll((String) request.getSession().getAttribute("userId")));
+                        request.setAttribute("payMethods", model.doRetrieveAll((String) request.getSession().getAttribute("userId")));
                         handleShowAction(request,response);
                     } catch (SQLException e) {
-                        e.printStackTrace();
-                        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        response.setContentType("application/json");
-                        response.setCharacterEncoding("UTF-8");
-                        response.getWriter().write("{\"success\": false, \"error\": \"" + e.getMessage() + "\"}");
+                        sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
                     }
                     break;
                 default:
-                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    response.getWriter().write("{\"success\": false, \"error\": \"Opzione non valida\"}");
+                    sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non valida");
                     break;
             }
         }else {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("{\"success\": false, \"error\": \"Opzione non fornita\"}");
+            sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non fornita");
         }
-//        response.setContentType("text/plain");
-//        response.setCharacterEncoding("UTF-8");
-//        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(dis);
-//        dispatcher.forward(request, response);
     }
 
     private void handleAddAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -106,25 +85,45 @@ public class Payment extends HttpServlet {
             pay.setSalt(salt);
             pay.setCvv(cvvHash);
         } catch (BadAttributeValueExpException e) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("{\"success\": false, \"error\": \"Errore generazione hash\"}");
+            sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore generazione hash");
         }
         int n = model.checkNum((String) request.getSession().getAttribute("userId"));
         pay.setNumId(n+1);
         model.doSave(pay, (String) request.getSession().getAttribute("userId"), pay.getNumId());
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("{\"success\": true}");
+        sendSuccessResponse(request, response);
     }
 
     private void handleShowAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         Collection<PayMethod> payMethods = model.doRetrieveAll((String) request.getSession().getAttribute("userId"));
-        String json = new Gson().toJson(payMethods);
+        sendJsonResponse(response,true, payMethods);
+    }
+
+    private void sendJsonResponse(HttpServletResponse response,boolean success, Object responseObject) throws IOException {
+        JsonObject jsonResponse = new JsonObject();
+        jsonResponse.addProperty("success", success);
+        jsonResponse.add("data", new Gson().toJsonTree(responseObject));
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(json);
+        response.getWriter().write(jsonResponse.toString());
+
+    }
+    private void sendSuccessResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String redirectUrl = "/Payment.jsp";
+        response.sendRedirect(request.getContextPath() + redirectUrl);
+    }
+    private void sendErrorResponse(HttpServletResponse response, int statusCode, String errorMessage) throws IOException {
+        response.setStatus(statusCode);
+        response.getWriter().write(new Gson().toJson(new ErrorResponse(false, errorMessage)));
+    }
+    private static class ErrorResponse {
+        private final boolean success;
+        private final String error;
+
+        public ErrorResponse(boolean success, String error) {
+            this.success = success;
+            this.error = error;
+        }
     }
 }
 

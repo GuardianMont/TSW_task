@@ -1,6 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if (request.getSession().getAttribute("userID")!=null){
+    boolean shouldForward = false;
+
+    if (request.getSession().getAttribute("userID") != null) {
+        shouldForward = true;
+    }
+
+    if (request.getSession().getAttribute("signupSuccess") != null) {
+        shouldForward = true;
+    }
+
+    if (shouldForward) {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/ProductView.jsp");
         dispatcher.forward(request, response);
     }
@@ -54,7 +64,7 @@
             </div>
         </form>
 
-        <form id="signup-form" style="display:none" action="LoginSignup" method="post" >
+        <form id="signup-form" style="display:none" action="LoginSignup" method="post">
             <input type="hidden" id="signup-option" name="option" value="signup">
             <div class="form-group">
                 <label for = "signup-username"> Username:</label>

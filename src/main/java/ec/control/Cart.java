@@ -40,7 +40,13 @@ public class Cart extends HttpServlet {
                 String par_id = request.getParameter("id");
                 int id = 0;
                 if (par_id != null) {
-                    id = Integer.parseInt(par_id);
+                    try {
+                        id = Integer.parseInt(par_id);
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid item ID format.");
+                        return;
+                    }
                 }
                 switch (action.toLowerCase()) {
                     case "decrement":
@@ -71,16 +77,27 @@ public class Cart extends HttpServlet {
                             throw new RuntimeException(e);
                         }
                     case "aggiornaquantita":
-                        int quantita = Integer.parseInt(request.getParameter("quantity"));
-                        CartItem item = cart.getItem(id);
-                        if (item != null) {
-                            if (quantita == 0) {
-                                item.cancelOrder();
-                                cart.deleteItem(id);
-                            } else {
-                                item.setNumItem(quantita);
+                        String quantityStr = request.getParameter("quantity");
+                        if (quantityStr != null && !quantityStr.isEmpty()) {
+                            try {
+                                int quantita = Integer.parseInt(quantityStr);
+                                CartItem item = cart.getItem(id);
+                                if (item != null) {
+                                    if (quantita == 0) {
+                                        item.cancelOrder();
+                                        cart.deleteItem(id);
+                                    } else {
+                                        item.setNumItem(quantita);
+                                    }
+                                    session.setAttribute("cart", cart);
+                                }
+                            } catch (NumberFormatException e) {
+                                // Gestisci l'errore di formato non valido
+                                e.printStackTrace();
+                                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid quantity format.");
                             }
-                            session.setAttribute("cart", cart);
+                        } else {
+                            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Quantity is required.");
                         }
                         break;
                     case "acquisto":
@@ -135,14 +152,24 @@ public class Cart extends HttpServlet {
 
     private void handleAddAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         HttpSession session = request.getSession();
-        int id_item = Integer.parseInt(request.getParameter("id"));
-        ProductDaoDM model = new ProductDaoDM();
-        ProductBean item= model.doRetrieveByKey(id_item);
-        ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
-        cart.addItem(item);
-        session.setAttribute("cart", cart);
-        String referer = request.getHeader("referer");
-        response.sendRedirect(referer);
+        String idStr = request.getParameter("id");
+        if (idStr != null && !idStr.isEmpty()) {
+            try {
+                int id_item = Integer.parseInt(idStr);
+                ProductDaoDM model = new ProductDaoDM();
+                ProductBean item = model.doRetrieveByKey(id_item);
+                ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+                cart.addItem(item);
+                session.setAttribute("cart", cart);
+                String referer = request.getHeader("referer");
+                response.sendRedirect(referer);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid item ID format.");
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Item ID is required.");
+        }
     }
 
     private void handleAcquistoAction(HttpServletRequest request) throws SQLException {

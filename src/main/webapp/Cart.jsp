@@ -18,7 +18,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="css/Cart.css" rel="stylesheet" type="text/css">
+    <link href="css/notifica.css" rel="stylesheet" type="text/css">
     <title>Storage DS/BF</title>
+    <script src="js/loginMessage.js"></script>
     <script>
         function checkValidityQuantity(input) {
             var value = parseInt(input.value);
@@ -52,12 +54,25 @@
         function updateQuantity(form) {
             form.submit();
         }
+
+        window.onload = function() {
+            var signupSuccess = <%= session.getAttribute("signupSuccess") != null %>;
+            var user = <%= session.getAttribute("userId") != null %>;
+
+            if (signupSuccess && user) {
+                showNotification("Login effettuato! Benvenuto " + "<%= session.getAttribute("userId") %>!");
+                <% session.removeAttribute("signupSuccess"); %>
+            }
+        };
     </script>
 </head>
 
 <body>
 <jsp:include page="Header.jsp"/>
-
+<div class="notification" id="notification">
+    <img src="uploadFile/IconInfo.png" alt="Info Icon" width="20" height="20">
+    <span id="notification-text"></span>
+</div>
 <div class="container">
     <a href="product" class="catalogo">Catalogo</a>
     <h2 class="prodotti_carrello">Prodotti nel Carrello</h2>
