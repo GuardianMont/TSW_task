@@ -1,5 +1,7 @@
 package ec.model.PaymentMethod;
 
+import com.google.gson.JsonObject;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -99,11 +101,18 @@ public class PayMethod {
 
     @Override
     public String toString() {
-        return "PayMethod{" +
-                "circuito='" + circuito + '\'' +
-                ", numCarta='" + numCarta + '\'' +
-                ", dataScadenza='" + dataScadenza + '\'' +
-                ", titolareCarta='" + titolareCarta + '\'' +
-                '}';
+        return "numCarta=" + numCarta +
+                ", dataScadenza=" + dataScadenza +
+                ", titolareCarta=" + titolareCarta +
+                ", circuito= " + circuito;
+    }
+
+    public JsonObject toJson() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("numCarta", numCarta);
+        jsonObject.addProperty("dataScadenza", dataScadenza);
+        jsonObject.addProperty("titolareCarta", titolareCarta);
+        jsonObject.addProperty("circuito" ,circuito);
+        return jsonObject;
     }
 }

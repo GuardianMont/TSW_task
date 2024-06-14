@@ -1,25 +1,33 @@
 package ec.model.CheckOut;
 
 public class Ordine {
-    private static int idFattura=0;
+    private int numId;
     private String codiceFattura="";
     private String utenteId="";
     private int codAdress;
     private int codMethod;
-    public Ordine(){ //serve pre creare un nuovo codice fattura
-        idFattura++;
-        codiceFattura="TVL00" + idFattura;
-        codAdress=-1;
-        codMethod=-1;
-    }
-
-    Ordine (boolean alreadycreate){
-        //creazione per ordini che hanno già un codice fattura ma non
+    public Ordine(){
         codiceFattura="";
+        numId=-1;
         codAdress=-1;
         codMethod=-1;
     }
 
+    Ordine (int numID){
+        //creazione per ordini che hanno già un codice fattura ma non
+        this.codiceFattura= "TAV0" + numID;
+        codAdress=-1;
+        codMethod=-1;
+    }
+
+    public int getNumId() {
+        return numId;
+    }
+
+    public void setNumId(int numId) {
+        this.numId = numId;
+        this.codiceFattura= "TAV0" + numId;
+    }
 
     public String getCodiceFattura() {
         return codiceFattura;
@@ -52,4 +60,5 @@ public class Ordine {
     public void setCodMethod(int codMethod) {
         this.codMethod = codMethod;
     }
+
 }

@@ -4,8 +4,15 @@ document.addEventListener('DOMContentLoaded', function() {
     loadPaymentMethods();
     document.getElementById('addressForm').addEventListener('onsubmit', submitAddressForm);
     document.getElementById('payMethodsForm').addEventListener('onsubmit', submitPaymentForm);
+    document.getElementById('check-out-form').addEventListener('submit', function(event) {
+        document.querySelector('.proceed-button').disabled = true; // disabilito il bottone
+        //in modo che non si possa premere più volte durante il caricamento dello stesso check out generando problemi
+        event.preventDefault();
+        checkoutForm();
+    });
+
 });
-   function checkoutForm(){
+   function checkoutForm(event){
         let addressSelected = document.querySelector("input[name='selectedAddress']:checked");
         let paymentSelected = document.querySelector("input[name='selectedPayMethod']:checked");
 
@@ -17,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 notification.style.display = "none";
             }, 5000);
+            document.querySelector('.proceed-button').disabled = false;
             return  false;
         }
 
@@ -28,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 notification.style.display = "none";
             }, 5000);
+            document.querySelector('.proceed-button').disabled = false;
             return  false;
         }
 
@@ -39,13 +48,92 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 notification.style.display = "none";
             }, 5000);
+            document.querySelector('.proceed-button').disabled = false;
             return   false;
         }
+       if (addressSelected && paymentSelected) {
+           let checkData;
+           checkData ={
+               address: addressSelected.value,
+               paymentMethod: paymentSelected.value
+           };
 
-        return true;
+           submitCheckOut(checkData)
+
+       }
+
     }
+function submitCheckOut(checkData) {
+    console.log("checkData: ", checkData);
+    if (checkData !== false) {
+        console.log("Sending data:", checkData);
 
-    // Submit address form via AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", 'CheckoutServlet');
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    console.log("Operazione completata con successo");
+                    showConfirmationMessage(response);
+                } else {
+                    alert('Errore: ' + response.error);
+                }
+            } else {
+                console.error('Request failed. Status:', xhr.status);
+            }
+        };
+
+        xhr.onerror = function() {
+            console.error('Request failed. Network error.');
+        };
+
+        var params = new URLSearchParams();
+        params.append("address", checkData.address);
+        params.append("paymentMethod", checkData.paymentMethod);
+        params.append("opzione", "add");
+        console.log("Params:", params.toString());
+        xhr.send(params.toString());
+    }else{
+        console.error("checkoutForm returned false");
+    }
+}
+function showConfirmationMessage(data) {
+    let confirmationMessage = `
+        <div class="confirmation-message">
+            <h2>Riepilogo Acquisto</h2>
+            <h3>Oggetti acquistati:</h3>
+            <ul>
+                ${data.cartItems.map(item => `
+                    <li>${item.nome} (Quantità: ${item.quantity} Prezzo: ${item.prezzo})</li>
+                `).join('')}
+            </ul>
+            <h3>Totale Spesa: ${data.spesa}</h3>
+            <h4>Metodo di pagamento: </h4>
+             <p>Numero carta: ${data.paymentMethod.numCarta} Data Scadenza: ${data.paymentMethod.dataScadenza}
+              <br>Titolare carta: ${data.paymentMethod.titolareCarta} Circuito Pagamento: ${data.paymentMethod.circuito}</p>
+              <h4>Indirizzo di spedizione: </h4>
+            <p>${data.address.via}, numero civico: ${data.address.numCiv}
+            <br>${data.address.citta}(${data.address.provincia}),${data.address.cap}
+            <br>Preferenze specificate: ${data.address.Preferenze}</p>
+           
+            <button onclick="closeConfirmationMessage()">Chiudi</button>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', confirmationMessage);
+}
+
+function closeConfirmationMessage() {
+    document.querySelector('.confirmation-message').remove();
+    document.querySelector('.proceed-button').disabled = false;
+    //ri do la possibilità di premere il bottone
+    window.location.href = 'carrello';
+}
+
+
+// Submit address form via AJAX
 
 function submitAddressForm(event) {
     event.preventDefault();

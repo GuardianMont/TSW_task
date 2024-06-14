@@ -42,7 +42,7 @@
             </li>
             <li>
                 <div class="utente">
-                    <a href="#">
+                    <a href="Profile.jsp">
                         <img src="uploadFile/profile-user-svgrepo-com.svg" width="30" height="auto" alt="utente" class="carrelloImg" id="userIcon">
                     </a>
                 </div>

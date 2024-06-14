@@ -1,5 +1,7 @@
 package ec.model.address;
 
+import com.google.gson.JsonObject;
+
 import java.util.Objects;
 
 public class AddressUs {
@@ -68,7 +70,7 @@ public class AddressUs {
     public void setPreferenze(String preferenze) {
         this.preferenze = preferenze;
     }
-    public void setNum_ID (int num){this.num_ID= this.num_ID+num;}
+    public void setNum_ID (int num){this.num_ID= num;}
 
     public int getNum_ID (){return num_ID;}
     @Override
@@ -89,5 +91,15 @@ public class AddressUs {
         return via + ", " + numCiv + ", "+
                 "\n" + citta + " (" +provincia + ")" + ", " + cap + "\n" +
                 "Preferenze specificate= " + preferenze + '\'';
+    }
+    public JsonObject toJson() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("via", this.via);
+        jsonObject.addProperty("numCiv", this.numCiv);
+        jsonObject.addProperty("citta", this.citta);
+        jsonObject.addProperty("provincia" ,this.provincia);
+        jsonObject.addProperty("cap", this.cap);
+        jsonObject.addProperty("Preferenze", this.preferenze);
+        return jsonObject;
     }
 }

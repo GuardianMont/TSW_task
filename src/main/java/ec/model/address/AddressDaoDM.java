@@ -58,7 +58,7 @@ public class AddressDaoDM implements AddressDao{
 
             while (res.next()){
                 AddressUs ad = new AddressUs();
-
+                ad.setNum_ID(res.getInt("num"));
                 ad.setCap(res.getString("cap"));
                 ad.setCitta(res.getString("citta"));
                 ad.setPreferenze(res.getString("preferenze"));
@@ -84,6 +84,7 @@ public class AddressDaoDM implements AddressDao{
             ResultSet res = preparedStatement.executeQuery();
 
             while (res.next()){
+                ad.setNum_ID(res.getInt("num"));
                 ad.setCap(res.getString("cap"));
                 ad.setCitta(res.getString("citta"));
                 ad.setPreferenze(res.getString("preferenze"));

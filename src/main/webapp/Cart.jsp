@@ -79,6 +79,7 @@
     <%
         Boolean buy = (Boolean) request.getAttribute("acquistoCompletato");
         if (buy != null && buy.booleanValue()){
+            request.removeAttribute("acquistoCompletato");
     %>
     <p class="success-message">Acquisto completato con successo</p>
     <%

@@ -60,7 +60,7 @@ CREATE TABLE Sconto(
 );
 
 CREATE TABLE Ordine(
-                       codice_fattura VARCHAR(255) PRIMARY KEY,
+                       num int auto_increment Primary Key,
                        utente_id VARCHAR(255) NOT NULL,
                        cod_address SMALLINT NOT NULL,
                        cod_method SMALLINT NOT NULL,
@@ -71,16 +71,16 @@ CREATE TABLE Ordine(
 );
 
 CREATE TABLE StoricoProdotti(
-                                codice_fattura VARCHAR(255) NOT NULL,
+                                codice_fattura int NOT NULL,
                                 prodotto_id INT UNSIGNED NOT NULL,
                                 iva DOUBLE NOT NULL,
                                 prezzo_unitario DOUBLE NOT NULL,
                                 quantita INT NOT NULL,
-                                sconto DOUBLE NOT NULL,
+                                sconto DOUBLE ,
                                 utente_id VARCHAR(255) NOT NULL,
                                 FOREIGN KEY (utente_id) REFERENCES Utente(username),
-                                FOREIGN KEY (codice_fattura) REFERENCES Ordine(codice_fattura),
-                                FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id) ON DELETE RESTRICT,
+                                FOREIGN KEY (codice_fattura) REFERENCES Ordine(num) ON DELETE CASCADE,
+                                FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id) ON DELETE RESTRICT ON UPDATE RESTRICT, -- Aggiunta ON UPDATE RESTRICT
                                 PRIMARY KEY (codice_fattura, prodotto_id)
 );
 

@@ -18,6 +18,7 @@
     <script src="js/loadAddressPay.js"></script>
     <link rel="stylesheet" href="css/notificaADPM.css">
     <link rel="stylesheet" href="css/Payment.css">
+    <link rel="stylesheet" href="css/confermaAcquisto.css">
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
@@ -118,7 +119,7 @@
     </div>
 </div>
 
-<form id="check-out-form" onsubmit="return checkoutForm()">
+<form id="check-out-form" action="CheckoutServlet" method="post">
     <input type="submit" value="Procedi al checkOut" class="proceed-button">
 </form>
 <jsp:include page="Footer.jsp"/>
