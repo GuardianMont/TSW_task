@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
 
-
-
 @WebServlet("/AddressManagement")
 public class Address extends HttpServlet {
     private AddressDaoDM model;
@@ -27,8 +25,9 @@ public class Address extends HttpServlet {
         super.init();
         model = new AddressDaoDM();
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        doPost(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -45,37 +44,23 @@ public class Address extends HttpServlet {
                 case "add":
                     try {
                         handleAddAction(request, response);
-                    } catch (SQLException | IOException e) {
-                        e.printStackTrace();
-                        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        response.setContentType("application/json");
-                        response.setCharacterEncoding("UTF-8");
-                        response.getWriter().write("{\"success\": false, \"error\": \"" + e.getMessage() + "\"}");
+                    } catch (SQLException e) {
+                        sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
                     }
                     break;
                 case "show":
                     try {
                         handleShowAction(request, response);
                     } catch (SQLException e) {
-                        e.printStackTrace();
-                        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        response.setContentType("application/json");
-                        response.setCharacterEncoding("UTF-8");
-                        response.getWriter().write("{\"success\": false, \"error\": \"" + e.getMessage() + "\"}");
+                        sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
                     }
                     break;
                 default:
-                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    response.getWriter().write("{\"success\": false, \"error\": \"Opzione non valida\"}");
+                    sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non valida");
                     break;
             }
         } else {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("{\"success\": false, \"error\": \"Opzione non fornita\"}");
+            sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non fornita");
         }
     }
 
@@ -91,29 +76,47 @@ public class Address extends HttpServlet {
         ad.setNum_ID(n + 1);
         model.doSave(ad, (String) request.getSession().getAttribute("userId"), ad.getNum_ID());
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("{\"success\": true}");
+        sendSuccessResponse(request, response);
     }
 
     private void handleShowAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         Collection<AddressUs> addresses = model.doRetrieveAll((String) request.getSession().getAttribute("userId"));
-
-        sendJsonResponse(response, addresses);
+        sendJsonResponse(response,true, addresses);
     }
 
-    private void sendJsonResponse(HttpServletResponse response, Object responseObject) throws IOException {
+    private void sendJsonResponse(HttpServletResponse response,boolean success, Object responseObject) throws IOException {
+        JsonObject jsonResponse = new JsonObject();
+        jsonResponse.addProperty("success", success);
+        jsonResponse.add("data", new Gson().toJsonTree(responseObject));
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(new Gson().toJson(responseObject));
+        response.getWriter().write(jsonResponse.toString());
+
+    }
+
+    private void sendSuccessResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JsonObject jsonResponse = new JsonObject();
+        jsonResponse.addProperty("success", true);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonResponse.toString());
+        String redirectUrl = "/Payment.jsp";
+        response.sendRedirect(request.getContextPath() + redirectUrl);
     }
 
     private void sendErrorResponse(HttpServletResponse response, int statusCode, String errorMessage) throws IOException {
-        JsonObject errorResponse = new JsonObject();
-        errorResponse.addProperty("success", false);
-        errorResponse.addProperty("error", errorMessage);
-
         response.setStatus(statusCode);
-        sendJsonResponse(response, errorResponse);
+        response.getWriter().write(new Gson().toJson(new ErrorResponse(false, errorMessage)));
+    }
+
+    private static class ErrorResponse {
+        private final boolean success;
+        private final String error;
+
+        public ErrorResponse(boolean success, String error) {
+            this.success = success;
+            this.error = error;
+        }
     }
 }
