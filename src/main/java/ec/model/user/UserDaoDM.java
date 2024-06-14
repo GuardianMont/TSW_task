@@ -21,7 +21,7 @@ public class UserDaoDM implements UserDao {
                 + " (username, nome, cognome, email, n_telefono, password_hash, salt)"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?)";
         try( Connection connection = ConnectionPool.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);){
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)){
 
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getNome());
@@ -142,7 +142,6 @@ public class UserDaoDM implements UserDao {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-
         Collection<UserBean> users = new LinkedList<>();
 
         String selectSQL = "SELECT * FROM " + UserDaoDM.TABLE_NAME;
@@ -205,5 +204,31 @@ public class UserDaoDM implements UserDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    //metodo per aggiornare i dati dell'utente
+    @Override
+    public boolean doUpdate(UserBean user) throws SQLException {
+        String updateSQL = "UPDATE " + UserDaoDM.TABLE_NAME + " SET nome = ?, cognome = ?, email = ?, n_telefono = ?, password_hash = ?, salt = ? WHERE username = ?";
+        int result = 0;
+        try( Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);){
+
+            preparedStatement.setString(1, user.getNome());
+            preparedStatement.setString(2, user.getCognome());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(4, user.getPhoneNumber());
+            preparedStatement.setBytes(5, user.getPassword());
+            preparedStatement.setBytes(6, user.getSalt());
+            preparedStatement.setString(7, user.getUsername());
+
+            result = preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            return false;
+        }
+
+        return result > 0;
+
+
     }
 }

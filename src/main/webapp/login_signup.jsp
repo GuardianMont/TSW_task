@@ -65,7 +65,7 @@
             </div>
         </form>
 
-        <form id="signup-form" style="display:none" action="LoginSignup" method="post" >
+        <form id="signup-form" style="display:none" action="LoginSignup" method="post">
             <input type="hidden" id="signup-option" name="option" value="signup">
             <div class="form-group">
                 <label for = "signup-username"> Username:</label>
