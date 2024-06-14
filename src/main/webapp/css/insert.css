@@ -1,0 +1,134 @@
+body {
+    font-family: 'Open Sans', Arial, serif;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.catalogo {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+/*form {
+    display: flex;
+    flex-direction: column;
+}*/
+
+label {
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+input[type="file"] {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+textarea.textarea {
+    height: 100px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+input[type="submit"],
+input[type="reset"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+}
+
+input[type="reset"] {
+    background-color: #f44336;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+input[type="reset"]:hover {
+    background-color: #e53935;
+}
+
+/* Media Queries per PC */
+@media screen and (min-width: 1200px) {
+    .container {
+        padding: 30px 50px;
+    }
+
+    .catalogo {
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+}
+
+/* Media Queries per tablet */
+@media screen and (max-width: 1199px) and (min-width: 600px) {
+    .container {
+        padding: 20px 40px;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+}
+
+/* Media Queries per telefoni */
+@media screen and (max-width: 599px) {
+    .container {
+        padding: 10px 20px;
+    }
+
+    .catalogo {
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    input[type="submit"],
+    input[type="reset"] {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

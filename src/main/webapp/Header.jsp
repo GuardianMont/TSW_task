@@ -15,7 +15,7 @@
         <ul class="nav-menu">
             <li class="barra-ricerca">
                 <form class="ricerca">
-                    <input id="cerca" type="text" placeholder="Cerca nel sito" required>
+                    <input id="cerca" type="cerca" placeholder="Cerca nel sito" required>
                     <input id="submit" type="submit" value="Cerca">
                 </form>
             </li>

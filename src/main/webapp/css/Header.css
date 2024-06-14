@@ -113,21 +113,22 @@ nav {
     align-items: center;
 }
 
-.barra-ricerca input[type="text"] {
+.barra-ricerca input[type="cerca"] {
     padding: 8px;
     width: 200px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    height: 50%;
 }
 
 .barra-ricerca input[type="submit"] {
-    padding: 8px 15px;
+    padding: 4px 7px;
     background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 5px;
+    margin-left: 3px;
 }
 
 .barra-ricerca input[type="submit"]:hover {
@@ -180,7 +181,7 @@ nav {
 /* Media Queries per PC */
 @media screen and (min-width: 1200px) {
     .header-container {
-        padding: 20px 50px;
+        padding: 20px 30px;
     }
 
     .Tavolando {
@@ -196,13 +197,13 @@ nav {
         margin-left: 15px;
     }
 
-    .barra-ricerca input[type="text"] {
-        width: 130px;
+    .barra-ricerca input[type="cerca"] {
+        width: 100px;
     }
 
     .barra-ricerca input[type="submit"] {
-        width: 70px;
-        height: 40px;
+        width: 60px;
+        height: 30px;
     }
 }
 
@@ -222,13 +223,13 @@ nav {
         flex-wrap: wrap;
     }
 
-    .barra-ricerca input[type="text"] {
+    .barra-ricerca input[type="cerca"] {
         width: 50%;
     }
 
     .barra-ricerca input[type="submit"] {
-        width: 50px;
-        height: 30px;
+        width: 40px;
+        height: 20px;
     }
 }
 
@@ -263,12 +264,12 @@ nav {
         line-height: 10px;
     }
 
-    .barra-ricerca input[type="text"] {
+    .barra-ricerca input[type="cerca"] {
         width: 60px;
     }
 
     .barra-ricerca input[type="submit"] {
-        width: 60px;
-        height: 40px;
+        width: 40px;
+        height: 30px;
     }
 }
