@@ -1,6 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if (request.getSession().getAttribute("userID")!=null){
+    boolean shouldForward = false;
+
+    if (request.getSession().getAttribute("userID") != null) {
+        shouldForward = true;
+    }
+
+    if (request.getSession().getAttribute("signupSuccess") != null) {
+        shouldForward = true;
+    }
+
+    if (shouldForward) {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/ProductView.jsp");
         dispatcher.forward(request, response);
     }
