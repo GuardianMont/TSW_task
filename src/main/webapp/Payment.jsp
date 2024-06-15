@@ -107,7 +107,15 @@
             <span id="CvvError" class="error-message">Inserisci un CVV valido (3 cifre).</span><br>
 
             <label for="circuito">Circuito:</label><br>
-            <input id="circuito" name="circuito" type="text" maxlength="20" placeholder="visa-..." ><br>
+            <select id="circuito" name="circuito" required>
+                <option value="" disabled selected>Seleziona un circuito</option>
+                <option value="visa">Visa</option>
+                <option value="mastercard">Mastercard</option>
+                <option value="amex">American Express</option>
+                <option value="discover">Discover</option>
+                <option value="diners">Diners Club</option>
+                <option value="bancomat">Bancomat</option>
+            </select><br>
             <span id="circuitoError" class="error-message">Il campo 'Circuito' è obbligatorio.</span><br>
 
             <label for="titolareCarta">Titolare Carta:</label><br>

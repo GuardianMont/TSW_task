@@ -202,5 +202,16 @@ public class ProductDaoDM implements ProductDao {
 		}
 	}
 
+	public void doUpdateQuantity(ProductBean product) throws SQLException, IOException {
+		String sqlUpadate ="UPDATE " + ProductDaoDM.TABLE_NAME + " SET  disponibilita = ?  WHERE id = ? ";
+		try (Connection connection = ConnectionPool.getInstance().getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(sqlUpadate)) {
+			preparedStatement.setInt(1, product.getDisponibilita());
+			preparedStatement.setInt(2, product.getId());
+
+			preparedStatement.executeUpdate();
+		}
+	}
+
 }
 

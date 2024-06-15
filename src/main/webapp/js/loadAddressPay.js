@@ -112,13 +112,18 @@ function showConfirmationMessage(data) {
             </ul>
             <h3>Totale Spesa: ${data.spesa}</h3>
             <h4>Metodo di pagamento: </h4>
-             <p>Numero carta: ${data.paymentMethod.numCarta} Data Scadenza: ${data.paymentMethod.dataScadenza}
-              <br>Titolare carta: ${data.paymentMethod.titolareCarta} Circuito Pagamento: ${data.paymentMethod.circuito}</p>
-              <h4>Indirizzo di spedizione: </h4>
-            <p>${data.address.via}, numero civico: ${data.address.numCiv}
-            <br>${data.address.citta}(${data.address.provincia}),${data.address.cap}
-            <br>Preferenze specificate: ${data.address.Preferenze}</p>
-           
+            <p>
+                Numero carta: ${data.paymentMethod.numCarta}<br> 
+                Data Scadenza: ${data.paymentMethod.dataScadenza}<br>
+                Titolare carta: ${data.paymentMethod.titolareCarta}<br>
+                Circuito Pagamento: ${data.paymentMethod.circuito}
+            </p>
+            <h4>Indirizzo di spedizione: </h4>
+            <p>
+                    ${data.address.via}, numero civico: ${data.address.numCiv}<br>
+                    ${data.address.citta}(${data.address.provincia}),${data.address.cap}<br>
+                    Preferenze specificate: ${data.address.Preferenze}
+            </p>
             <button onclick="closeConfirmationMessage()">Chiudi</button>
         </div>
     `;

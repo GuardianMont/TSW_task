@@ -92,6 +92,11 @@ public class ProductBean implements Serializable {
         this.disponibilita = disponibilita;
     }
 
+    public void updateDisponibilita (int quantitaAcquistata){
+        this.disponibilita = this.disponibilita - quantitaAcquistata;
+        if (this.disponibilita<0) this.disponibilita=0;
+    }
+
     public String getCategoria() {
         return categoria;
     }

@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
 
 <%
 	Collection<?> products = (Collection<?>) request.getAttribute("products");
 	if(products == null) {
-		response.sendRedirect("./product");	
+		response.sendRedirect("./product");
 		return;
 	}
 %>
@@ -38,7 +38,7 @@
 
 <jsp:include page="Header.jsp"/>
 <div class="notification" id="notification">
-	<img src="uploadFile/IconInfo.png" alt="Info Icon" width="20" height="20">
+	<img src="uploadFile/IconInfo.png" alt="Info Icon" width="20" height="20" >
 	<span id="notification-text"></span>
 </div>
 <div class="generale">
@@ -59,46 +59,67 @@
 			Iterator<?> it = products.iterator();
 			while (it.hasNext()) {
 				ProductBean bean = (ProductBean) it.next();
-		%>
+				boolean outOfStock = bean.getDisponibilita() == 0;
+	%>
 
-	<div class="product">
+	<div class="product <%=outOfStock ?  "out-of-stock" : "" %>" >
 		<div class="product-content">
 			<div class="immagini">
-		<%
-			String stockImg = "";
-			byte[] imageData = bean.getImmagineUrl();
-			if (imageData != null) {
-				stockImg = Base64.getEncoder().encodeToString(imageData);
-			}
-		%>
+				<%
+					String stockImg = "";
+					byte[] imageData = bean.getImmagineUrl();
+					if (imageData != null) {
+						stockImg = Base64.getEncoder().encodeToString(imageData);
+					}
+				%>
 
-				<img  src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="<%=bean.getNome()%>">
+				<img src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="<%=bean.getNome()%>" onclick="window.location.href='product?opzione=read&id=<%=bean.getId()%>'">
 			</div>
-		<h2><%=bean.getNome()%></h2>
-		<p><%=bean.getPrezzo()%></p>
-		<p><a  href="product?opzione=delete&id=<%=bean.getId()%>">Delete</a> <br>
-			<a href="product?opzione=read&id=<%=bean.getId()%>">Details</a><br>
-			<a href="carrello?opzione=add&id=<%=bean.getId()%>">Add to Cart</a><br>
-			<a href="product?opzione=show&id=<%=bean.getId()%>">Modifica</a>
-		</p>
+			<h2><%=bean.getNome()%></h2>
+			<p><%=bean.getPrezzo()%></p>
+			<div class="button-container">
+				<p>
+					<%
+						if (request.getSession().getAttribute("userId")!=null){
+					%>
+					<a href="product?opzione=delete&id=<%=bean.getId()%>" class="remove-button">Delete</a> <br>
+					<a href="product?opzione=show&id=<%=bean.getId()%>" class="add-button">Modifica</a>
+						<%
+							}
+						%>
+
+
+						<%
+                        if (bean.getDisponibilita() > 0) {
+                    %>
+					<a href="carrello?opzione=add&id=<%=bean.getId()%>" class="add-button">Aggiungi al carrello</a> <br>
+						<%
+                        } else {
+                    %>
+				<div class="out-of-stock-message">
+					<img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="15" height="15">
+					<span id="out-of-stock-message-text">Esaurito</span>
+				</div>
+				<br>
+				<%
+					}
+				%>
+				</p>
+			</div>
 		</div>
 	</div>
 
-		<%
-				}
-			 %>
+	<%
+		}
+	%>
 </div>
-<% } else {
-		%>
-		<tr>
-			<td colspan="6">No products available</td>
-		</tr>
-		<%
-			}
-		%>
+<% } else { %>
+<tr>
+	<td colspan="6">No products available</td>
+</tr>
+<% } %>
 
 <a href="insert.jsp" class="inserimento">Inserire prodotto</a>
-
 
 <script>
 	// JavaScript per gestire il click sul pulsante

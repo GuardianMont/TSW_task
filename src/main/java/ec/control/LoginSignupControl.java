@@ -49,6 +49,7 @@ public class LoginSignupControl extends HttpServlet {
                         return;
                     }
                     break;
+
                 case "signup":
                     if (!doSignup(req,resp)){
                         dis="/login_signup.jsp";

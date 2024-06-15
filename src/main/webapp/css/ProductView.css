@@ -55,3 +55,36 @@ body{
     object-fit: cover;
 }
 
+.out-of-stock {
+    filter: grayscale(100%);
+    background-color: #ff8a80;
+}
+
+.out-of-stock-message {
+    display: inline-block;
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.out-of-stock-message img {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.button-container a {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.button-container a:hover {
+    background-color: #45a049;
+}

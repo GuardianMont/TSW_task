@@ -10,6 +10,7 @@ import ec.model.PaymentMethod.PaymentDaoDM;
 import ec.model.address.AddressDaoDM;
 import ec.model.address.AddressUs;
 import ec.model.cart.ShoppingCart;
+import ec.model.product.ProductDaoDM;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -98,13 +99,22 @@ public class CheckoutServlet extends HttpServlet {
         JsonObject jsonResponse = new JsonObject();
         jsonResponse.addProperty("success", true);
 
-        AddressUs indirizzo = new AddressDaoDM().doRetrieveByKey(request.getParameter("userId"),ordine.getCodAdress() );
+        AddressUs indirizzo = new AddressDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodAdress());
         jsonResponse.add("address", indirizzo.toJson());
-        PayMethod metodo= new PaymentDaoDM().doRetrieveByKey(request.getParameter("userId"),ordine.getCodMethod() );
-        jsonResponse.add("paymentMethod", metodo.toJson() );
+
+        PayMethod metodo = new PaymentDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodMethod());
+        jsonResponse.add("paymentMethod", metodo.toJson());
         jsonResponse.addProperty("spesa", cart.getPrezzoTot());
+
+        ProductDaoDM modelItem = new ProductDaoDM();
         JsonArray cartItems = new JsonArray();
         cart.getItem_ordinati().forEach(item -> {
+            item.getItem().updateDisponibilita(item.getNumItem());
+            try {
+                modelItem.doUpdateQuantity(item.getItem());
+            } catch (SQLException |IOException e) {
+                throw new RuntimeException(e);
+            }
             JsonObject jsonItem = new JsonObject();
             jsonItem.addProperty("nome", item.getItem().getNome());
             jsonItem.addProperty("quantity", item.getNumItem());
