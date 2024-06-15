@@ -55,6 +55,7 @@ public class UpdateUser extends HttpServlet {
     // il metodo doUpdate prende i parametri dalla richiesta e aggiorna i dati dell'utente
     private void doUpdate(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException{
         String dis = "/Profile.jsp";
+        //TODO: aggiungere controlli sui parametri
         try {
             // Prende le informazioni vecchie dell'utente dal database
             UserBean oldUser = userDao.doRetrieveByKey(req.getParameter("username"));
@@ -90,6 +91,7 @@ public class UpdateUser extends HttpServlet {
     // il metodo doChangePassword prende i parametri dalla richiesta e cambia la password dell'utente
     private void doChangePassword(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException{
         String dis = "/Profile.jsp";
+        //TODO: aggiungere controlli sui parametri
         try {
             // Prende le informazioni vecchie dell'utente dal database
             UserBean oldUser = userDao.doRetrieveByKey(req.getParameter("username"));

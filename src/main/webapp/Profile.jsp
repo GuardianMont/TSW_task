@@ -9,75 +9,89 @@
 <html>
 <head>
 
-    <!-- TODO: aggiungere style e modificare layout-->
-    <title>Title</title>
+    <!-- TODO: modificare style e layout-->
+    <title>Profilo</title>
+    <link rel="stylesheet" type="text/css" href="css/Profile.css">
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
+<script src="js/profileSwitchingForms.js"></script>
     <%
-        // TODO: aggiungere controllo per vedere se l'utente è loggato (me l'ha consigliato copilot)
         UserBean user = (UserBean) request.getAttribute("user");
-        if (user != null) {
+        String sessionUser = (String) request.getSession().getAttribute("userId");
 
+        if (user != null && sessionUser != null && sessionUser.equals(user.getUsername())){
     %>
-    <h1>Profilo <%= user.getUsername() %></h1>
-    <table border="1">
-        <tr>
-            <th>Nome</th>
-            <th>Cognome</th>
-            <th>Email</th>
-            <th>Telefono</th>
-        </tr>
-        <tr>
-            <td><%= user.getNome() %></td>
-            <td><%= user.getCognome() %></td>
-            <td><%= user.getEmail() %></td>
-            <td><%= user.getPhoneNumber() %></td>
-        </tr>
-    </table>
+<div class="container main-container" id = "main-container">
+    <div class="container profile-container" id="profile-container">
+        <h3>Profilo <%= user.getUsername() %></h3>
+        <p>Nome: <%= user.getNome() %></p>
+        <p>Cognome: <%= user.getCognome() %></p>
+        <p>Email: <%= user.getEmail() %></p>
+        <p>Telefono: <%= user.getPhoneNumber() %></p>
+    </div>
 
+    <div class="container edit-container" id="edit-container">
+        <p id="edit-error" class="edit-error"></p>
+        <h3>Modifica</h3>
+        <form id="edit-profile-form" action="updateUser" method="post" id="edit-form">
+            <input type="hidden" name="option" value="update">
+            <input type="hidden" name="username"  value="<%= user.getUsername() %>">
 
-    <!-- TODO: form a scomparsa (dovrebbero apparire solo nel caso in cui l'utente voglia modificare i dati)-->
-    <h2>Modifica</h2>
-    <form action="updateUser" method="post">
-        <input type="hidden" name="option" value="update">
-        <input type="hidden" name="username"  value="<%= user.getUsername() %>">
+            <label for="edit-nome">Nome:</label><br>
+            <input id="edit-nome" name="nome" type="text" maxlength="20" required value=<%= user.getNome()%>><br>
 
-        <label for="nome">Nome:</label><br>
-        <input id="nome" name="nome" type="text" maxlength="20" required value=<%= user.getNome()%>><br>
+            <label for="edit-cognome">Cognome:</label><br>
+            <input id="edit-cognome" name="cognome" type="text" maxlength="20" required value=<%= user.getCognome()%>><br>
 
-        <label for="cognome">Cognome:</label><br>
-        <input id="cognome" name="cognome" type="text" maxlength="20" required value=<%= user.getCognome()%>><br>
+            <label for="edit-email">Email:</label><br>
+            <input id="edit-email" name="email" type="email" required value=<%= user.getEmail()%>><br>
 
-        <label for="email">Email:</label><br>
-        <input id="email" name="email" type="email" required value=<%= user.getEmail()%>><br>
+            <label for="edit-phonenumber">Telefono:</label><br>
+            <input id="edit-phonenumber" name="phoneNumber" type="tel" required value=<%= user.getPhoneNumber()%>><br>
 
-        <label for="phoneNumber">Telefono:</label><br>
-        <input id="phoneNumber" name="phoneNumber" type="tel" required value=<%= user.getPhoneNumber()%>><br>
+            <input type="submit" id="edit-submit" value="Salva modifiche"><input type="reset" value="Reset">
+        </form>
+    </div>
 
-        <input type="submit" value="Salva modifiche"><input type="reset" value="Reset">
-    </form>
+    <div class="container change-password-container" id="change-password-container">
+        <p id="change-password-error" class="change-password-error"></p>
+        <h3>Cambia Password</h3>
+        <form id="change-password-form" action="updateUser" method="post">
 
-    <h2>Cambia Password</h2>
-    <form action="updateUser" method="post">
+            <input type="hidden" name="option" value="changePassword">
+            <input type="hidden" name="username" required value="<%= user.getUsername() %>">
 
-        <input type="hidden" name="option" value="changePassword">
-        <input type="hidden" name="username" required value="<%= user.getUsername() %>">
+            <label for="change-password-new">Nome:</label><br>
+            <input id="change-password-new" name="newPassword" type="text" maxlength="20" required placeholder="Nuova Password"><br>
 
-        <label for="newPassword">Nome:</label><br>
-        <input id="newPassword" name="newPassword" type="text" maxlength="20" required placeholder="Nuova Password"><br>
+            <label for="change-password-confirm">Nome:</label><br>
+            <input id="change-password-confirm" name="confirmPassword" type="text" maxlength="20" required placeholder="Conferma Password"><br>
 
-        <label for="confirmPassword">Nome:</label><br>
-        <input id="confirmPassword" name="confirmPassword" type="text" maxlength="20" required placeholder="Conferma Password"><br>
+            <input type="submit" value="Cambia Password"><input type="reset" value="Reset">
+        </form>
+    </div>
 
-        <input type="submit" value="Cambia Password"><input type="reset" value="Reset">
-    </form>
-
-
-
+    <div class = "container button-container">
+        <button class="edit-button" onclick="showProfile()">Profilo</button>
+        <button class="edit-button" onclick="editProfile()">Modifica</button>
+        <button class="edit-button" onclick="changePassword()">Cambia Password</button>
+    </div>
+</div>
 <%
-        }
-    %>
+}else{
+%>
+<div class="container" id="not-logged-message">
+    <h3>Devi essere loggato per visualizzare il profilo, coglione!</h3>
+    <p>
+        Ma come cazzo hai fatto ad arrivare in sta pagina poi...<br>
+        Ti ci sei messo proprio d'impegno, eh?
+    </p>
+</div>
+<%
+    }
+%>
+<script src="js/validationEditProfile.js"></script>
 <jsp:include page="Footer.jsp"/>
 </body>
 </html>

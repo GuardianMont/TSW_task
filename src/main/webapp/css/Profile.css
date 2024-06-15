@@ -1,0 +1,27 @@
+.profile-container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: inline-block;
+}
+.edit-container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: none;
+}
+.change-password-container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: none;
+}
+.button-container{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: inline-block;
+}
+.main-container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

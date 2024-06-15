@@ -23,7 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
         emailError.style.display = 'none';
         let isValid = true;
 
-        if (email.includes("@")) {
+        if (email === "" || password === "") {
+            emailError.style.display = 'block';
+            emailError.textContent = 'Compila tutti i campi.';
+            isValid = false;
+        }else if (email.includes("@")) {
             if ( !validateEmail(email)) {
                 emailError.style.display = 'block';
                 emailError.textContent = 'Inserisci un indirizzo email valido.';
