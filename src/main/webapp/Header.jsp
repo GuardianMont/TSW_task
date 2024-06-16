@@ -1,5 +1,7 @@
 <%@ page import="ec.model.cart.ShoppingCart" %>
+<%@ page import="ec.control.Profile"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>Header</title>

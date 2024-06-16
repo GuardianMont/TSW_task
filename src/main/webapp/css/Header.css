@@ -1,8 +1,4 @@
-body {
-    font-family: 'Open sans', Arial, serif;
-    background-color: #f5f5f5;
-}
-
+/* Additional Styles */
 .TavolandImg {
     width: 200px;
     margin: 20px;
@@ -26,9 +22,11 @@ body {
 }
 
 nav {
+    width: 100%;
+    background-color: #f2f2f2;
     display: flex;
     justify-content: center;
-    width: 100%;
+    padding: 10px 0;
 }
 
 .nav-menu {
@@ -37,7 +35,6 @@ nav {
     align-items: center;
     padding: 0;
     margin: 0;
-    background-color: #f2f2f2;
 }
 
 .nav-menu li {
@@ -52,15 +49,16 @@ nav {
     text-decoration: none;
 }
 
-/* Aggiorna solo la parte relativa al submenu */
 .nav-menu ul.submenu {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
     background-color: #f2f2f2;
-    width: 100%;
-    text-align: center;
+    width: auto;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
 }
 
 .nav-menu ul.submenu li {
@@ -69,7 +67,7 @@ nav {
 }
 
 .nav-menu ul.submenu li a {
-    padding: 10px;
+    padding: 10px 20px;
     color: #333;
     text-decoration: none;
     display: block;
@@ -83,34 +81,10 @@ nav {
     display: block;
 }
 
-.nav-menu li:hover > ul {
-    display: block;
-}
-
-.nav-menu ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #f2f2f2;
-}
-
-.nav-menu ul li {
-    display: block;
-}
-
-.nav-menu ul li a {
-    padding: 10px 30px;
-    color: #333;
-}
-
-.nav-menu ul li a:hover {
-    background-color: #add;
-}
-
 .barra-ricerca form {
     display: flex;
     align-items: center;
+    margin-left: 10px;
 }
 
 .barra-ricerca input[type="cerca"] {
@@ -118,7 +92,6 @@ nav {
     width: 200px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    height: 50%;
 }
 
 .barra-ricerca input[type="submit"] {
@@ -133,28 +106,6 @@ nav {
 
 .barra-ricerca input[type="submit"]:hover {
     background-color: #45a049;
-}
-
-
-.carrello, .utente {
-    position: relative;
-    display: inline-block;
-    margin: 0 10px;
-}
-
-.numeroProdotti {
-    position: absolute;
-    top: -2px;
-    right: -2px;
-    background-color: #0056b3;
-    color: white;
-    border-radius: 50%;
-    padding: 5px;
-    font-size: 12px;
-    width: 12px;
-    height: 12px;
-    text-align: center;
-    line-height: 12px;
 }
 
 .carrello, .utente {
