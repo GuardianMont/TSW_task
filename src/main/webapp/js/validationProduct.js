@@ -23,7 +23,11 @@ function validateForm() {
     const categoria = document.getElementById('categoria').value;
     const colore = document.getElementById('colore').value;
     const img = document.getElementById('img').files[0];
+    clearErrors();
 
+    if(nome.trim()===""){
+        showError(nome, document.getElementById("nome-error"))
+    }
     if (nome.length < 3) {
         alert('Il nome deve contenere almeno 3 caratteri.');
         return false;
@@ -98,4 +102,21 @@ async function handleSubmit(event) {
     if (isValid) {
         event.target.submit();
     }
+}
+
+function showError(element, errorElementId) {
+    element.classList.add("error");
+    document.getElementById(errorElementId).style.display = "block";
+}
+
+function clearErrors() {
+    var errors = document.querySelectorAll(".error");
+    errors.forEach(function(element) {
+        element.classList.remove("error");
+    });
+
+    var errorMessages = document.querySelectorAll(".error-message");
+    errorMessages.forEach(function(element) {
+        element.style.display = "none";
+    });
 }

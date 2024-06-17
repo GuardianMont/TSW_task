@@ -29,10 +29,10 @@ h2 {
     text-align: center;
 }
 
-/*form {
-    display: flex;
-    flex-direction: column;
-}*/
+.error-message {
+    color: red;
+    display: none;
+}
 
 label {
     margin-bottom: 5px;
@@ -131,4 +131,11 @@ input[type="reset"]:hover {
         padding: 10px;
         font-size: 14px;
     }
+}
+
+#specificaTavolo {
+    display: none;
+}
+#specificaAttrezzatura{
+    display: none;
 }

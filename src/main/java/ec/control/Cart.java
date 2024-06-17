@@ -108,8 +108,8 @@ public class Cart extends HttpServlet {
                                 //è la servelet cart che si occupa di reindirizzare
                                 //verso la servlet address per fare il fetch degli indirizzi
                                 //e proseguire verso la finalizzazione dell'acquisto
-//                                ServletContext context = getServletContext();
-//                                context.setAttribute("op", "show");
+                                //ServletContext context = getServletContext();
+                                //context.setAttribute("op", "show");
                                 dis = "/Payment.jsp";
                             } catch (SQLException e) {
                                 e.printStackTrace();
@@ -140,10 +140,13 @@ public class Cart extends HttpServlet {
                     break;
             }
         }
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(dis);
-        dispatcher.forward(request, response);
+        if (!response.isCommitted()){
+            response.setContentType("text/plain");
+            response.setCharacterEncoding("UTF-8");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(dis);
+            dispatcher.forward(request, response);
+            return;
+        }
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

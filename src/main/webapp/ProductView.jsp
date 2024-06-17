@@ -87,8 +87,6 @@
 						<%
 							}
 						%>
-
-
 						<%
                         if (bean.getDisponibilita() > 0) {
                     %>

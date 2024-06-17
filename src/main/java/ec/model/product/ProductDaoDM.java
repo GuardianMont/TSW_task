@@ -105,9 +105,8 @@ public class ProductDaoDM implements ProductDao {
 		int result = 0;
 
 		String deleteSQL = "DELETE FROM " + ProductDaoDM.TABLE_NAME + " WHERE id = ?";
-        String deleteCartItem ="DELETE FROM Carrello WHERE prodotto_id= ?";
 		try (Connection connection = ConnectionPool.getInstance().getConnection()) {
-            preparedStatement = connection.prepareStatement(deleteCartItem);
+            preparedStatement = connection.prepareStatement(deleteSQL);
 			preparedStatement.setInt(1,code);
 			result = preparedStatement.executeUpdate();
 

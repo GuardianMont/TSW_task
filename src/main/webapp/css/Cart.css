@@ -169,3 +169,8 @@ body {
     padding: 20px;
     box-sizing: border-box;
 }
+
+.error-message {
+    color: red;
+    display: none;
+}
