@@ -54,7 +54,7 @@
 }
 
 .product-price h2 {
-	color: #4CAF50;
+	color: #4CAF49;
 	font-size: 2em;
 	margin-bottom: 20px;
 }
@@ -87,7 +87,7 @@
 }
 
 .return-button:hover {
-	background-color: #e0e0e0;
+	background-color: #45a050;
 }
 
 /* Responsive design */
