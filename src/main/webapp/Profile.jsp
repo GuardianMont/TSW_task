@@ -35,22 +35,33 @@
         <p id="edit-error" class="edit-error"></p>
         <h3>Modifica</h3>
         <form id="edit-profile-form" action="updateUser" method="post" id="edit-form">
-            <input type="hidden" name="option" value="update">
-            <input type="hidden" name="username"  value="<%= user.getUsername() %>">
-
-            <label for="edit-nome">Nome:</label><br>
-            <input id="edit-nome" name="nome" type="text" maxlength="20" required value=<%= user.getNome()%>><br>
-
-            <label for="edit-cognome">Cognome:</label><br>
-            <input id="edit-cognome" name="cognome" type="text" maxlength="20" required value=<%= user.getCognome()%>><br>
-
-            <label for="edit-email">Email:</label><br>
-            <input id="edit-email" name="email" type="email" required value=<%= user.getEmail()%>><br>
-
-            <label for="edit-phonenumber">Telefono:</label><br>
-            <input id="edit-phonenumber" name="phoneNumber" type="tel" required value=<%= user.getPhoneNumber()%>><br>
-
-            <input type="submit" id="edit-submit" value="Salva modifiche"><input type="reset" value="Reset">
+            <div class="edit-form-hidden">
+                <input type="hidden" name="option" value="update">
+                <input type="hidden" name="username"  value="<%= user.getUsername() %>">
+            </div>
+            <div class="edit-form-group">
+                <label for="edit-nome">Nome:</label><br>
+                <input id="edit-nome" name="nome" type="text" maxlength="20" required value=<%= user.getNome()%>><br>
+                <span id="edit-nome-error" class="error-message">Non ci possono essere numeri o simboli.</span>
+            </div>
+            <div class="edit-form-group">
+                <label for="edit-cognome">Cognome:</label><br>
+                <input id="edit-cognome" name="cognome" type="text" maxlength="20" required value=<%= user.getCognome()%>><br>
+                <span id="edit-cognome-error" class="error-message">Non ci possono essere numeri o simboli.</span>
+            </div>
+            <div class="edit-form-group">
+                <label for="edit-email">Email:</label><br>
+                <input id="edit-email" name="email" type="email" required value=<%= user.getEmail()%>><br>
+                <span id="edit-email-error" class="error-message">Email non valida.</span>
+            </div>
+            <div class="edit-form-group">
+                <label for="edit-phonenumber">Telefono:</label><br>
+                <input id="edit-phonenumber" name="phoneNumber" type="tel" required value=<%= user.getPhoneNumber()%>><br>
+                <span id="edit-phonenumber-error" class="error-message">Numero di telefono non valido.</span>
+            </div>
+            <div class="edit-form-group">
+                <input type="submit" id="edit-submit" value="Salva modifiche"><input type="reset" value="Reset">
+            </div>
         </form>
     </div>
 
@@ -58,17 +69,23 @@
         <p id="change-password-error" class="change-password-error"></p>
         <h3>Cambia Password</h3>
         <form id="change-password-form" action="updateUser" method="post">
-
-            <input type="hidden" name="option" value="changePassword">
-            <input type="hidden" name="username" required value="<%= user.getUsername() %>">
-
-            <label for="change-password-new">Nome:</label><br>
-            <input id="change-password-new" name="newPassword" type="text" maxlength="20" required placeholder="Nuova Password"><br>
-
-            <label for="change-password-confirm">Nome:</label><br>
-            <input id="change-password-confirm" name="confirmPassword" type="text" maxlength="20" required placeholder="Conferma Password"><br>
-
-            <input type="submit" value="Cambia Password"><input type="reset" value="Reset">
+            <div class="change-password-form-hidden">
+                <input type="hidden" name="option" value="changePassword">
+                <input type="hidden" name="username" required value="<%= user.getUsername() %>">
+            </div>
+            <div class="change-password-form-group">
+                <label for="change-password-new">Inserisci Password:</label><br>
+                <input id="change-password-new" name="newPassword" type="text" maxlength="20" required placeholder="Nuova Password"><br>
+                <span id="change-password-new-error" class="error-message">La password deve essere di almeno 8 caratteri.</span>
+            </div>
+            <div class="change-password-form-group">
+                <label for="change-password-confirm">Ripeti Password:</label><br>
+                <input id="change-password-confirm" name="confirmPassword" type="text" maxlength="20" required placeholder="Conferma Password"><br>
+                <span id="change-password-confirm-error" class="error-message">La password deve essere la stessa.</span>
+            </div>
+            <div class="change-password-form-submit">
+                <input type="submit" value="Cambia Password"><input type="reset" value="Reset">
+            </div>
         </form>
     </div>
 
