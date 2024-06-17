@@ -107,3 +107,4 @@ INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponi
 INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('Borsa', 'Borsa a tracolla nera', 39.50, 22.0, '30x20x10', 30, 'Accessori', 'Nero', NULL);
 INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('Scarpe', 'Sneakers bianche', 49.99, 22.0, '41', 20, 'Scarpe', 'Bianco', NULL);
 INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('Orologio', 'Orologio da polso nero', 79.90, 22.0, 'Unica', 10, 'Accessori', 'Nero', NULL);
+INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('Schiavo ', 'Mario schiavo', 1.50, 99.0, 'Unica', 1, 'Accessori', 'Nero', NULL);
