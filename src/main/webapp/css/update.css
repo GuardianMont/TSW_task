@@ -48,8 +48,17 @@ form.form input[type="file"] {
     margin-top: 10px;
 }
 
-form.form input[type="submit"],
 form.form input[type="reset"] {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form.form input[type="submit"] {
     padding: 10px 20px;
     margin-top: 10px;
     background-color: #4CAF50;
