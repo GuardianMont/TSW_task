@@ -76,7 +76,7 @@
             <div class="change-password-form-group">
                 <label for="change-password-new">Inserisci Password:</label><br>
                 <input id="change-password-new" name="newPassword" type="text" maxlength="20" required placeholder="Nuova Password"><br>
-                <span id="change-password-new-error" class="error-message">La password deve essere di almeno 8 caratteri.</span>
+                <span id="change-password-new-error" class="error-message">Sono richiesti almeno 8 caratteri, almeno una lettera maiuscola e un numero.</span>
             </div>
             <div class="change-password-form-group">
                 <label for="change-password-confirm">Ripeti Password:</label><br>

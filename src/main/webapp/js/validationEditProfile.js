@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     //validazione conferma password in scrittura
     changePasswordConfirm.addEventListener('change', function() {
-       if (changePasswordConfirm.value === '' && (changePasswordNew.value === changePasswordConfirm.value)) {
+       if (changePasswordConfirm.value === '' || (changePasswordNew.value === changePasswordConfirm.value)) {
            changePasswordConfirmError.style.display = 'none';
        }else{
            changePasswordConfirmError.style.display = 'block';
