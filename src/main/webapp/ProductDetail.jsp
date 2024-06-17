@@ -15,33 +15,27 @@
         ProductBean product = (ProductBean) request.getAttribute("product");
         if (product != null) {
     %>
-    <h1>Prodotto <%= product.getNome() %></h1>
-    <%
-        String stockImg = "";
-        byte[] imageData = product.getImmagineUrl();
-        if (imageData != null) {
-            stockImg = Base64.getEncoder().encodeToString(imageData);
-        }
-    %>
-    <img src="data:image/jpeg;base64,<%= stockImg %>" alt="no immagine" />
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Descrizione</th>
-            <th>Quantità</th>
-            <th>Prezzo</th>
-            <th>Colore</th>
-        </tr>
-        <tr>
-            <td data-label="ID"><%= product.getId() %></td>
-            <td data-label="Descrizione"><%= product.getDescrizione() %></td>
-            <td data-label="Quantità"><%= product.getDisponibilita() %></td>
-            <td data-label="Prezzo"><%= product.getPrezzo() %></td>
-            <td data-label="Colore"><%=product.getColore()%></td>
-        </tr>
-    </table>
-    <a href="carrello?opzione=add&id=<%=product.getId()%>">Add to Cart</a><br>
-    <a href="./product">Return</a>
+    <div class="product-content">
+        <div class="product-image">
+            <%
+                String stockImg = "";
+                byte[] imageData = product.getImmagineUrl();
+                if (imageData != null) {
+                    stockImg = Base64.getEncoder().encodeToString(imageData);
+                }
+            %>
+            <img src="data:image/jpeg;base64,<%= stockImg %>" alt="no immagine" />
+        </div>
+        <div class="product-details">
+            <h1><%= product.getNome() %></h1>
+            <p><%= product.getDescrizione() %></p>
+        </div>
+        <div class="product-price">
+            <h2>$<%= product.getPrezzo() %></h2>
+            <a href="carrello?opzione=add&id=<%=product.getId()%>" class="add-to-cart-button">Add to Cart</a>
+        </div>
+    </div>
+    <a href="./product" class="return-button">Return</a>
     <%
         }
     %>

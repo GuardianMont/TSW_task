@@ -1,4 +1,3 @@
-/* CSS per la pagina di dettaglio prodotto */
 .container {
     max-width: 800px;
     margin: 20px auto;
@@ -9,11 +8,24 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.return-link {
-    display: block;
-    margin-bottom: 20px;
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.return-button {
+    padding: 10px 20px;
+    background-color: #4CAF49;
+    color: #fff;
     text-decoration: none;
-    color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.return-button:hover {
+    background-color: #4CAF50;
 }
 
 h1 {
