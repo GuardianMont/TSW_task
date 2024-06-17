@@ -14,7 +14,10 @@
     if (product != null) {
 %>
 <div class="container">
-    <h1>Prodotto <%= product.getNome() %> con id: <%= product.getId() %></h1>
+    <div class="header-section">
+        <a href="./product" class="return-button">Catalogo</a>
+        <h1>Prodotto <%= product.getNome() %> con id: <%= product.getId() %></h1>
+    </div>
     <%
         String stockImg = "";
         byte[] imageData = product.getImmagineUrl();
@@ -59,8 +62,6 @@
     </form>
 </div>
 <% } %>
-
-<a href="./product" class="return-link">Torna alla lista dei prodotti</a>
 
 <jsp:include page="Footer.jsp"/>
 </body>

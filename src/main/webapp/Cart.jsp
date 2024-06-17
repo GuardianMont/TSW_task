@@ -21,6 +21,7 @@
     <link href="css/notifica.css" rel="stylesheet" type="text/css">
     <title>Storage DS/BF</title>
     <script src="js/loginMessage.js"></script>
+    <script src="js/validationAddress.js"></script>
     <script>
         function checkValidityQuantity(input) {
             var value = parseInt(input.value);
@@ -28,8 +29,9 @@
                 input.value = input.min; // Imposta il valore al minimo ovvero 1
             }
             if (value > parseInt(input.max)) {
-                input.value = input.max; // Imposta il valore al massimo (in base al prodoott)
+                input.value = input.max; // Imposta il valore al massimo (in base al prodotto)
             }
+            updateQuantity(input.form);
         }
         function incrementQuantity(button) {
             var input = button.previousElementSibling;
@@ -52,7 +54,20 @@
         }
 
         function updateQuantity(form) {
-            form.submit();
+            clearErrors();
+            var quantita = form.querySelector('input[name="quantity"]');
+            if (quantita && quantita.value){
+                const quantity = parseInt(quantityInput.value, 10);
+                if (!isNaN(quantity) && quantity > 0) {
+                    form.submit();
+                } else {
+                    document.getElementById("quantity-error").textContent="la quantità è necessaria non può essere nulla"
+                    document.getElementById("quantity-error").style.display="block";
+                }
+            }else{
+                document.getElementById("quantity-error").textContent="la quantità è necessaria non può essere nulla"
+                document.getElementById("quantity-error").style.display="block";
+            }
         }
 
         window.onload = function() {
@@ -117,9 +132,11 @@
                     <input type="hidden" name="opzione" value="aggiornaQuantita">
                     <input type="hidden" name="id" value="<%=item.getItem().getId()%>">
                     <button type="button" onclick="decrementQuantity(this)">-</button>
-                    <input type="text" name="quantity" value="<%=item.getNumItem()%>" min="0" max="<%=item.getItem().getDisponibilita()%>" oninput="checkValidityQuantity(this)" onchange="updateQuantity(this.form)">
+                    <input id =quantity type="text" name="quantity" value="<%=item.getNumItem()%>" min="0" max="<%=item.getItem().getDisponibilita()%>"
+                           oninput="checkValidityQuantity(this)" onchange="updateQuantity(this.form)" required>
                     <button type="button" onclick="incrementQuantity(this)">+</button>
                 </form>
+                <br><div id="quantity-error" class="error-message"></div>
             </td>
             <td><a href="carrello?opzione=delete&id=<%=item.getItem().getId()%>" class="action-button delete">X</a></td>
         </tr>

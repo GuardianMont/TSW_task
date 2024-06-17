@@ -92,7 +92,7 @@ public class DiscountDaoDM implements DiscountDao {
 
         String selectSQL = "select * from " + DiscountDaoDM.TABLE_NAME;
 
-        if(order.toUpperCase().equals("DESC") || order.toUpperCase().equals("ASC"))
+        if(order!=null && (order.toUpperCase().equals("DESC") || order.toUpperCase().equals("ASC")))
             selectSQL = selectSQL + " ORDER BY percentuale_sconto " + order;
 
         try {

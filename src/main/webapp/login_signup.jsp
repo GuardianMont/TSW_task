@@ -74,12 +74,14 @@
 
             <div class="form-group">
                 <label for = "signup-name"> Name:</label>
-                <input type="text" id="signup-name" name="signup-name" required title="nome utente" placeholder="Mario">
+                <input type="text" id="signup-name" name="signup-name" required
+                       title="nome utente" placeholder="Mario" pattern="^[a-zA-Z\s]+$">
             </div>
 
             <div class="form-group">
                 <label for = "signup-surname"> Surname:</label>
-                <input type="text" id="signup-surname" name="signup-surname" required title="cognome utente" placeholder="Del Santo">
+                <input type="text" id="signup-surname" name="signup-surname" required
+                       title="cognome utente" placeholder="Del Santo" pattern="^[a-zA-Z\s]+$">
             </div>
 
             <div class="form-group">
@@ -95,11 +97,13 @@
 
             <div class="form-group">
                 <label for = "signup-password"> Password:</label>
-                <input type="text" id="signup-password" name="signup-password" required pattern="^[a-zA-Z0-9.?!\$%&()=[]]+$" title="password alfanumerica senza spazi" placeholder="pAssword1234">
+                <input type="text" id="signup-password" name="signup-password" required
+                       pattern="^[a-zA-Z0-9.?!\$%&()=[]]+$" title="password alfanumerica senza spazi" placeholder="pAssword1234">
             </div>
             <div class="form-group">
                 <label for = "signup-rep-password"> Repeat Password:</label>
-                <input type="text" id="signup-rep-password" name="signup-rep-password" pattern="^[a-zA-Z0-9.?!\$%&()=[]]+$" title="ripeti password" placeholder="pAssword1234" required>
+                <input type="text" id="signup-rep-password" name="signup-rep-password"
+                       pattern="^[a-zA-Z0-9.?!\$%&()=[]]+$" title="ripeti password" placeholder="pAssword1234" required>
                 <span id="signup-password-error" class="error-message">Le password non coincidono.</span>
             </div>
 
