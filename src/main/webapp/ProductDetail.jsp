@@ -10,13 +10,16 @@
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
+
 <div class="product-container">
+    <a href="./product" class="return-button">Return</a>
     <%
         ProductBean product = (ProductBean) request.getAttribute("product");
         if (product != null) {
     %>
     <div class="product-content">
         <div class="product-image">
+            <br>
             <%
                 String stockImg = "";
                 byte[] imageData = product.getImmagineUrl();
@@ -35,7 +38,7 @@
             <a href="carrello?opzione=add&id=<%=product.getId()%>" class="add-to-cart-button">Add to Cart</a>
         </div>
     </div>
-    <a href="./product" class="return-button">Return</a>
+
     <%
         }
     %>
