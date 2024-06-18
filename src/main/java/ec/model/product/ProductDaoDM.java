@@ -78,7 +78,7 @@ public class ProductDaoDM implements ProductDao {
 				bean.setId(rs.getInt("id"));
 				bean.setNome(rs.getString("nome"));
 				bean.setDescrizione(rs.getString("descrizione"));
-				bean.setPrezzo(rs.getInt("prezzo"));
+				bean.setPrezzo(rs.getDouble("prezzo"));
 				bean.setDisponibilita(rs.getInt("disponibilita"));
 				bean.setDimensioni(rs.getString("dimensioni"));
 				bean.setCategoria(rs.getString("categoria"));
@@ -152,7 +152,7 @@ public class ProductDaoDM implements ProductDao {
 				bean.setId(rs.getInt("id"));
 				bean.setNome(rs.getString("nome"));
 				bean.setDescrizione(rs.getString("descrizione"));
-				bean.setPrezzo(rs.getInt("prezzo"));
+				bean.setPrezzo(rs.getDouble("prezzo"));
 				bean.setDisponibilita(rs.getInt("disponibilita"));
 				bean.setDimensioni(rs.getString("dimensioni"));
 				bean.setCategoria(rs.getString("categoria"));
