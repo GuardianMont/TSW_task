@@ -74,7 +74,6 @@ CREATE TABLE StoricoProdotti(
                                 utente_id VARCHAR(255) NOT NULL,
                                 FOREIGN KEY (utente_id) REFERENCES Utente(username),
                                 FOREIGN KEY (codice_fattura) REFERENCES Ordine(num) ON DELETE CASCADE,
-                                FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id) ON DELETE RESTRICT ON UPDATE RESTRICT, -- Aggiunta ON UPDATE RESTRICT
                                 PRIMARY KEY (codice_fattura, prodotto_id)
 );
 

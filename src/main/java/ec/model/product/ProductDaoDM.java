@@ -110,10 +110,6 @@ public class ProductDaoDM implements ProductDao {
 			preparedStatement.setInt(1,code);
 			result = preparedStatement.executeUpdate();
 
-			preparedStatement = connection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, code);
-
-			result = preparedStatement.executeUpdate();
 
 		} finally {
 			try {
