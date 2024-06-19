@@ -110,7 +110,7 @@ function showConfirmationMessage(data) {
                     <li>${item.nome} (Quantità: ${item.quantity} Prezzo: ${item.prezzo})</li>
                 `).join('')}
             </ul>
-            <h3>Totale Spesa: ${data.spesa}</h3>
+            <h3>Totale Spesa: String.format("%.2f", ${data.spesa})</h3>
             <h4>Metodo di pagamento: </h4>
             <p>
                 Numero carta: ${data.paymentMethod.numCarta}<br> 

@@ -38,7 +38,6 @@
     <servlet-name>Cart</servlet-name>
     <url-pattern>/carrello</url-pattern>
   </servlet-mapping>
-  <!--
  <error-page>
    <error-code>500</error-code>
    <location>/error500.jsp</location>
@@ -51,7 +50,6 @@
    <exception-type>java.lang.Throwable</exception-type>
    <location>/error500.jsp</location>
  </error-page>
- -->
 
 </web-app>
 

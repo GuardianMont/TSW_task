@@ -22,54 +22,8 @@
     <title>Storage DS/BF</title>
     <script src="js/loginMessage.js"></script>
     <script src="js/validationAddress.js"></script>
+    <script src="js/quantityCheck.js"></script>
     <script>
-        function checkValidityQuantity(input) {
-            var value = parseInt(input.value);
-            if (value < parseInt(input.min)) {
-                input.value = input.min; // Imposta il valore al minimo ovvero 1
-            }
-            if (value > parseInt(input.max)) {
-                input.value = input.max; // Imposta il valore al massimo (in base al prodotto)
-            }
-            updateQuantity(input.form);
-        }
-        function incrementQuantity(button) {
-            var input = button.previousElementSibling;
-            var max = parseInt(input.max);
-            var currentValue = parseInt(input.value);
-            if (currentValue < max) {
-                input.value = currentValue + 1;
-                updateQuantity(input.form);
-            }
-        }
-
-        function decrementQuantity(button) {
-            var input = button.nextElementSibling;
-            var min = parseInt(input.min);
-            var currentValue = parseInt(input.value);
-            if (currentValue > min) {
-                input.value = currentValue - 1;
-                updateQuantity(input.form);
-            }
-        }
-
-        function updateQuantity(form) {
-            clearErrors();
-            var quantita = form.querySelector('input[name="quantity"]');
-            if (quantita && quantita.value){
-                const quantity = parseInt(quantityInput.value, 10);
-                if (!isNaN(quantity) && quantity > 0) {
-                    form.submit();
-                } else {
-                    document.getElementById("quantity-error").textContent="la quantità è necessaria non può essere nulla"
-                    document.getElementById("quantity-error").style.display="block";
-                }
-            }else{
-                document.getElementById("quantity-error").textContent="la quantità è necessaria non può essere nulla"
-                document.getElementById("quantity-error").style.display="block";
-            }
-        }
-
         window.onload = function() {
             var signupSuccess = <%= session.getAttribute("signupSuccess") != null %>;
             var user = <%= session.getAttribute("userId") != null %>;
@@ -143,7 +97,7 @@
         <% } %>
         </tbody>
     </table>
-    <h3 class="spesa_totale">Spesa totale: €<%=cartItem.getPrezzoTot()%></h3>
+    <h3 class="spesa_totale">Spesa totale: €<%= String.format("%.2f", cartItem.getPrezzoTot()) %></h3>
     <form action="carrello" method="post" class="acquista-form">
         <input type="hidden" name="opzione" value="acquisto">
         <input type="submit" value="ACQUISTA" class="acquista-button">

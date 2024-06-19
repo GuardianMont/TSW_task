@@ -25,6 +25,11 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+.ordiniEffettuati{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: none;
+}
 .error-message{
     display: none;
 }

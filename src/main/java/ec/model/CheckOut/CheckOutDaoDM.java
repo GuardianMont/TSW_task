@@ -3,7 +3,9 @@ package ec.model.CheckOut;
 import ec.model.ConnectionPool;
 
 import java.sql.*;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
 public class CheckOutDaoDM implements CheckOutDao {
@@ -51,19 +53,27 @@ public class CheckOutDaoDM implements CheckOutDao {
                 ordine.setUtenteId(res.getString("utente_id"));
                 ordine.setCodAdress(res.getInt("cod_address"));
                 ordine.setCodMethod(res.getInt("cod_method"));
+                ordine.setData(res.getObject("data", GregorianCalendar.class));
             }
         }
         return ordine;
     }
 
 
-    public Collection<Ordine> retriveAllOrdineUtente (int numId) throws SQLException{
-        String sqlSelectFattura = "SELECT * FROM "+ CheckOutDaoDM.TABLE_NAME + " where num= ?";
+    public Collection<Ordine> retriveAllOrdineUtente (String utenteID, String order) throws SQLException{
+        String sqlSelectFattura = "SELECT * FROM "+ CheckOutDaoDM.TABLE_NAME + " where utente_id= ?";
+        if ("data".equals(order)) {
+            // Order by data crescente
+            sqlSelectFattura += " ORDER BY data";
+        } else if ("dataDESC".equals(order)) {
+            // Order by data decrescente
+            sqlSelectFattura += " ORDER BY data DESC";
+        }
         Collection<Ordine> ordini = new LinkedList<>();
 
         try (Connection connection =ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement= connection.prepareStatement(sqlSelectFattura)){
-            preparedStatement.setInt(1, numId);
+            preparedStatement.setString(1, utenteID);
 
             ResultSet res = preparedStatement.executeQuery();
 
@@ -72,10 +82,19 @@ public class CheckOutDaoDM implements CheckOutDao {
                 ordine.setUtenteId(res.getString("utente_id"));
                 ordine.setCodAdress(res.getInt("cod_address"));
                 ordine.setCodMethod(res.getInt("cod_method"));
+
+                Timestamp timestamp = res.getTimestamp("data");
+                if (timestamp != null) {
+                    Calendar calendar = GregorianCalendar.getInstance();
+                    calendar.setTimeInMillis(timestamp.getTime());
+                    ordine.setData((GregorianCalendar) calendar);
+                }
                 ordini.add(ordine);
             }
         }
         return ordini;
     }
+
+
 
 }

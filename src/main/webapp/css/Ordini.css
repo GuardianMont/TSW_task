@@ -1,0 +1,38 @@
+
+.ordine-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+
+.ordine-info {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+
+.ordine-container div {
+    margin-bottom: 5px;
+}
+
+
+.ordine-container ul {
+    list-style-type: none;
+    /*più carino senza pallini*/
+    padding-left: 0;
+}
+
+.ordine-container ul li {
+    margin-left: 10px;
+}
+
+#checkOutOrdini {
+    margin: 20px;
+}

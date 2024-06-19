@@ -12,10 +12,13 @@
     <!-- TODO: modificare style e layout-->
     <title>Profilo</title>
     <link rel="stylesheet" type="text/css" href="css/Profile.css">
+    <link rel="stylesheet" type="text/css" href="css/Ordini.css">
+    <script src="js/loadOrdini.js"></script>
+    <script src="js/profileSwitchingForms.js"></script>
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
-<script src="js/profileSwitchingForms.js"></script>
+
     <%
         UserBean user = (UserBean) request.getAttribute("user");
         String sessionUser = (String) request.getSession().getAttribute("userId");
@@ -88,11 +91,26 @@
             </div>
         </form>
     </div>
-
+<div class="ordiniEffettuati" id="ordiniEffettuati">
+    <div class="generale">
+        <div class="sorting-dropdown">
+            <select onchange="orderOrdini()" class="select-sorting" id="sortingDropdown">
+                <option value="#">Ordina per</option>
+                <option value="data">Dal meno recente</option>
+                <option value="dataDESC">Dal più recente</option>
+            </select>
+        </div>
+    </div>
+    <div id="checkOutOrdini">
+        <!--li immetto con ajax-->
+    </div>
+</div>
     <div class = "container button-container">
-        <button class="edit-button" onclick="showProfile()">Profilo</button>
-        <button class="edit-button" onclick="editProfile()">Modifica</button>
-        <button class="edit-button" onclick="changePassword()">Cambia Password</button>
+
+        <button class="edit-button" id="profilo" onclick="showProfile()">informazioni utente</button>
+        <button class="edit-button" id="modifica" onclick="editProfile()">Modifica informazioni utente</button>
+        <button class="edit-button" id="cambiaPassword" onclick="changePassword()">Cambia Password</button>
+        <button class="edit-button" id="viewOrdini" onclick="loadOrders()">visualizza Ordini</button>
     </div>
 </div>
 <%

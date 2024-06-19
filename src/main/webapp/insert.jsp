@@ -25,7 +25,7 @@
         <span id="descrizione-error" class="error-message">Il campo descrizione è obbligatorio.</span><br>
 
         <label for="prezzo">Prezzo:</label>
-        <input id="prezzo" name="prezzo" type="number" min="0" value="0" required pattern="^\d+(\.\d{1,2})?$" title="prezzo del prodotto">
+        <input id="prezzo" name="prezzo" type="text" pattern="^\d+(\.\d{1,2})?$" title="Inserisci un prezzo valido (massimo 2 cifre decimali)" required>
         <span id="prezzo-error" class="error-message">Il campo prezzo è obbligatorio.</span><br>
 
         <label for="quantita">Disponibilità:</label>
@@ -33,8 +33,7 @@
         <span id="quantita-error" class="error-message">Il campo quantità è obbligatorio.</span><br>
 
         <label for="iva">Fascia IVA:</label>
-        <input id="iva" name="iva" type="number" min="1" value="1" placeholder="xx"
-               pattern="^([1-9]|[1-9][0-9]|100)$" title="fascia d'iva del prodotto" required>
+        <input id="iva" name="iva" type="text" pattern="^(?:[1-9]|[1-9][0-9])$" title="Inserisci una fascia d'iva" required>
         <span id="iva-error" class="error-message">Il campo fascia iva è obbligatorio.</span><br>
 
         <label for="dimensioni">Dimensioni:</label>

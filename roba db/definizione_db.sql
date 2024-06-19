@@ -24,6 +24,7 @@ CREATE TABLE Indirizzo(
                           FOREIGN KEY (utente_id) REFERENCES Utente(username),
                           PRIMARY KEY (utente_id, num)
 );
+
 CREATE TABLE MetodoPagamento(
                                 utente_id VARCHAR(255) NOT NULL,
                                 num SMALLINT NOT NULL,
@@ -50,15 +51,6 @@ CREATE TABLE Prodotto(
                          immagine MEDIUMBLOB
 );
 
-CREATE TABLE Sconto(
-    prodotto INT UNSIGNED PRIMARY KEY,
-    percentuale_sconto INT UNSIGNED,
-    FOREIGN KEY prodotto REFERENCES Prodotto(id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-    CHECK (percentuale_sconto >= 0 AND percentuale_sconto <=100)
-);
-
 CREATE TABLE Ordine(
                        num int auto_increment Primary Key,
                        utente_id VARCHAR(255) NOT NULL,
@@ -73,10 +65,12 @@ CREATE TABLE Ordine(
 CREATE TABLE StoricoProdotti(
                                 codice_fattura int NOT NULL,
                                 prodotto_id INT UNSIGNED NOT NULL,
+                                nome_prodotto VARCHAR(255) NOT NULL,
                                 iva DOUBLE NOT NULL,
                                 prezzo_unitario DOUBLE NOT NULL,
                                 quantita INT NOT NULL,
                                 sconto DOUBLE ,
+                                immagine MEDIUMBLOB,
                                 utente_id VARCHAR(255) NOT NULL,
                                 FOREIGN KEY (utente_id) REFERENCES Utente(username),
                                 FOREIGN KEY (codice_fattura) REFERENCES Ordine(num) ON DELETE CASCADE,
@@ -107,4 +101,4 @@ INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponi
 INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('Borsa', 'Borsa a tracolla nera', 39.50, 22.0, '30x20x10', 30, 'Accessori', 'Nero', NULL);
 INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('Scarpe', 'Sneakers bianche', 49.99, 22.0, '41', 20, 'Scarpe', 'Bianco', NULL);
 INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('Orologio', 'Orologio da polso nero', 79.90, 22.0, 'Unica', 10, 'Accessori', 'Nero', NULL);
-INSERT INTO Prodotto (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine) VALUES ('Schiavo ', 'Mario schiavo', 1.50, 99.0, 'Unica', 1, 'Accessori', 'Nero', NULL);
+

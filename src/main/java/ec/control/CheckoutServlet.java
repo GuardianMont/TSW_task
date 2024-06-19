@@ -1,5 +1,6 @@
 package ec.control;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import ec.model.CheckOut.CheckOutDaoDM;
@@ -10,6 +11,7 @@ import ec.model.PaymentMethod.PaymentDaoDM;
 import ec.model.address.AddressDaoDM;
 import ec.model.address.AddressUs;
 import ec.model.cart.ShoppingCart;
+import ec.model.product.ProductBean;
 import ec.model.product.ProductDaoDM;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -21,6 +23,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collection;
 
 @WebServlet("/CheckoutServlet")
 public class CheckoutServlet extends HttpServlet {
@@ -48,11 +51,6 @@ public class CheckoutServlet extends HttpServlet {
             return;
         }
 
-        ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-        if (cart == null) {
-            sendErrorResponse(response, "Carrello non trovato");
-            return;
-        }
 
         String userId = (String) session.getAttribute("userId");
         if (userId == null) {
@@ -64,6 +62,11 @@ public class CheckoutServlet extends HttpServlet {
             switch (opzione) {
                 case "add":
                     try {
+                        ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+                        if (cart == null) {
+                            sendErrorResponse(response, "Carrello non trovato");
+                            return;
+                        }
                         handleAddAction(request, response, session);
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -73,9 +76,27 @@ public class CheckoutServlet extends HttpServlet {
                         sendErrorResponse(response, "Errore durante il salvataggio dell'ordine: INPUT OUTPUT");
                     }
                     break;
+                case "show":
+                    try {
+                        handleShowAction(request, response);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        sendErrorResponse(response, "Errore durante l'estrazione degli ordini: DB Error");
+                    }
+                    break;
+                case "order":
+                    try{
+                        handleOrderAction(request,response);
+                    }catch (SQLException e){
+                        e.printStackTrace();
+                        sendErrorResponse(response, "Errore durante l'estrazione degli ordini secondo ordine: DB Error");
+
+                    }
+                    break;
                 default:
                     sendErrorResponse(response, "Azione non riconosciuta");
             }
+
         } else {
             sendErrorResponse(response, "Nessuna opzione fornita");
         }
@@ -93,6 +114,66 @@ public class CheckoutServlet extends HttpServlet {
         request.setAttribute("acquistoCompletato", true);
         session.setAttribute("cart", new ShoppingCart());
         sendSuccessResponse(request, response,ordine, cart);
+    }
+    private void handleShowAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        Collection<Ordine> ordini = modelCheckOut.retriveAllOrdineUtente((String) request.getSession().getAttribute("userId"), null);
+        JsonArray jsonOrdini = new JsonArray();
+
+        for (Ordine ord : ordini){
+            jsonOrdini.add(getOrderDetails(ord));
+        }
+        sendJsonResponse(response,true, jsonOrdini);
+    }
+
+    private void handleOrderAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException{
+        Collection<Ordine> ordini = modelCheckOut.retriveAllOrdineUtente((String) request.getSession().getAttribute("userId"), request.getParameter("order"));
+        JsonArray jsonOrdini = new JsonArray();
+
+        for (Ordine ord : ordini){
+            jsonOrdini.add(getOrderDetails(ord));
+        }
+        sendJsonResponse(response,true, jsonOrdini);
+    }
+
+    private JsonObject getOrderDetails(Ordine ordine) throws SQLException {
+        JsonObject jsonOrder = new JsonObject();
+
+        AddressUs indirizzo = new AddressDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodAdress());
+        PayMethod metodo = new PaymentDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodMethod());
+
+        jsonOrder.addProperty("ordineId", ordine.getNumId());
+        jsonOrder.add("address", indirizzo.toJson());
+        jsonOrder.add("paymentMethod", metodo.toJson());
+        jsonOrder.addProperty("ordineFattura", ordine.getCodiceFattura());
+        if (ordine.getData() != null) {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            jsonOrder.addProperty("dataOrdine", sdf.format(ordine.getData().getTime()));
+        }
+
+        double prezzoTot =0;
+        JsonArray cartItems = new JsonArray();
+        for (ProductBean item : modelStoricoProdotti.retriveOrdineitem(ordine.getNumId(), ordine.getUtenteId()) ){
+            JsonObject jsonItem = new JsonObject();
+            jsonItem.addProperty("nome", item.getNome());
+            jsonItem.addProperty("quantity", item.getDisponibilita());
+            jsonItem.addProperty("prezzo", item.getPrezzo());
+            prezzoTot += item.getPrezzo();
+            cartItems.add(jsonItem);
+        }
+
+        jsonOrder.add("cartItems", cartItems);
+        jsonOrder.addProperty("prezzototale", prezzoTot);
+        return jsonOrder;
+    }
+    private void sendJsonResponse(HttpServletResponse response,boolean success, Object responseObject) throws IOException {
+        JsonObject jsonResponse = new JsonObject();
+        jsonResponse.addProperty("success", success);
+        jsonResponse.add("data", new Gson().toJsonTree(responseObject));
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonResponse.toString());
+
     }
 
     private void sendSuccessResponse(HttpServletRequest request, HttpServletResponse response, Ordine ordine, ShoppingCart cart) throws IOException, SQLException {

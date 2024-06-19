@@ -10,5 +10,5 @@ public interface CheckOutDao {
 
     public Ordine retriveOrdineFattura (int numId) throws SQLException;
 
-    public Collection<Ordine> retriveAllOrdineUtente (int numId) throws SQLException;
+    public Collection<Ordine> retriveAllOrdineUtente (String utenteID, String order) throws SQLException;
 }
