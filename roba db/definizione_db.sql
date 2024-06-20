@@ -55,15 +55,6 @@ CREATE TABLE Prodotto(
                 CHECK( percentuale_sconto >= 0 AND percentuale_sconto <= 100)
 );
 
-CREATE TABLE Sconto(
-                prodotto INT UNSIGNED PRIMARY KEY,
-                percentuale_sconto INT UNSIGNED,
-                FOREIGN KEY prodotto REFERENCES Prodotto(id)
-                ON DELETE CASCADE
-                ON UPDATE CASCADE,
-                CHECK (percentuale_sconto >= 0 AND percentuale_sconto <=100)
-);
-
 CREATE TABLE Ordine(
                 num int auto_increment Primary Key,
                 utente_id VARCHAR(255) NOT NULL,
