@@ -12,6 +12,7 @@ public class UserBean {
     private String phoneNumber; //check
     private byte[] password; //check
     private byte[] salt;
+    private boolean isAdmin;
 
     private ArrayList<AddressUs> indirizzi;
     public String getUsername() {
@@ -65,6 +66,10 @@ public class UserBean {
     }
 
     public void setSalt(byte[] salt){ this.salt = salt; }
+
+    public boolean isAdmin() { return isAdmin; }
+
+    public void setAdmin(boolean isAdmin) { this.isAdmin = isAdmin; }
 
     public ArrayList<AddressUs> getIndirizzi(){ return indirizzi;}
 

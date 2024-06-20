@@ -1,6 +1,6 @@
 package ec.control;
 
-import ec.Validation;
+import ec.UserValidation;
 import ec.model.HashGenerator;
 import ec.model.user.UserBean;
 import ec.model.user.UserDao;
@@ -63,7 +63,7 @@ public class UpdateUser extends HttpServlet {
             UserBean user = new UserBean();
 
             // Controlla che il nome e il cognome siano validi
-            if (!Validation.checkNameSurname(req.getParameter("nome")) || !Validation.checkNameSurname(req.getParameter("cognome"))) {
+            if (!UserValidation.checkNameSurname(req.getParameter("nome")) || !UserValidation.checkNameSurname(req.getParameter("cognome"))) {
                 // Se il nome o il cognome non rispettano i requisiti, setta un errore e reindirizza alla pagina di profilo
                 req.setAttribute("error", "Nome e cognome devono contenere solo lettere");
                 req.setAttribute("user", oldUser);
@@ -71,7 +71,7 @@ public class UpdateUser extends HttpServlet {
                 return;
             }
             // Controlla che l'email sia valida
-            if (!Validation.checkEmail(req.getParameter("email"))) {
+            if (!UserValidation.checkEmail(req.getParameter("email"))) {
                 // Se l'email non rispetta i requisiti, setta un errore e reindirizza alla pagina di profilo
                 req.setAttribute("error", "Email non valida");
                 req.setAttribute("user", oldUser);
@@ -79,7 +79,7 @@ public class UpdateUser extends HttpServlet {
                 return;
             }
             // Controlla che il numero di telefono sia valido
-            if (!Validation.checkPhoneNumber(req.getParameter("phoneNumber"))) {
+            if (!UserValidation.checkPhoneNumber(req.getParameter("phoneNumber"))) {
                 // Se il numero di telefono non rispetta i requisiti, setta un errore e reindirizza alla pagina di profilo
                 req.setAttribute("error", "Numero di telefono non valido");
                 req.setAttribute("user", oldUser);
@@ -95,6 +95,10 @@ public class UpdateUser extends HttpServlet {
             user.setPhoneNumber(req.getParameter("phoneNumber"));
             user.setPassword(oldUser.getPassword());
             user.setSalt(oldUser.getSalt());
+            user.setAdmin(oldUser.isAdmin());
+            /*L'eventuale aggiornamento dello stato di admin è gestito
+            * in un'altra servlet per motivi di sicurezza
+             */
 
             // Se l'aggiornamento non va a buon fine, setta un errore
             if(!userDao.doUpdate(user)){
@@ -125,14 +129,14 @@ public class UpdateUser extends HttpServlet {
 
             // Controlla che le nuove password siano uguali
             String newPassword = req.getParameter("newPassword");
-            if(!Validation.checkPassword(newPassword)){
+            if(!UserValidation.checkPassword(newPassword)){
                 // Se la password non rispetta i requisiti, setta un errore e reindirizza alla pagina di profilo
                 req.setAttribute("error", "La password deve contenere almeno 8 caratteri, di cui almeno una lettera maiuscola, una minuscola e un numero");
                 req.setAttribute("user", oldUser);
                 req.getRequestDispatcher(dis).forward(req, resp);
                 return;
             }
-            if(!Validation.checkPasswordMatching(newPassword, req.getParameter("confirmPassword"))){
+            if(!UserValidation.checkPasswordMatching(newPassword, req.getParameter("confirmPassword"))){
                 // Se le password non coincidono, setta un errore e reindirizza alla pagina di profilo
                 req.setAttribute("error", "Le password non coincidono");
                 req.setAttribute("user", oldUser);

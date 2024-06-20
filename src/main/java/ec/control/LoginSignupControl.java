@@ -97,6 +97,7 @@ public class LoginSignupControl extends HttpServlet {
         String phoneN = req.getParameter("signup-phone").trim();
         String password = req.getParameter("signup-password").trim();
         String repPassword = req.getParameter("signup-rep-password").trim();
+        String isAdmin = req.getParameter("is_admin");
 
         // Aggiunta controlli per evitare spazi nei campi username ed email
         if (username.contains(" ") || email.contains(" ")) {
@@ -115,8 +116,8 @@ public class LoginSignupControl extends HttpServlet {
                 byte[] passwordHash = HashGenerator.generateHash(password, salt);
                 user.setPassword(passwordHash);
                 user.setSalt(salt);
+                user.setAdmin(Boolean.parseBoolean(isAdmin));
                 userDao.doSave(user);
-
                 HttpSession session = req.getSession();
                 session.setAttribute("userId", user.getUsername());
                 session.setAttribute("signupSuccess", true);

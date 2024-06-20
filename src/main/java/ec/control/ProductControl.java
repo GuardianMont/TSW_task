@@ -106,7 +106,7 @@ public class ProductControl extends HttpServlet {
 		model.doDelete(id);
 		//nel model mi accerto di eliminare anche le reference al medesimo
 		//prodotto in possibili carrelli già salvati
-		ShoppingCart cart =  (ShoppingCart) request.getSession().getAttribute("cart");
+		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
 		CartItem doDelete;
 		if (cart!=null && (doDelete=cart.getItem(id))!=null){
 			//cancello riferimenti ai prodotti nella sessione corrente
@@ -125,11 +125,14 @@ public class ProductControl extends HttpServlet {
         bean.setId(id);
 		// Eseguo l'aggiornamento nel database
 		model.doUpdate(bean);
-		//mi assicuro di aggiornare anche i prodotti nel carrello
-		//per farlo nel caso in cui l'oggetto che sto aggiornando fa parte del carrello di sessione
-		//induco il salvataggio delle informazioni del carrello nel db dove la reference del prodotto
-		// è in base al id e non alle specifiche, ricarico il carrello in modo che in automatico si aggiorna il tutto
+		/*
+		mi assicuro di aggiornare anche i prodotti nel carrello
+		per farlo nel caso in cui l'oggetto che sto aggiornando fa parte del carrello di sessione
+		induco il salvataggio delle informazioni del carrello nel db dove la reference del prodotto
+		è in base al id e non alle specifiche, ricarico il carrello in modo che in automatico si aggiorna il tutto
+		*/
 		ShoppingCart cart = (ShoppingCart)request.getSession().getAttribute("cart");
+		 */
 		if (cart!=null){
 			if(cart.getItem(id)!=null) {
 				update = true;
@@ -148,6 +151,8 @@ public class ProductControl extends HttpServlet {
 		String colore = request.getParameter("colore");
 		String category = request.getParameter("categoria");
 		String dimension = request.getParameter("dimensioni");
+		String discount = request.getParameter("sconto");
+		String isVisible = request.getParameter("isVisible");
 
 		String appPath = request.getServletContext().getRealPath("");
 		//String savePath = "C:\\Users\\user\\Desktop\\TSW_guardian_ver\\TSW_task\\src\\main\\webapp";
@@ -161,11 +166,11 @@ public class ProductControl extends HttpServlet {
 				if (filePart.getName().equals("img")) { // il nome campo input è img !!
 					String fileName = FileManager.extractFileName(filePart);
 					if (fileName != null && !fileName.equals("")) {
-//						File existingFile = new File(savePath, fileName);
-//						if (!existingFile.exists()) {
-//							//se esiste già un file con lo stesso nome non aggiungerà l'immagine
-//							filePart.write(savePath + File.separator + fileName);
-//						}
+						File existingFile = new File(savePath, fileName);
+						if (!existingFile.exists()) {
+							//se esiste già un file con lo stesso nome non aggiungerà l'immagine
+							filePart.write(savePath + File.separator + fileName);
+						}
 						filePart.write(savePath + File.separator + fileName);
 						ablPath = savePath + File.separator + fileName;
 					}
@@ -186,14 +191,16 @@ public class ProductControl extends HttpServlet {
 		bean.setCategoria(category);
 		bean.setDimensioni(dimension);
 		bean.setTemp_Url(ablPath);
+		bean.setPercentualeSconto(Integer.parseInt(discount));
+		bean.setVisibile(Boolean.parseBoolean(isVisible));
 		return bean;
 	}
 	private void handleInsertAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
 		//inserimento
-//		if (!request.getMethod().equalsIgnoreCase("POST")) {
-//			//mi devo accertare che la richiesta sia di tipo post
-//			throw new ServletException("La richiesta deve essere di tipo POST");
-//		}
+		if (!request.getMethod().equalsIgnoreCase("POST")) {
+			//mi devo accertare che la richiesta sia di tipo post
+			throw new ServletException("La richiesta deve essere di tipo POST");
+		}
 		model.doSave(handleBeanCreation(request));
 	}
 }

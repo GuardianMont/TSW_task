@@ -23,8 +23,8 @@ public class ProductDaoDM implements ProductDao {
 	public synchronized int doSave(ProductBean product) throws SQLException {
 		int generatedId = -1;
 		String insertSQL = "INSERT INTO " + ProductDaoDM.TABLE_NAME
-				+ " (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine)"
-				+ " VALUES (?, ?, ?, ? ,? ,? ,? ,? , ?) ";
+				+ " (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine, percentuale_sconto, is_visibile)"
+				+ " VALUES (?, ?, ?, ? ,? ,? ,? ,? , ?, ?, ?) ";
 		try (Connection connection = ConnectionPool.getInstance().getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 
@@ -36,6 +36,8 @@ public class ProductDaoDM implements ProductDao {
 			preparedStatement.setInt(6, product.getDisponibilita());
 			preparedStatement.setString(7, product.getCategoria());
 			preparedStatement.setString(8, product.getColore());
+			preparedStatement.setInt(10, product.getPercentualeSconto());
+			preparedStatement.setBoolean(11, product.isVisibile());
             if (product.getTemp_url()!=null) {
 				File file = new File(product.getTemp_url());
 				FileInputStream fis = new FileInputStream(file);
@@ -85,6 +87,8 @@ public class ProductDaoDM implements ProductDao {
 				bean.setFasciaIva(rs.getDouble("fascia_iva"));
 				bean.setImmagineUrl(rs.getBytes("immagine"));
 				bean.setColore(rs.getString("colore"));
+				bean.setPercentualeSconto(rs.getInt("percentuale_sconto"));
+				bean.setVisibile(rs.getBoolean("is_visibile"));
 			}
 
 		} finally {
@@ -155,6 +159,8 @@ public class ProductDaoDM implements ProductDao {
 				bean.setFasciaIva(rs.getDouble("fascia_iva"));
 				bean.setImmagineUrl(rs.getBytes("immagine"));
 				bean.setColore(rs.getString("colore"));
+				bean.setPercentualeSconto(rs.getInt("percentuale_sconto"));
+				bean.setVisibile(rs.getBoolean("is_visibile"));
 
 				products.add(bean);
 			}
@@ -171,12 +177,12 @@ public class ProductDaoDM implements ProductDao {
 
 	public void doUpdate(ProductBean product) throws SQLException, IOException {
 		String img_part= "";
-		int state =9;
+		int state =11;
 		if (product.getTemp_url()!=null){
 			img_part=", immagine = ? ";
 		}
 		try (Connection connection = ConnectionPool.getInstance().getConnection();
-			 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE " + ProductDaoDM.TABLE_NAME + " SET nome = ?, descrizione = ?, prezzo = ?, fascia_iva = ?, dimensioni = ?, disponibilita = ?, categoria = ?, colore = ? "+ img_part +" WHERE id = ?")) {
+			 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE " + ProductDaoDM.TABLE_NAME + " SET nome = ?, descrizione = ?, prezzo = ?, fascia_iva = ?, dimensioni = ?, disponibilita = ?, categoria = ?, colore = ?, percentuale_sconto = ?, is_visible = ? "+ img_part +" WHERE id = ?")) {
 			preparedStatement.setString(1, product.getNome());
 			preparedStatement.setString(2, product.getDescrizione());
 			preparedStatement.setDouble(3, product.getPrezzo());
@@ -185,10 +191,12 @@ public class ProductDaoDM implements ProductDao {
 			preparedStatement.setInt(6, product.getDisponibilita());
 			preparedStatement.setString(7, product.getCategoria());
 			preparedStatement.setString(8, product.getColore());
+			preparedStatement.setInt(9, product.getPercentualeSconto());
+			preparedStatement.setBoolean(10, product.isVisibile());
 			if (!img_part.equals("")) {
 				File file = new File(product.getTemp_url());
 				FileInputStream fis = new FileInputStream(file);
-				preparedStatement.setBinaryStream(9, fis, fis.available());
+				preparedStatement.setBinaryStream(state, fis, fis.available());
 				state++;
 			}
 			preparedStatement.setInt(state, product.getId());
