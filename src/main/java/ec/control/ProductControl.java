@@ -132,7 +132,7 @@ public class ProductControl extends HttpServlet {
 		è in base al id e non alle specifiche, ricarico il carrello in modo che in automatico si aggiorna il tutto
 		*/
 		ShoppingCart cart = (ShoppingCart)request.getSession().getAttribute("cart");
-		 */
+
 		if (cart!=null){
 			if(cart.getItem(id)!=null) {
 				update = true;
