@@ -19,7 +19,6 @@ import java.util.Collection;
 @WebServlet("/AddressManagement")
 public class Address extends HttpServlet {
     private AddressDaoDM model;
-
     @Override
     public void init() throws ServletException {
         super.init();

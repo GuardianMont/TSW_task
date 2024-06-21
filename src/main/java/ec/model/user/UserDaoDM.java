@@ -18,8 +18,8 @@ public class UserDaoDM implements UserDao {
     @Override
     public synchronized void doSave(UserBean user) throws SQLException {
         String insertSQL = "INSERT INTO " + UserDaoDM.TABLE_NAME
-                + " (username, nome, cognome, email, n_telefono, password_hash, salt)"
-                + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+                + " (username, nome, cognome, email, n_telefono, password_hash, salt, is_admin)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try( Connection connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)){
 
@@ -30,6 +30,7 @@ public class UserDaoDM implements UserDao {
             preparedStatement.setString(5, user.getPhoneNumber());
             preparedStatement.setBytes(6, user.getPassword());
             preparedStatement.setBytes(7, user.getSalt());
+            preparedStatement.setBoolean(8, user.isAdmin());
 
             preparedStatement.executeUpdate();
         }
@@ -87,6 +88,7 @@ public class UserDaoDM implements UserDao {
                 bean.setPassword(rs.getBytes("password_hash"));
                 bean.setSalt(rs.getBytes("salt"));
                 bean.setPhoneNumber(rs.getString("n_telefono"));
+                bean.setAdmin(rs.getBoolean("is_admin"));
             }
 
         } finally {
@@ -124,6 +126,7 @@ public class UserDaoDM implements UserDao {
                 bean.setPassword(rs.getBytes("password_hash"));
                 bean.setSalt(rs.getBytes("salt"));
                 bean.setPhoneNumber(rs.getString("n_telefono"));
+                bean.setAdmin(rs.getBoolean("is_admin"));
             }
 
         } finally {
@@ -164,6 +167,7 @@ public class UserDaoDM implements UserDao {
                 bean.setPassword(rs.getBytes("password_hash"));
                 bean.setSalt(rs.getBytes("salt"));
                 bean.setPhoneNumber(rs.getString("n_telefono"));
+                bean.setAdmin(rs.getBoolean("is_admin"));
                 users.add(bean);
             }
 
@@ -209,7 +213,7 @@ public class UserDaoDM implements UserDao {
     //metodo per aggiornare i dati dell'utente
     @Override
     public boolean doUpdate(UserBean user) throws SQLException {
-        String updateSQL = "UPDATE " + UserDaoDM.TABLE_NAME + " SET nome = ?, cognome = ?, email = ?, n_telefono = ?, password_hash = ?, salt = ? WHERE username = ?";
+        String updateSQL = "UPDATE " + UserDaoDM.TABLE_NAME + " SET nome = ?, cognome = ?, email = ?, n_telefono = ?, password_hash = ?, salt = ?, is_admin = ? WHERE username = ?";
         int result = 0;
         try( Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);){
@@ -220,8 +224,9 @@ public class UserDaoDM implements UserDao {
             preparedStatement.setString(4, user.getPhoneNumber());
             preparedStatement.setBytes(5, user.getPassword());
             preparedStatement.setBytes(6, user.getSalt());
-            preparedStatement.setString(7, user.getUsername());
+            preparedStatement.setBoolean(7, user.isAdmin());
 
+            preparedStatement.setString(8, user.getUsername());
             result = preparedStatement.executeUpdate();
         }catch (SQLException e){
             return false;
