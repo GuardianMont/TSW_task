@@ -17,7 +17,7 @@ public class ProductBean implements Serializable {
     private String categoria;
     private String colore;
     private int percentualeSconto;
-    private boolean isVisibile;
+    private boolean isVisible;
     private byte[] immagineUrl; // Cambiato da byte[] a String per test
     //per ora riporto a byte
     //semplifica la comunicazione c
@@ -119,9 +119,9 @@ public class ProductBean implements Serializable {
 
     public void setPercentualeSconto(int percentualeSconto) { this.percentualeSconto = percentualeSconto; }
 
-    public boolean isVisibile() { return isVisibile; }
+    public boolean isVisible() { return isVisible; }
 
-    public void setVisibile(boolean isVisibile) { this.isVisibile = isVisibile; }
+    public void setVisible(boolean isVisible) { this.isVisible = isVisible; }
 
     //rappresentazione in Byte dell'immagine.
     //necessaria per class 64 se no non si vede niente

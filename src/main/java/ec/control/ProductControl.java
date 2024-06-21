@@ -192,7 +192,7 @@ public class ProductControl extends HttpServlet {
 		bean.setDimensioni(dimension);
 		bean.setTemp_Url(ablPath);
 		bean.setPercentualeSconto(Integer.parseInt(discount));
-		bean.setVisibile(Boolean.parseBoolean(isVisible));
+		bean.setVisible(Boolean.parseBoolean(isVisible));
 		return bean;
 	}
 	private void handleInsertAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
