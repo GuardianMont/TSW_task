@@ -82,6 +82,13 @@ function renderOrders(ordini) {
         // per visualizzare il rettangolino solo con info ordini faccio questo div sepratore
         //con ovviamente classe specifica
 
+        //bottone aggiunta per scaricare il pdf
+        let buttonFattura = document.createElement("button");
+        buttonFattura.textContent = 'Scarica Fattura';
+        buttonFattura.addEventListener("click", function() {
+            downloadInvoice(ordine.ordineId);
+        });
+
 
         let address = ordine.address ? ordine.address.via : 'No info';
         let paymentMethod = ordine.paymentMethod ? ordine.paymentMethod.numCarta : 'No info';
@@ -110,7 +117,17 @@ function renderOrders(ordini) {
         orderDetails.appendChild(prodottiList);
 
         div.appendChild(orderInfo);
+        div.appendChild(buttonFattura);
         div.appendChild(orderDetails);
         container.appendChild(div);
     });
+}
+
+function downloadInvoice(orderId) {
+    const link = document.createElement('a');
+    link.href = 'CheckoutServlet?orderId=' + orderId + '&opzione=pdf';
+    link.download = 'fattura_' + orderId + '.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }

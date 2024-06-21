@@ -103,6 +103,7 @@
     </div>
     <div id="checkOutOrdini">
         <!--li immetto con ajax-->
+
     </div>
 </div>
     <div class = "container button-container">

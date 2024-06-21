@@ -47,13 +47,17 @@ public class CheckOutDaoDM implements CheckOutDao {
         try (Connection connection =ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement= connection.prepareStatement(sqlSelectFattura)){
             preparedStatement.setInt(1, numId);
-
+            GregorianCalendar calendar =null;
             ResultSet res = preparedStatement.executeQuery();
             while (res.next()){
                 ordine.setUtenteId(res.getString("utente_id"));
                 ordine.setCodAdress(res.getInt("cod_address"));
                 ordine.setCodMethod(res.getInt("cod_method"));
-                ordine.setData(res.getObject("data", GregorianCalendar.class));
+                Timestamp timestamp = res.getTimestamp("data");
+                if (timestamp != null) {
+                    calendar = new GregorianCalendar();
+                    calendar.setTimeInMillis(timestamp.getTime());
+                }
             }
         }
         return ordine;
