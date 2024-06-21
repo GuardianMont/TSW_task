@@ -21,7 +21,7 @@
                     <input id="submit" type="submit" value="Cerca">
                 </form>
             </li>
-            <li><a href="product">Home</a></li>
+            <li><a href="./Homepage.jsp">Home</a></li>
             <li><a href="product">Prodotti</a>
                 <ul class="submenu">
                     <li><a href="#">Prodotto 1</a></li>
