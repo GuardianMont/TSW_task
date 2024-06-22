@@ -154,6 +154,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+function clearErrors() {
+    var errors = document.querySelectorAll(".error");
+    errors.forEach(function(element) {
+        element.classList.remove("error");
+    });
+
+    var errorMessages = document.querySelectorAll(".error-message");
+    errorMessages.forEach(function(element) {
+        element.style.display = "none";
+    });
+}
+
 //check per l'email
 
 

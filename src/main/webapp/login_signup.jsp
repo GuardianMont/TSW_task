@@ -124,12 +124,14 @@
 
 <script>
     document.getElementById("show-signup-link").addEventListener("click", function(event) {
+        clearErrors() // così quando cambia da un interfaccia ad un altra si tolgono gli errori
         event.preventDefault(); // Evita il comportamento predefinito del link
         document.getElementById("login-form").style.display = "none";
         document.getElementById("signup-form").style.display = "block";
     });
 
     document.getElementById("show-login-link").addEventListener("click", function(event) {
+        clearErrors(); // così quando cambia da un interfaccia ad un altra si tolgono gli errori
         event.preventDefault(); // Evita il comportamento predefinito del link
         document.getElementById("signup-form").style.display = "none";
         document.getElementById("login-form").style.display = "block";

@@ -107,10 +107,10 @@ function showConfirmationMessage(data) {
             <h3>Oggetti acquistati:</h3>
             <ul>
                 ${data.cartItems.map(item => `
-                    <li>${item.nome} (Quantità: ${item.quantity} Prezzo: ${item.prezzo})</li>
+                    <li>${item.nome} (Quantità: ${item.quantity} Prezzo: ${item.prezzoUnitario})</li>
                 `).join('')}
             </ul>
-            <h3>Totale Spesa: String.format("%.2f", ${data.spesa})</h3>
+            <h3>Totale Spesa:  ${data.prezzototale}</h3>
             <h4>Metodo di pagamento: </h4>
             <p>
                 Numero carta: ${data.paymentMethod.numCarta}<br> 
