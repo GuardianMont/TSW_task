@@ -106,7 +106,7 @@ function renderOrders(ordini) {
         let prodottiList = document.createElement('ul');
         if (ordine.cartItems) {
             ordine.cartItems.forEach(function (item) {
-                let prezzo = item.prezzo.toFixed(2);
+                let prezzo = item.prezzoUnitario.toFixed(2);
                 let prodotto = document.createElement("li");
                 prodotto.innerHTML = 'Nome: ' + item.nome +
                     ', Quantità: ' + item.quantity +

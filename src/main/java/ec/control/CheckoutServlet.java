@@ -1,19 +1,24 @@
 package ec.control;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.io.source.ByteArrayOutputStream;
-
-import com.itextpdf.kernel.pdf.*;
-
-import java.net.URL;
-import java.nio.file.Paths;
-import com.itextpdf.layout.*;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.draw.ILineDrawer;
+import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.Gson;
-import com.sun.tools.javac.Main;
+
 import ec.model.CheckOut.CheckOutDaoDM;
 import ec.model.CheckOut.Ordine;
 import ec.model.CheckOut.StoricoProdottiDaoDM;
@@ -35,12 +40,11 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Paths;
+import java.net.URL;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Collection;
-
-import static com.itextpdf.layout.property.HorizontalAlignment.CENTER;
 
 @WebServlet("/CheckoutServlet")
 public class CheckoutServlet extends HttpServlet {
@@ -190,8 +194,10 @@ public class CheckoutServlet extends HttpServlet {
         for (ProductBean item : modelStoricoProdotti.retriveOrdineitem(ordine.getNumId(), ordine.getUtenteId()) ){
             JsonObject jsonItem = new JsonObject();
             jsonItem.addProperty("nome", item.getNome());
+            jsonItem.addProperty("iva", item.getFasciaIva());
             jsonItem.addProperty("quantity", item.getDisponibilita());
-            jsonItem.addProperty("prezzo", item.getPrezzo());
+            jsonItem.addProperty("prezzoUnitario", item.getPrezzo());
+            jsonItem.addProperty("sconto", item.getPercentualeSconto());
             prezzoTot += item.getPrezzo();
             cartItems.add(jsonItem);
         }
@@ -214,47 +220,72 @@ public class CheckoutServlet extends HttpServlet {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(baos);
         PdfDocument pdf = new PdfDocument(writer);
-        Document document = new Document(pdf);
+        Document document = new Document(pdf, PageSize.A4);
 
-        URL resourceUrl = Main.class.getClassLoader().getResource("erroreAttentionIcon.png");
-        if (resourceUrl != null) {
-            Path path = Paths.get(resourceUrl.toURI());
-            Image img = new Image(ImageDataFactory.create(path.toAbsolutePath().toString()));
-            document.add(img);
-        } else {
-            System.err.println("Resource not found: uploadFile/erroreAttentionIcon.png");
-        }
+        PdfFont font = PdfFontFactory.createFont("Times-Roman");
+        String imagePath = "C:\\Users\\user\\Desktop\\TSW_guardian_ver\\TSW_task\\src\\main\\webapp\\uploadFile\\frusta.png";
+        Image img = new Image(ImageDataFactory.create(imagePath)).setTextAlignment(TextAlignment.CENTER);
+        document.add(img);
 
-        document.add(new Paragraph("Fattura" + jsonOrder.get("ordineFattura").getAsString()).setBold().setFontSize(20).setTextAlignment(TextAlignment.CENTER));
+        LineSeparator ls = new LineSeparator(new SolidLine());
+        ls.setMarginBottom(10);
+        document.add(ls);
+
+        document.add(new Paragraph("Codice Fattura: " + jsonOrder.get("ordineFattura").getAsString())
+                .setFont(font)
+                .setFontSize(12)
+                .setTextAlignment(TextAlignment.CENTER));
+
+        LineSeparator ls_2 = new LineSeparator(new SolidLine());
+        ls_2.setMarginBottom(10);
+        document.add(ls_2);
 
         if (jsonOrder.has("ordineId")) {
-            document.add(new Paragraph("Ordine ID: " + jsonOrder.get("ordineId").getAsString()));
+            document.add(new Paragraph(
+                    "Esercente TavolandoSRL"+
+                    "\nOrdine ID: " + jsonOrder.get("ordineId").getAsString() +
+                    "\nIn data: " + jsonOrder.get("dataOrdine") +
+                    "\nCodice Fattura: " + jsonOrder.get("ordineFattura").getAsString() )
+                    .setFont(font)
+                    .setFontSize(10)
+                    .setTextAlignment(TextAlignment.RIGHT));
         }
-        if (jsonOrder.has("ordineFattura")) {
-            document.add(new Paragraph("Codice Fattura: " + jsonOrder.get("ordineFattura").getAsString()));
-        }
-        if (jsonOrder.has("dataOrdine")) {
-            document.add(new Paragraph("Data Ordine: " + jsonOrder.get("dataOrdine").getAsString()));
-        }
+
+        LineSeparator ls_3 = new LineSeparator(new SolidLine());
+        ls_3.setMarginBottom(10);
+        document.add(ls_3);
+
+        float[] columnWidths = {1, 1};
+        Table tableInfo = new Table(columnWidths).useAllAvailableWidth();
+
 
         if (jsonOrder.has("address")) {
             JsonObject address = jsonOrder.getAsJsonObject("address");
-            document.add(new Paragraph("Indirizzo:"));
-            if (address.has("via")) {
-                document.add(new Paragraph(address.get("via").getAsString()));
-            }
-            if (address.has("città")) {
-                document.add(new Paragraph(address.get("città").getAsString()));
-            }
-            if (address.has("cap")) {
-                document.add(new Paragraph(address.get("cap").getAsString()));
-            }
+            Cell cell = new Cell().add(new Paragraph("Indirizzo di spedizione: "
+            + address.get("via").getAsString() + ", " + address.get("numCiv").getAsString() +
+                    "\n cita: " + address.get("citta").getAsString() + "(" + address.get("provincia").getAsString() + "),"
+            + address.get("cap").getAsString())
+                    .setFont(font)
+                    .setFontSize(10)
+                    .setTextAlignment(TextAlignment.LEFT));
+            cell.setBorder(Border.NO_BORDER);
+            tableInfo.addCell(cell);
         }
 
         if (jsonOrder.has("paymentMethod")) {
             JsonObject paymentMethod = jsonOrder.getAsJsonObject("paymentMethod");
-            document.add(new Paragraph("Metodo di Pagamento: " + paymentMethod.get("numCarta").getAsString()));
+            Cell cell = new Cell().add(new Paragraph("Numero carta: " + paymentMethod.get("numCarta").getAsString() +
+                    "\ndata scedenza: " + paymentMethod.get("dataScadenza") +
+            "\ntitolare carta: " + paymentMethod.get("titolareCarta") +
+                    "\ncircuito di pagamento: " + paymentMethod.get("circuito"))
+                    .setFont(font)
+                    .setFontSize(10)
+                    .setTextAlignment(TextAlignment.RIGHT));
+            cell.setBorder(Border.NO_BORDER);
+            tableInfo.addCell(cell);
         }
+
+        document.add(tableInfo);
 
         if (jsonOrder.has("cartItems")) {
             JsonArray cartItems = jsonOrder.getAsJsonArray("cartItems");
@@ -269,7 +300,7 @@ public class CheckoutServlet extends HttpServlet {
                 JsonObject item = cartItems.get(i).getAsJsonObject();
                 table.addCell(new Cell().add(new Paragraph(item.get("nome").getAsString())));
                 table.addCell(new Cell().add(new Paragraph(item.get("quantity").getAsString())));
-                table.addCell(new Cell().add(new Paragraph(item.get("prezzo").getAsString())));
+                table.addCell(new Cell().add(new Paragraph(item.get("prezzoUnitario").getAsString())));
             }
 
             document.add(table);
@@ -313,9 +344,11 @@ public class CheckoutServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
             JsonObject jsonItem = new JsonObject();
+            jsonItem.addProperty("iva", item.getItem().getFasciaIva());
             jsonItem.addProperty("nome", item.getItem().getNome());
             jsonItem.addProperty("quantity", item.getNumItem());
-            jsonItem.addProperty("prezzo", item.getItem().getPrezzo());
+            jsonItem.addProperty("prezzoUnitario", item.getItem().getPrezzo());
+            jsonItem.addProperty("sconto", item.getItem().getPercentualeSconto());
             cartItems.add(jsonItem);
         });
         jsonResponse.add("cartItems", cartItems);
