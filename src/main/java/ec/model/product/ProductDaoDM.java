@@ -1,8 +1,7 @@
 package ec.model.product;
 
 import ec.model.ConnectionPool;
-import ec.model.DriverManagerConnectionPool;
-import ec.model.cart.CartDaoDM;
+
 
 import java.io.File;
 import java.io.FileInputStream;
