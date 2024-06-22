@@ -20,16 +20,16 @@
     <link href="css/Cart.css" rel="stylesheet" type="text/css">
     <link href="css/notifica.css" rel="stylesheet" type="text/css">
     <title>Storage DS/BF</title>
-    <script src="js/loginMessage.js"></script>
     <script src="js/validationAddress.js"></script>
     <script src="js/quantityCheck.js"></script>
+    <script src="js/notifica.js"></script>
     <script>
         window.onload = function() {
             var signupSuccess = <%= session.getAttribute("signupSuccess") != null %>;
             var user = <%= session.getAttribute("userId") != null %>;
 
             if (signupSuccess && user) {
-                showNotification("Login effettuato! Benvenuto " + "<%= session.getAttribute("userId") %>!");
+                showInfoNotifica("Login effettuato! Benvenuto " + "<%= session.getAttribute("userId") %>!");
                 <% session.removeAttribute("signupSuccess"); %>
             }
         };
@@ -38,10 +38,6 @@
 
 <body>
 <jsp:include page="Header.jsp"/>
-<div class="notification" id="notification">
-    <img src="uploadFile/IconInfo.png" alt="Info Icon" width="20" height="20">
-    <span id="notification-text"></span>
-</div>
 <div class="container">
     <a href="product" class="catalogo">Catalogo</a>
     <h2 class="prodotti_carrello">Prodotti nel Carrello</h2>

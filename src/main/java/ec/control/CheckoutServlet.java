@@ -223,8 +223,12 @@ public class CheckoutServlet extends HttpServlet {
         Document document = new Document(pdf, PageSize.A4);
 
         PdfFont font = PdfFontFactory.createFont("Times-Roman");
-        String imagePath = "C:\\Users\\user\\Desktop\\TSW_guardian_ver\\TSW_task\\src\\main\\webapp\\uploadFile\\frusta.png";
-        Image img = new Image(ImageDataFactory.create(imagePath)).setTextAlignment(TextAlignment.CENTER);
+        String imagePath = "C:\\Users\\user\\Desktop\\TSW_guardian_ver\\TSW_task\\src\\main\\webapp\\uploadFile\\logoso.png";
+
+        Image img = new Image(ImageDataFactory.create(imagePath));
+        img.setWidth(UnitValue.createPercentValue(50)); // 50% of the page width
+        img.setHeight(UnitValue.createPercentValue(50));
+        img .setTextAlignment(TextAlignment.CENTER);
         document.add(img);
 
         LineSeparator ls = new LineSeparator(new SolidLine());

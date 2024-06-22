@@ -16,21 +16,13 @@
     <script src="js/validationAddress.js"></script>
     <script src="js/validationPayMathods.js"></script>
     <script src="js/loadAddressPay.js"></script>
-    <link rel="stylesheet" href="css/notificaADPM.css">
+    <script src="js/notifica.js"></script>
+    <link rel="stylesheet" href="css/notifica.css">
     <link rel="stylesheet" href="css/Payment.css">
     <link rel="stylesheet" href="css/confermaAcquisto.css">
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
-<div class="notification" id="notificationAD">
-    <img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="20" height="20">
-    <span id="notification-textAD"></span>
-</div>
-<div class="notification" id="notificationPM">
-    <img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="20" height="20">
-    <span id="notification-textPM"></span>
-</div>
-
     <!--action="CheckoutServlet" method="post"-->
 <div class="section_1">
     <h2>Indirizzo di Spedizione</h2>

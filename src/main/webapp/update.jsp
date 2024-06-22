@@ -49,6 +49,11 @@
         <label for="dimensioni">Dimensioni</label><br>
         <input id="dimensioni" name="dimensioni" type="text" maxlength="40" required value="<%=product.getDimensioni()%>"><br>
 
+        <label for="sconto">Sconto:</label>
+        <input id ="sconto" name="sconto" type="number" min="0" max="99" value="0" placeholder="0"
+               title="sconto da applicare al prodotto" required>
+        <span id="sconto-error" class="error-message">Il campo sconto è obbligatorio</span>
+
         <label for="categoria">Categoria</label><br>
         <input id="categoria" name="categoria" type="text" maxlength="40" required value="<%=product.getCategoria()%>"><br>
 

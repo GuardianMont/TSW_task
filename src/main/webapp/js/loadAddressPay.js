@@ -17,37 +17,19 @@ document.addEventListener('DOMContentLoaded', function() {
         let paymentSelected = document.querySelector("input[name='selectedPayMethod']:checked");
 
         if (!addressSelected && !paymentSelected ){
-            var notification = document.getElementById("notificationAD");
-            var notificationText = document.getElementById('notification-textAD');
-            notificationText.textContent = "Per proseguire selezionare un indirizzo e un metodo di pagamento";
-            notification.style.display = "flex";
-            setTimeout(function() {
-                notification.style.display = "none";
-            }, 5000);
+            showAttentionNotifica("Per proseguire selezionare un indirizzo e un metodo di pagamento") ;
             document.querySelector('.proceed-button').disabled = false;
             return  false;
         }
 
         if (!addressSelected) {
-            var notification = document.getElementById("notificationAD");
-            var notificationText = document.getElementById('notification-textAD');
-            notificationText.textContent = "Per proseguire selezionare un indirizzo";
-            notification.style.display = "flex";
-            setTimeout(function() {
-                notification.style.display = "none";
-            }, 5000);
+            showAttentionNotifica("Per proseguire selezionare un indirizzo") ;
             document.querySelector('.proceed-button').disabled = false;
             return  false;
         }
 
         if (!paymentSelected) {
-            var notification = document.getElementById("notificationPM");
-            var notificationText = document.getElementById('notification-textPM');
-            notificationText.textContent= "Per proseguire selezionare un metodo di pagamento";
-            notification.style.display = "flex";
-            setTimeout(function() {
-                notification.style.display = "none";
-            }, 5000);
+            showAttentionNotifica("Per proseguire selezionare un metodo di pagamento") ;
             document.querySelector('.proceed-button').disabled = false;
             return   false;
         }
