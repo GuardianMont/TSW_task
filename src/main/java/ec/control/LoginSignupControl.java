@@ -30,7 +30,18 @@ public class LoginSignupControl extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req,resp);
+        String option = req.getParameter("option");
+        if (option != null && option.equals("logout")){
+            HttpSession session = req.getSession();
+            session.removeAttribute("userId");
+            session.removeAttribute("signupSuccess");
+            resp.sendRedirect(req.getContextPath() + "/Homepage.jsp");
+        }
+        else if(req.getSession().getAttribute("userId") != null){
+            resp.sendRedirect(req.getContextPath()+"/profileServlet");
+        }else{
+            resp.sendRedirect(req.getContextPath()+"/Homepage.jsp");
+        }
     }
 
     @Override
@@ -97,7 +108,6 @@ public class LoginSignupControl extends HttpServlet {
         String phoneN = req.getParameter("signup-phone").trim();
         String password = req.getParameter("signup-password").trim();
         String repPassword = req.getParameter("signup-rep-password").trim();
-        //String isAdmin = req.getParameter("is_admin");
 
         // Aggiunta controlli per evitare spazi nei campi username ed email
         if (username.contains(" ") || email.contains(" ")) {
@@ -116,7 +126,7 @@ public class LoginSignupControl extends HttpServlet {
                 byte[] passwordHash = HashGenerator.generateHash(password, salt);
                 user.setPassword(passwordHash);
                 user.setSalt(salt);
-               // user.setAdmin(Boolean.parseBoolean(isAdmin));
+                user.setAdmin(false);
                 userDao.doSave(user);
                 HttpSession session = req.getSession();
                 session.setAttribute("userId", user.getUsername());
