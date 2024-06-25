@@ -1,8 +1,7 @@
 package ec.model.product;
 
 import ec.model.ConnectionPool;
-import ec.model.DriverManagerConnectionPool;
-import ec.model.cart.CartDaoDM;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +22,7 @@ public class ProductDaoDM implements ProductDao {
 	public synchronized int doSave(ProductBean product) throws SQLException {
 		int generatedId = -1;
 		String insertSQL = "INSERT INTO " + ProductDaoDM.TABLE_NAME
-				+ " (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine, percentuale_sconto, is_visibile)"
+				+ " (nome, descrizione, prezzo, fascia_iva, dimensioni, disponibilita, categoria, colore, immagine, percentuale_sconto, is_visible)"
 				+ " VALUES (?, ?, ?, ? ,? ,? ,? ,? , ?, ?, ?) ";
 		try (Connection connection = ConnectionPool.getInstance().getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
@@ -37,7 +36,7 @@ public class ProductDaoDM implements ProductDao {
 			preparedStatement.setString(7, product.getCategoria());
 			preparedStatement.setString(8, product.getColore());
 			preparedStatement.setInt(10, product.getPercentualeSconto());
-			preparedStatement.setBoolean(11, product.isVisibile());
+			preparedStatement.setBoolean(11, product.isVisible());
             if (product.getTemp_url()!=null) {
 				File file = new File(product.getTemp_url());
 				FileInputStream fis = new FileInputStream(file);
@@ -88,7 +87,7 @@ public class ProductDaoDM implements ProductDao {
 				bean.setImmagineUrl(rs.getBytes("immagine"));
 				bean.setColore(rs.getString("colore"));
 				bean.setPercentualeSconto(rs.getInt("percentuale_sconto"));
-				bean.setVisibile(rs.getBoolean("is_visibile"));
+				bean.setVisible(rs.getBoolean("is_visible"));
 			}
 
 		} finally {
@@ -133,7 +132,7 @@ public class ProductDaoDM implements ProductDao {
 		Collection<ProductBean> products = new LinkedList<>();
 		String selectSQL = "SELECT * FROM " + ProductDaoDM.TABLE_NAME;
 		try (Connection connection = ConnectionPool.getInstance().getConnection()) {
-			if (order != null && !order.equals("")) {
+			if (order != null && !order.isEmpty()) {
 				selectSQL += " ORDER BY ";
 				if (order.equals("prezzoDec")) {
 					// prezzo decrescente
@@ -160,7 +159,7 @@ public class ProductDaoDM implements ProductDao {
 				bean.setImmagineUrl(rs.getBytes("immagine"));
 				bean.setColore(rs.getString("colore"));
 				bean.setPercentualeSconto(rs.getInt("percentuale_sconto"));
-				bean.setVisibile(rs.getBoolean("is_visibile"));
+				bean.setVisible(rs.getBoolean("is_visible"));
 
 				products.add(bean);
 			}
@@ -192,8 +191,8 @@ public class ProductDaoDM implements ProductDao {
 			preparedStatement.setString(7, product.getCategoria());
 			preparedStatement.setString(8, product.getColore());
 			preparedStatement.setInt(9, product.getPercentualeSconto());
-			preparedStatement.setBoolean(10, product.isVisibile());
-			if (!img_part.equals("")) {
+			preparedStatement.setBoolean(10, product.isVisible());
+			if (!img_part.isEmpty()) {
 				File file = new File(product.getTemp_url());
 				FileInputStream fis = new FileInputStream(file);
 				preparedStatement.setBinaryStream(state, fis, fis.available());

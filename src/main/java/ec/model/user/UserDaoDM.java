@@ -90,7 +90,6 @@ public class UserDaoDM implements UserDao {
                 bean.setPhoneNumber(rs.getString("n_telefono"));
                 bean.setAdmin(rs.getBoolean("is_admin"));
             }
-
         } finally {
             try {
                 if (preparedStatement != null)

@@ -25,6 +25,7 @@
 
         if (user != null && sessionUser != null && sessionUser.equals(user.getUsername())){
     %>
+
 <div class="container main-container" id = "main-container">
     <div class="container profile-container" id="profile-container">
         <h3>Profilo <%= user.getUsername() %></h3>
@@ -37,7 +38,7 @@
     <div class="container edit-container" id="edit-container">
         <p id="edit-error" class="edit-error"></p>
         <h3>Modifica</h3>
-        <form id="edit-profile-form" action="updateUser" method="post" id="edit-form">
+        <form id="edit-profile-form" action="updateUser" method="post" >
             <div class="edit-form-hidden">
                 <input type="hidden" name="option" value="update">
                 <input type="hidden" name="username"  value="<%= user.getUsername() %>">
@@ -103,6 +104,7 @@
     </div>
     <div id="checkOutOrdini">
         <!--li immetto con ajax-->
+
     </div>
 </div>
     <div class = "container button-container">
@@ -111,10 +113,14 @@
         <button class="edit-button" id="modifica" onclick="editProfile()">Modifica informazioni utente</button>
         <button class="edit-button" id="cambiaPassword" onclick="changePassword()">Cambia Password</button>
         <button class="edit-button" id="viewOrdini" onclick="loadOrders()">visualizza Ordini</button>
+        <form class="edit-button" action="${pageContext.request.contextPath}/LoginSignup">
+            <input type="hidden" name="option" value="logout">
+            <input type="submit" value="Logout">
+        </form>
     </div>
 </div>
 <%
-}else{
+    }else{
 %>
 <div class="container" id="not-logged-message">
     <h3>Devi essere loggato per visualizzare il profilo, coglione!</h3>
@@ -123,6 +129,7 @@
         Ti ci sei messo proprio d'impegno, eh?
     </p>
 </div>
+
 <%
     }
 %>

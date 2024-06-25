@@ -37,9 +37,14 @@
         <span id="iva-error" class="error-message">Il campo fascia iva è obbligatorio.</span><br>
 
         <label for="dimensioni">Dimensioni:</label>
-        <input id="dimensioni" name="dimensioni" type="text" maxlength="40" pattern="^\d+\*\d+\*\d+$"
+        <input id="dimensioni" name="dimensioni" type="text" maxlength="40" pattern="^\d+\*\d+(\*\d+)?$"
                title="Dimensioni del prodotto" required placeholder="ww*ll*hh">
         <span id="dimensioni-error" class="error-message">Il campo dimensioni è obbligatorio.</span><br>
+
+        <label for="sconto">Sconto:</label>
+        <input id ="sconto" name="sconto" type="number" min="0" max="99" value="0" placeholder="0"
+               title="sconto da applicare al prodotto" required>
+      <span id="sconto-error" class="error-message">Il campo sconto è obbligatorio</span>
 
         <label for="categoria">Categoria:</label>
         <select id="categoria" name="categoria" required title="Categoria dei prodotti">
@@ -72,7 +77,7 @@
         </div>
 
         <br><label for="colore">Colore:</label>
-        <input id="colore" name="colore" type="text" maxlength="40" required placeholder="Inserire colore">
+        <input id="colore" name="colore" type="text" maxlength="40" required placeholder="Inserire colore" pattern="^[a-zA-Z0-9\s]+$">
         <span id="colore-error" class="error-message">Il campo colore è obbligatorio.</span><br>
 
         <label for="img">Immagine:</label>

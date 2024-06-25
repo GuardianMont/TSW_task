@@ -18,16 +18,15 @@
 	<link rel="stylesheet" href="css/ProductView.css">
 	<link rel="stylesheet" href="css/notifica.css">
 	<title>Storage DS/BF</title>
-
 	<script src="js/validationProduct.js"></script>
-	<script src="js/loginMessage.js"></script>
+	<script src="js/notifica.js"></script>
 	<script>
 		window.onload = function() {
 			var signupSuccess = <%= session.getAttribute("signupSuccess") != null %>;
 			var user = <%= session.getAttribute("userId") != null %>;
 
 			if (signupSuccess && user) {
-				showNotification("Login effettuato! Benvenuto " + "<%= session.getAttribute("userId") %>!");
+				showInfoNotifica("Login effettuato! Benvenuto " + "<%= session.getAttribute("userId") %>!");
 				<% session.removeAttribute("signupSuccess"); %>
 			}
 		};
@@ -37,10 +36,6 @@
 <body>
 
 <jsp:include page="Header.jsp"/>
-<div class="notification" id="notification">
-	<img src="uploadFile/IconInfo.png" alt="Info Icon" width="20" height="20" >
-	<span id="notification-text"></span>
-</div>
 <div class="generale">
 	<div class="sorting-dropdown">
 		<select onchange="window.location.href=this.value" class="select-sorting">

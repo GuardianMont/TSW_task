@@ -70,9 +70,11 @@ public class AddressUs {
     public void setPreferenze(String preferenze) {
         this.preferenze = preferenze;
     }
+
     public void setNum_ID (int num){this.num_ID= num;}
 
     public int getNum_ID (){return num_ID;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

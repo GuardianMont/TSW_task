@@ -17,37 +17,19 @@ document.addEventListener('DOMContentLoaded', function() {
         let paymentSelected = document.querySelector("input[name='selectedPayMethod']:checked");
 
         if (!addressSelected && !paymentSelected ){
-            var notification = document.getElementById("notificationAD");
-            var notificationText = document.getElementById('notification-textAD');
-            notificationText.textContent = "Per proseguire selezionare un indirizzo e un metodo di pagamento";
-            notification.style.display = "flex";
-            setTimeout(function() {
-                notification.style.display = "none";
-            }, 5000);
+            showAttentionNotifica("Per proseguire selezionare un indirizzo e un metodo di pagamento") ;
             document.querySelector('.proceed-button').disabled = false;
             return  false;
         }
 
         if (!addressSelected) {
-            var notification = document.getElementById("notificationAD");
-            var notificationText = document.getElementById('notification-textAD');
-            notificationText.textContent = "Per proseguire selezionare un indirizzo";
-            notification.style.display = "flex";
-            setTimeout(function() {
-                notification.style.display = "none";
-            }, 5000);
+            showAttentionNotifica("Per proseguire selezionare un indirizzo") ;
             document.querySelector('.proceed-button').disabled = false;
             return  false;
         }
 
         if (!paymentSelected) {
-            var notification = document.getElementById("notificationPM");
-            var notificationText = document.getElementById('notification-textPM');
-            notificationText.textContent= "Per proseguire selezionare un metodo di pagamento";
-            notification.style.display = "flex";
-            setTimeout(function() {
-                notification.style.display = "none";
-            }, 5000);
+            showAttentionNotifica("Per proseguire selezionare un metodo di pagamento") ;
             document.querySelector('.proceed-button').disabled = false;
             return   false;
         }
@@ -107,10 +89,10 @@ function showConfirmationMessage(data) {
             <h3>Oggetti acquistati:</h3>
             <ul>
                 ${data.cartItems.map(item => `
-                    <li>${item.nome} (Quantità: ${item.quantity} Prezzo: ${item.prezzo})</li>
+                    <li>${item.nome} (Quantità: ${item.quantity} Prezzo: ${item.prezzoUnitario})</li>
                 `).join('')}
             </ul>
-            <h3>Totale Spesa: String.format("%.2f", ${data.spesa})</h3>
+            <h3>Totale Spesa:  ${data.prezzototale}</h3>
             <h4>Metodo di pagamento: </h4>
             <p>
                 Numero carta: ${data.paymentMethod.numCarta}<br> 
