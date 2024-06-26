@@ -1,4 +1,4 @@
-package ec;
+package ec.util;
 
 /**
  * Classe per la validazione dei dati.

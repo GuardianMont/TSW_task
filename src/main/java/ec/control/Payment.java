@@ -53,8 +53,15 @@ public class Payment extends HttpServlet {
                     break;
                 case "show":
                     try {
-                        request.setAttribute("payMethods", model.doRetrieveAll((String) request.getSession().getAttribute("userId")));
+                        request.setAttribute("payMethods", model.doRetrieveAll((String)request.getSession().getAttribute("userId")));
                         handleShowAction(request,response);
+                    } catch (SQLException e) {
+                        sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+                    }
+                    break;
+                case "delete":
+                    try {
+                        handleDeleteAction(request,response);
                     } catch (SQLException e) {
                         sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
                     }
@@ -96,6 +103,14 @@ public class Payment extends HttpServlet {
     private void handleShowAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         Collection<PayMethod> payMethods = model.doRetrieveAll((String) request.getSession().getAttribute("userId"));
         sendJsonResponse(response,true, payMethods);
+    }
+
+    //TODO QUESTA È UNA RICHIESTA D'AIUTO
+    private void handleDeleteAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        int numId = Integer.parseInt(request.getParameter("numId"));
+        String userId = (String) request.getSession().getAttribute("userId");
+        model.doDelete(userId, numId);
+        sendSuccessResponse(response, request.getContextPath() + "/Profile.jsp");
     }
 }
 

@@ -15,7 +15,8 @@ function loadPaymentMethods() {
                     let div = document.createElement('div');
                     div.innerHTML =  '<div>Numero carta: ' + payMethod.numCarta +
                         '<br> Data scadenza: ' + payMethod.dataScadenza +
-                        'Titolare Carta: ' + payMethod.titolareCarta + '</div>';
+                        'Titolare Carta: ' + payMethod.titolareCarta + '</div>' +
+                        '<button onclick="deletePaymentMethod(' + payMethod.numId + ')">Elimina</button>';
                     container.appendChild(div);
                 });
             } else {
@@ -31,6 +32,32 @@ function loadPaymentMethods() {
     var data = 'opzione=show';
     xhr.send(data);
 }
+
+//TODO: AGGIUSTARE O ELIMINARE STA MERDA
+function deletePaymentMethod(payMethod) {
+    console.log('Deleting payment method:', payMethod);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'payMethodsManager');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                loadPaymentMethods();
+            } else {
+                console.error('Error deleting payment method:', response.error);
+            }
+        } else {
+            console.error('Request failed. Status:', xhr.status);
+        }
+    };
+    xhr.onerror = function() {
+        console.error('Request failed. Network error.');
+    };
+    var data = 'opzione=delete&numId=' + encodeURI(payMethod);
+    xhr.send(data);
+}
+
 
 function loadAddresses() {
     viewAddresses()

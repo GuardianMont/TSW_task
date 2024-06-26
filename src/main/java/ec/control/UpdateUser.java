@@ -1,6 +1,6 @@
 package ec.control;
 
-import ec.UserValidation;
+import ec.util.UserValidation;
 import ec.model.HashGenerator;
 import ec.model.user.UserBean;
 import ec.model.user.UserDao;
