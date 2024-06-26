@@ -1,14 +1,5 @@
 function loadOrders() {
-    document.getElementById("edit-container").style.display = "none"
-    document.getElementById("profile-container").style.display = "none"
-    document.getElementById("change-password-container").style.display = "none"
-    document.getElementById("ordiniEffettuati").style.display="block"
-
-    document.getElementById("profilo").style.display="inline-block"
-
-    document.getElementById("modifica").style.display="inline-block"
-    document.getElementById("cambiaPassword").style.display="inline-block"
-    document.getElementById("viewOrdini").style.display="none"
+    viewOrdini();
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'CheckoutServlet');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

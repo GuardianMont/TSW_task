@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/Ordini.css">
     <script src="js/loadOrdini.js"></script>
     <script src="js/profileSwitchingForms.js"></script>
+    <script src="js/profileLoadingFunctions.js"></script>
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
@@ -92,27 +93,38 @@
             </div>
         </form>
     </div>
-<div class="ordiniEffettuati" id="ordiniEffettuati">
-    <div class="generale">
-        <div class="sorting-dropdown">
-            <select onchange="orderOrdini()" class="select-sorting" id="sortingDropdown">
-                <option value="#">Ordina per</option>
-                <option value="data">Dal meno recente</option>
-                <option value="dataDESC">Dal più recente</option>
-            </select>
+    <div class="ordiniEffettuati" id="ordiniEffettuati">
+        <div class="generale">
+            <div class="sorting-dropdown">
+                <select onchange="orderOrdini()" class="select-sorting" id="sortingDropdown">
+                    <option value="#">Ordina per</option>
+                    <option value="data">Dal meno recente</option>
+                    <option value="dataDESC">Dal più recente</option>
+                </select>
+            </div>
+        </div>
+        <div id="checkOutOrdini">
+            <!--li immetto con ajax-->
+
         </div>
     </div>
-    <div id="checkOutOrdini">
-        <!--li immetto con ajax-->
-
+    <div class="indirizziSpedizione" id="indirizziSpedizione">
+        <div id="shipping-address">
+            <!--li immetto con ajax-->
+        </div>
     </div>
-</div>
+    <div class="metodiPagamento" id="metodiPagamento">
+        <div id="shipping-payment">
+            <!--li immetto con ajax-->
+        </div>
+    </div>
     <div class = "container button-container">
-
         <button class="edit-button" id="profilo" onclick="showProfile()">informazioni utente</button>
         <button class="edit-button" id="modifica" onclick="editProfile()">Modifica informazioni utente</button>
         <button class="edit-button" id="cambiaPassword" onclick="changePassword()">Cambia Password</button>
         <button class="edit-button" id="viewOrdini" onclick="loadOrders()">visualizza Ordini</button>
+        <button class="edit-button" id="viewPayment" onclick="loadPaymentMethods()">visualizza Metodi di pagamento</button>
+        <button class="edit-button" id="viewAddresses" onclick="loadAddresses()">visualizza Indirizzi di spedizione</button>
         <form class="edit-button" action="${pageContext.request.contextPath}/LoginSignup">
             <input type="hidden" name="option" value="logout">
             <input type="submit" value="Logout">
