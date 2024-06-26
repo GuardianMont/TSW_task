@@ -31,6 +31,13 @@ public class ProductBeanCreator {
         bean.setDisponibilita(quantity);
         bean.setFasciaIva(iva);
         bean.setColore(colore);
+
+        if (category.equals("tavolo")){
+            bean.setCategoria(request.getParameter("tipoTavolo"));
+        }else if (category.equals("attrezzatura")){
+            bean.setCategoria(request.getParameter("tipoAttrezzatura"));
+        }else bean.setCategoria(category);
+
         bean.setCategoria(category);
         bean.setDimensioni(dimension);
         bean.setTemp_Url(uploadedFilePath);
