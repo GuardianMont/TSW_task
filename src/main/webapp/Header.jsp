@@ -7,26 +7,27 @@
 <head>
     <title>Header</title>
     <link rel="stylesheet" href="css/Header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
 <div class="header-container">
     <header class="Tavolando">
-        <img src="uploadFile/loghino.svg" alt="Tavolando" class="TavolandImg" id="TavilandoIcon">
+        <img src="uploadFile/loghino.svg" alt="Tavolando" class="TavolandImg" id="TavolandoIcon">
     </header>
     <nav>
         <ul class="nav-menu">
             <li class="barra-ricerca">
                 <form class="ricerca">
                     <input id="cerca" type="text" placeholder="Cerca nel sito" required>
-                    <input id="submit" type="submit" value="Cerca">
+                    <button id="submit" type="submit"><i class="fas fa-search"></i></button>
                 </form>
             </li>
             <li><a href="./Homepage.jsp">Home</a></li>
             <li><a href="product">Prodotti</a>
                 <ul class="submenu">
-                    <li><a href="#">Prodotto 1</a></li>
-                    <li><a href="#">Prodotto 2</a></li>
-                    <li><a href="#">Prodotto 3</a></li>
+                    <li><a href="#">Prodotto</a></li>
+                    <li><a href="#">Prodotto</a></li>
+                    <li><a href="#">Prodotto</a></li>
                 </ul>
             </li>
             <li><a href="#">Servizi</a></li>
@@ -34,7 +35,7 @@
             <li>
                 <div class="carrello">
                     <a href="carrello">
-                        <img src="uploadFile/cart.png" width="30" height="auto" alt="carrello" class="carrelloImg" id="carrelloIcon">
+                        <i class="fas fa-shopping-cart"></i>
                         <% ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
                             if (cart != null && cart.getNumProdottiTot() > 0) { %>
                         <span class="numeroProdotti"><%= cart.getNumProdottiTot() %></span>
@@ -45,7 +46,7 @@
             <li>
                 <div class="utente">
                     <a href="profileServlet">
-                        <img src="uploadFile/profile-user-svgrepo-com.svg" width="30" height="auto" alt="utente" class="carrelloImg" id="userIcon">
+                        <i class="fas fa-user"></i>
                     </a>
                 </div>
             </li>

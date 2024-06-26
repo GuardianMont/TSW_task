@@ -48,6 +48,7 @@ header {
 .products-container {
     display: flex;
     overflow-x: auto;
+    justify-content: center;
     gap: 20%; /* Aumentato lo spazio tra i prodotti */
     padding: 10px;
     white-space: nowrap;

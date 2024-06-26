@@ -1,6 +1,5 @@
-/* Additional Styles */
 .TavolandImg {
-    width: 200px;
+    width: 150px;
     margin: 20px;
     display: block;
 }
@@ -10,6 +9,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
 }
 
 .Tavolando {
@@ -47,6 +47,7 @@ nav {
     padding: 10px 20px;
     color: #333;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .nav-menu ul.submenu {
@@ -59,6 +60,8 @@ nav {
     text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
+    z-index: 1000;
+    padding-left: 10px;
 }
 
 .nav-menu ul.submenu li {
@@ -67,10 +70,11 @@ nav {
 }
 
 .nav-menu ul.submenu li a {
-    padding: 10px 20px;
+    /*padding: 10px 20px;*/
     color: #333;
     text-decoration: none;
     display: block;
+    padding-left: 10px;
 }
 
 .nav-menu ul.submenu li a:hover {
@@ -87,15 +91,15 @@ nav {
     margin-left: 10px;
 }
 
-.barra-ricerca input[type="cerca"] {
+.barra-ricerca input[type="text"] {
     padding: 8px;
     width: 200px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
-.barra-ricerca input[type="submit"] {
-    padding: 4px 7px;
+.barra-ricerca button[type="submit"] {
+    padding: 8px;
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -104,7 +108,7 @@ nav {
     margin-left: 3px;
 }
 
-.barra-ricerca input[type="submit"]:hover {
+.barra-ricerca button[type="submit"]:hover {
     background-color: #45a049;
 }
 
@@ -116,17 +120,17 @@ nav {
 
 .numeroProdotti {
     position: absolute;
-    top: -2px;
-    right: -2px;
-    background-color: #0056b3;
+    top: -5px;
+    right: -3px;
+    background-color: #ff0000;
     color: white;
     border-radius: 50%;
     padding: 5px;
     font-size: 12px;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     text-align: center;
-    line-height: 12px;
+    line-height: 10px;
 }
 
 /* Media Queries per PC */
@@ -148,13 +152,13 @@ nav {
         margin-left: 15px;
     }
 
-    .barra-ricerca input[type="cerca"] {
-        width: 100px;
+    .barra-ricerca input[type="text"] {
+        width: 200px;
     }
 
-    .barra-ricerca input[type="submit"] {
+    .barra-ricerca button[type="submit"] {
         width: 60px;
-        height: 30px;
+        height: 40px;
     }
 }
 
@@ -174,13 +178,13 @@ nav {
         flex-wrap: wrap;
     }
 
-    .barra-ricerca input[type="cerca"] {
-        width: 50%;
+    .barra-ricerca input[type="text"] {
+        width: 150px;
     }
 
-    .barra-ricerca input[type="submit"] {
+    .barra-ricerca button[type="submit"] {
         width: 40px;
-        height: 20px;
+        height: 30px;
     }
 }
 
@@ -215,11 +219,11 @@ nav {
         line-height: 10px;
     }
 
-    .barra-ricerca input[type="cerca"] {
-        width: 60px;
+    .barra-ricerca input[type="text"] {
+        width: 100px;
     }
 
-    .barra-ricerca input[type="submit"] {
+    .barra-ricerca button[type="submit"] {
         width: 40px;
         height: 30px;
     }
