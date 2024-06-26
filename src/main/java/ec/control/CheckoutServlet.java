@@ -138,7 +138,7 @@ public class CheckoutServlet extends HttpServlet {
     private void handlePdfAction (HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         Ordine ordine = modelCheckOut.retriveOrdineFattura(Integer.parseInt(request.getParameter("orderId")));
         try {
-            PdfGeneratorHelper.generatePdfInvoice(getOrderDetails(ordine), response);
+            PdfGeneratorHelper.generatePdfInvoice(getOrderDetails(ordine), response, getServletContext());
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
