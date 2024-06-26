@@ -50,7 +50,26 @@
 		</select>
 	</div>
 </div>
-
+<%
+	Object userId = request.getSession().getAttribute("userId");
+	Object isAdmin = request.getSession().getAttribute("isAdmin");
+	if (userId != null && isAdmin != null && (boolean) isAdmin) {
+%>
+<div class="button-container">
+	<a href="insert.jsp" id="insert-a" class="add-button">Inserire prodotto</a>
+</div>
+<% } %>
+<%
+	if (products == null && products.isEmpty()) { %>
+<div>
+	<div class="no-product-wrapper">
+		<div class="No-product">
+			<h1>Nessun risultato</h1>
+			<p>prova a cercare con altre parole</p>
+		</div>
+	</div>
+</div>
+<%}%>
 <div class="container">
 	<%
 		if (products != null && !products.isEmpty()) {
@@ -76,7 +95,7 @@
 			<div class="button-container">
 				<p>
 					<%
-                    if (request.getSession().getAttribute("userId") != null) {
+					if (userId != null && isAdmin != null && (boolean) isAdmin) {
                     %>
 					<a href="product?opzione=delete&id=<%= bean.getId() %>" class="remove-button">Delete</a> <br>
 					<a href="product?opzione=show&id=<%= bean.getId() %>" class="add-button">Modifica</a>
@@ -103,20 +122,11 @@
 
 	<%
 		}
-	} else {
-	%>
-	<div class="no-product-wrapper">
-		<div class="No-product">
-			<h1>Nessun risultato</h1>
-			<p>prova a cercare con altre parole</p>
-		</div>
-	</div>
-	<%
-		}
+	}
 	%>
 </div>
 
-<a href="insert.jsp" class="inserimento">Inserire prodotto</a>
+
 
 <script>
 	// JavaScript per gestire il click sul pulsante

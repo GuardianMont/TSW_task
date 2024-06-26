@@ -35,6 +35,7 @@ public class LoginSignupControl extends HttpServlet {
             HttpSession session = req.getSession();
             session.removeAttribute("userId");
             session.removeAttribute("signupSuccess");
+            session.removeAttribute("isAdmin");
             resp.sendRedirect(req.getContextPath() + "/Homepage.jsp");
         }
         else if(req.getSession().getAttribute("userId") != null){
@@ -88,6 +89,9 @@ public class LoginSignupControl extends HttpServlet {
         UserBean user = userDao.getUserIfPasswordIsCorrect(token, password);
         if(user != null){
             session.setAttribute("userId", user.getUsername());
+            if (user.isAdmin()){
+                session.setAttribute("isAdmin", true);
+            }
             String referer = req.getHeader("referer");
             if (referer.equals(req.getContextPath() + "/login_signup.jsp")){
                 resp.sendRedirect(req.getContextPath() + "/ProductView.jsp");
