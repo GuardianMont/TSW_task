@@ -11,10 +11,10 @@
 </head>
 <body>
 <div class="header-container">
-    <header class="Tavolando">
-        <img src="uploadFile/loghino.svg" alt="Tavolando" class="TavolandImg" id="TavolandoIcon">
-    </header>
     <nav>
+        <header class="Tavolando">
+            <img src="uploadFile/loghino.svg" alt="Tavolando" class="TavolandImg" id="TavolandoIcon">
+        </header>
         <ul class="nav-menu">
             <li class="barra-ricerca">
                 <form class="ricerca">
