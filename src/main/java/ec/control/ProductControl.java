@@ -1,29 +1,17 @@
 package ec.control;
 
-
-import ec.model.*;
-
-import ec.model.cart.CartItem;
-import ec.model.cart.ShoppingCart;
 import ec.model.product.ProductBean;
 import ec.model.product.ProductDaoDM;
+import ec.util.CartManager;
+import ec.util.FileUploadManager;
+import ec.util.ProductBeanCreator;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.*;
-
-import java.io.File;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-
-
-import javax.swing.*;
 
 public class ProductControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -46,7 +34,6 @@ public class ProductControl extends HttpServlet {
 		processRequest(request, response);
 	}
 
-	//Metodo per gestire una richiesta generica (le immagini non vanno gestite in un get)
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getParameter("opzione");
@@ -70,25 +57,25 @@ public class ProductControl extends HttpServlet {
 						dis = "/update.jsp";
 						break;
 					case "update":
-						if(handleUpdateAction(request)){
-							dis="/carrello";
+						if (handleUpdateAction(request)) {
+							dis = "/carrello";
 							ServletContext context = getServletContext();
 							context.setAttribute("op", "update");
 						}
 						break;
-
 				}
-
 			} catch (SQLException e) {
 				throw new ServletException("Database error", e);
 			}
 		}
+
 		try {
 			String sort = request.getParameter("sort");
 			request.setAttribute("products", model.doRetrieveAll(sort));
 		} catch (SQLException e) {
 			throw new ServletException("Database error", e);
 		}
+
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(dis);
@@ -101,106 +88,35 @@ public class ProductControl extends HttpServlet {
 	}
 
 	private void handleDeleteAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
-		//azione di cancellazione
 		int id = Integer.parseInt(request.getParameter("id"));
 		model.doDelete(id);
-		//nel model mi accerto di eliminare anche le reference al medesimo
-		//prodotto in possibili carrelli già salvati
-		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
-		CartItem doDelete;
-		if (cart!=null && (doDelete=cart.getItem(id))!=null){
-			//cancello riferimenti ai prodotti nella sessione corrente
-			doDelete.cancelOrder();
-			cart.deleteItem(id);
-			request.getSession().setAttribute("cart",cart);
-		}
-
+		CartManager.removeProductFromCart(request.getSession(), id);
+		//gestione esterna del carrello
 	}
 
 	private boolean handleUpdateAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
-		//azione di modifica
-		boolean update= false;
 		int id = Integer.parseInt(request.getParameter("identificatore"));
-        ProductBean bean = handleBeanCreation(request);
-        bean.setId(id);
-		// Eseguo l'aggiornamento nel database
-		model.doUpdate(bean);
-		/*
-		mi assicuro di aggiornare anche i prodotti nel carrello
-		per farlo nel caso in cui l'oggetto che sto aggiornando fa parte del carrello di sessione
-		induco il salvataggio delle informazioni del carrello nel db dove la reference del prodotto
-		è in base al id e non alle specifiche, ricarico il carrello in modo che in automatico si aggiorna il tutto
-		*/
-		ShoppingCart cart = (ShoppingCart)request.getSession().getAttribute("cart");
-
-		if (cart!=null){
-			if(cart.getItem(id)!=null) {
-				update = true;
-			}
-		}
-		return update;
-	  }
-
-
-	private ProductBean handleBeanCreation(HttpServletRequest request) throws SQLException, ServletException, IOException{
-		String name = request.getParameter("nome");
-		String description = request.getParameter("descrizione");
-		double price = Double.parseDouble(request.getParameter("prezzo"));
-		int quantity = Integer.parseInt(request.getParameter("quantita"));
-		double iva = Double.parseDouble(request.getParameter("iva"));
-		String colore = request.getParameter("colore");
-		String category = request.getParameter("categoria");
-		String dimension = request.getParameter("dimensioni");
-		String discount = request.getParameter("sconto");
-		String isVisible = request.getParameter("isVisible");
-
 		String appPath = request.getServletContext().getRealPath("");
-		//String savePath = "C:\\Users\\user\\Desktop\\TSW_guardian_ver\\TSW_task\\src\\main\\webapp";
-		//path usato diretto ma credo sia meglio dinamico
-		//dinamicamente il save path arriva in task\\TSW_task-1.0-SNAPSHOT\\SAVE_DIR
-		String savePath= appPath+ File.separator + SAVE_DIR;
-		String ablPath = null;
 		List<Part> fileParts = request.getParts().stream().filter(part -> "img".equals(part.getName()) && part.getSize() > 0).toList();
-		if (!fileParts.isEmpty()) {
-			for (Part filePart : fileParts) {
-				if (filePart.getName().equals("img")) { // il nome campo input è img !!
-					String fileName = FileManager.extractFileName(filePart);
-					if (fileName != null && !fileName.equals("")) {
-						File existingFile = new File(savePath, fileName);
-						if (!existingFile.exists()) {
-							//se esiste già un file con lo stesso nome non aggiungerà l'immagine
-							filePart.write(savePath + File.separator + fileName);
-						}
-						filePart.write(savePath + File.separator + fileName);
-						ablPath = savePath + File.separator + fileName;
-					}
-				}
-			}
-			File fileSaveDir = new File(savePath);
-			if (!fileSaveDir.exists()) {
-				fileSaveDir.mkdir();
-			}
-		}
-		ProductBean bean = new ProductBean();
-		bean.setNome(name);
-		bean.setDescrizione(description);
-		bean.setPrezzo(price);
-		bean.setDisponibilita(quantity);
-		bean.setFasciaIva(iva);
-		bean.setColore(colore);
-		bean.setCategoria(category);
-		bean.setDimensioni(dimension);
-		bean.setTemp_Url(ablPath);
-		bean.setPercentualeSconto(Integer.parseInt(discount));
-		bean.setVisible(Boolean.parseBoolean(isVisible));
-		return bean;
+		String uploadedFilePath = FileUploadManager.saveUploadedFiles(appPath, SAVE_DIR, fileParts);
+		//gestione esterna per la scrittura e salvataggio del file
+		ProductBean bean = ProductBeanCreator.createProductBean(request, uploadedFilePath);
+		//creazione esterna del bean
+		bean.setId(id);
+		model.doUpdate(bean);
+		return CartManager.updateProductInCart(request.getSession(), id);
 	}
+
 	private void handleInsertAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
-		//inserimento
 		if (!request.getMethod().equalsIgnoreCase("POST")) {
-			//mi devo accertare che la richiesta sia di tipo post
 			throw new ServletException("La richiesta deve essere di tipo POST");
 		}
-		model.doSave(handleBeanCreation(request));
+		String appPath = request.getServletContext().getRealPath("");
+		List<Part> fileParts = request.getParts().stream().filter(part -> "img".equals(part.getName()) && part.getSize() > 0).toList();
+		String uploadedFilePath = FileUploadManager.saveUploadedFiles(appPath, SAVE_DIR, fileParts);
+		ProductBean bean = ProductBeanCreator.createProductBean(request, uploadedFilePath);
+		model.doSave(bean);
+		HttpSession session = request.getSession();
+		session.setAttribute("inserted", true);
 	}
 }

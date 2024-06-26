@@ -50,8 +50,8 @@ function getMagicNumber(file, callback) {
             return false;
         }
 
-        if (!quanita || quantita <= 0) {
-            showError("quanitita", "quantita-error",'La quantità deve essere almeno 1.');
+        if (!quantita || quantita <= 0) {
+            showError("quantita", "quantita-error",'La quantità deve essere almeno 1.');
             return false;
         }
 

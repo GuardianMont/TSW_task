@@ -188,7 +188,6 @@ function submitPaymentForm(event) {
     }
 }
 
-
 function loadAddresses() {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'AddressManagement');

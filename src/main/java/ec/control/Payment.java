@@ -1,4 +1,5 @@
 package ec.control;
+import static ec.util.ResponseUtils.*;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -23,7 +24,6 @@ import java.util.Collection;
 @WebServlet ("/payMethodsManager")
 public class Payment extends HttpServlet {
     private PaymentDaoDM model;
-
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -90,40 +90,12 @@ public class Payment extends HttpServlet {
         int n = model.checkNum((String) request.getSession().getAttribute("userId"));
         pay.setNumId(n+1);
         model.doSave(pay, (String) request.getSession().getAttribute("userId"), pay.getNumId());
-        sendSuccessResponse(request, response);
+        sendSuccessResponse(response, request.getContextPath() + "/Payment.jsp");
     }
 
     private void handleShowAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         Collection<PayMethod> payMethods = model.doRetrieveAll((String) request.getSession().getAttribute("userId"));
         sendJsonResponse(response,true, payMethods);
-    }
-
-    private void sendJsonResponse(HttpServletResponse response,boolean success, Object responseObject) throws IOException {
-        JsonObject jsonResponse = new JsonObject();
-        jsonResponse.addProperty("success", success);
-        jsonResponse.add("data", new Gson().toJsonTree(responseObject));
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(jsonResponse.toString());
-
-    }
-    private void sendSuccessResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String redirectUrl = "/Payment.jsp";
-        response.sendRedirect(request.getContextPath() + redirectUrl);
-    }
-    private void sendErrorResponse(HttpServletResponse response, int statusCode, String errorMessage) throws IOException {
-        response.setStatus(statusCode);
-        response.getWriter().write(new Gson().toJson(new ErrorResponse(false, errorMessage)));
-    }
-    private static class ErrorResponse {
-        private final boolean success;
-        private final String error;
-
-        public ErrorResponse(boolean success, String error) {
-            this.success = success;
-            this.error = error;
-        }
     }
 }
 

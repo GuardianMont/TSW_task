@@ -25,7 +25,8 @@
         <span id="descrizione-error" class="error-message">Il campo descrizione è obbligatorio.</span><br>
 
         <label for="prezzo">Prezzo:</label>
-        <input id="prezzo" name="prezzo" type="text" pattern="^\d+(\.\d{1,2})?$" title="Inserisci un prezzo valido (massimo 2 cifre decimali)" required>
+        <input id="prezzo" name="prezzo" type="text" placeholder="12.34"
+               pattern="^\d+(\.\d{1,2})?$" title="Inserisci un prezzo valido (massimo 2 cifre decimali separate da punto)" required>
         <span id="prezzo-error" class="error-message">Il campo prezzo è obbligatorio.</span><br>
 
         <label for="quantita">Disponibilità:</label>

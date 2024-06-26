@@ -1,7 +1,4 @@
 package ec.control;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import ec.model.address.AddressDaoDM;
 import ec.model.address.AddressUs;
 
@@ -15,6 +12,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
+
+import static ec.util.ResponseUtils.*;
 
 @WebServlet("/AddressManagement")
 public class Address extends HttpServlet {
@@ -59,7 +58,7 @@ public class Address extends HttpServlet {
                     break;
             }
         } else {
-            sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non fornita");
+           sendErrorResponse (response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non fornita");
         }
     }
 
@@ -75,7 +74,7 @@ public class Address extends HttpServlet {
         ad.setNum_ID(n + 1);
         model.doSave(ad, (String) request.getSession().getAttribute("userId"), ad.getNum_ID());
 
-        sendSuccessResponse(request, response);
+        sendSuccessResponse(response,request.getContextPath() + "/Payment.jsp");
     }
 
     private void handleShowAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -83,39 +82,4 @@ public class Address extends HttpServlet {
         sendJsonResponse(response,true, addresses);
     }
 
-    private void sendJsonResponse(HttpServletResponse response,boolean success, Object responseObject) throws IOException {
-        JsonObject jsonResponse = new JsonObject();
-        jsonResponse.addProperty("success", success);
-        jsonResponse.add("data", new Gson().toJsonTree(responseObject));
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(jsonResponse.toString());
-
-    }
-
-    private void sendSuccessResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        JsonObject jsonResponse = new JsonObject();
-        jsonResponse.addProperty("success", true);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(jsonResponse.toString());
-        String redirectUrl = "/Payment.jsp";
-        response.sendRedirect(request.getContextPath() + redirectUrl);
-    }
-
-    private void sendErrorResponse(HttpServletResponse response, int statusCode, String errorMessage) throws IOException {
-        response.setStatus(statusCode);
-        response.getWriter().write(new Gson().toJson(new ErrorResponse(false, errorMessage)));
-    }
-
-    private static class ErrorResponse {
-        private final boolean success;
-        private final String error;
-
-        public ErrorResponse(boolean success, String error) {
-            this.success = success;
-            this.error = error;
-        }
-    }
 }
