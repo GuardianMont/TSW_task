@@ -53,6 +53,7 @@ CREATE TABLE Prodotto(
                 percentuale_sconto INT UNSIGNED,
                 is_visible BOOLEAN NOT NULL DEFAULT TRUE,
                 CHECK( percentuale_sconto >= 0 AND percentuale_sconto <= 100)
+
 );
 
 CREATE TABLE Ordine(
@@ -70,6 +71,7 @@ CREATE TABLE StoricoProdotti(
                                 codice_fattura int NOT NULL,
                                 prodotto_id INT UNSIGNED NOT NULL,
                                 nome_prodotto VARCHAR(255) NOT NULL,
+    -- ACCERTATI CI SIANO TUTTI I PARAMENTRI
                                 iva DOUBLE NOT NULL,
                                 prezzo_unitario DOUBLE NOT NULL,
                                 quantita INT NOT NULL,
