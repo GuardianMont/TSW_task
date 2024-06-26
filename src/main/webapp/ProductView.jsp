@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, ec.model.product.ProductBean, java.util.Base64"%>
 
 <%
 	Collection<?> products = (Collection<?>) request.getAttribute("products");
-	if(products == null) {
+	if (products == null) {
 		response.sendRedirect("./product");
 		return;
 	}
@@ -11,8 +11,6 @@
 
 <!DOCTYPE html>
 <html>
-<%@ page contentType="text/html; charset=UTF-8" import="java.util.*,ec.model.product.ProductBean"%>
-
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" href="css/ProductView.css">
@@ -22,17 +20,22 @@
 	<script src="js/notifica.js"></script>
 	<script>
 		window.onload = function() {
-			var signupSuccess = <%= session.getAttribute("signupSuccess") != null %>;
-			var user = <%= session.getAttribute("userId") != null %>;
+			var signupSuccess = '<%= session.getAttribute("signupSuccess") != null %>' === 'true';
+			var user = '<%= session.getAttribute("userId") != null %>' === 'true';
+			var insert = '<%= session.getAttribute("inserted") != null %>' === 'true';
 
 			if (signupSuccess && user) {
-				showInfoNotifica("Login effettuato! Benvenuto " + "<%= session.getAttribute("userId") %>!");
+				showInfoNotifica("Login effettuato! Benvenuto " + '<%= session.getAttribute("userId") %>' + "!");
 				<% session.removeAttribute("signupSuccess"); %>
+			}
+
+			if (insert) {
+				showInfoNotifica("Inserimento prodotto avvenuto con successo");
+				<% session.removeAttribute("inserted"); %>
 			}
 		};
 	</script>
 </head>
-
 <body>
 
 <jsp:include page="Header.jsp"/>
@@ -50,14 +53,13 @@
 
 <div class="container">
 	<%
-		if (products != null && products.size() != 0) {
-			Iterator<?> it = products.iterator();
-			while (it.hasNext()) {
-				ProductBean bean = (ProductBean) it.next();
+		if (products != null && !products.isEmpty()) {
+			for (Object obj : products) {
+				ProductBean bean = (ProductBean) obj;
 				boolean outOfStock = bean.getDisponibilita() == 0;
 	%>
 
-	<div class="product <%=outOfStock ?  "out-of-stock" : "" %>" >
+	<div class="product <%= outOfStock ? "out-of-stock" : "" %>">
 		<div class="product-content">
 			<div class="immagini">
 				<%
@@ -67,25 +69,22 @@
 						stockImg = Base64.getEncoder().encodeToString(imageData);
 					}
 				%>
-
-				<img src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="<%=bean.getNome()%>" onclick="window.location.href='product?opzione=read&id=<%=bean.getId()%>'">
+				<img src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="<%= bean.getNome() %>" onclick="window.location.href='product?opzione=read&id=<%= bean.getId() %>'">
 			</div>
-			<h2><%=bean.getNome()%></h2>
-			<p><%=bean.getPrezzo()%></p>
+			<h2><%= bean.getNome() %></h2>
+			<p><%= bean.getPrezzo() %></p>
 			<div class="button-container">
 				<p>
-					<%
-						if (request.getSession().getAttribute("userId")!=null){
-					%>
-					<a href="product?opzione=delete&id=<%=bean.getId()%>" class="remove-button">Delete</a> <br>
-					<a href="product?opzione=show&id=<%=bean.getId()%>" class="add-button">Modifica</a>
 						<%
-							}
-						%>
+                        if (request.getSession().getAttribute("userId") != null) {
+                    %>
+					<a href="product?opzione=delete&id=<%= bean.getId() %>" class="remove-button">Delete</a> <br>
+					<a href="product?opzione=show&id=<%= bean.getId() %>" class="add-button">Modifica</a>
 						<%
+                        }
                         if (bean.getDisponibilita() > 0) {
                     %>
-					<a href="carrello?opzione=add&id=<%=bean.getId()%>" class="add-button">Aggiungi al carrello</a> <br>
+					<a href="carrello?opzione=add&id=<%= bean.getId() %>" class="add-button">Aggiungi al carrello</a> <br>
 						<%
                         } else {
                     %>
@@ -104,21 +103,26 @@
 
 	<%
 		}
+	} else {
+	%>
+	<div>
+		<p>No products available</p>
+	</div>
+	<%
+		}
 	%>
 </div>
-<% } else { %>
-<tr>
-	<td colspan="6">No products available</td>
-</tr>
-<% } %>
 
 <a href="insert.jsp" class="inserimento">Inserire prodotto</a>
 
 <script>
 	// JavaScript per gestire il click sul pulsante
-	document.querySelector(".dropdown-btn").addEventListener("click", function() {
-		this.parentElement.classList.toggle("active");
-	});
+	var dropdownBtn = document.querySelector(".dropdown-btn");
+	if (dropdownBtn) {
+		dropdownBtn.addEventListener("click", function() {
+			this.parentElement.classList.toggle("active");
+		});
+	}
 </script>
 
 <jsp:include page="Footer.jsp"/>
