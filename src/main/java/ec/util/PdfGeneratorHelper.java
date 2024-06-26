@@ -13,6 +13,7 @@ import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 
@@ -21,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.ServletContext;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 
 public class PdfGeneratorHelper {
@@ -35,14 +37,11 @@ public class PdfGeneratorHelper {
             String imagePath = servletContext.getRealPath("/uploadFile/logoso.png");
 
             Image img = new Image(ImageDataFactory.create(imagePath));
-            img.setWidth(UnitValue.createPercentValue(50));
-            img.setHeight(UnitValue.createPercentValue(50));
-            img.setTextAlignment(TextAlignment.CENTER);
+            img.setWidth(UnitValue.createPercentValue(15));
+            img.setHeight(UnitValue.createPercentValue(15));
+            img.setHorizontalAlignment(HorizontalAlignment.CENTER);
             document.add(img);
 
-            LineSeparator ls = new LineSeparator(new SolidLine());
-            ls.setMarginBottom(10);
-            document.add(ls);
 
             document.add(new Paragraph("Codice Fattura: " + jsonOrder.get("ordineFattura").getAsString())
                     .setFont(font)
@@ -57,7 +56,7 @@ public class PdfGeneratorHelper {
                 document.add(new Paragraph(
                         "Esercente TavolandoSRL" +
                                 "\nOrdine ID: " + jsonOrder.get("ordineId").getAsString() +
-                                "\nIn data: " + jsonOrder.get("dataOrdine") +
+                                "\nIn data: " + jsonOrder.get("dataOrdine").getAsString() +
                                 "\nCodice Fattura: " + jsonOrder.get("ordineFattura").getAsString())
                         .setFont(font)
                         .setFontSize(10)
@@ -99,20 +98,35 @@ public class PdfGeneratorHelper {
 
             document.add(tableInfo);
 
+            document.add(ls_3);
+
             if (jsonOrder.has("cartItems")) {
                 JsonArray cartItems = jsonOrder.getAsJsonArray("cartItems");
-                Table table = new Table(UnitValue.createPercentArray(new float[]{3, 1, 1}));
+                Table table = new Table(UnitValue.createPercentArray(new float[]{1, 3, 1, 1, 1, 1}));
                 table.setWidth(UnitValue.createPercentValue(100));
 
-                table.addHeaderCell(new Cell().add(new Paragraph("Nome Prodotto").setBold()));
-                table.addHeaderCell(new Cell().add(new Paragraph("Quantità").setBold()));
-                table.addHeaderCell(new Cell().add(new Paragraph("Prezzo").setBold()));
+                table.addHeaderCell(new Cell().add(new Paragraph("Quantità").setFont(font).setBold().setFontSize(10)));
+                table.addHeaderCell(new Cell().add(new Paragraph("Nome Prodotto").setFont(font).setBold().setFontSize(10)));
+                table.addHeaderCell(new Cell().add(new Paragraph("IVA").setFont(font).setBold().setFontSize(10)));
+                table.addHeaderCell(new Cell().add(new Paragraph("Sconto").setFont(font).setBold().setFontSize(10)));
+                table.addHeaderCell(new Cell().add(new Paragraph("Prezzo Unitario").setFont(font).setBold().setFontSize(10)));
+                table.addHeaderCell(new Cell().add(new Paragraph("Prezzo Riga").setFont(font).setBold().setFontSize(10)));
 
                 for (int i = 0; i < cartItems.size(); i++) {
                     JsonObject item = cartItems.get(i).getAsJsonObject();
-                    table.addCell(new Cell().add(new Paragraph(item.get("nome").getAsString())));
-                    table.addCell(new Cell().add(new Paragraph(item.get("quantity").getAsString())));
-                    table.addCell(new Cell().add(new Paragraph(item.get("prezzoUnitario").getAsString())));
+                    String quantityStr = item.get("quantity").getAsString();
+                    String prezzoUnitarioStr = item.get("prezzoUnitario").getAsString();
+
+                    BigDecimal quantity = new BigDecimal(quantityStr);
+                    BigDecimal prezzoUnitario = new BigDecimal(prezzoUnitarioStr);
+                    BigDecimal prezzoRiga = quantity.multiply(prezzoUnitario);
+
+                    table.addCell(new Cell().add(new Paragraph(quantityStr)).setFont(font).setFontSize(10).setBorder(Border.NO_BORDER));
+                    table.addCell(new Cell().add(new Paragraph(item.get("nome").getAsString())).setFont(font).setFontSize(10).setBorder(Border.NO_BORDER));
+                    table.addCell(new Cell().add(new Paragraph(item.get("iva").getAsString())).setFont(font).setFontSize(10).setBorder(Border.NO_BORDER));
+                    table.addCell(new Cell().add(new Paragraph(item.get("sconto").getAsString())).setFont(font).setFontSize(10).setBorder(Border.NO_BORDER));
+                    table.addCell(new Cell().add(new Paragraph(prezzoUnitarioStr + "€")).setFont(font).setFontSize(10).setBorder(Border.NO_BORDER));
+                    table.addCell(new Cell().add(new Paragraph(prezzoRiga.toString() + "€")).setFont(font).setFontSize(10).setBorder(Border.NO_BORDER));
                 }
 
                 document.add(table);
@@ -122,7 +136,7 @@ public class PdfGeneratorHelper {
                 document.add(new Paragraph("Prezzo Totale: " + jsonOrder.get("prezzototale").getAsString()).setBold());
             }
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             document.close();

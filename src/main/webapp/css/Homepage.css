@@ -19,10 +19,11 @@ header {
     left: 0;
     right: 0;
     height: 100vh;
-    background: url('https://i.ebayimg.com/images/g/hU4AAOSwbY5dxuKI/s-l1600.jpg') no-repeat center center;
+    background-image: url('/uploadFile/fabric-texture-background.jpg');
     background-size: cover;
     z-index: 1;
 }
+
 
 .main-content {
     position: relative;

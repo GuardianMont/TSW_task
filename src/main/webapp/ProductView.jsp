@@ -75,27 +75,27 @@
 			<p><%= bean.getPrezzo() %></p>
 			<div class="button-container">
 				<p>
-						<%
-                        if (request.getSession().getAttribute("userId") != null) {
+					<%
+                    if (request.getSession().getAttribute("userId") != null) {
                     %>
 					<a href="product?opzione=delete&id=<%= bean.getId() %>" class="remove-button">Delete</a> <br>
 					<a href="product?opzione=show&id=<%= bean.getId() %>" class="add-button">Modifica</a>
-						<%
-                        }
-                        if (bean.getDisponibilita() > 0) {
+					<%
+                    }
+                    if (bean.getDisponibilita() > 0) {
                     %>
 					<a href="carrello?opzione=add&id=<%= bean.getId() %>" class="add-button">Aggiungi al carrello</a> <br>
-						<%
-                        } else {
+					<%
+                    } else {
                     %>
-				<div class="out-of-stock-message">
-					<img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="15" height="15">
-					<span id="out-of-stock-message-text">Esaurito</span>
-				</div>
-				<br>
-				<%
+					<div class="out-of-stock-message">
+						<img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="15" height="15">
+						<span id="out-of-stock-message-text">Esaurito</span>
+					</div>
+					<br>
+					<%
 					}
-				%>
+					%>
 				</p>
 			</div>
 		</div>
@@ -105,8 +105,11 @@
 		}
 	} else {
 	%>
-	<div>
-		<p>No products available</p>
+	<div class="no-product-wrapper">
+		<div class="No-product">
+			<h1>Nessun risultato</h1>
+			<p>prova a cercare con altre parole</p>
+		</div>
 	</div>
 	<%
 		}
