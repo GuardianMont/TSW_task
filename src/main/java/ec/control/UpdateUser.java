@@ -47,9 +47,10 @@ public class UpdateUser extends HttpServlet {
                     doChangePassword(req, resp);
                     break;
             }
+        }else {
+            //se option non è presente reindirizza alla pagina di profilo
+            resp.sendRedirect("/Profile.jsp");
         }
-        //se option non è presente reindirizza alla pagina di profilo
-        resp.sendRedirect("Profile.jsp");
     }
 
 
