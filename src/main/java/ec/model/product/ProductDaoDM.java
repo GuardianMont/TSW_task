@@ -56,7 +56,9 @@ public class ProductDaoDM implements ProductDao {
 		} catch (IOException e) {
 			System.out.println(e);
 		} finally {
+			System.out.println("inserito il prodotto:" + generatedId);
 			return generatedId;
+
 		}
 	}
 

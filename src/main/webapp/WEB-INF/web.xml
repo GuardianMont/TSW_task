@@ -38,6 +38,11 @@
     <servlet-name>Cart</servlet-name>
     <url-pattern>/carrello</url-pattern>
   </servlet-mapping>
+  <context-param>
+    <param-name>uploadDirectory</param-name>
+    <param-value>/uploadFile</param-value>
+  </context-param>
+
   <!--
  <error-page>
    <error-code>500</error-code>

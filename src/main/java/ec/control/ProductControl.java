@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ProductControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String SAVE_DIR = "\\uploadFile";
+	private static final String UPLOAD_DIR_PARAM_NAME = "uploadDirectory";
 	private ProductDaoDM model;
 
 	@Override
@@ -87,7 +87,7 @@ public class ProductControl extends HttpServlet {
 		request.setAttribute("product", model.doRetrieveByKey(id));
 	}
 
-	private void handleDeleteAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
+	private void handleDeleteAction(HttpServletRequest request) throws SQLException {
 		int id = Integer.parseInt(request.getParameter("id"));
 		model.doDelete(id);
 		CartManager.removeProductFromCart(request.getSession(), id);
@@ -95,10 +95,12 @@ public class ProductControl extends HttpServlet {
 	}
 
 	private boolean handleUpdateAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("identificatore"));
-		String appPath = request.getServletContext().getRealPath("");
+		int id = Integer.parseInt(request.getParameter("identificatore"));;
+		String relativePath = "/uploadFile";
+		String appPath = getServletContext().getRealPath(relativePath);
+		System.out.println("App Path: " + appPath);
 		List<Part> fileParts = request.getParts().stream().filter(part -> "img".equals(part.getName()) && part.getSize() > 0).toList();
-		String uploadedFilePath = FileUploadManager.saveUploadedFiles(appPath, SAVE_DIR, fileParts);
+		String uploadedFilePath = FileUploadManager.saveUploadedFiles(appPath, relativePath, fileParts);
 		//gestione esterna per la scrittura e salvataggio del file
 		ProductBean bean = ProductBeanCreator.createProductBean(request, uploadedFilePath);
 		//creazione esterna del bean
@@ -111,12 +113,20 @@ public class ProductControl extends HttpServlet {
 		if (!request.getMethod().equalsIgnoreCase("POST")) {
 			throw new ServletException("La richiesta deve essere di tipo POST");
 		}
-		String appPath = request.getServletContext().getRealPath("");
+		String relativePath = "/uploadFile";
+		String appPath = getServletContext().getRealPath(relativePath);
+		System.out.println("App Path: " + appPath);
+
+
 		List<Part> fileParts = request.getParts().stream().filter(part -> "img".equals(part.getName()) && part.getSize() > 0).toList();
-		String uploadedFilePath = FileUploadManager.saveUploadedFiles(appPath, SAVE_DIR, fileParts);
-		ProductBean bean = ProductBeanCreator.createProductBean(request, uploadedFilePath);
-		model.doSave(bean);
-		HttpSession session = request.getSession();
-		session.setAttribute("inserted", true);
+		try {
+			String uploadedFilePath = FileUploadManager.saveUploadedFiles(appPath, relativePath, fileParts);
+			ProductBean bean = ProductBeanCreator.createProductBean(request, uploadedFilePath);
+			model.doSave(bean);
+			HttpSession session = request.getSession();
+			session.setAttribute("inserted", true);
+		} catch (IOException e) {
+			throw new ServletException("Errore durante il salvataggio dei file", e);
+		}
 	}
 }

@@ -8,23 +8,27 @@ import jakarta.servlet.http.Part;
 public class FileUploadManager {
 
     public static String saveUploadedFiles(String appPath, String saveDir, List<Part> fileParts) throws IOException {
-        String savePath = appPath + File.separator + saveDir;
+
         String uploadedFilePath = null;
 
         for (Part filePart : fileParts) {
             String fileName = extractFileName(filePart);
             if (fileName != null && !fileName.isEmpty()) {
-                File fileSaveDir = new File(savePath);
-                if (!fileSaveDir.exists()) {
-                    fileSaveDir.mkdirs();
+                File file = new File(appPath  + File.separator + fileName);
+                if (!file.exists()) {
+                    // Il file non esiste, quindi lo scriviamo nella cartella di destinazione
+                    filePart.write(file.getAbsolutePath());
+                    uploadedFilePath = appPath  + File.separator + fileName;
+                } else {
+                    // Il file esiste già, usiamo solo il percorso esistente
+                    uploadedFilePath = appPath  + File.separator + fileName;
                 }
-                filePart.write(savePath + File.separator + fileName);
-                uploadedFilePath = saveDir + File.separator + fileName;
             }
         }
 
         return uploadedFilePath;
     }
+
 
     private static String extractFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");

@@ -54,8 +54,9 @@
             <option value="tavolo">Tavolo</option>
             <option value="attrezzatura">Attrezzatura</option>
             <option value="kit">Kit assortiti</option>
-            <span id="categoria-error" class="error-message">Il campo categoria è obbligatorio.</span><br>
         </select>
+        <span id="categoria-error" class="error-message">Il campo categoria è obbligatorio.</span><br>
+
         <div id="specificaTavolo">
             <label for="tipoTavolo">Tipo di Tavolo:</label>
             <select id="tipoTavolo" name="tipoTavolo">

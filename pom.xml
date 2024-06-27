@@ -125,6 +125,15 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
+                <configuration>
+                    <warSourceDirectory>src/main/webapp</warSourceDirectory>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp/uploadFile</directory>
+                            <targetPath>uploadFile</targetPath>
+                        </resource>
+                    </webResources>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
