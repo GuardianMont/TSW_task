@@ -56,7 +56,9 @@ public class ProductDaoDM implements ProductDao {
 		} catch (IOException e) {
 			System.out.println(e);
 		} finally {
+			System.out.println("inserito il prodotto:" + generatedId);
 			return generatedId;
+
 		}
 	}
 
@@ -213,6 +215,51 @@ public class ProductDaoDM implements ProductDao {
 
 			preparedStatement.executeUpdate();
 		}
+	}
+
+	public Collection<ProductBean> searchBarProducts(String query) throws SQLException, IOException{
+        String sqlSearch = "(SELECT * FROM "+ ProductDaoDM.TABLE_NAME +" WHERE nome LIKE ?) " +
+							"UNION " +
+				"(SELECT * FROM " + ProductDaoDM.TABLE_NAME +" WHERE nome LIKE ? AND nome NOT LIKE ?); ";
+		//creo due tabelle e poi ne posso dare la union dato che sono sicuro della loro compatibilità
+		//in questo modo posso assicurarmi che i primi risultati siano quelli più precisi
+		//dopodichè si ha una granularità maggiore
+
+		Collection<ProductBean> products = new LinkedList<>();
+		String search_1, search_2;
+		if (query == null || query.trim().isEmpty()) {
+			System.out.println("La stringa di query non può essere nulla o vuota.");
+			return products;
+		} else {
+			search_1 =query + "%";
+			search_2 = "%" + query + "%";
+		}
+		try ( Connection connection = ConnectionPool.getInstance().getConnection();
+		PreparedStatement preparedStatement = connection.prepareStatement(sqlSearch)){
+			preparedStatement.setString(1, search_1);
+			preparedStatement.setString(2, search_2);
+			preparedStatement.setString(3,search_1);
+			ResultSet res = preparedStatement.executeQuery();
+			while (res.next()) {
+				ProductBean bean = new ProductBean();
+
+				bean.setId(res.getInt("id"));
+				bean.setNome(res.getString("nome"));
+				bean.setDescrizione(res.getString("descrizione"));
+				bean.setPrezzo(res.getDouble("prezzo"));
+				bean.setDisponibilita(res.getInt("disponibilita"));
+				bean.setDimensioni(res.getString("dimensioni"));
+				bean.setCategoria(res.getString("categoria"));
+				bean.setFasciaIva(res.getDouble("fascia_iva"));
+				bean.setImmagineUrl(res.getBytes("immagine"));
+				bean.setColore(res.getString("colore"));
+				bean.setPercentualeSconto(res.getInt("percentuale_sconto"));
+				bean.setVisible(res.getBoolean("is_visible"));
+
+				products.add(bean);
+			}
+		}
+		return products;
 	}
 
 }

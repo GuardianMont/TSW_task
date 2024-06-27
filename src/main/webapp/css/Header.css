@@ -1,7 +1,8 @@
 .TavolandImg {
-    width: 150px;
-    margin: 20px;
+    width: 130px;
     display: block;
+    justify-content: center;
+    justify-items: center;
 }
 
 .header-container {
@@ -13,8 +14,8 @@
 }
 
 .Tavolando {
-    margin-bottom: 20px;
-    width: 100%;
+    /*margin-bottom: 20px;
+    width: 100%;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,10 +24,10 @@
 
 nav {
     width: 100%;
-    background-color: #f2f2f2;
+    /*background-color: #f2f2f2;*/
     display: flex;
     justify-content: center;
-    padding: 10px 0;
+    /*padding: 10px 0;*/
 }
 
 .nav-menu {
@@ -165,7 +166,7 @@ nav {
 /* Media Queries per tablet */
 @media screen and (max-width: 1199px) and (min-width: 600px) {
     .header-container {
-        padding: 20px;
+        /*padding: 20px;*/
     }
 
     .Tavolando {

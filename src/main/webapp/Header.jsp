@@ -8,6 +8,8 @@
     <title>Header</title>
     <link rel="stylesheet" href="css/Header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/searchBar.css">
+    <script src = "js/searchBar.js"></script>
 </head>
 <body>
 <div class="header-container">
@@ -17,8 +19,8 @@
     <nav>
         <ul class="nav-menu">
             <li class="barra-ricerca">
-                <form class="ricerca">
-                    <input id="cerca" type="text" placeholder="Cerca nel sito" required>
+                <form id="searchForm" class="ricerca">
+                    <input id="cerca" type="text" placeholder="Cerca prodotto" autocomplete="off" required>
                     <button id="submit" type="submit"><i class="fas fa-search"></i></button>
                 </form>
             </li>

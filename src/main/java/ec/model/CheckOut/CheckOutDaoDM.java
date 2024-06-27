@@ -57,6 +57,7 @@ public class CheckOutDaoDM implements CheckOutDao {
                 if (timestamp != null) {
                     calendar = new GregorianCalendar();
                     calendar.setTimeInMillis(timestamp.getTime());
+                    ordine.setData((GregorianCalendar) calendar);
                 }
             }
         }

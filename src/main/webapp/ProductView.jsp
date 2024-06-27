@@ -50,7 +50,26 @@
 		</select>
 	</div>
 </div>
-
+<%
+	Object userId = request.getSession().getAttribute("userId");
+	Object isAdmin = request.getSession().getAttribute("isAdmin");
+	if (userId != null && isAdmin != null && (boolean) isAdmin) {
+%>
+<div class="button-container">
+	<a href="insert.jsp" id="insert-a" class="add-button">Inserire prodotto</a>
+</div>
+<% } %>
+<%
+	if (products == null && products.isEmpty()) { %>
+<div>
+	<div class="no-product-wrapper">
+		<div class="No-product">
+			<h1>Nessun risultato</h1>
+			<p>prova a cercare con altre parole</p>
+		</div>
+	</div>
+</div>
+<%}%>
 <div class="container">
 	<%
 		if (products != null && !products.isEmpty()) {
@@ -71,31 +90,31 @@
 				%>
 				<img src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="<%= bean.getNome() %>" onclick="window.location.href='product?opzione=read&id=<%= bean.getId() %>'">
 			</div>
-			<h2><%= bean.getNome() %></h2>
+			<h2 onclick="window.location.href='product?opzione=read&id=<%= bean.getId() %>'"><%= bean.getNome() %></h2>
 			<p><%= bean.getPrezzo() %></p>
 			<div class="button-container">
 				<p>
-						<%
-                        if (request.getSession().getAttribute("userId") != null) {
+					<%
+					if (userId != null && isAdmin != null && (boolean) isAdmin) {
                     %>
 					<a href="product?opzione=delete&id=<%= bean.getId() %>" class="remove-button">Delete</a> <br>
 					<a href="product?opzione=show&id=<%= bean.getId() %>" class="add-button">Modifica</a>
-						<%
-                        }
-                        if (bean.getDisponibilita() > 0) {
+					<%
+                    }
+                    if (bean.getDisponibilita() > 0) {
                     %>
 					<a href="carrello?opzione=add&id=<%= bean.getId() %>" class="add-button">Aggiungi al carrello</a> <br>
-						<%
-                        } else {
+					<%
+                    } else {
                     %>
-				<div class="out-of-stock-message">
-					<img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="15" height="15">
-					<span id="out-of-stock-message-text">Esaurito</span>
-				</div>
-				<br>
-				<%
+					<div class="out-of-stock-message">
+						<img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="15" height="15">
+						<span id="out-of-stock-message-text">Esaurito</span>
+					</div>
+					<br>
+					<%
 					}
-				%>
+					%>
 				</p>
 			</div>
 		</div>
@@ -103,17 +122,11 @@
 
 	<%
 		}
-	} else {
-	%>
-	<div>
-		<p>No products available</p>
-	</div>
-	<%
-		}
+	}
 	%>
 </div>
 
-<a href="insert.jsp" class="inserimento">Inserire prodotto</a>
+
 
 <script>
 	// JavaScript per gestire il click sul pulsante

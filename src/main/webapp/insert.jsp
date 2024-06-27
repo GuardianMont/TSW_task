@@ -16,7 +16,8 @@
         <input type="hidden" name="opzione" value="insert">
 
         <label for="nome">Nome:</label>
-        <input id="nome" name="nome" type="text" maxlength="50" required placeholder="Inserire nome" pattern="^[a-zA-Z0-9\s]+$" title="nome del prodotto" >
+        <input id="nome" name="nome" type="text" maxlength="50" required
+               placeholder="Inserire nome" pattern="^[a-zA-Z0-9\s]+$" title="nome del prodotto" autofocus>
         <span id="nome-error" class="error-message">Il campo nome è obbligatorio.</span><br>
 
         <label for="descrizione">Descrizione:</label>
@@ -53,8 +54,9 @@
             <option value="tavolo">Tavolo</option>
             <option value="attrezzatura">Attrezzatura</option>
             <option value="kit">Kit assortiti</option>
-            <span id="categoria-error" class="error-message">Il campo categoria è obbligatorio.</span><br>
         </select>
+        <span id="categoria-error" class="error-message">Il campo categoria è obbligatorio.</span><br>
+
         <div id="specificaTavolo">
             <label for="tipoTavolo">Tipo di Tavolo:</label>
             <select id="tipoTavolo" name="tipoTavolo">
