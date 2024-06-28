@@ -9,7 +9,6 @@ body {
 header {
     position: relative;
     z-index: 4;
-    /*background: #333;*/
     padding: 10px;
 }
 
@@ -19,11 +18,9 @@ header {
     left: 0;
     right: 0;
     height: 100vh;
-    background-image: url('/uploadFile/fabric-texture-background.jpg');
     background-size: cover;
-    z-index: 1;
+    z-index: 0;
 }
-
 
 .main-content {
     position: relative;
@@ -50,7 +47,7 @@ header {
     display: flex;
     overflow-x: auto;
     justify-content: center;
-    gap: 20%; /* Aumentato lo spazio tra i prodotti */
+    gap: 20%;
     padding: 10px;
     white-space: nowrap;
 }
@@ -85,4 +82,231 @@ header {
 
 .products-container::-webkit-scrollbar {
     display: none;
+}
+
+.TavolandImg {
+    width: 130px;
+    display: block;
+    justify-content: center;
+    justify-items: center;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.Tavolando {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative; /* Aggiunto per il posizionamento */
+    z-index: 5; /* Imposta un valore più alto se necessario */
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu li {
+    position: relative;
+    margin: 0 10px;
+}
+
+.nav-menu li a {
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-menu ul.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f2f2f2;
+    width: auto;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1000;
+    padding-left: 10px;
+}
+
+.nav-menu ul.submenu li {
+    display: block;
+    margin: 0;
+}
+
+.nav-menu ul.submenu li a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding-left: 10px;
+}
+
+.nav-menu ul.submenu li a:hover {
+    background-color: #ddd;
+}
+
+.nav-menu li:hover > ul.submenu {
+    display: block;
+}
+
+.barra-ricerca form {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.barra-ricerca input[type="text"] {
+    padding: 8px;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.barra-ricerca button[type="submit"] {
+    padding: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 3px;
+}
+
+.barra-ricerca button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.carrello, .utente {
+    position: relative;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.numeroProdotti {
+    position: absolute;
+    top: -5px;
+    right: -3px;
+    background-color: #ff0000;
+    color: white;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 12px;
+    width: 10px;
+    height: 10px;
+    text-align: center;
+    line-height: 10px;
+}
+
+/* Media Queries per PC */
+@media screen and (min-width: 1200px) {
+    .header-container {
+        padding: 20px 30px;
+    }
+
+    .Tavolando {
+        font-size: 1.9em;
+    }
+
+    .nav-menu {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .barra-ricerca {
+        margin-left: 15px;
+    }
+
+    .barra-ricerca input[type="text"] {
+        width: 200px;
+    }
+
+    .barra-ricerca button[type="submit"] {
+        width: 60px;
+        height: 40px;
+    }
+}
+
+/* Media Queries per tablet */
+@media screen and (max-width: 1199px) and (min-width: 600px) {
+    .header-container {
+    }
+
+    .Tavolando {
+        font-size: 1.3em;
+    }
+
+    .nav-menu {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .barra-ricerca input[type="text"] {
+        width: 150px;
+    }
+
+    .barra-ricerca button[type="submit"] {
+        width: 40px;
+        height: 30px;
+    }
+}
+
+/* Media Queries per telefoni */
+@media screen and (max-width: 599px) {
+    .header-container {
+        padding: 10px;
+    }
+
+    .Tavolando {
+        font-size: 1.5em;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-menu li {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .carrello {
+        margin-top: 6%;
+    }
+
+    .numeroProdotti {
+        font-size: 10px;
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+    }
+
+    .barra-ricerca input[type="text"] {
+        width: 100px;
+    }
+
+    .barra-ricerca button[type="submit"] {
+        width: 40px;
+        height: 30px;
+    }
 }

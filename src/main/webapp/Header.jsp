@@ -13,11 +13,11 @@
 </head>
 <body>
 <div class="header-container">
-    <header class="Tavolando">
-        <img src="uploadFile/loghino.svg" alt="Tavolando" class="TavolandImg" id="TavolandoIcon">
-    </header>
     <nav>
         <ul class="nav-menu">
+            <header class="Tavolando">
+                <img src="uploadFile/loghino.svg" alt="Tavolando" class="TavolandImg" id="TavolandoIcon">
+            </header>
             <li class="barra-ricerca">
                 <form id="searchForm" class="ricerca">
                     <input id="cerca" type="text" placeholder="Cerca prodotto" autocomplete="off" required>
