@@ -1,9 +1,13 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
-    /*margin: 0;
-    padding: 0;
-    zoom:1.2*/
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .container {
@@ -17,16 +21,20 @@ body {
 
 .section_1,
 .section_2 {
-    padding: 20px;
     border-radius: 8px;
     background-color: #f9f9f9;
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Assicura che le sezioni occupino tutta la larghezza del contenitore */
 }
 
 h2 {
     color: #333;
     font-size: 1.5em;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 label {
@@ -63,6 +71,7 @@ input[type="reset"] {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin: 5px; /* Aggiunge spazio tra i pulsanti */
 }
 
 .add-button:hover,
@@ -80,6 +89,7 @@ input[type="reset"]:hover {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin: 5px; /* Aggiunge spazio tra i pulsanti */
 }
 
 .add-address-button:hover,
@@ -100,9 +110,20 @@ input[type="reset"]:hover {
 }
 
 .proceed-button:hover {
-    background-color: #4CAF50; /* Differente colore per il pulsante Proceed al passaggio del mouse */
+    background-color: #45a049; /* Differente colore per il pulsante Proceed al passaggio del mouse */
 }
 
 .hidden {
     display: none;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    input[type="text"],
+    textarea {
+        width: 100%;
+    }
 }
