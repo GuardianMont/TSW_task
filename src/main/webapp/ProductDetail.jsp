@@ -47,7 +47,7 @@
             <p><%= product.getDescrizione() %></p>
         </div>
         <div class="product-price">
-            <h2>€<%= product.getPrezzo() %></h2>
+            <h2><%= product.getPrezzo() %> &euro;</h2>
             <%
                 if (product.getDisponibilita() > 0) {
             %>

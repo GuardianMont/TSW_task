@@ -12,6 +12,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
@@ -48,7 +49,9 @@ public class PdfGeneratorHelper {
                     .setFontSize(12)
                     .setTextAlignment(TextAlignment.CENTER));
 
-            LineSeparator ls_2 = new LineSeparator(new SolidLine());
+            SolidLine thinGrayLine = new SolidLine(0.5f);
+            thinGrayLine.setColor(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY);
+            LineSeparator ls_2 = new LineSeparator(thinGrayLine);
             ls_2.setMarginBottom(10);
             document.add(ls_2);
 
@@ -63,9 +66,7 @@ public class PdfGeneratorHelper {
                         .setTextAlignment(TextAlignment.RIGHT));
             }
 
-            LineSeparator ls_3 = new LineSeparator(new SolidLine());
-            ls_3.setMarginBottom(10);
-            document.add(ls_3);
+            document.add(ls_2);
 
             float[] columnWidths = {1, 1};
             Table tableInfo = new Table(columnWidths).useAllAvailableWidth();
@@ -98,43 +99,56 @@ public class PdfGeneratorHelper {
 
             document.add(tableInfo);
 
-            document.add(ls_3);
-
+            document.add(ls_2);
+            BigDecimal prezzoTot= new BigDecimal(0);
             if (jsonOrder.has("cartItems")) {
                 JsonArray cartItems = jsonOrder.getAsJsonArray("cartItems");
                 Table table = new Table(UnitValue.createPercentArray(new float[]{1, 3, 1, 1, 1, 1}));
                 table.setWidth(UnitValue.createPercentValue(100));
 
                 table.addHeaderCell(new Cell().add(new Paragraph("Quantità").setFont(font).setBold().setFontSize(10)));
-                table.addHeaderCell(new Cell().add(new Paragraph("Nome Prodotto").setFont(font).setBold().setFontSize(10)));
-                table.addHeaderCell(new Cell().add(new Paragraph("IVA").setFont(font).setBold().setFontSize(10)));
-                table.addHeaderCell(new Cell().add(new Paragraph("Sconto").setFont(font).setBold().setFontSize(10)));
-                table.addHeaderCell(new Cell().add(new Paragraph("Prezzo Unitario").setFont(font).setBold().setFontSize(10)));
-                table.addHeaderCell(new Cell().add(new Paragraph("Prezzo Riga").setFont(font).setBold().setFontSize(10)));
+                table.addHeaderCell(new Cell().add(new Paragraph("Nome Prodotto").setFont(font).setBold().setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f))));
+                table.addHeaderCell(new Cell().add(new Paragraph("IVA").setFont(font).setBold().setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f))));
+                table.addHeaderCell(new Cell().add(new Paragraph("Sconto").setFont(font).setBold().setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f))));
+                table.addHeaderCell(new Cell().add(new Paragraph("Prezzo Unitario").setFont(font).setBold().setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f))));
+                table.addHeaderCell(new Cell().add(new Paragraph("Prezzo Riga").setFont(font).setBold().setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f))));
 
                 for (int i = 0; i < cartItems.size(); i++) {
                     JsonObject item = cartItems.get(i).getAsJsonObject();
                     String quantityStr = item.get("quantity").getAsString();
                     String prezzoUnitarioStr = item.get("prezzoUnitario").getAsString();
-
+                    int sconto  =  item.get("sconto").getAsInt();
                     BigDecimal quantity = new BigDecimal(quantityStr);
                     BigDecimal prezzoUnitario = new BigDecimal(prezzoUnitarioStr);
-                    BigDecimal prezzoRiga = quantity.multiply(prezzoUnitario);
+                    BigDecimal scontoRiga = new BigDecimal(0);
+                    if (sconto >0){
+                        scontoRiga = (prezzoUnitario.multiply(BigDecimal.valueOf(sconto))).divide(BigDecimal.valueOf(100));
+                        scontoRiga.multiply(quantity);
+                    }
+                    BigDecimal prezzoRiga = (quantity.multiply(prezzoUnitario)).subtract(scontoRiga);
 
-                    table.addCell(new Cell().add(new Paragraph(quantityStr)).setFont(font).setFontSize(10).setBorder(Border.NO_BORDER));
-                    table.addCell(new Cell().add(new Paragraph(item.get("nome").getAsString())).setFont(font).setFontSize(10).setBorder(Border.NO_BORDER));
-                    table.addCell(new Cell().add(new Paragraph(item.get("iva").getAsString())).setFont(font).setFontSize(10).setBorder(Border.NO_BORDER));
-                    table.addCell(new Cell().add(new Paragraph(item.get("sconto").getAsString())).setFont(font).setFontSize(10).setBorder(Border.NO_BORDER));
-                    table.addCell(new Cell().add(new Paragraph(prezzoUnitarioStr + "€")).setFont(font).setFontSize(10).setBorder(Border.NO_BORDER));
-                    table.addCell(new Cell().add(new Paragraph(prezzoRiga.toString() + "€")).setFont(font).setFontSize(10).setBorder(Border.NO_BORDER));
+                    prezzoTot = prezzoTot.add(prezzoRiga);
+                    table.addCell(new Cell().add(new Paragraph(quantityStr)).setFont(font).setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f)));
+                    table.addCell(new Cell().add(new Paragraph(item.get("nome").getAsString())).setFont(font).setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f)));
+                    table.addCell(new Cell().add(new Paragraph(item.get("iva").getAsString())).setFont(font).setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f)));
+                    table.addCell(new Cell().add(new Paragraph(item.get("sconto").getAsString())).setFont(font).setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f)));
+                    table.addCell(new Cell().add(new Paragraph(prezzoUnitarioStr + "€")).setFont(font).setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f)));
+                    table.addCell(new Cell().add(new Paragraph(prezzoRiga.toString() + "€")).setFont(font).setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f)));
                 }
-
                 document.add(table);
             }
 
             if (jsonOrder.has("prezzototale")) {
-                document.add(new Paragraph("Prezzo Totale: " + jsonOrder.get("prezzototale").getAsString()).setBold());
+                document.add(new Paragraph("Prezzo Totale: " + prezzoTot.toString()+  "€").setFont(font).setFontSize(12).setTextAlignment(TextAlignment.RIGHT).setBold());
             }
+
+            document.add(ls_2);
+            document.add(new Paragraph("grazie per l'acquisto")
+                    .setFont(font)
+                    .setFontSize(9)
+                    .setFontColor(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY)
+                    .setTextAlignment(TextAlignment.CENTER));
+            document.add(ls_2);
 
         } catch (IOException e) {
             e.printStackTrace();

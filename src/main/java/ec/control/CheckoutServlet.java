@@ -1,24 +1,7 @@
 package ec.control;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.io.source.ByteArrayOutputStream;
-import com.itextpdf.kernel.font.PdfFont;
-import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.kernel.pdf.canvas.draw.ILineDrawer;
-import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.borders.Border;
-import com.itextpdf.layout.borders.SolidBorder;
-import com.itextpdf.layout.element.*;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.UnitValue;
-
 import ec.model.CheckOut.CheckOutDaoDM;
 import ec.model.CheckOut.Ordine;
 import ec.model.CheckOut.StoricoProdottiDaoDM;
@@ -26,13 +9,13 @@ import ec.model.PaymentMethod.PayMethod;
 import ec.model.PaymentMethod.PaymentDaoDM;
 import ec.model.address.AddressDaoDM;
 import ec.model.address.AddressUs;
+import ec.model.cart.CartItem;
 import ec.model.cart.ShoppingCart;
 import ec.model.product.ProductBean;
 import ec.model.product.ProductDaoDM;
 import ec.util.PdfGeneratorHelper;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,12 +24,12 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Collection;
-import static ec.util.ResponseUtils.*;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static ec.util.ResponseUtils.sendErrorMessage;
+import static ec.util.ResponseUtils.sendJsonResponse;
 @WebServlet("/CheckoutServlet")
 public class CheckoutServlet extends HttpServlet {
     private CheckOutDaoDM modelCheckOut;
@@ -168,7 +151,7 @@ public class CheckoutServlet extends HttpServlet {
             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
             jsonOrder.addProperty("dataOrdine", sdf.format(ordine.getData().getTime()));
         }
-
+        double sconto=0;
         double prezzoTot =0;
         JsonArray cartItems = new JsonArray();
         for (ProductBean item : modelStoricoProdotti.retriveOrdineitem(ordine.getNumId(), ordine.getUtenteId()) ){
@@ -178,7 +161,8 @@ public class CheckoutServlet extends HttpServlet {
             jsonItem.addProperty("quantity", item.getDisponibilita());
             jsonItem.addProperty("prezzoUnitario", item.getPrezzo());
             jsonItem.addProperty("sconto", item.getPercentualeSconto());
-            prezzoTot += item.getPrezzo();
+            sconto = (item.getPrezzo()*item.getPercentualeSconto())/100;
+            prezzoTot += item.getDisponibilita()* (item.getPrezzo() -sconto);
             cartItems.add(jsonItem);
         }
 
@@ -195,27 +179,36 @@ public class CheckoutServlet extends HttpServlet {
 
         PayMethod metodo = new PaymentDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodMethod());
         jsonResponse.add("paymentMethod", metodo.toJson());
-        jsonResponse.addProperty("spesa", cart.getPrezzoTot());
+
+        double prezzoTot = 0; // Inizializza il prezzo totale a 0
 
         ProductDaoDM modelItem = new ProductDaoDM();
         JsonArray cartItems = new JsonArray();
-        cart.getItem_ordinati().forEach(item -> {
+        for (CartItem item : cart.getItem_ordinati()) {
             item.getItem().updateDisponibilita(item.getNumItem());
             try {
                 modelItem.doUpdateQuantity(item.getItem());
-            } catch (SQLException |IOException e) {
-                //scrittura di un errore
+            } catch (SQLException | IOException e) {
+                // Gestisci l'errore
                 throw new RuntimeException(e);
             }
+
+            double prezzoUnitario = item.getItem().getPrezzo();
+            double sconto = (prezzoUnitario * item.getItem().getPercentualeSconto()) / 100;
+            double prezzoTotaleElemento = item.getNumItem() * (prezzoUnitario - sconto);
+            prezzoTot += prezzoTotaleElemento; // Aggiorna il prezzo totale
+
             JsonObject jsonItem = new JsonObject();
             jsonItem.addProperty("iva", item.getItem().getFasciaIva());
             jsonItem.addProperty("nome", item.getItem().getNome());
             jsonItem.addProperty("quantity", item.getNumItem());
-            jsonItem.addProperty("prezzoUnitario", item.getItem().getPrezzo());
+            jsonItem.addProperty("prezzoUnitario", prezzoUnitario);
             jsonItem.addProperty("sconto", item.getItem().getPercentualeSconto());
             cartItems.add(jsonItem);
-        });
+        }
+
         jsonResponse.add("cartItems", cartItems);
+        jsonResponse.addProperty("prezzototale", prezzoTot); // Aggiungi il prezzo totale alla risposta
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

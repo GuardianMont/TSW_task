@@ -25,6 +25,8 @@ public class Address extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String opzione = request.getParameter("opzione");
+        System.out.println("Paramentro doGet address: " +opzione);
         doPost(request, response);
     }
 
@@ -36,7 +38,7 @@ public class Address extends HttpServlet {
             sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Sessione non valida o utente non loggato");
             return;
         }
-
+        System.out.println("Paramentro address: " +opzione);
         if (opzione != null) {
             switch (opzione) {
                 case "add":
@@ -63,19 +65,33 @@ public class Address extends HttpServlet {
     }
 
     private void handleAddAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        String cap = request.getParameter("cap");
+        String citta = request.getParameter("citta");
+        String nCivico = request.getParameter("n_civico");
+        String preferenze = request.getParameter("preferenze");
+        String via = request.getParameter("via");
+        String provincia = request.getParameter("provincia");
+
+        if (cap == null || citta == null || nCivico == null || preferenze == null || via == null || provincia == null) {
+            //check lato server
+            sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Parametri mancanti o non validi");
+            return;
+        }
+
         AddressUs ad = new AddressUs();
-        ad.setCap(request.getParameter("cap"));
-        ad.setCitta(request.getParameter("citta"));
-        ad.setNumCiv(Integer.parseInt(request.getParameter("n_civico")));
-        ad.setPreferenze(request.getParameter("preferenze"));
-        ad.setVia(request.getParameter("via"));
-        ad.setProvincia(request.getParameter("provincia"));
+        ad.setCap(cap);
+        ad.setCitta(citta);
+        ad.setNumCiv(Integer.parseInt(nCivico));
+        ad.setPreferenze(preferenze);
+        ad.setVia(via);
+        ad.setProvincia(provincia);
         int n = model.checkNum((String) request.getSession().getAttribute("userId"));
         ad.setNum_ID(n + 1);
         model.doSave(ad, (String) request.getSession().getAttribute("userId"), ad.getNum_ID());
 
-        sendSuccessResponse(response,request.getContextPath() + "/Payment.jsp");
+        sendSuccessResponse(response, request.getContextPath() + "/Payment.jsp");
     }
+
 
     private void handleShowAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         Collection<AddressUs> addresses = model.doRetrieveAll((String) request.getSession().getAttribute("userId"));

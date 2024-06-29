@@ -1,20 +1,31 @@
 .container-search {
-    position: absolute;
-    background: white;
-    border: 1px solid #ccc;
-    max-width: 300px;
-    margin-top: 5px;
-    z-index: 1000;
+    position: absolute; /* Assicura che il contenitore dei risultati sia posizionato rispetto alla finestra */
+    z-index: 1000; /* Mantiene il contenitore sopra gli altri elementi */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    max-width: 100%; /* Assicura che il contenitore non superi la larghezza dello schermo */
+    box-sizing: border-box; /* Include padding e bordo nella larghezza totale */
 }
+
 .container-search ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
     margin: 0;
 }
+
 .container-search li {
     padding: 10px;
-    cursor: pointer;
+    border-bottom: 1px solid #ddd;
 }
-.container-search li:hover {
-    background-color: #45a049;
+
+.container-search li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+.container-search li a:hover {
+    background-color: #f0f0f0;
 }

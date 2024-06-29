@@ -82,6 +82,13 @@ document.addEventListener('DOMContentLoaded', function() {
             emailError.textContent = 'Inserisci un indirizzo email valido.';
             isValid = false;
         }
+        if (!validatePassword(password) || !validatePassword(repPassword)){
+            password.classList.add('error');
+            repPassword.classList.add('error');
+            passwordError.style.display = 'block';
+            passwordError.textContent = 'rispettare il pattern password';
+            isValid = false;
+        }
         if (password.value !== repPassword.value) {
             password.classList.add('error');
             repPassword.classList.add('error');
@@ -100,7 +107,14 @@ document.addEventListener('DOMContentLoaded', function() {
         return re.test(email);
     }
 
+    function validatePassword(pass){
+        const pat =/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+        return pass.test(pass);
+    }
+
     function checkEmailAvailability(email) {
+        //verifica se esiste un utente con la stessa mail
+        //in caso positivo non consente la registrazione
         const xhr = new XMLHttpRequest();
         const params = `email=${encodeURIComponent(email)}&opzione=checkEmail`;
 
@@ -129,6 +143,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function checkUsernameAvailability(username) {
+        //verifica che non vi siano due utenti con il
+        //medesimo username
         const xhr = new XMLHttpRequest();
         const params = `username=${encodeURIComponent(username)}&opzione=checkUser`;
 
@@ -165,7 +181,3 @@ function clearErrors() {
         element.style.display = "none";
     });
 }
-
-//check per l'email
-
-

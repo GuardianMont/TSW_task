@@ -40,37 +40,27 @@ public class Payment extends HttpServlet {
             sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Sessione non valida o utente non loggato");
             return;
         }
+        System.out.println("Parametri payment: " + opzione);
         if (opzione != null) {
-            switch (opzione){
-                case "add":
-                    if(request.getSession().getAttribute("userId")!=null) {
-                        try {
-                            handleAddAction(request,response);
-                        } catch (SQLException | IOException e) {
-                            sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
-                        }
-                    }
-                    break;
-                case "show":
-                    try {
-                        request.setAttribute("payMethods", model.doRetrieveAll((String)request.getSession().getAttribute("userId")));
-                        handleShowAction(request,response);
-                    } catch (SQLException e) {
-                        sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
-                    }
-                    break;
-                case "delete":
-                    try {
-                        handleDeleteAction(request,response);
-                    } catch (SQLException e) {
-                        sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
-                    }
-                    break;
-                default:
-                    sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non valida");
-                    break;
+            try {
+                switch (opzione) {
+                    case "add":
+                        handleAddAction(request, response);
+                        break;
+                    case "show":
+                        handleShowAction(request, response);
+                        break;
+                    case "delete":
+                        handleDeleteAction(request, response);
+                        break;
+                    default:
+                        sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non valida");
+                        break;
+                }
+            } catch (SQLException | IOException e) {
+                sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
             }
-        }else {
+        } else {
             sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non fornita");
         }
     }

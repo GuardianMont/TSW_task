@@ -23,7 +23,7 @@ public class ResponseUtils {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonResponse.toString());
-        response.sendRedirect(redirectUrl);
+        //response.sendRedirect(redirectUrl);
     }
 
     public static void sendErrorResponse(HttpServletResponse response, int statusCode, String errorMessage) throws IOException {

@@ -91,7 +91,7 @@
 				<img src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="<%= bean.getNome() %>" onclick="window.location.href='product?opzione=read&id=<%= bean.getId() %>'">
 			</div>
 			<h2 onclick="window.location.href='product?opzione=read&id=<%= bean.getId() %>'"><%= bean.getNome() %></h2>
-			<p><%= bean.getPrezzo() %></p>
+			<p><%= bean.getPrezzo() %> &euro;</p>
 			<div class="button-container">
 				<p>
 					<%

@@ -10,6 +10,8 @@
         var provincia = document.getElementById("provincia").value;
 
         // Regular expressions for validation
+        var stringaViaPatter = /^[a-zA-Z0-9\s]+$/
+        var stringPatter = /^[a-zA-Z\s]+$/
         var capPattern = /^[0-9]{5}$/;
         var provinciaPattern = /^[A-Za-z]{2}$/;
         var civicoPattern =/^[0-9]{1,4}$/
@@ -17,7 +19,12 @@
         //se prima ce ne erano altri
 
         if (via.trim() === "") {
-            showError(document.getElementById("via"), "via-error");
+            showError(document.getElementById("via"), "via-error", "il campo via è obbligatori");
+            console.log("Errore nella validazione: via");
+            isValid = false;
+        }
+        if (!stringaViaPatter.test(via)){
+            showError(document.getElementById("via"), "via-error", "il campo via è un alfanumerico");
             console.log("Errore nella validazione: via");
             isValid = false;
         }
@@ -37,6 +44,10 @@
             showError(document.getElementById("citta"), "citta-error");
             isValid = false;
         }
+        if (!stringPatter.test(citta)){
+            showError(document.getElementById("citta"), "citta-error", "città può contenere solo lettere");
+            isValid = false;
+        }
 
         if (provincia.trim() === "" || !provinciaPattern.test(provincia)) {
             showError(document.getElementById("provincia"), "provincia-error");
@@ -48,10 +59,13 @@
         return isValid;  // Se tutti i campi sono validi
     }
 
-    function showError(element, errorElementId) {
+    function showError(element, errorElementId, meggase) {
         element.classList.add("error");
-        document.getElementById(errorElementId).style.display = "block";
+        let error = document.getElementById(errorElementId);
+        error.style.display = "block"
+        error.innerText=meggase;
     }
+
 
     function clearErrors() {
         var errors = document.querySelectorAll(".error");

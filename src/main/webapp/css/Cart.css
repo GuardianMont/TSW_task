@@ -59,7 +59,20 @@ body {
     border-radius: 10px;
 }
 
-.spesa_totale {
+.quantity-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0; /* Assicurati che questa regola sia definita una sola volta */
+}
+
+
+
+.quantity-error {
+    margin-top: 5px; /* Aggiungi spazio sopra il messaggio di errore */
+}
+
+#spesa_totale {
     text-align: right;
     margin: 20px 20px 0 0;
 }
@@ -92,11 +105,11 @@ body {
     border-radius: 5px;
 }
 
-.action-button.decrement {
+.decrement-button {
     background-color: #ff9800;
 }
 
-.action-button.increment {
+.increment-button {
     background-color: #4CAF50;
 }
 

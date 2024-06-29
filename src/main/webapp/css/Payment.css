@@ -29,7 +29,20 @@ body {
     align-items: center;
     width: 100%; /* Assicura che le sezioni occupino tutta la larghezza del contenitore */
 }
-
+/* lo uso per visualizzare anno e mese l'uno affianco
+all'altro così è anche più carino
+ */
+.data-scadenza {
+    display: flex;
+    align-items: center;
+}
+.data-scadenza label {
+    margin-right: 5px;
+}
+.data-scadenza input[type="text"] {
+    width: 40px; /* Dimensione dei campi per due cifre */
+    margin-right: 10px; /* Spazio tra i campi */
+}
 h2 {
     color: #333;
     font-size: 1.5em;

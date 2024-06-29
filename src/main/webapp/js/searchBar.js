@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('cerca');
     const formSearch= document.getElementById("searchForm");
+    let resultContainer;
 
     searchInput.addEventListener('input', function() {
         const query = searchInput.value;
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     searchInput.addEventListener("blur", function(){
-        clearResults();
+        //clearResults();
     })
 
     formSearch.addEventListener("submit", function (){
@@ -57,39 +58,66 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function displayResults(data) {
-        clearResults(); // Clear previous results
+        clearResults(); // cancella i risultati precenti
 
         const maxResults = 4;
-        const resultsToShow = data.slice(0, maxResults); // Limit to 4 results
+        const resultsToShow = data.slice(0, maxResults);
+        //limito la rappresentazione a 4 risultati
 
         if (resultsToShow.length > 0) {
-            const resultsContainer = document.createElement('div');
-            resultsContainer.classList.add('container-search');
-            resultsContainer.id = 'dynamic-results';
+            resultContainer = document.createElement('div');
+            resultContainer.classList.add('container-search');
+            resultContainer.id = 'dynamic-results';
 
             const ulElement = document.createElement('ul');
             resultsToShow.forEach(item => {
                 const liElement = document.createElement('li');
-                liElement.textContent = item.nome;
-                liElement.addEventListener('click', function() {
-                    window.location.href = `product?opzione=read&id=${item.id}`;
-                });
+                const linkElement = document.createElement('a');
+                linkElement.textContent = item.nome;
+                linkElement.href =  `product?opzione=read&id=${item.id}`;
+            //rendo i nomi che si visualizzano come risposta dalla ricerca come
+                //dei link alle loro pagine dettaglio
+                liElement.appendChild(linkElement);
                 ulElement.appendChild(liElement);
             });
-            resultsContainer.appendChild(ulElement);
+            resultContainer.appendChild(ulElement);
 
-            document.body.appendChild(resultsContainer);
+            document.body.appendChild(resultContainer);
 
-            // Position the results container below the search input
-            const searchInputRect = searchInput.getBoundingClientRect();
-            resultsContainer.style.left = `${searchInputRect.left}px`;
-            resultsContainer.style.top = `${searchInputRect.bottom + window.scrollY}px`;
-            resultsContainer.style.width = `${searchInputRect.width}px`;
+
+            positionResultsContainer();
+
+            document.addEventListener('click', closeResultsIfClickedOutside);
+            //riaggiorna la posizione dei risultati nel caso in cui la finestra cambia di dimensione
+            window.addEventListener('resize', positionResultsContainer);
         } else {
             clearResults();
         }
     }
+    function positionResultsContainer() {
+        //è una funzione che cerca di posizionare in base alla barra di ricerca
+        //dove mostrare i risultati
+        if (resultContainer && searchInput) {
+            const searchInputRect = searchInput.getBoundingClientRect();
+            resultContainer.style.left = `${searchInputRect.left}px`;
+            resultContainer.style.top = `${searchInputRect.bottom + window.scrollY}px`;
+            resultContainer.style.width = `${searchInputRect.width}px`;
 
+            // Assicura che il contenitore non superi la larghezza dello schermo
+            const windowWidth = window.innerWidth;
+            const containerRightEdge = searchInputRect.left + searchInputRect.width;
+            if (containerRightEdge > windowWidth) {
+                resultContainer.style.width = `${windowWidth - searchInputRect.left - 10}px`; // 10px di margine
+            }
+        }
+    }
+
+    function closeResultsIfClickedOutside(event) {
+        if (resultContainer && !resultContainer.contains(event.target) && event.target !== searchInput) {
+            clearResults();
+            document.removeEventListener('click', closeResultsIfClickedOutside);
+        }
+    }
     function clearResults() {
         const existingResults = document.getElementById('dynamic-results');
         if (existingResults) {

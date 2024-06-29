@@ -76,24 +76,29 @@
                 }
             %>
             <td><img src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="Immagine prodotto"></td>
-            <td><%=item.getItem().getPrezzo()%></td>
+            <td class="prezzo"><%=item.getItem().getPrezzo()%>&euro;</td>
             <td>
                 <form action="carrello" method="post" class="quantity-form">
                     <input type="hidden" name="opzione" value="aggiornaQuantita">
+                    <input type="hidden" name="prezzo" value="<%=item.getItem().getPrezzo()%> ">
                     <input type="hidden" name="id" value="<%=item.getItem().getId()%>">
-                    <button type="button" onclick="decrementQuantity(this)">-</button>
-                    <input id =quantity type="text" name="quantity" value="<%=item.getNumItem()%>" min="0" max="<%=item.getItem().getDisponibilita()%>"
+                    <div class="quantity-input">
+                         <button type="button" name="decrement-button" onclick="decrementQuantity(this)">-</button>
+                         <input type="text" name="quantity" value="<%=item.getNumItem()%>" min="0" max="<%=item.getItem().getDisponibilita()%>"
                            oninput="checkValidityQuantity(this)" onchange="updateQuantity(this.form)" required>
-                    <button type="button" onclick="incrementQuantity(this)">+</button>
+                          <button type="button" name="increment-button" onclick="incrementQuantity(this)">+</button>
+                    </div>
+                    <div class="quantity-error" style="display:none; color: red;"></div> <!-- Messaggio di errore -->
                 </form>
-                <br><div id="quantity-error" class="error-message"></div>
+
+
             </td>
             <td><a href="carrello?opzione=delete&id=<%=item.getItem().getId()%>" class="action-button delete">X</a></td>
         </tr>
         <% } %>
         </tbody>
     </table>
-    <h3 class="spesa_totale">Spesa totale: €<%= String.format("%.2f", cartItem.getPrezzoTot()) %></h3>
+    <h3 id="spesa_totale">Spesa totale: €<%= String.format("%.2f", cartItem.getPrezzoTot()) %></h3>
     <form action="carrello" method="post" class="acquista-form">
         <input type="hidden" name="opzione" value="acquisto">
         <input type="submit" value="ACQUISTA" class="acquista-button">

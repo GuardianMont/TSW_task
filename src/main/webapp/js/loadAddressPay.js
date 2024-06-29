@@ -2,13 +2,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     loadAddresses();
     loadPaymentMethods();
-    document.getElementById('addressForm').addEventListener('onsubmit', submitAddressForm);
-    document.getElementById('payMethodsForm').addEventListener('onsubmit', submitPaymentForm);
+    document.getElementById('addressForm').addEventListener('submit', submitAddressForm);
+    document.getElementById('payMethodsForm').addEventListener('submit', submitPaymentForm);
     document.getElementById('check-out-form').addEventListener('submit', function(event) {
+        event.preventDefault();
         document.querySelector('.proceed-button').disabled = true; // disabilito il bottone
         //in modo che non si possa premere più volte durante il caricamento dello stesso check out generando problemi
-        event.preventDefault();
-        checkoutForm();
+        checkoutForm(event);
     });
 
 });
@@ -47,41 +47,39 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 function submitCheckOut(checkData) {
     console.log("checkData: ", checkData);
-    if (checkData !== false) {
-        console.log("Sending data:", checkData);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", 'CheckoutServlet');
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", 'CheckoutServlet');
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.success) {
-                    console.log("Operazione completata con successo");
-                    showConfirmationMessage(response);
-                } else {
-                    alert('Errore: ' + response.error);
-                }
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                console.log("Operazione completata con successo");
+                showConfirmationMessage(response);
             } else {
-                console.error('Request failed. Status:', xhr.status);
+                alert('Errore: ' + response.error);
+                document.querySelector('.proceed-button').disabled = false;
             }
-        };
+        } else {
+            console.error('Request failed. Status:', xhr.status);
+            document.querySelector('.proceed-button').disabled = false;
+        }
+    };
 
-        xhr.onerror = function() {
-            console.error('Request failed. Network error.');
-        };
+    xhr.onerror = function() {
+        console.error('Request failed. Network error.');
+        document.querySelector('.proceed-button').disabled = false;
+    };
 
-        var params = new URLSearchParams();
-        params.append("address", checkData.address);
-        params.append("paymentMethod", checkData.paymentMethod);
-        params.append("opzione", "add");
-        console.log("Params:", params.toString());
-        xhr.send(params.toString());
-    }else{
-        console.error("checkoutForm returned false");
-    }
+    var params = new URLSearchParams();
+    params.append("address", checkData.address);
+    params.append("paymentMethod", checkData.paymentMethod);
+    params.append("opzione", "add");
+    console.log("Params:", params.toString());
+    xhr.send(params.toString());
 }
+
 function showConfirmationMessage(data) {
     let confirmationMessage = `
         <div class="confirmation-message">
@@ -89,10 +87,10 @@ function showConfirmationMessage(data) {
             <h3>Oggetti acquistati:</h3>
             <ul>
                 ${data.cartItems.map(item => `
-                    <li>${item.nome} (Quantità: ${item.quantity} Prezzo: ${item.prezzoUnitario})</li>
+                    <li>${item.nome} (Quantità: ${item.quantity} Prezzo: ${item.prezzoUnitario} &euro; Sconto: ${item.sconto}%)</li>
                 `).join('')}
             </ul>
-            <h3>Totale Spesa:  ${data.prezzototale}</h3>
+            <h3>Totale Spesa:  ${data.prezzototale}  &euro;</h3>
             <h4>Metodo di pagamento: </h4>
             <p>
                 Numero carta: ${data.paymentMethod.numCarta}<br> 
@@ -138,11 +136,12 @@ function submitAddressForm(event) {
             var response = JSON.parse(xhr.responseText);
             if (response.success) {
                 console.log("Operazione completata con successo");
-                document.getElementById('new-address-form').classList.add('hidden');
+                showInfoNotifica("indirizzo inserito correttamente");
+                removeForm();
                 loadAddresses();
                 resetAddressForm();
             } else {
-                alert('Errore: ' + response.error);
+                showAttentionNotifica('Errore: ' + response.error);
             }
         } else {
             console.error('Request failed. Status:', xhr.status);
@@ -151,7 +150,18 @@ function submitAddressForm(event) {
     xhr.onerror = function() {
         console.error('Request failed. Network error.');
     };
-    xhr.send(formData);
+    //mi dava problemi con la lettura del form
+        //in questo modo si rendendo i campi del form un url
+        //tecnicamente in questo modo si potrebbe persino gestire il tutto con un
+        //doGet, ma continuo a usare Post
+        //var params = new URLSearchParams();
+        //formData.forEach((value, key) => {
+        //    params.append(key, value);
+        //});
+        //params.append("opzione", "add");
+        var params = new URLSearchParams(formData);
+        params.append("opzione", "add");
+        xhr.send(params.toString());
     }
 }
 
@@ -166,25 +176,28 @@ function submitPaymentForm(event) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'payMethodsManager');
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
+        xhr.onload = function () {
             if (xhr.status === 200) {
                 var response = JSON.parse(xhr.responseText);
                 if (response.success) {
                     console.log("Operazione completata con successo");
-                    document.getElementById('new-payMethod-form').classList.add('hidden');
+                    showInfoNotifica("indirizzo inserito correttamente");
+                    removePayForm();
                     loadPaymentMethods();
                     resetPaymentForm();
                 } else {
-                    alert('Errore: ' + response.error);
+                    showAttentionNotifica('Errore: ' + response.error);
                 }
             } else {
                 console.error('Request failed. Status:', xhr.status);
             }
         };
-        xhr.onerror = function() {
+        xhr.onerror = function () {
             console.error('Request failed. Network error.');
         };
-        xhr.send(formData);
+        var params = new URLSearchParams(formData);
+        params.append("opzione", "add");
+        xhr.send(params.toString());
     }
 }
 
@@ -216,8 +229,9 @@ function loadAddresses() {
     xhr.onerror = function() {
         console.error('Request failed. Network error.');
     };
-    var data = 'opzione=show';
-    xhr.send(data);
+    var params = new URLSearchParams();
+    params.append("opzione", "show");
+    xhr.send(params.toString());
 }
 
 
@@ -249,8 +263,10 @@ function loadPaymentMethods() {
     xhr.onerror = function() {
         console.error('Request failed. Network error.');
     };
-    var data = 'opzione=show';
-    xhr.send(data);
+    var params = new URLSearchParams();
+    params.append("opzione", "show");
+    xhr.send(params.toString());
+
 }
 
 function aggiungiIndirizzo() {
@@ -282,21 +298,4 @@ function resetAddressForm() {
 
 function resetPaymentForm() {
     $('#payMethodsForm')[0].reset();
-}
-
-function validateSelections(){
-    let addressSelected = $("input[name='selectedAddress']:checked").val();
-    let paymentSelected = $("input[name='selectedPayMethod']:checked").val();
-
-    if (!addressSelected) {
-        alert("Per proseguire selezionare un indirizzo");
-        return false;
-    }
-
-    if (!paymentSelected) {
-        alert("Per proseguire selezionare un metodo di pagamento");
-        return false;
-    }
-
-    return true;
 }
