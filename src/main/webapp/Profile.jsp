@@ -15,6 +15,8 @@
     <script src="js/loadOrdini.js"></script>
     <script src="js/profileSwitchingForms.js"></script>
     <script src="js/profileLoadingFunctions.js"></script>
+    <script src="js/validationEditProfile.js"></script>
+    <script src="js/validationFunctions.js"></script>
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
@@ -144,7 +146,7 @@
 <%
     }
 %>
-<script src="js/validationEditProfile.js"></script>
+
 <jsp:include page="Footer.jsp"/>
 </body>
 </html>

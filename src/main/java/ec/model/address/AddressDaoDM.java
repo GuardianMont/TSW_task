@@ -16,8 +16,9 @@ public class AddressDaoDM implements AddressDao{
         String sqlInsert = "Insert into " + AddressDaoDM.TABLE_NAME +
                 " (utente_id, num, cap, citta, provincia, via, n_civico, preferenze) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert)) {
+
+        try(Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert)) {
             preparedStatement.setString(1,userID);
             preparedStatement.setInt(2,num);
             preparedStatement.setString(3,ad.getCap());
@@ -35,9 +36,11 @@ public class AddressDaoDM implements AddressDao{
     public boolean doDelete (String userID, int num) throws  SQLException{
         String sqlDelete = "DELETE from " + AddressDaoDM.TABLE_NAME +
                 " where utente_id=? AND num = ?";
+
         int result=0;
+
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sqlDelete)){
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlDelete)){
             preparedStatement.setString(1,userID);
             preparedStatement.setInt(2, num);
 
@@ -52,8 +55,9 @@ public class AddressDaoDM implements AddressDao{
 
         Collection<AddressUs> indirizzi = new LinkedList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sqlRetrive)){
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlRetrive)){
             preparedStatement.setString(1,userID);
+
             ResultSet res = preparedStatement.executeQuery();
 
             while (res.next()){
@@ -77,10 +81,11 @@ public class AddressDaoDM implements AddressDao{
         String sqlRetrive= "SELECT * from " + AddressDaoDM.TABLE_NAME +
                 " where utente_id=? and num = ?";
         AddressUs ad = new AddressUs();
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlRetrive)){
+        try(Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlRetrive)){
             preparedStatement.setString(1,userID);
             preparedStatement.setInt(2,num);
+
             ResultSet res = preparedStatement.executeQuery();
 
             while (res.next()){
@@ -103,12 +108,13 @@ public class AddressDaoDM implements AddressDao{
                 "WHERE utente_id = ? " +
                 "GROUP BY utente_id ";
         int n = 0;
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlCount)){
+        try(Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlCount)){
             preparedStatement.setString(1,userId);
-            ResultSet ret = preparedStatement.executeQuery();
-            while (ret.next()){
 
+            ResultSet ret = preparedStatement.executeQuery();
+
+            while (ret.next()){
                  n  = ret.getInt("numero_indirizzi");
             }
         }

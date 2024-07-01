@@ -154,8 +154,10 @@ public class UpdateUser extends HttpServlet {
 
             //utilizza lo stesso salt per la nuova password
             byte[] salt = oldUser.getSalt();
-            user.setPassword(HashGenerator.generateHash(newPassword, salt));
+            byte [] newHashedPssw = HashGenerator.generateHash(newPassword, salt);
+            user.setPassword(newHashedPssw);
             user.setSalt(salt);
+            user.setAdmin(oldUser.isAdmin());
 
             // Se l'aggiornamento non va a buon fine, setta un errore
             if(!userDao.doUpdate(user)){

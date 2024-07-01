@@ -36,13 +36,17 @@ public class PaymentDaoDM implements PaymentDao {
     public boolean doDelete(String userID, int num) throws SQLException {
         String sqlDelete = "DELETE from " + PaymentDaoDM.TABLE_NAME +
                 " where utente_id=? AND num = ?";
+
         int result = 0;
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sqlDelete);
-        preparedStatement.setString(1, userID);
-        preparedStatement.setInt(2, num);
-        result = preparedStatement.executeUpdate();
-        connection.close();
+
+        try(Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlDelete)) {
+            preparedStatement.setString(1, userID);
+            preparedStatement.setInt(2, num);
+            result = preparedStatement.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return (result != 0);
     }
 

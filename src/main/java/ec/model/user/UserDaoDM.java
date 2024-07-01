@@ -38,44 +38,34 @@ public class UserDaoDM implements UserDao {
 
     @Override
     public synchronized boolean doDelete(String id) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
 
         int result = 0;
 
         String deleteSQL = "DELETE FROM " + UserDaoDM.TABLE_NAME + " WHERE username = ?";
 
-        try {
-            connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(deleteSQL);
+        try(Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+
             preparedStatement.setString(1, id);
 
             result = preparedStatement.executeUpdate();
 
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return (result != 0);
-    
     }
 
     @Override
     public synchronized UserBean doRetrieveByKey(String id) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
 
         UserBean bean = new UserBean();
 
         String selectSQL = "select * from " + UserDaoDM.TABLE_NAME + " where username = ? ";
 
-        try {
-            connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(selectSQL);
+        try(Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+
             preparedStatement.setString(1, id);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -90,29 +80,21 @@ public class UserDaoDM implements UserDao {
                 bean.setPhoneNumber(rs.getString("n_telefono"));
                 bean.setAdmin(rs.getBoolean("is_admin"));
             }
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return bean;
     }
 
     @Override
     public synchronized UserBean doRetrieveByEmail(String email) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
 
         UserBean bean = new UserBean();
 
         String selectSQL = "select * from " + UserDaoDM.TABLE_NAME + " where email = ?";
 
-        try {
-            connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(selectSQL);
+        try(Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
             preparedStatement.setString(1, email);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -128,31 +110,21 @@ public class UserDaoDM implements UserDao {
                 bean.setAdmin(rs.getBoolean("is_admin"));
             }
 
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return bean;
     }
 
     @Override
     public Collection<UserBean> doRetrieveAll(String order) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
 
         Collection<UserBean> users = new LinkedList<>();
 
         String selectSQL = "SELECT * FROM " + UserDaoDM.TABLE_NAME;
 
-        try {
-
-            connection = DriverManagerConnectionPool.getConnection();
-
-            preparedStatement = connection.prepareStatement(selectSQL);
+        try(Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -170,13 +142,8 @@ public class UserDaoDM implements UserDao {
                 users.add(bean);
             }
 
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return users;
@@ -228,11 +195,9 @@ public class UserDaoDM implements UserDao {
             preparedStatement.setString(8, user.getUsername());
             result = preparedStatement.executeUpdate();
         }catch (SQLException e){
+            e.printStackTrace();
             return false;
         }
-
         return result > 0;
-
-
     }
 }

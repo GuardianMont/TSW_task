@@ -69,8 +69,6 @@ public class CartDaoDM implements CartDao {
 
     @Override
     public ShoppingCart retriveItem(String codeUser) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
 
         ShoppingCart cart = new ShoppingCart();
 
@@ -79,10 +77,10 @@ public class CartDaoDM implements CartDao {
        + " LEFT JOIN Prodotto AS p ON c.prodotto_id = p.id "
        +" WHERE c.utente_id = ? ";
 
-        try {
-            connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(selectSQL);
+        try(Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
             preparedStatement.setString(1,codeUser);
+
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -103,13 +101,8 @@ public class CartDaoDM implements CartDao {
                 cart.CartItem(carrello);
             }
 
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return cart;
     }
