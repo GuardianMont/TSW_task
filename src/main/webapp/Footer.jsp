@@ -8,7 +8,7 @@
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section contact-info">
-            <h2>Contatti</h2>
+            <p>Contatti</p>
             <p>Email:prova@gmail.com</p>
             <p>Telefono:+39 1234567890</p>
         </div>

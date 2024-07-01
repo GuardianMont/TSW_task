@@ -31,9 +31,8 @@ h2 {
 }
 
 .return-button:hover {
-    background-color: #4CAF50;
+    background-color: #45a049;
 }
-
 
 .error-message {
     color: red;
@@ -67,29 +66,28 @@ form.form input[type="file"] {
     margin-top: 10px;
 }
 
-form.form input[type="reset"] {
+form.form input[type="reset"],
+form.form input[type="submit"] {
     padding: 10px 20px;
     margin-top: 10px;
-    background-color: red;
-    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
+form.form input[type="reset"] {
+    background-color: red;
+    color: #fff;
+}
+
 form.form input[type="submit"] {
-    padding: 10px 20px;
-    margin-top: 10px;
     background-color: #4CAF50;
     color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
 
 form.form input[type="submit"]:hover,
 form.form input[type="reset"]:hover {
-    background-color: #4CAF50;
+    background-color: #45a049;
 }
 
 form.form img {
@@ -98,17 +96,58 @@ form.form img {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
 #specificaTavolo {
     display: none;
 }
-#specificaAttrezzatura{
+
+#specificaAttrezzatura {
     display: none;
 }
+
 /* Media Queries per adattarsi a dispositivi diversi */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1200px) {
+    .container {
+        max-width: 100%;
+    }
+
     form.form input[type="text"],
     form.form input[type="number"],
     form.form textarea {
-        width: calc(100% - 12px);
+        width: calc(100% - 22px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    form.form input[type="text"],
+    form.form input[type="number"],
+    form.form textarea {
+        width: calc(100% - 22px);
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .button-container input {
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    form.form input[type="text"],
+    form.form input[type="number"],
+    form.form textarea {
+        width: calc(100% - 22px);
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .button-container input {
+        margin-top: 10px;
     }
 }
