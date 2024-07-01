@@ -5,12 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Dettaglio prodotto</title>
-    <link rel="stylesheet" href="css/insert.css">
-    <script src="js/validationProduct.js"></script>
-    <script src="js/specificaCategoria.js"></script>
+    <link rel="stylesheet" href="../css/insert.css">
+    <script src="../js/validationProduct.js"></script>
+    <script src="../js/specificaCategoria.js"></script>
 </head>
 <body>
-<jsp:include page="Header.jsp"/>
+<jsp:include page="../Header.jsp"/>
 <%
     ProductBean product = (ProductBean) request.getAttribute("product");
     if (product != null) {
@@ -111,6 +111,6 @@
 </div>
 <% } %>
 
-<jsp:include page="Footer.jsp"/>
+<jsp:include page="../Footer.jsp"/>
 </body>
 </html>

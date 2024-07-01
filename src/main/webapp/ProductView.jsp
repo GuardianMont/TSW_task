@@ -57,7 +57,7 @@
 	if (userId != null && isAdmin != null && (boolean) isAdmin) {
 %>
 <div class="button-container">
-	<a href="insert.jsp" id="insert-a" class="add-button">Inserire prodotto</a>
+	<a href="admin/insert.jsp" id="insert-a" class="add-button">Inserire prodotto</a>
 </div>
 <% } %>
 <%

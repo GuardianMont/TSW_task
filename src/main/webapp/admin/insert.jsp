@@ -2,12 +2,12 @@
 <html>
 <head>
     <title>Inserimento prodotti</title>
-    <link rel="stylesheet" href="css/insert.css">
-    <script src="js/validationProduct.js"></script>
-    <script src="js/specificaCategoria.js"></script>
+    <link rel="stylesheet" href="../css/insert.css">
+    <script src="../js/validationProduct.js"></script>
+    <script src="../js/specificaCategoria.js"></script>
 </head>
 <body>
-<jsp:include page="Header.jsp"/>
+<jsp:include page="../Header.jsp"/>
 
 <div class="container">
     <a href="product" class="catalogo">Catalogo</a>
@@ -94,6 +94,6 @@
     </form>
 </div>
 
-<jsp:include page="Footer.jsp"/>
+<jsp:include page="../Footer.jsp"/>
 </body>
 </html>
