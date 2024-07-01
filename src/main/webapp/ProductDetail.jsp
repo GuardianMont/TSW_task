@@ -17,6 +17,10 @@
         ProductBean product = (ProductBean) request.getAttribute("product");
         if (product != null) {
             boolean outOfStock = product.getDisponibilita() == 0;
+            double prezzoUnitario = product.getPrezzo();
+            double prezzoScontato = product.getPrezzoScontato();
+            //funzione per calcolare il prezzo scontato
+            boolean hasDiscount = prezzoScontato > 0;
     %>
     <div class="product-content <%= outOfStock ? "out-of-stock" : "" %>">
         <div class="product-image">
@@ -32,26 +36,34 @@
         </div>
         <div class="product-details">
             <h1>
-            <%
-                if (outOfStock) {
-            %>
-            <div class="out-of-stock-message">
-                <img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="15" height="15">
-                <span id="out-of-stock-message-text">Esaurito</span>
-            </div>
-            <%
-                }
-            %>
+                <%
+                    if (outOfStock) {
+                %>
+                <div class="out-of-stock-message">
+                    <img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="15" height="15">
+                    <span id="out-of-stock-message-text">Esaurito</span>
+                </div>
+                <%
+                    }
+                %>
                 <%= product.getNome() %>
             </h1>
             <p><%= product.getDescrizione() %></p>
         </div>
         <div class="product-price">
+            <% if (hasDiscount){ %>
+            <div class="sconto-prezzo-container">
+                <div class="sconto-visible"><%= product.getPercentualeSconto() + "%" %></div>
+                <span class="prezzo-unitario"><%= String.format("%.2f", product.getPrezzo()) %> &euro;</span>
+            </div>
+            <h2 class="prezzo-scontato"><%= String.format("%.2f", prezzoScontato) %> &euro;</h2>
+            <% } else { %>
             <h2><%= product.getPrezzo() %> &euro;</h2>
+            <% } %>
             <%
                 if (product.getDisponibilita() > 0) {
             %>
-            <a href="carrello?opzione=add&id=<%=product.getId()%>" class="add-to-cart-button">Add to Cart</a>
+            <a href="carrello?opzione=add&id=<%= product.getId() %>" class="add-to-cart-button">Add to Cart</a>
             <%
                 }
             %>

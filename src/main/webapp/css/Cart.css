@@ -8,8 +8,15 @@ body {
 }
 
 .container {
-    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
     padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /*flex: 1;
+    padding: 20px;*/
 }
 
 .catalogo {
@@ -41,8 +48,8 @@ body {
 }
 
 .tabella th, .tabella td {
-    padding: 15px;
-    text-align: center;
+    padding: 10px;
+    text-align: left;
     border: 1px solid #ddd;
 }
 
@@ -50,7 +57,33 @@ body {
     background-color: #4CAF50;
     color: white;
 }
-
+.sconto-prezzo-container {
+    display: flex;
+    align-items: center;
+}
+.sconto-visible {
+    display: inline-block;
+    background-color: #e74c3c;
+    color: #fff;
+    border-radius: 20%;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-right: 10px;
+    position: relative;
+}
+.prezzo-unitario {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 1em;
+    margin-right: 10px;
+    display: inline-block;
+}
+.prezzo-scontato {
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 1em;
+}
 .tabella td img {
     width: 100px;
     height: auto;

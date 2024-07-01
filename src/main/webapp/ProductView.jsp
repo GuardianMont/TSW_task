@@ -15,6 +15,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" href="css/ProductView.css">
 	<link rel="stylesheet" href="css/notifica.css">
+	<link rel="stylesheet" href="css/Sconto.css">
 	<title>Storage DS/BF</title>
 	<script src="js/validationProduct.js"></script>
 	<script src="js/notifica.js"></script>
@@ -75,7 +76,13 @@
 		if (products != null && !products.isEmpty()) {
 			for (Object obj : products) {
 				ProductBean bean = (ProductBean) obj;
+				//lo uso per settare se il prodotto è esaurito o meno
 				boolean outOfStock = bean.getDisponibilita() == 0;
+				double prezzoUnitario = bean.getPrezzo();
+				double prezzoScontato = bean.getPrezzoScontato();
+				//funzione per calcolare il prezzo scontato
+				boolean hasDiscount = prezzoScontato>0 ? true : false;
+
 	%>
 
 	<div class="product <%= outOfStock ? "out-of-stock" : "" %>">
@@ -89,9 +96,23 @@
 					}
 				%>
 				<img src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="<%= bean.getNome() %>" onclick="window.location.href='product?opzione=read&id=<%= bean.getId() %>'">
+				<%
+					if (hasDiscount) {
+				%>
+					<div class="sconto-visible">
+						<%=bean.getPercentualeSconto() + "%" %>
+					</div>
+				<% } %>
 			</div>
 			<h2 onclick="window.location.href='product?opzione=read&id=<%= bean.getId() %>'"><%= bean.getNome() %></h2>
-			<p><%= bean.getPrezzo() %> &euro;</p>
+			<p>
+				<% if (hasDiscount){ %>
+				<span class="prezzo-unitario"><%= String.format("%.2f", bean.getPrezzo()) %> &euro;</span>
+				<span class="prezzo-scontato"><%= String.format("%.2f", prezzoScontato) %> &euro;</span>
+                <% } else { %>
+				<span><%= bean.getPrezzo() %> &euro;</span>
+				<% } %>
+			</p>
 			<div class="button-container">
 				<p>
 					<%

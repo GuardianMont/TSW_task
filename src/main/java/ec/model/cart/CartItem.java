@@ -47,6 +47,9 @@ public class CartItem {
     }
 
     public double prezzoAllItem(){
+        if (this.Item.getPercentualeSconto()>0){
+            return (this.Item.getPrezzoScontato()*this.numItem);
+        }
         return (this.Item.getPrezzo()*this.numItem);
     }
 

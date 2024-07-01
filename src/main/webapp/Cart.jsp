@@ -59,13 +59,18 @@
         <tr>
             <th>Nome</th>
             <th>Immagine</th>
-            <th>prezzo</th>
-            <th>quantità</th>
+            <th>Prezzo</th>
+            <th>Quantità</th>
+            <th>Totale Riga</th>
             <th>Azioni</th>
         </tr>
         </thead>
         <tbody>
-        <% for (CartItem item : items) { %>
+        <% for (CartItem item : items) {
+            double prezzoUnitario = item.getItem().getPrezzo();
+            double prezzoScontato = item.getItem().getPrezzoScontato();
+            //funzione per calcolare il prezzo scontato
+            boolean hasDiscount = prezzoScontato > 0;%>
         <tr>
             <td><%=item.getItem().getNome()%></td>
             <%
@@ -76,11 +81,29 @@
                 }
             %>
             <td><img src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="Immagine prodotto"></td>
-            <td class="prezzo"><%=item.getItem().getPrezzo()%>&euro;</td>
+            <td class="prezzo">
+                <% if (hasDiscount){ %>
+                <div class="sconto-prezzo-container">
+                    <div class="sconto-visible"><%= item.getItem().getPercentualeSconto() + "%" %></div>
+                    <span class="prezzo-unitario"><%= String.format("%.2f", item.getItem().getPrezzo()) %> &euro;</span>
+                 </div>
+            <div class="prezzo-scontato"><%= String.format("%.2f", prezzoScontato) %> &euro;</div>
+            <% } else { %>
+            <div><%= item.getItem().getPrezzo() %> &euro;</div>
+            <% } %>
+            </td>
             <td>
                 <form action="carrello" method="post" class="quantity-form">
                     <input type="hidden" name="opzione" value="aggiornaQuantita">
-                    <input type="hidden" name="prezzo" value="<%=item.getItem().getPrezzo()%> ">
+                    <%
+                        double prezzo = item.getItem().getPrezzo();
+                        if (item.getItem().getPercentualeSconto() > 0) {
+                            //se ha una percentuale sconto setto quella
+                            //altrimenti il suo prezzo unitario
+                            prezzo = item.getItem().getPrezzoScontato();
+                        }
+                    %>
+                    <input type="hidden" name="prezzo" value="<%= prezzo %>">
                     <input type="hidden" name="id" value="<%=item.getItem().getId()%>">
                     <div class="quantity-input">
                          <button type="button" name="decrement-button" onclick="decrementQuantity(this)">-</button>
@@ -93,6 +116,7 @@
 
 
             </td>
+            <td><%= String.format("%.2f", (hasDiscount ? prezzoScontato : prezzoUnitario) * item.getNumItem()) %> &euro;</td>
             <td><a href="carrello?opzione=delete&id=<%=item.getItem().getId()%>" class="action-button delete">X</a></td>
         </tr>
         <% } %>

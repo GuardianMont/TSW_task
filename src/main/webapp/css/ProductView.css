@@ -48,6 +48,7 @@ body{
     margin-bottom: 0;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .img-product{

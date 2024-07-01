@@ -142,6 +142,14 @@ public class ProductBean implements Serializable {
         return temp_url;
     }
 
+    public double getPrezzoScontato(){
+        double prezzoScontato = 0;
+        if (this.getPercentualeSconto()>0){
+            double sconto = (this.prezzo * this.percentualeSconto)/100;
+            prezzoScontato = this.prezzo - sconto;
+        }
+        return prezzoScontato;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

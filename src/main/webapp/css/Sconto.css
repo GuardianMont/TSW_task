@@ -1,0 +1,31 @@
+/* Aggiungi queste regole al tuo file CSS ProductView.css */
+
+/* Stile per il prezzo originale barrato */
+.prezzo-unitario {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 0.9em;
+    margin-right: 10px;
+}
+
+/* Stile per il prezzo scontato */
+.prezzo-scontato {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Stile per il balloon dello sconto */
+.sconto-visible {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #e74c3c;
+    color: #fff;
+    border-radius: 20%;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    font-weight: bold;
+    z-index: 10;
+}
+
+
