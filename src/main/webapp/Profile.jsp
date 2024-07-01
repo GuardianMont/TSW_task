@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-
     <!-- TODO: modificare style e layout-->
     <title>Profilo</title>
     <link rel="stylesheet" type="text/css" href="css/Profile.css">
@@ -125,7 +124,7 @@
         <button class="edit-button" id="viewOrdini" onclick="loadOrders()">visualizza Ordini</button>
         <button class="edit-button" id="viewPayment" onclick="loadPaymentMethods()">visualizza Metodi di pagamento</button>
         <button class="edit-button" id="viewAddresses" onclick="loadAddresses()">visualizza Indirizzi di spedizione</button>
-        <form class="edit-button" action="${pageContext.request.contextPath}/LoginSignup">
+        <form class="logout-form" action="${pageContext.request.contextPath}/LoginSignup">
             <input type="hidden" name="option" value="logout">
             <input type="submit" value="Logout">
         </form>

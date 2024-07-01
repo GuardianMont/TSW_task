@@ -1,12 +1,10 @@
 body {
     font-family: 'Open Sans', Arial, serif;
     background-color: #f5f5f5;
-    /*zoom: 1.2;
-    margin: 0;
-    padding: 0;
+    /* Mantiene il layout flessibile per tutta la pagina */
     display: flex;
     flex-direction: column;
-    min-height: 100vh;*/
+    min-height: 100vh;
 }
 
 .container {
@@ -116,6 +114,7 @@ body {
 .action-button:hover {
     opacity: 0.8;
 }
+
 .quantity-form {
     display: flex;
     align-items: center;
@@ -124,7 +123,7 @@ body {
 }
 
 .quantity-form input[type="text"] {
-    width: 40px; /* Riduce la larghezza dell'input */
+    width: 40px;
     padding: 8px;
     margin: 0;
     border: 1px solid #ddd;
@@ -156,7 +155,6 @@ body {
     opacity: 1.9;
 }
 
-
 .no_product {
     text-align: center;
     margin: 50px;
@@ -186,4 +184,60 @@ body {
 .error-message {
     color: red;
     display: none;
+}
+
+/* Media Queries */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .tabella th, .tabella td {
+        padding: 10px;
+    }
+
+    .spesa_totale, .acquista-form {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .quantity-form {
+        flex-direction: column;
+    }
+
+    .quantity-form input[type="text"] {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .tabella {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .tabella th, .tabella td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .tabella td img {
+        width: 80px;
+    }
+
+    .catalogo, .acquista-button {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+    .quantity-form button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .spesa_totale, .acquista-form {
+        text-align: center;
+        margin: 20px 0;
+    }
 }

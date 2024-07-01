@@ -1,35 +1,198 @@
-.profile-container {
-    margin-top: 50px;
-    margin-bottom: 50px;
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h3 {
+    color: #4CAF50;
+}
+
+/* Container Styles */
+.container {
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+}
+
+/* Profile Container */
+.profile-container p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Edit Container */
+.edit-container,
+.change-password-container,
+.ordiniEffettuati,
+.indirizziSpedizione,
+.metodiPagamento {
+    display: none;
+}
+
+.edit-form-group,
+.change-password-form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.error-message {
+    color: #e74c3c;
+    display: none;
+    font-size: 12px;
+}
+
+.edit-form-hidden,
+.change-password-form-hidden {
+    display: none;
+}
+
+/* Button Styles */
+.edit-button,
+input[type="submit"]{
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    text-align: center;
+    cursor: pointer;
+    margin: 5px 0;
+    font-size: 14px;
+    width: 100%;
+}
+
+input[type="reset"] {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    text-align: center;
+    cursor: pointer;
+    margin: 5px 0;
+    font-size: 14px;
+    width: 100%;
+}
+
+.edit-button:hover,
+input[type="submit"]:hover{
+    background-color: #45a049;
+}
+
+input[type="reset"]:hover {
+    background-color: darkred;
+}
+
+/* Logout Button Styles */
+.logout-form input[type="submit"] {
+    background-color: #e74c3c !important;
+    color: white !important;
+}
+
+.logout-form input[type="submit"]:hover {
+    background-color: #c0392b !important;
+}
+
+/* Dropdown Styles */
+.select-sorting {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* Responsive Design */
+/* Desktop and Large Screens */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 800px;
+        padding: 20px;
+    }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        max-width: 700px;
+        padding: 15px;
+    }
+
+    button.edit-button,
+    .logout-form input[type="submit"] {
+        width: 48%;
+        margin: 1%;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 767px) {
+    .container {
+        width: 90%;
+        padding: 10px;
+    }
+
+    button.edit-button,
+    .logout-form input[type="submit"] {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .generale .sorting-dropdown {
+        width: 100%;
+    }
+}
+
+/* Not Logged In Message */
+#not-logged-message {
+    text-align: center;
+    color: #e74c3c;
+}
+
+#not-logged-message h3 {
+    margin-bottom: 20px;
+}
+
+/* Additional Container Styles */
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.generale {
+    margin-bottom: 10px;
+}
+
+.generale .sorting-dropdown {
     display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
 }
-.edit-container {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    display: none;
-}
-.change-password-container {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    display: none;
-}
-.button-container{
-    margin-top: 50px;
-    margin-bottom: 50px;
-    display: inline-block;
-}
-.main-container {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-.ordiniEffettuati{
-    margin-top: 50px;
-    margin-bottom: 50px;
-    display: none;
-}
-.error-message{
+
+.ordiniEffettuati,
+.indirizziSpedizione,
+.metodiPagamento {
     display: none;
 }

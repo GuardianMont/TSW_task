@@ -32,8 +32,6 @@
                     <li><a href="#">Prodotto</a></li>
                 </ul>
             </li>
-            <li><a href="#">Servizi</a></li>
-            <li><a href="#">Contatti</a></li>
             <li>
                 <div class="carrello">
                     <a href="carrello">
