@@ -106,7 +106,7 @@ body{
 
 .search-bar button {
     padding: 10px;
-    background-color: #000;
+    background-color: #4CAF49;
     color: #fff;
     border: none;
     border-radius: 0 5px 5px 0;
@@ -114,7 +114,7 @@ body{
 }
 
 .search-bar button:hover {
-    background-color: #333;
+    background-color: #4CAF50;
 }
 
 .icons {
@@ -129,22 +129,25 @@ body{
     color: #333;
     font-size: 18px;
     position: relative;
+    z-index: 1;
 }
 
 .numeroProdotti {
     position: absolute;
-    top: -5px;
-    right: -10px;
+    top: -15px;
+    /*right: -10px;*/
     background-color: #ff0000;
-    color: white;
+    color: black;
     border-radius: 50%;
-    padding: 5px;
-    font-size: 12px;
-    width: 20px;
-    height: 20px;
+    padding: 3px; /* Ridotto rispetto a prima */
+    font-size: 10px; /* Dimensione del carattere più piccola */
+    width: 16px; /* Ridotto rispetto a prima */
+    height: 16px; /* Ridotto rispetto a prima */
     text-align: center;
-    line-height: 20px;
+    line-height: 16px; /* Corrispondente all'altezza */
+    z-index: 1000;
 }
+
 
 /* Responsive Styles */
 @media (max-width: 1199px) {
