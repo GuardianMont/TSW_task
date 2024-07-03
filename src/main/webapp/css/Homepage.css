@@ -1,312 +1,88 @@
 body {
-    font-family: 'Open Sans', Arial, sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    color: white;
-    position: relative;
-}
-
-header {
-    position: relative;
-    z-index: 4;
-    padding: 10px;
+    background-color: #f5f5f5;
 }
 
 .header-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100vh;
+    background-image: url('https://example.com/your-header-image.jpg'); /* Sostituisci con l'immagine dell'header di Nike */
     background-size: cover;
-    z-index: 0;
+    height: 60vh;
+    position: relative;
 }
 
 .main-content {
-    position: relative;
-    z-index: 2;
-    padding-top: calc(100vh - 60px);
+    margin: 20px;
 }
 
 .section {
-    padding: 20px;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.5);
-    margin: 20px 0;
-    border-radius: 10px;
-    position: relative;
-    z-index: 2;
+    margin-bottom: 40px;
 }
 
 .section h2 {
-    color: white;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
     margin-bottom: 20px;
 }
 
 .products-container {
     display: flex;
-    overflow-x: auto;
-    justify-content: center;
-    gap: 20%;
-    padding: 10px;
-    white-space: nowrap;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .product {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    padding: 10px;
-    width: 200px;
-    display: inline-block;
-    transition: transform 0.2s;
-    color: black;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    max-width: 300px;
+    flex: 1 1 calc(33% - 20px);
+    text-align: center;
 }
 
 .product img {
     width: 100%;
     height: auto;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
 }
 
 .product p {
-    color: #333;
-    margin-top: 10px;
-}
-
-.product:hover {
-    transform: scale(1.05);
-}
-
-.products-container::-webkit-scrollbar {
-    display: none;
-}
-
-.TavolandImg {
-    width: 130px;
-    display: block;
-    justify-content: center;
-    justify-items: center;
-}
-
-.header-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.Tavolando {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-nav {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    position: relative; /* Aggiunto per il posizionamento */
-    z-index: 5; /* Imposta un valore più alto se necessario */
-}
-
-.nav-menu {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    padding: 0;
     margin: 0;
+    padding: 10px;
 }
 
-.nav-menu li {
-    position: relative;
-    margin: 0 10px;
-}
-
-.nav-menu li a {
-    display: block;
-    padding: 10px 20px;
-    color: #333;
+.product p a {
     text-decoration: none;
+    color: #333;
     font-weight: bold;
 }
 
-.nav-menu ul.submenu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #f2f2f2;
-    width: auto;
-    text-align: left;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    z-index: 1000;
-    padding-left: 10px;
+.product:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-.nav-menu ul.submenu li {
-    display: block;
-    margin: 0;
-}
-
-.nav-menu ul.submenu li a {
-    color: #333;
-    text-decoration: none;
-    display: block;
-    padding-left: 10px;
-}
-
-.nav-menu ul.submenu li a:hover {
-    background-color: #ddd;
-}
-
-.nav-menu li:hover > ul.submenu {
-    display: block;
-}
-
-.barra-ricerca form {
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-}
-
-.barra-ricerca input[type="text"] {
-    padding: 8px;
-    width: 200px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.barra-ricerca button[type="submit"] {
-    padding: 8px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 3px;
-}
-
-.barra-ricerca button[type="submit"]:hover {
-    background-color: #45a049;
-}
-
-.carrello, .utente {
-    position: relative;
-    display: inline-block;
-    margin: 0 10px;
-}
-
-.numeroProdotti {
-    position: absolute;
-    top: -5px;
-    right: -3px;
-    background-color: #ff0000;
-    color: white;
-    border-radius: 50%;
-    padding: 5px;
-    font-size: 12px;
-    width: 10px;
-    height: 10px;
-    text-align: center;
-    line-height: 10px;
-}
-
-/* Media Queries per PC */
-@media screen and (min-width: 1200px) {
-    .header-container {
-        padding: 20px 30px;
+/* Stili base per la responsività */
+@media only screen and (max-width: 768px) {
+    .header-background {
+        height: 40vh; /* Altezza ridotta per schermi più piccoli */
     }
-
-    .Tavolando {
-        font-size: 1.9em;
+    .products-container {
+        flex-direction: column; /* Prodotti in colonna anziché in riga */
+        align-items: center; /* Centra i prodotti */
     }
-
-    .nav-menu {
-        flex-direction: row;
-        justify-content: flex-start;
-    }
-
-    .barra-ricerca {
-        margin-left: 15px;
-    }
-
-    .barra-ricerca input[type="text"] {
-        width: 200px;
-    }
-
-    .barra-ricerca button[type="submit"] {
-        width: 60px;
-        height: 40px;
+    .product {
+        max-width: 100%; /* Prodotti occupano tutta la larghezza disponibile */
+        margin: 10px 0; /* Margine aggiustato */
     }
 }
 
-/* Media Queries per tablet */
-@media screen and (max-width: 1199px) and (min-width: 600px) {
-    .header-container {
+@media only screen and (max-width: 480px) {
+    .header-background {
+        height: 30vh; /* Altezza ridotta ulteriormente per schermi molto piccoli */
     }
-
-    .Tavolando {
-        font-size: 1.3em;
-    }
-
-    .nav-menu {
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .barra-ricerca input[type="text"] {
-        width: 150px;
-    }
-
-    .barra-ricerca button[type="submit"] {
-        width: 40px;
-        height: 30px;
-    }
-}
-
-/* Media Queries per telefoni */
-@media screen and (max-width: 599px) {
-    .header-container {
-        padding: 10px;
-    }
-
-    .Tavolando {
-        font-size: 1.5em;
-    }
-
-    .nav-menu {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .nav-menu li {
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    .carrello {
-        margin-top: 6%;
-    }
-
-    .numeroProdotti {
-        font-size: 10px;
-        width: 10px;
-        height: 10px;
-        line-height: 10px;
-    }
-
-    .barra-ricerca input[type="text"] {
-        width: 100px;
-    }
-
-    .barra-ricerca button[type="submit"] {
-        width: 40px;
-        height: 30px;
+    .product {
+        flex: 1 1 calc(50% - 20px); /* Due prodotti per riga */
     }
 }

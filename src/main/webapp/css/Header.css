@@ -1,202 +1,174 @@
-.TavolandImg {
-    width: 130px;
-    display: block;
-    justify-content: center;
-    justify-items: center;
+/* Global Styles */
+body{
+    font-family: 'Open Sans', Arial, serif;
+    background-color: #f5f5f5;
 }
 
+/* Header Styles */
 .header-container {
+    /*width: 100%;*/
+    background-color: #fff;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    text-align: center;
-    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
-.Tavolando {
-    /*margin-bottom: 20px;
-    width: 100%;*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+.header-container a {
+    text-decoration: none;
+    color: #333;
 }
 
-nav {
-    width: 100%;
-    /*background-color: #f2f2f2;*/
+.logo {
+    flex: 1;
     display: flex;
-    justify-content: center;
-    /*padding: 10px 0;*/
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.logo img {
+    width: 130px;
 }
 
 .nav-menu {
-    list-style: none;
+    flex: 2;
     display: flex;
+    justify-content: center;
     align-items: center;
+    list-style: none;
     padding: 0;
     margin: 0;
 }
 
 .nav-menu li {
+    margin: 0 15px;
     position: relative;
-    margin: 0 10px;
 }
 
 .nav-menu li a {
-    display: block;
-    padding: 10px 20px;
-    color: #333;
-    text-decoration: none;
     font-weight: bold;
+    padding: 10px;
+    text-transform: uppercase;
 }
 
-.nav-menu ul.submenu {
+.nav-menu li a:hover {
+    color: #555;
+}
+
+.nav-menu .submenu {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: #f2f2f2;
-    width: auto;
-    text-align: left;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     z-index: 1000;
-    padding-left: 10px;
+    list-style: none;
+    padding: 10px 0;
 }
 
-.nav-menu ul.submenu li {
-    display: block;
+.nav-menu .submenu li {
     margin: 0;
 }
 
-.nav-menu ul.submenu li a {
-    /*padding: 10px 20px;*/
+.nav-menu .submenu li a {
+    padding: 10px 20px;
+    display: block;
     color: #333;
-    text-decoration: none;
-    display: block;
-    padding-left: 10px;
 }
 
-.nav-menu ul.submenu li a:hover {
-    background-color: #ddd;
-}
-
-.nav-menu li:hover > ul.submenu {
+.nav-menu li:hover .submenu {
     display: block;
 }
 
-.barra-ricerca form {
+.search-bar {
+    flex: 1;
     display: flex;
+    justify-content: center;
     align-items: center;
-    margin-left: 10px;
 }
 
-.barra-ricerca input[type="text"] {
-    padding: 8px;
-    width: 200px;
-    border-radius: 5px;
+.search-bar form {
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-bar input[type="text"] {
+    width: 100%;
+    padding: 10px;
     border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
 }
 
-.barra-ricerca button[type="submit"] {
-    padding: 8px;
-    background-color: #4CAF50;
-    color: white;
+.search-bar button {
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 0 5px 5px 0;
     cursor: pointer;
-    margin-left: 3px;
 }
 
-.barra-ricerca button[type="submit"]:hover {
-    background-color: #45a049;
+.search-bar button:hover {
+    background-color: #333;
 }
 
-.carrello, .utente {
-    position: relative;
-    display: inline-block;
+.icons {
+    /*flex: 1;*/
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icons a {
     margin: 0 10px;
+    color: #333;
+    font-size: 18px;
+    position: relative;
 }
 
 .numeroProdotti {
     position: absolute;
     top: -5px;
-    right: -3px;
+    right: -10px;
     background-color: #ff0000;
     color: white;
     border-radius: 50%;
     padding: 5px;
     font-size: 12px;
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
     text-align: center;
-    line-height: 10px;
+    line-height: 20px;
 }
 
-/* Media Queries per PC */
-@media screen and (min-width: 1200px) {
-    .header-container {
-        padding: 20px 30px;
-    }
-
-    .Tavolando {
-        font-size: 1.9em;
-    }
-
-    .nav-menu {
-        flex-direction: row;
-        justify-content: flex-start;
-    }
-
-    .barra-ricerca {
-        margin-left: 15px;
-    }
-
-    .barra-ricerca input[type="text"] {
-        width: 200px;
-    }
-
-    .barra-ricerca button[type="submit"] {
-        width: 60px;
-        height: 40px;
-    }
-}
-
-/* Media Queries per tablet */
-@media screen and (max-width: 1199px) and (min-width: 600px) {
-    .header-container {
-        /*padding: 20px;*/
-    }
-
-    .Tavolando {
-        font-size: 1.3em;
-    }
-
-    .nav-menu {
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .barra-ricerca input[type="text"] {
+/* Responsive Styles */
+@media (max-width: 1199px) {
+    .search-bar input[type="text"] {
         width: 150px;
     }
 
-    .barra-ricerca button[type="submit"] {
+    .search-bar button {
         width: 40px;
-        height: 30px;
     }
 }
 
-/* Media Queries per telefoni */
-@media screen and (max-width: 599px) {
+@media (max-width: 770px) {
     .header-container {
+        flex-direction: column;
+        /*align-items: flex-start;*/
         padding: 10px;
+        justify-content: center;
+        justify-items: center;
     }
 
-    .Tavolando {
-        font-size: 1.5em;
+    .logo, .nav-menu, .search-bar-container, .icons {
+        width: 100%;
+        justify-content: center;
     }
 
     .nav-menu {
@@ -205,27 +177,11 @@ nav {
     }
 
     .nav-menu li {
-        display: block;
-        margin-bottom: 10px;
+        margin: 10px 0;
     }
 
-    .carrello {
-        margin-top: 6%;
-    }
-
-    .numeroProdotti {
-        font-size: 10px;
-        width: 10px;
-        height: 10px;
-        line-height: 10px;
-    }
-
-    .barra-ricerca input[type="text"] {
-        width: 100px;
-    }
-
-    .barra-ricerca button[type="submit"] {
-        width: 40px;
-        height: 30px;
+    .icons {
+        justify-content: center;
+        margin-top: 10px;
     }
 }
