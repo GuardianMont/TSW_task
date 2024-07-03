@@ -54,7 +54,7 @@ public class ProductControl extends HttpServlet {
 						break;
 					case "show":
 						handleReadAction(request);
-						dis = "/update.jsp";
+						dis = "/admin/update.jsp";
 						break;
 					case "update":
 						if (handleUpdateAction(request)) {

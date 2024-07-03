@@ -6,17 +6,17 @@
 <html>
 <head>
     <title>Header</title>
-    <link rel="stylesheet" href="css/Header.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="css/searchBar.css">
-    <script src = "js/searchBar.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/searchBar.css">
+    <script src = "${pageContext.request.contextPath}/js/searchBar.js"></script>
 </head>
 <body>
 <div class="header-container">
     <nav>
         <ul class="nav-menu">
             <header class="Tavolando">
-                <img src="uploadFile/loghino.svg" alt="Tavolando" class="TavolandImg" id="TavolandoIcon">
+                <img src="${pageContext.request.contextPath}/uploadFile/loghino.svg" alt="Tavolando" class="TavolandImg" id="TavolandoIcon">
             </header>
             <li class="barra-ricerca">
                 <form id="searchForm" class="ricerca">
@@ -24,8 +24,8 @@
                     <button id="submit" type="submit"><i class="fas fa-search"></i></button>
                 </form>
             </li>
-            <li><a href="./Homepage.jsp">Home</a></li>
-            <li><a href="product">Prodotti</a>
+            <li><a href="${pageContext.request.contextPath}/Homepage.jsp">Home</a></li>
+            <li><a href="${pageContext.request.contextPath}/product">Prodotti</a>
                 <ul class="submenu">
                     <li><a href="#">Prodotto</a></li>
                     <li><a href="#">Prodotto</a></li>
@@ -34,7 +34,7 @@
             </li>
             <li>
                 <div class="carrello">
-                    <a href="carrello">
+                    <a href="${pageContext.request.contextPath}/carrello">
                         <i class="fas fa-shopping-cart"></i>
                         <% ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
                             if (cart != null && cart.getNumProdottiTot() > 0) { %>
@@ -45,7 +45,7 @@
             </li>
             <li>
                 <div class="utente">
-                    <a href="profileServlet">
+                    <a href="${pageContext.request.contextPath}/profileServlet">
                         <i class="fas fa-user"></i>
                     </a>
                 </div>

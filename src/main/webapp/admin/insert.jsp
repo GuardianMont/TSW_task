@@ -1,18 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Inserimento prodotti</title>
-    <link rel="stylesheet" href="../css/insert.css">
-    <script src="../js/validationProduct.js"></script>
-    <script src="../js/specificaCategoria.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/insert.css">
+    <script src="${pageContext.request.contextPath}/js/validationProduct.js"></script>
+    <script src="${pageContext.request.contextPath}/js/specificaCategoria.js"></script>
 </head>
 <body>
 <jsp:include page="../Header.jsp"/>
 
-<div class="container">
-    <a href="product" class="catalogo">Catalogo</a>
+<div class="container">+3
+
+    <a href="../product" class="catalogo">Catalogo</a>
     <h2>Inserimento Prodotti</h2>
-    <form action="product" enctype="multipart/form-data" method="post" onsubmit="handleSubmit(event)">
+    <form action="./product" enctype="multipart/form-data" method="post" onsubmit="handleSubmit(event)">
         <input type="hidden" name="opzione" value="insert">
 
         <label for="nome">Nome:</label>
@@ -21,8 +23,8 @@
         <span id="nome-error" class="error-message">Il campo nome è obbligatorio.</span><br>
 
         <label for="descrizione">Descrizione:</label>
-        <textarea class="textarea" id="descrizione" name="descrizione" maxlength="500" required
-                  placeholder="Inserire descrizione" pattern="^[a-zA-Z0-9\s]+$" title="descrizione del prodotto"></textarea>
+        <textarea class="textarea" id="descrizione" name="descrizione" pattern="^[a-zA-Z0-9\s]+$" maxlength="500" required
+                  placeholder="Inserire descrizione"  title="descrizione del prodotto"></textarea>
         <span id="descrizione-error" class="error-message">Il campo descrizione è obbligatorio.</span><br>
 
         <label for="prezzo">Prezzo:</label>
