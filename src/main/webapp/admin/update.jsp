@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Dettaglio prodotto</title>
-    <link rel="stylesheet" href="../css/insert.css">
-    <script src="../js/validationProduct.js"></script>
-    <script src="../js/specificaCategoria.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/insert.css">
+    <script src="${pageContext.request.contextPath}/js/validationProduct.js"></script>
+    <script src="${pageContext.request.contextPath}/js/specificaCategoria.js"></script>
 </head>
 <body>
 <jsp:include page="../Header.jsp"/>

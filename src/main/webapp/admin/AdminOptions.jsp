@@ -11,7 +11,7 @@
     <title>AdminOptions</title>
 </head>
 <body>
-<jsp:include page="../Header.jsp"/>
+<jsp:include page="/Header.jsp"/>
 
 <%
     if (session.getAttribute("user") == null || session.getAttribute("isAdmin") == null || !(Boolean)session.getAttribute("isAdmin")) {

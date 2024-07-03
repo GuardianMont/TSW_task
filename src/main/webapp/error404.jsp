@@ -24,13 +24,13 @@
     </style>
 </head>
 <body>
-<jsp:include page="Header.jsp"/>
+<jsp:include page="./Header.jsp"/>
 <div class="error-container">
     <h1>Si è verificato un errore</h1>
     <p>La pagina in cui si sta tentando di accedere non esiste</p>
     <p>Per favore, ricaricare la pagina o tornare indietro.</p>
     <p>Ci scusiamo per il disagio</p>
 </div>
-<jsp:include page="Footer.jsp"/>
+<jsp:include page="./Footer.jsp"/>
 </body>
 </html>
