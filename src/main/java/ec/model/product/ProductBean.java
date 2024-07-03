@@ -124,8 +124,10 @@ public class ProductBean implements Serializable {
     public void setVisible(boolean isVisible) { this.isVisible = isVisible; }
 
     //rappresentazione in Byte dell'immagine.
-    //necessaria per class 64 se no non si vede niente
+    /**necessaria per class 64 se no non si vede niente*/
+
     public byte[] getImmagineUrl() {
+
         return immagineUrl;
     }
 

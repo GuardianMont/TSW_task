@@ -32,6 +32,7 @@ h3 {
 .change-password-container,
 .ordiniEffettuati,
 .indirizziSpedizione,
+.orderDetail,
 .metodiPagamento {
     display: none;
 }
@@ -70,7 +71,7 @@ select {
 
 /* Button Styles */
 .edit-button,
-input[type="submit"]{
+input[type="submit"] {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -97,7 +98,7 @@ input[type="reset"] {
 }
 
 .edit-button:hover,
-input[type="submit"]:hover{
+input[type="submit"]:hover {
     background-color: #45a049;
 }
 
@@ -163,6 +164,58 @@ input[type="reset"]:hover {
     .generale .sorting-dropdown {
         width: 100%;
     }
+
+    .orderDetail table,
+    .orderDetail thead,
+    .orderDetail tbody,
+    .orderDetail th,
+    .orderDetail td,
+    .orderDetail tr {
+        display: block;
+    }
+
+    .orderDetail thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .orderDetail tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+
+    .orderDetail td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+        white-space: normal;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .orderDetail td:before {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        width: calc(50% - 20px);
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        transform: translateY(-50%);
+    }
+
+    .orderDetail td:nth-of-type(1):before { content: "Prodotto"; }
+    .orderDetail td:nth-of-type(2):before { content: "Nome"; }
+    .orderDetail td:nth-of-type(3):before { content: "IVA"; }
+    .orderDetail td:nth-of-type(4):before { content: "Quantità"; }
+    .orderDetail td:nth-of-type(5):before { content: "Prezzo Unitario"; }
+    .orderDetail td:nth-of-type(6):before { content: "Sconto"; }
+    .orderDetail td:nth-of-type(7):before { content: "Prezzo Totale"; }
+    .orderDetail td:nth-of-type(8):before { content: "Immagine"; }
 }
 
 /* Not Logged In Message */
@@ -195,4 +248,75 @@ input[type="reset"]:hover {
 .indirizziSpedizione,
 .metodiPagamento {
     display: none;
+}
+
+/* Order Details Styles */
+.orderDetail {
+    display: none;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.orderDetail h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #4CAF50;
+}
+
+.orderDetail .order-info,
+.orderDetail .address-info,
+.orderDetail .payment-method-info,
+.orderDetail .cart-items {
+    margin-bottom: 20px;
+}
+
+.orderDetail .order-info p,
+.orderDetail .address-info p,
+.orderDetail .payment-method-info p {
+    margin: 5px 0;
+}
+
+.orderDetail table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.orderDetail th,
+.orderDetail td {
+    border: 1px solid #ccc;
+   /*padding: 10px;*/
+    text-align: left;
+}
+
+.orderDetail th {
+    background-color: #f9f9f9;
+}
+
+.orderDetail .total-price {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 10px;
+}
+
+.orderDetail table img {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Fix overlapping issues */
+.orderDetail td {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.orderDetail td:before {
+    top: 50%;
+    transform: translateY(-50%);
 }

@@ -58,6 +58,7 @@ public class StoricoProdottiDaoDM implements  StoricoProdottiDao{
                 item.setDisponibilita(res.getInt("quantita"));
                 item.setImmagineUrl(res.getBytes("immagine"));
                 item.setNome(res.getString("nome_prodotto"));
+                item.setImmagineUrl(res.getBytes("immagine"));
                 //aggiungi sconto
                 Storico.add(item);
             }

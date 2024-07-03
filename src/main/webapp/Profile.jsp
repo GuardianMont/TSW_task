@@ -109,6 +109,46 @@
 
         </div>
     </div>
+    <div class="orderDetail" id="orderDetail">
+        <div class="order-details">
+            <h1>Dettagli Ordine</h1>
+            <div class="order-info">
+                <p><strong>Ordine ID:</strong> <span id="ordineId"></span></p>
+                <p><strong>Data Ordine:</strong> <span id="dataOrdine"></span></p>
+                <p><strong>Codice Fattura:</strong> <span id="ordineFattura"></span></p>
+            </div>
+            <div class="address-info">
+                <h2>Indirizzo</h2>
+                <p id="address"></p>
+            </div>
+            <div class="payment-method-info">
+                <h2>Metodo di Pagamento</h2>
+                <p id="paymentMethod"></p>
+            </div>
+            <div class="cart-items">
+                <h2>Articoli nel Carrello</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Prodotto</th>
+                        <th>Nome</th>
+                        <th>IVA</th>
+                        <th>Quantità</th>
+                        <th>Prezzo Unitario</th>
+                        <th>Sconto</th>
+                        <th>Prezzo Totale</th>
+                        <th>Immagine</th>
+                    </tr>
+                    </thead>
+                    <tbody id="cartItems"></tbody>
+                </table>
+            </div>
+            <div class="total-price">
+                <h2>Prezzo Totale: <span id="prezzoTotale"></span></h2>
+            </div>
+        </div>
+
+    </div>
     <div class="indirizziSpedizione" id="indirizziSpedizione">
         <div id="shipping-address">
             <!--li immetto con ajax-->

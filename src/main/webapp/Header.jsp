@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/searchBar.css">
     <script src="${pageContext.request.contextPath}/js/searchBar.js"></script>
+    <script src="${pageContext.request.contextPath}/js/burgerMenu.js"></script>
+
 </head>
 <body>
 <header class="header-container">
@@ -20,17 +22,19 @@
             <img src="${pageContext.request.contextPath}/uploadFile/loghino.svg" alt="Tavolando">
         </a>
     </div>
-    <ul class="nav-menu">
-        <li><a href="${pageContext.request.contextPath}/Homepage.jsp">Home</a></li>
-        <li>
+    <nav class="nav-menu">
+        <ul>
+            <li><a href="${pageContext.request.contextPath}/Homepage.jsp">Home</a></li>
+            <li>
             <a href="${pageContext.request.contextPath}/product">Prodotti</a>
             <ul class="submenu">
                 <li><a href="#">Prodotto</a></li>
                 <li><a href="#">Prodotto</a></li>
                 <li><a href="#">Prodotto</a></li>
             </ul>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </nav>
     <div class="search-bar">
         <form id="searchForm" class="ricerca">
             <input id="cerca" type="text" placeholder="Cerca prodotto" aria-label="Cerca prodotto" autocomplete="off" required>
@@ -48,6 +52,20 @@
         <a href="${pageContext.request.contextPath}/profileServlet" aria-label="Profilo utente">
             <i class="fas fa-user" aria-hidden="true"></i>
         </a>
+    </div>
+    <div class="burger-menu">
+        <span class="burger-icon">&#9776;</span>
+    </div>
+    <div class="burger-menu-container">
+        <a href="${pageContext.request.contextPath}/Homepage.jsp">Home</a>
+        <a href="${pageContext.request.contextPath}/product">Prodotti</a>
+        <a href="${pageContext.request.contextPath}/carrello"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Carrello
+            <% if (cart != null && cart.getNumProdottiTot() > 0) { %>(<%= cart.getNumProdottiTot() %>)<% } %></a>
+        <a href="${pageContext.request.contextPath}/profileServlet"><i class="fas fa-user" aria-hidden="true"></i> Profilo utente</a>
+        <form id="searchFormBurger" class="ricerca">
+            <input id="cercaBurger" type="text" placeholder="Cerca prodotto" aria-label="Cerca prodotto" autocomplete="off" required>
+            <button id="submitBurger" type="submit"><i class="fas fa-search" aria-hidden="true"></i><span class="sr-only">Cerca</span></button>
+        </form>
     </div>
 </header>
 </body>

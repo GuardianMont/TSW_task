@@ -1,12 +1,11 @@
 /* Global Styles */
-body{
+body {
     font-family: 'Open Sans', Arial, serif;
     background-color: #f5f5f5;
 }
 
 /* Header Styles */
 .header-container {
-    /*width: 100%;*/
     background-color: #fff;
     display: flex;
     justify-content: space-between;
@@ -37,9 +36,13 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    list-style: none;
+}
+
+.nav-menu ul {
+    display: flex;
     padding: 0;
     margin: 0;
+    list-style: none;
 }
 
 .nav-menu li {
@@ -118,7 +121,6 @@ body{
 }
 
 .icons {
-    /*flex: 1;*/
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -163,7 +165,6 @@ body{
 @media (max-width: 770px) {
     .header-container {
         flex-direction: column;
-        /*align-items: flex-start;*/
         padding: 10px;
         justify-content: center;
         justify-items: center;
@@ -185,6 +186,71 @@ body{
 
     .icons {
         justify-content: center;
-        margin-top: 10px;
+
+    }
+}
+
+.burger-menu {
+    display: none;
+    cursor: pointer;
+}
+
+.burger-menu-container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.burger-menu-container a,
+.burger-menu-container form {
+    margin: 10px 0;
+    width: 100%;
+    text-align: center;
+}
+
+.burger-menu-container form {
+    padding: 0 10px;
+}
+
+.burger-menu-container form input[type="text"] {
+    width: calc(100% - 40px);
+    border-radius: 5px 0 0 5px;
+}
+
+.burger-menu-container form button {
+    width: 40px;
+    border-radius: 0 5px 5px 0;
+}
+
+@media (max-width: 770px) {
+    .burger-menu {
+        display: block;
+
+    }
+
+
+    .nav-menu,
+    .search-bar,
+    .icons {
+        display: none;
+    }
+
+    .burger-menu-container {
+        display: none;
+    }
+
+    .burger-menu-container.show {
+        display: flex;
+    }
+
+    .header-container {
+        position: relative;
     }
 }
