@@ -23,11 +23,18 @@ public class AdminFilter implements Filter {
         HttpSession session = httpRequest.getSession(false); // Ottieni la sessione se esiste, altrimenti restituisci null
 
         // Se la sessione non esiste o non è un amministratore, reindirizza alla homepage
-        if (session == null || session.getAttribute("isAdmin") == null || !(Boolean) session.getAttribute("isAdmin")) {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/Homepage.jsp"); // Reindirizza alla pagina di login o di errore
+        if (session == null) {
+            System.out.println("Session is null");
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/Homepage.jsp");
         } else {
-            // Passa la richiesta al prossimo filtro o servlet nella catena
-            chain.doFilter(request, response); // Passa la richiesta al prossimo filtro o servlet nella catena
+            Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
+            if (isAdmin == null || !isAdmin) {
+                System.out.println("User is not admin: " + isAdmin);
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/Homepage.jsp");
+            } else {
+                System.out.println("User is admin: " + isAdmin);
+                chain.doFilter(request, response);
+            }
         }
     }
 }

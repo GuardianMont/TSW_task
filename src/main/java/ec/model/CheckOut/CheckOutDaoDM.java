@@ -100,6 +100,70 @@ public class CheckOutDaoDM implements CheckOutDao {
         return ordini;
     }
 
+    public Collection<Ordine> retriveAllOrders () throws SQLException{
+        String sqlSelectFattura = "SELECT * FROM "+ CheckOutDaoDM.TABLE_NAME ;
+
+        Collection<Ordine> ordini = new LinkedList<>();
+
+        try (Connection connection =ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement= connection.prepareStatement(sqlSelectFattura)){
+
+            ResultSet res = preparedStatement.executeQuery();
+
+            while (res.next()){
+                Ordine ordine = new Ordine(res.getInt("num"));
+                ordine.setUtenteId(res.getString("utente_id"));
+                ordine.setCodAdress(res.getInt("cod_address"));
+                ordine.setCodMethod(res.getInt("cod_method"));
+
+                Timestamp timestamp = res.getTimestamp("data");
+                if (timestamp != null) {
+                    Calendar calendar = GregorianCalendar.getInstance();
+                    calendar.setTimeInMillis(timestamp.getTime());
+                    ordine.setData((GregorianCalendar) calendar);
+                }
+                ordini.add(ordine);
+            }
+        }
+        return ordini;
+    }
+
+    public Collection<Ordine> filterAllOrderByDate (java.util.Date startDate, java.util.Date endDate ) throws SQLException{
+        String sqlSelectFattura = "SELECT * FROM "+ CheckOutDaoDM.TABLE_NAME +
+                " WHERE data>= ? AND data<= ? ";
+
+        Collection<Ordine> ordini = new LinkedList<>();
+
+        try (Connection connection =ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement= connection.prepareStatement(sqlSelectFattura)){
+            // Converto i GregorianCalendar in java.sql.Date in modo che sia compatibile
+
+            java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
+            java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
+
+            preparedStatement.setDate(1, sqlStartDate);
+            preparedStatement.setDate(2, sqlEndDate);
+
+            ResultSet res = preparedStatement.executeQuery();
+
+            while (res.next()){
+                Ordine ordine = new Ordine(res.getInt("num"));
+                ordine.setUtenteId(res.getString("utente_id"));
+                ordine.setCodAdress(res.getInt("cod_address"));
+                ordine.setCodMethod(res.getInt("cod_method"));
+
+                Timestamp timestamp = res.getTimestamp("data");
+                if (timestamp != null) {
+                    Calendar calendar = GregorianCalendar.getInstance();
+                    calendar.setTimeInMillis(timestamp.getTime());
+                    ordine.setData((GregorianCalendar) calendar);
+                }
+                ordini.add(ordine);
+            }
+        }
+        return ordini;
+    }
+
 
 
 }
