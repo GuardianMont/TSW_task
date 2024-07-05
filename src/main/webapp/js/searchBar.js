@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         const query = searchInput.value.trim();
         if (query.length>0){
-            window.location.href = `searchForm?query=${encodeURIComponent(query)}`;
+            window.location.href = `/searchForm?query=${encodeURIComponent(query)}`;
         }else{
             console.log("La barra di ricerca è vuota")
         }
