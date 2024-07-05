@@ -276,7 +276,7 @@ input[type="reset"]:hover {
 .orderDetail .order-info p,
 .orderDetail .address-info p,
 .orderDetail .payment-method-info p {
-    margin: 5px 0;
+    maargin: 5px 0;
 }
 
 .orderDetail table {

@@ -9,16 +9,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.*;
-
+import jakarta.servlet.http.HttpSession;
 
 import javax.management.BadAttributeValueExpException;
-import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
-@WebServlet ("/LoginSignup")
+@WebServlet("/LoginSignup")
 public class LoginSignupControl extends HttpServlet {
     private UserDaoDM userDao;
 
@@ -31,80 +29,84 @@ public class LoginSignupControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String option = req.getParameter("option");
-        if (option != null && option.equals("logout")){
+        if (option != null && option.equals("logout")) {
             HttpSession session = req.getSession();
-            session.removeAttribute("userId");
-            session.removeAttribute("signupSuccess");
-            session.removeAttribute("isAdmin");
+            session.invalidate(); // Usare invalidate per rimuovere tutte le attributi di sessione
             resp.sendRedirect(req.getContextPath() + "/Homepage.jsp");
-        }
-        else if(req.getSession().getAttribute("userId") != null){
-            resp.sendRedirect(req.getContextPath()+"/profileServlet");
-        }else{
-            resp.sendRedirect(req.getContextPath()+"/Homepage.jsp");
+        } else if (req.getSession().getAttribute("userId") != null) {
+            resp.sendRedirect(req.getContextPath() + "/profileServlet");
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/Homepage.jsp");
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String option = req.getParameter("option");
-        //caso tutto apposto
-        String dis = "/ProductView.jsp";
-        String errorMessage="";
-        if (option!=null){
-            switch (option){
+        String dis = "/Profile.jsp";
+        String errorMessage = "";
+        boolean redirectFlag = false;
+
+        if (option != null) {
+            switch (option) {
                 case "login":
-                    if(!doLogin(req,resp)){
-                        dis="/login_signup.jsp";
-                        errorMessage="Login fallito. username o password errati";
-                    }else{
-                        return;
+                    if (!doLogin(req, resp)) {
+                        dis = "/login_signup.jsp";
+                        errorMessage = "Login fallito. username o password errati";
+                    } else {
+                        redirectFlag = true;
                     }
                     break;
 
                 case "signup":
-                    if (!doSignup(req,resp)){
-                        dis="/login_signup.jsp";
-                        errorMessage="registrazione fallita";
-                    }else{
-                        return;
+                    if (!doSignup(req, resp)) {
+                        dis = "/login_signup.jsp";
+                        errorMessage = "registrazione fallita";
+                    } else {
+                        redirectFlag = true;
                     }
                     break;
             }
         }
-        req.setAttribute("errorMessage", errorMessage);
-        resp.setContentType("text/plain");
-        resp.setCharacterEncoding("UTF-8");
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(dis);
-        dispatcher.forward(req, resp);
+        if (!redirectFlag) {
+            req.setAttribute("errorMessage", errorMessage);
+            resp.setContentType("text/plain");
+            resp.setCharacterEncoding("UTF-8");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(dis);
+            dispatcher.forward(req, resp);
+        }
     }
 
     protected boolean doLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
-        String  token = req.getParameter("login-token");
+        String token = req.getParameter("login-token");
         String password = req.getParameter("login-password");
 
-        if(password.length()>=100) return false;
+        if (password.length() >= 100) return false;
 
         UserBean user = userDao.getUserIfPasswordIsCorrect(token, password);
-        if(user != null){
+        if (user != null) {
             session.setAttribute("userId", user.getUsername());
-            if (user.isAdmin()){
+            if (user.isAdmin()) {
+                System.out.println("Setting isAdmin to true for user: " + user.getUsername());
                 session.setAttribute("isAdmin", true);
+                resp.sendRedirect(req.getContextPath() + "/admin/AdminOptions.jsp");
+                return true;
+            } else {
+                String referer = req.getHeader("referer");
+                if (referer == null || referer.equals(req.getContextPath() + "/login_signup.jsp")) {
+                    resp.sendRedirect(req.getContextPath() + "/ProductView.jsp");
+                } else {
+                    resp.sendRedirect(referer);
+                }
+                session.setAttribute("signupSuccess", true);
+                return true;
             }
-            String referer = req.getHeader("referer");
-            if (referer.equals(req.getContextPath() + "/login_signup.jsp")){
-                resp.sendRedirect(req.getContextPath() + "/ProductView.jsp");
-            }else resp.sendRedirect(referer);
-            session.setAttribute("signupSuccess", true);
-
-            return true;
         }
         return false;
     }
 
     protected boolean doSignup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         String username = req.getParameter("signup-username").trim();
         String name = req.getParameter("signup-name").trim();
         String surname = req.getParameter("signup-surname").trim();
@@ -113,7 +115,6 @@ public class LoginSignupControl extends HttpServlet {
         String password = req.getParameter("signup-password").trim();
         String repPassword = req.getParameter("signup-rep-password").trim();
 
-        // Aggiunta controlli per evitare spazi nei campi username ed email
         if (username.contains(" ") || email.contains(" ")) {
             return false;
         }
@@ -142,10 +143,9 @@ public class LoginSignupControl extends HttpServlet {
             } catch (BadAttributeValueExpException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
-                e.printStackTrace();//potremmo voler dare un errore diverso, per ora lo lascio così
+                e.printStackTrace();
             }
         }
         return false;
     }
-
 }

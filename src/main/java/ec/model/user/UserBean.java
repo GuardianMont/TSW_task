@@ -1,5 +1,6 @@
 package ec.model.user;
 
+import com.google.gson.JsonObject;
 import ec.model.address.AddressUs;
 
 import java.util.ArrayList;
@@ -77,5 +78,16 @@ public class UserBean {
         if (!indirizzi.contains(Indirizzo)){
             indirizzi.add(Indirizzo);
         }
+    }
+
+    public JsonObject toJson() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("username", this.username);
+        jsonObject.addProperty("email", this.email);
+        jsonObject.addProperty("nome", this.nome);
+        jsonObject.addProperty("cognome" ,this.cognome);
+        jsonObject.addProperty("phoneNumber", this.phoneNumber);
+        jsonObject.addProperty("isAdmin", this.isAdmin);
+        return jsonObject;
     }
 }

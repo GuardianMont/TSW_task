@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -85,7 +86,10 @@ public class CheckoutServlet extends HttpServlet {
                     break;
                 case "pdf":
                     handlePdfAction(request,response);
-
+                    break;
+                case "detail":
+                    handleDetailAction(request,response);
+                    break;
                 default:
                     sendErrorMessage(response, "Azione non riconosciuta");
             }
@@ -117,7 +121,11 @@ public class CheckoutServlet extends HttpServlet {
         }
         sendJsonResponse(response,true, jsonOrdini);
     }
-
+   private void handleDetailAction (HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        //prende un unico ordine e ne restituisce il json
+        Ordine ord = modelCheckOut.retriveOrdineFattura(Integer.parseInt(request.getParameter("orderId")));
+        sendJsonResponse(response, true, getOrderDetails(ord));
+   }
     private void handlePdfAction (HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         Ordine ordine = modelCheckOut.retriveOrdineFattura(Integer.parseInt(request.getParameter("orderId")));
         try {
@@ -156,11 +164,14 @@ public class CheckoutServlet extends HttpServlet {
         JsonArray cartItems = new JsonArray();
         for (ProductBean item : modelStoricoProdotti.retriveOrdineitem(ordine.getNumId(), ordine.getUtenteId()) ){
             JsonObject jsonItem = new JsonObject();
+            jsonItem.addProperty("idProdotto", item.getId());
             jsonItem.addProperty("nome", item.getNome());
             jsonItem.addProperty("iva", item.getFasciaIva());
             jsonItem.addProperty("quantity", item.getDisponibilita());
             jsonItem.addProperty("prezzoUnitario", item.getPrezzo());
             jsonItem.addProperty("sconto", item.getPercentualeSconto());
+            //trasformo lo stream di byte in un
+            //jsonItem.addProperty("immagine", Arrays.toString(item.getImmagineUrl()));
             sconto = (item.getPrezzo()*item.getPercentualeSconto())/100;
             prezzoTot += item.getDisponibilita()* (item.getPrezzo() -sconto);
             cartItems.add(jsonItem);
@@ -199,11 +210,13 @@ public class CheckoutServlet extends HttpServlet {
             prezzoTot += prezzoTotaleElemento; // Aggiorna il prezzo totale
 
             JsonObject jsonItem = new JsonObject();
+            jsonItem.addProperty("idProdotto", item.getItem().getId());
             jsonItem.addProperty("iva", item.getItem().getFasciaIva());
             jsonItem.addProperty("nome", item.getItem().getNome());
             jsonItem.addProperty("quantity", item.getNumItem());
             jsonItem.addProperty("prezzoUnitario", prezzoUnitario);
             jsonItem.addProperty("sconto", item.getItem().getPercentualeSconto());
+            jsonItem.addProperty("immagine", Arrays.toString(item.getItem().getImmagineUrl()));
             cartItems.add(jsonItem);
         }
 

@@ -17,18 +17,18 @@ document.addEventListener('DOMContentLoaded', function() {
         //clearResults();
     })
 
-    formSearch.addEventListener("submit", function (){
-        event.preventDefault();
+    formSearch.addEventListener("submit", function (event) {
+        event.preventDefault(); // Evita il comportamento predefinito di submit del form
         const query = searchInput.value.trim();
-        if (query.length>0){
-            window.location.href = `/searchForm?query=${encodeURIComponent(query)}`;
-        }else{
-            console.log("La barra di ricerca è vuota")
+        if (query.length > 0) {
+            window.location.href = `/TSW_task_war_exploded/searchForm?query=${encodeURIComponent(query)}`;
+        } else {
+            console.log("La barra di ricerca è vuota");
         }
-    })
+    });
     function searchProduct(query) {
         var xhr = new XMLHttpRequest();
-        var url = "search?query=" + encodeURIComponent(query);
+        var url = "/TSW_task_war_exploded/search?query=" + encodeURIComponent(query);
         xhr.open("GET", url, true);
         xhr.responseType = 'json'; // Imposta il tipo di risposta come JSON
 
@@ -58,11 +58,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function displayResults(data) {
-        clearResults(); // cancella i risultati precenti
+        clearResults(); // Cancella i risultati precedenti
 
         const maxResults = 4;
         const resultsToShow = data.slice(0, maxResults);
-        //limito la rappresentazione a 4 risultati
 
         if (resultsToShow.length > 0) {
             resultContainer = document.createElement('div');
@@ -74,26 +73,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 const liElement = document.createElement('li');
                 const linkElement = document.createElement('a');
                 linkElement.textContent = item.nome;
-                linkElement.href =  `product?opzione=read&id=${item.id}`;
-            //rendo i nomi che si visualizzano come risposta dalla ricerca come
-                //dei link alle loro pagine dettaglio
-                liElement.appendChild(linkElement);
-                ulElement.appendChild(liElement);
+                linkElement.href = `/TSW_task_war_exploded/product?opzione=read&id=${item.id}`;
+                liElement.appendChild(linkElement); // Aggiungi il link al list item
+                ulElement.appendChild(liElement); // Aggiungi il list item all'ul
             });
-            resultContainer.appendChild(ulElement);
+            resultContainer.appendChild(ulElement); // Aggiungi l'ul al contenitore
 
             document.body.appendChild(resultContainer);
-
 
             positionResultsContainer();
 
             document.addEventListener('click', closeResultsIfClickedOutside);
-            //riaggiorna la posizione dei risultati nel caso in cui la finestra cambia di dimensione
             window.addEventListener('resize', positionResultsContainer);
         } else {
             clearResults();
         }
     }
+
     function positionResultsContainer() {
         //è una funzione che cerca di posizionare in base alla barra di ricerca
         //dove mostrare i risultati
