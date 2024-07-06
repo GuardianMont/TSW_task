@@ -54,13 +54,13 @@ function updateQuantity(form) {
     if (quantityInput && quantityInput.value) {
         var quantity = parseInt(quantityInput.value, 10);
         if (isNaN(quantity) || quantity <= 0) {
-            errorElement.textContent = "La quantità è necessaria e deve essere maggiore di zero.";
+            showAttentionNotifica("La quantità è necessaria e deve essere maggiore di zero.") ;
             errorElement.style.display = "block";
         } else {
             form.submit();
         }
     } else {
-        errorElement.textContent = "La quantità è necessaria e non può essere nulla.";
+        showAttentionNotifica("La quantità è necessaria e deve essere maggiore di zero.") ;
         errorElement.style.display = "block";
     }
 }
