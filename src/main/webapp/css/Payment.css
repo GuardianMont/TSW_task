@@ -1,202 +1,157 @@
+/* Stili globali per il corpo della pagina */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
+    line-height: 1.6;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
 }
 
+/* Stile per il contenitore principale */
 .main-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 20px auto;
-    padding: 20px;
     background-color: #fff;
+    padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.section_1,
-.section_2 {
-    border-radius: 8px;
-    background-color: #f9f9f9;
+/* Stili per i titoli delle sezioni */
+.section h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Stili per i form di inserimento */
+form {
     margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%; /* Assicura che le sezioni occupino tutta la larghezza del contenitore */
-}
-/* lo uso per visualizzare anno e mese l'uno affianco
-all'altro così è anche più carino
- */
-.data-scadenza {
-    display: flex;
-    align-items: center;
-}
-.data-scadenza label {
-    margin-right: 5px;
-}
-.data-scadenza input[type="text"] {
-    width: 40px; /* Dimensione dei campi per due cifre */
-    margin-right: 10px; /* Spazio tra i campi */
-}
-h2 {
-    color: #333;
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    text-align: center;
+    padding: 20px;
+    border-radius: 6px;
 }
 
-label {
+form label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
-input[type="text"],
-textarea {
-    width: calc(100% - 10px);
+form input[type="text"],
+form input[type="number"],
+form input[type="email"],
+form textarea,
+form select {
+    width: calc(100% - 12px);
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
+}
+
+form input[type="reset"]{
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form input[type="reset"]:hover{
+    background-color: darkred;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form input[type="submit"],
+form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover,
+form button:hover {
+    background-color: #45a049;
 }
 
 .error-message {
-    color: red;
     display: none;
-}
-
-.button-container {
-    margin-top: 10px;
-    text-align: center;
-}
-
-.add-button,
-.remove-button,
-input[type="reset"] {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 5px; /* Aggiunge spazio tra i pulsanti */
-}
-
-.add-button:hover,
-.remove-button:hover,
-input[type="reset"]:hover {
-    background-color: #45a049;
-}
-
-.add-address-button,
-.add-methods-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 5px; /* Aggiunge spazio tra i pulsanti */
-}
-
-.add-address-button:hover,
-.add-methods-button:hover {
-    background-color: #45a049;
-}
-
-.proceed-button {
-    padding: 10px 20px;
-    background-color: #4CAF50; /* Differente colore per il pulsante Proceed */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    display: block;
-    margin: 20px auto; /* Centra il pulsante */
-}
-
-.proceed-button:hover {
-    background-color: #45a049; /* Differente colore per il pulsante Proceed al passaggio del mouse */
+    color: red;
 }
 
 .hidden {
     display: none;
 }
 
-/* Media Queries */
+.button-container {
+    margin-top: 10px;
+}
 
-/* Mobile Devices */
-@media (max-width: 480px) {
-    .container {
+/* Stili per i bottoni di aggiunta e rimozione */
+.add-button,
+.remove-button {
+    background-color: #4CAF49;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-button:hover,
+.remove-button:hover {
+    background-color: #4CAF50;
+}
+
+.proceed-button {
+    background-color: #28a745;
+}
+
+.proceed-button:hover {
+    background-color: #218838;
+}
+
+/* Stili per i messaggi di notifica */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+/* Stili per le aree di testo */
+.textarea {
+    height: 100px;
+}
+
+/* Media query per layout responsive */
+@media (max-width: 768px) {
+    form {
         padding: 10px;
     }
 
-    input[type="text"],
-    textarea {
-        width: calc(100% - 8px);
-        padding: 6px;
-    }
-
-    .add-button,
-    .remove-button,
-    input[type="reset"],
-    .add-address-button,
-    .add-methods-button,
-    .proceed-button {
-        padding: 8px 16px;
-        font-size: 14px;
-    }
-}
-
-/* Tablet Devices */
-@media (max-width: 1024px) {
-    .container {
-        padding: 15px;
-    }
-
-    input[type="text"],
-    textarea {
-        width: calc(100% - 8px);
-        padding: 6px;
-    }
-
-    .add-button,
-    .remove-button,
-    input[type="reset"],
-    .add-address-button,
-    .add-methods-button,
-    .proceed-button {
-        padding: 10px 20px;
-        font-size: 16px;
-    }
-}
-
-/* Large Screens (PC) */
-@media (min-width: 1024px) {
-    .container {
-        padding: 20px;
-    }
-
-    input[type="text"],
-    textarea {
-        width: calc(100% - 10px);
-        padding: 8px;
-    }
-
-    .add-button,
-    .remove-button,
-    input[type="reset"],
-    .add-address-button,
-    .add-methods-button,
-    .proceed-button {
-        padding: 12px 24px;
-        font-size: 18px;
+    form input[type="text"],
+    form input[type="number"],
+    form input[type="email"],
+    form textarea,
+    form select {
+        width: 100%;
     }
 }

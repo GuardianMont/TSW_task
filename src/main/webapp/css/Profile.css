@@ -79,9 +79,11 @@ input[type="submit"] {
     padding: 10px 15px;
     text-align: center;
     cursor: pointer;
-    margin: 5px 0;
+    margin: 5px auto;
     font-size: 14px;
-    width: 100%;
+    display: inline-block;
+    max-width: 100px;
+    /*width: 100%;*/
 }
 
 input[type="reset"] {
@@ -92,9 +94,10 @@ input[type="reset"] {
     padding: 10px 15px;
     text-align: center;
     cursor: pointer;
-    margin: 5px 0;
+    margin: 5px auto;
     font-size: 14px;
-    width: 100%;
+    display: inline-block;
+    max-width: 200px  ;
 }
 
 .edit-button:hover,
@@ -276,7 +279,7 @@ input[type="reset"]:hover {
 .orderDetail .order-info p,
 .orderDetail .address-info p,
 .orderDetail .payment-method-info p {
-    maargin: 5px 0;
+    margin: 5px 0;
 }
 
 .orderDetail table {
