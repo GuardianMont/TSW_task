@@ -1,26 +1,40 @@
+/* Stili per il messaggio di conferma */
 .confirmation-message {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: #fff;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1000;
+    border-radius: 8px;
+    max-width: 400px;
+    text-align: center;
 }
+
 .confirmation-message h2 {
     margin-top: 0;
-    color:#4CAF50;
+    color: #4CAF50;
+    font-size: 24px;
 }
+
 .confirmation-message ul {
     list-style-type: none;
     padding: 0;
 }
+
 .confirmation-message button {
-    background-color: #4CAF50;+
-    color:white;
-    display: block;
-    margin: 20px auto 0;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
     padding: 10px 20px;
     font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.confirmation-message button:hover {
+    background-color: #45a049;
 }
