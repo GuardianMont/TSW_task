@@ -23,17 +23,6 @@
     <script src="js/validationAddress.js"></script>
     <script src="js/quantityCheck.js"></script>
     <script src="js/notifica.js"></script>
-    <script>
-        window.onload = function() {
-            var signupSuccess = <%= session.getAttribute("signupSuccess") != null %>;
-            var user = <%= session.getAttribute("userId") != null %>;
-
-            if (signupSuccess && user) {
-                showInfoNotifica("Login effettuato! Benvenuto " + "<%= session.getAttribute("userId") %>!");
-                <% session.removeAttribute("signupSuccess"); %>
-            }
-        };
-    </script>
 </head>
 
 <body>
@@ -138,6 +127,18 @@
         }
     %>
 </div>
+
+<script>
+    window.onload = function() {
+        var signupSuccess = <%= session.getAttribute("signupSuccess") != null %>;
+        var user = <%= session.getAttribute("userId") != null %>;
+
+        if (signupSuccess && user) {
+            showInfoNotifica("Login effettuato! Benvenuto " + "<%= session.getAttribute("userId") %>!");
+            <% session.removeAttribute("signupSuccess"); %>
+        }
+    };
+</script>
 
 <jsp:include page="Footer.jsp"/>
 </body>

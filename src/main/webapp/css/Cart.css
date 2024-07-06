@@ -1,22 +1,27 @@
+/* General Styles */
 body {
     font-family: 'Open Sans', Arial, serif;
     background-color: #f5f5f5;
-    /* Mantiene il layout flessibile per tutta la pagina */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    box-sizing: border-box;
+    overflow-x: hidden; /* Nascondi overflow orizzontale del body */
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
 }
 
 .container {
-    width: 100%;
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    /*flex: 1;
-    padding: 20px;*/
+    width: 100%; /* Assicurati che il container occupi il 100% della larghezza disponibile */
+    overflow-x: auto; /* Aggiunto per consentire lo scroll orizzontale */
 }
 
 .catalogo {
@@ -41,7 +46,7 @@ body {
 }
 
 .tabella {
-    width: 90%;
+    width: 100%;
     margin: 20px auto;
     border-collapse: collapse;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -57,10 +62,12 @@ body {
     background-color: #4CAF50;
     color: white;
 }
+
 .sconto-prezzo-container {
     display: flex;
     align-items: center;
 }
+
 .sconto-visible {
     display: inline-block;
     background-color: #e74c3c;
@@ -72,6 +79,7 @@ body {
     margin-right: 10px;
     position: relative;
 }
+
 .prezzo-unitario {
     text-decoration: line-through;
     color: #888;
@@ -79,28 +87,30 @@ body {
     margin-right: 10px;
     display: inline-block;
 }
+
 .prezzo-scontato {
     color: #e74c3c;
     font-weight: bold;
     font-size: 1em;
 }
+
 .tabella td img {
     width: 100px;
     height: auto;
     border-radius: 10px;
+    max-width: 100%; /* Assicurati che le immagini non superino mai la larghezza del contenitore */
 }
 
 .quantity-form {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px 0; /* Assicurati che questa regola sia definita una sola volta */
+    margin: 10px 0;
+    width: 100%; /* Assicurati che il form occupi il 100% della larghezza disponibile */
 }
 
-
-
 .quantity-error {
-    margin-top: 5px; /* Aggiungi spazio sopra il messaggio di errore */
+    margin-top: 5px;
 }
 
 #spesa_totale {
@@ -127,49 +137,12 @@ body {
 }
 
 .action-button {
-    display: block;
     margin: 5px 0;
     padding: 5px 10px;
     background-color: #f44336;
     color: white;
     text-decoration: none;
     border-radius: 5px;
-}
-
-.decrement-button {
-    background-color: #ff9800;
-}
-
-.increment-button {
-    background-color: #4CAF50;
-}
-
-.action-button:hover {
-    opacity: 0.8;
-}
-
-.quantity-form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px 0;
-}
-
-.quantity-form input[type="text"] {
-    width: 40px;
-    padding: 8px;
-    margin: 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 16px;
-    background-color: #f5f5f5;
-}
-
-.quantity-form input[type="text"]:focus {
-    outline: none;
-    border-color: #4CAF50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
 .quantity-form button {
@@ -185,7 +158,6 @@ body {
 
 .quantity-form button:hover {
     background-color: #45a049;
-    opacity: 1.9;
 }
 
 .no_product {
@@ -241,36 +213,55 @@ body {
         margin: 5px 0;
     }
 }
-
-/* Mobile */
+/* Media Queries per dispositivi mobili */
 @media (max-width: 480px) {
-    .tabella {
-        width: 100%;
-        margin: 10px 0;
+    .tabella table,
+    .tabella thead,
+    .tabella tbody,
+    .tabella th,
+    .tabella td,
+    .tabella tr {
+        display: block;
     }
 
-    .tabella th, .tabella td {
-        padding: 8px;
-        font-size: 14px;
+    .tabella thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
     }
 
-    .tabella td img {
-        width: 80px;
+    .tabella tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
     }
 
-    .catalogo, .acquista-button {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
+    .tabella td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        white-space: normal;
+        padding-top: 15px;
+        padding-bottom: 15px;
     }
 
-    .quantity-form button {
-        width: 100%;
-        margin: 5px 0;
+    .tabella td:before {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        width: calc(50% - 20px);
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        transform: translateY(-50%);
     }
 
-    .spesa_totale, .acquista-form {
-        text-align: center;
-        margin: 20px 0;
-    }
+    .tabella td:nth-of-type(1):before { content: "Nome"; }
+    .tabella td:nth-of-type(2):before { content: "Immagine"; }
+    .tabella td:nth-of-type(3):before { content: "Prezzo"; }
+    .tabella td:nth-of-type(4):before { content: "Quantità"; }
+    .tabella td:nth-of-type(5):before { content: "Prezzo Unitario"; }
+    .tabella td:nth-of-type(6):before { content: "Azioni"; }
+
 }
