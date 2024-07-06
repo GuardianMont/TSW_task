@@ -55,6 +55,11 @@ public class UserAdminOption extends HttpServlet {
 
      private void handleShowAction (HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
          Collection<UserBean> users = model.doRetrieveAll(null);
+         String sessionUserId = (String) request.getSession(false).getAttribute("userId");
+         //elimina l'utente in sessione
+         if (sessionUserId != null) {
+             users.removeIf(user -> user.getUsername().equals(sessionUserId));
+         }
          sendJsonResponse(response, true, users);
      }
 }

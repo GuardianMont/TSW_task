@@ -1,3 +1,4 @@
+
 function loadOrders() {
     viewOrdini();
     var xhr = new XMLHttpRequest();
@@ -30,7 +31,7 @@ function orderOrdini(){
     var selectedValue = dropdown.value;
     console.log('Opzione selezionata:', selectedValue);
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/TSW_task_war_exploded/CheckoutServlet');
+    xhr.open('POST', 'CheckoutServlet');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
         if (xhr.status === 200) {
@@ -132,7 +133,7 @@ function downloadInvoice(orderId) {
 function detaglioOrder(orderId) {
     viewDetail();
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/TSW_task_war_exploded/DetailOrder');
+    xhr.open('POST', 'DetailOrder');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
         if (xhr.status === 200) {

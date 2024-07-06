@@ -72,6 +72,11 @@ body {
     padding: 10px 0;
 }
 
+/* Mostra il sotto-menu quando si passa il mouse sulla voce principale */
+.nav-menu li:hover > .submenu {
+    display: block;
+}
+
 .nav-menu .submenu li {
     margin: 0;
 }
@@ -82,8 +87,27 @@ body {
     color: #333;
 }
 
-.nav-menu li:hover .submenu {
+/* Posiziona il sotto-menu a destra della voce principale */
+.nav-menu .submenu {
+    top: 0;
+    left: 100%;
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1000;
+    list-style: none;
+    padding: 10px 0;
+}
+
+.nav-menu li:hover > .submenu {
     display: block;
+}
+
+.nav-menu .submenu li a:hover {
+    background-color: #e0e0e0; /* Cambia il colore di sfondo */
+    color: #000; /* Cambia il colore del testo */
 }
 
 .search-bar {
@@ -91,23 +115,24 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 10px; /* Aggiunto spazio dal top per separare dalla nav */
 }
 
 .search-bar form {
     display: flex;
     width: 100%;
-    max-width: 400px;
+    max-width: 300px; /* Ridotto il massimo della larghezza per adattarsi meglio */
 }
 
 .search-bar input[type="text"] {
     width: 100%;
-    padding: 10px;
+    padding: 8px; /* Ridotto il padding per renderla più compatta */
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
 }
 
 .search-bar button {
-    padding: 10px;
+    padding: 8px; /* Ridotto il padding del pulsante */
     background-color: #4CAF49;
     color: #fff;
     border: none;
@@ -164,12 +189,7 @@ body {
         flex-direction: column;
         padding: 10px;
         justify-content: center;
-        justify-items: center;
-    }
-
-    .logo, .nav-menu, .search-bar-container, .icons {
-        /*width: 100%;*/
-        justify-content: center;
+        align-items: center;
     }
 
     .nav-menu {
@@ -178,36 +198,40 @@ body {
     }
 
     .nav-menu li {
-        margin: 10px 0;
-    }
-
-    .icons {
-        justify-content: center;
+        margin: 10px 0; /* Aumentato il margine verticale tra le voci del menu */
     }
 
     .search-bar {
         width: 100%;
         display: flex;
         justify-content: center;
+        margin-top: 20px; /* Aumentato lo spazio dal top per separare dal menu */
     }
 
     .search-bar input[type="text"] {
-        width: 100px;
+        width: 120px; /* Ridotto ulteriormente la larghezza della barra di ricerca */
+        padding: 6px; /* Ridotto il padding per renderla ancora più compatta */
     }
 
     .search-bar button {
-        width: 30px;
+        padding: 6px; /* Ridotto il padding del pulsante */
+        width: 30px; /* Ridotto ulteriormente la larghezza del pulsante */
     }
 
-    .burger-menu {
-        display: block;
-        font-size: 20px;
+    .icons {
+        justify-content: center;
     }
 
     .nav-menu,
     .search-bar,
     .icons {
         display: none;
+    }
+
+    .burger-menu {
+        display: block;
+        font-size: 20px;
+        margin-bottom: 10px; /* Aggiunto margine inferiore per separare dal contenuto */
     }
 
     .burger-menu-container {
@@ -245,10 +269,6 @@ body {
 
     .burger-menu-container.show {
         display: flex;
-    }
-
-    .header-container {
-        position: relative;
     }
 }
 

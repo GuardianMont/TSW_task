@@ -13,9 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    searchInput.addEventListener("blur", function(){
-        //clearResults();
-    })
 
     formSearch.addEventListener("submit", function (event) {
         event.preventDefault(); // Evita il comportamento predefinito di submit del form

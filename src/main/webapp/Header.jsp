@@ -24,17 +24,39 @@
     </div>
     <nav class="nav-menu">
         <ul>
-            <li><a href="${pageContext.request.contextPath}/Homepage.jsp">Home</a></li>
             <li>
-            <a href="${pageContext.request.contextPath}/product">Prodotti</a>
-            <ul class="submenu">
-                <li><a href="#">Prodotto</a></li>
-                <li><a href="#">Prodotto</a></li>
-                <li><a href="#">Prodotto</a></li>
-            </ul>
+                <a href="${pageContext.request.contextPath}/Homepage.jsp">Home</a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/product">Catalogo</a>
+                <ul class="submenu">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/SearchByCategory?categoria=tavolo">Tavoli</a>
+                        <ul class="submenu hide">
+                            <li><a href="${pageContext.request.contextPath}/SearchByCategory?categoria=biliardo">Tavoli da biliardo</a></li>
+                            <li><a href="${pageContext.request.contextPath}/SearchByCategory?categoria=AirHokey">Tavoli Air hockey</a></li>
+                            <li><a href="${pageContext.request.contextPath}/SearchByCategory?categoria=pingPong">Tavoli ping pong</a></li>
+                            <li><a href="${pageContext.request.contextPath}/SearchByCategory?categoria=multifunzione">Tavoli multifunzione</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/SearchByCategory?categoria=attrezzatura">Attrezzature</a>
+                        <ul class="submenu hide">
+                            <li><a href="${pageContext.request.contextPath}/SearchByCategory?categoria=stecche">Stecche</a></li>
+                            <li><a href="${pageContext.request.contextPath}/SearchByCategory?categoria=bilie">bilie biliardo</a></li>
+                            <li><a href="${pageContext.request.contextPath}/SearchByCategory?categoria=racchette">Racchette ping pong</a></li>
+                            <li><a href="${pageContext.request.contextPath}/SearchByCategory?categoria=palline">Palline ping pong</a></li>
+                            <li><a href="${pageContext.request.contextPath}/SearchByCategory?categoria=AttrezzaturaAir">Attrezzatura air hockey</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/SearchByCategory?categoria=kit">Kit assortiti</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </nav>
+
     <div class="search-bar">
         <form id="searchForm" class="ricerca">
             <input id="cerca" type="text" placeholder="Cerca prodotto" aria-label="Cerca prodotto" autocomplete="off" required>
@@ -58,7 +80,7 @@
     </div>
     <div class="burger-menu-container">
         <a href="${pageContext.request.contextPath}/Homepage.jsp">Home</a>
-        <a href="${pageContext.request.contextPath}/product">Prodotti</a>
+        <a href="${pageContext.request.contextPath}/product">Catalogo</a>
         <a href="${pageContext.request.contextPath}/carrello"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Carrello
             <% if (cart != null && cart.getNumProdottiTot() > 0) { %>(<%= cart.getNumProdottiTot() %>)<% } %></a>
         <a href="${pageContext.request.contextPath}/profileServlet"><i class="fas fa-user" aria-hidden="true"></i> Profilo utente</a>

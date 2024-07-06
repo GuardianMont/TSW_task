@@ -1,9 +1,11 @@
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>AdminOptions</title>
-    <script src="${pageContext.request.contextPath}/js/loadOrdini.js"></script>
+    <script src="${pageContext.request.contextPath}/js/notifica.js"></script>
     <script src="${pageContext.request.contextPath}/js/adminPageOptions.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/notifica.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AdminOptions.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Ordini.css">
 
@@ -11,7 +13,7 @@
 <body>
 <jsp:include page="/Header.jsp"/>
 
-<div>
+<div class ="container">
     <h1>Admin Options</h1>
     <div id="admin-options" class="button-container">
         <button onclick="viewOrders()">View Orders</button>
@@ -49,10 +51,24 @@
             </select>
         </div>
         <div class="date-range">
-            <label for="startDate">From:</label>
+            <label for="startDate">Da:</label>
             <input type="date" id="startDate" name="startDate">
-            <label for="endDate">To:</label>
-            <input type="date" id="endDate" name="endDate">
+            <label for="endDate">A:</label>
+            <input type="date" id="endDate" name="endDate" >
+            <script>
+                // Ottieni la data odierna
+                var today = new Date();
+
+                // Formatta la data nel formato yyyy-mm-dd
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); // Gennaio è 0!
+                var yyyy = today.getFullYear();
+
+                var formattedDate = yyyy + '-' + mm + '-' + dd;
+
+                // Imposta il valore dell'input date
+                document.getElementById('endDate').value = formattedDate;
+            </script>
             <button onclick="filterOrdersByDate()">Search</button>
         </div>
     </div>
@@ -98,7 +114,6 @@
                 <h2>Prezzo Totale: <span id="prezzoTotale"></span></h2>
             </div>
         </div>
-
     </div>
 <jsp:include page="../Footer.jsp"/>
 </body>

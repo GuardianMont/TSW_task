@@ -262,5 +262,40 @@ public class ProductDaoDM implements ProductDao {
 		return products;
 	}
 
+	public synchronized Collection<ProductBean> SearchByCategory(String categoria) throws SQLException {
+
+
+		Collection<ProductBean> products = new LinkedList<>();
+		String selectSQL = "SELECT * FROM " + ProductDaoDM.TABLE_NAME + " WHERE categoria=? ";
+		try (Connection connection = ConnectionPool.getInstance().getConnection();
+		PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+			preparedStatement.setString(1, categoria);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+
+				bean.setId(rs.getInt("id"));
+				bean.setNome(rs.getString("nome"));
+				bean.setDescrizione(rs.getString("descrizione"));
+				bean.setPrezzo(rs.getDouble("prezzo"));
+				bean.setDisponibilita(rs.getInt("disponibilita"));
+				bean.setDimensioni(rs.getString("dimensioni"));
+				bean.setCategoria(rs.getString("categoria"));
+				bean.setFasciaIva(rs.getDouble("fascia_iva"));
+				bean.setImmagineUrl(rs.getBytes("immagine"));
+				bean.setColore(rs.getString("colore"));
+				bean.setPercentualeSconto(rs.getInt("percentuale_sconto"));
+				bean.setVisible(rs.getBoolean("is_visible"));
+
+				products.add(bean);
+			}
+		}
+		return products;
+	}
+
+
+
 }
 

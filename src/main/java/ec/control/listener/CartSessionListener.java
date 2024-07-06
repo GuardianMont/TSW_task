@@ -1,3 +1,5 @@
+package ec.control.listener;
+
 import ec.model.cart.CartItem;
 import jakarta.servlet.annotation.WebListener;
 import jakarta.servlet.http.HttpSession;
@@ -20,9 +22,7 @@ public class CartSessionListener implements HttpSessionListener {
         Integer userId = (Integer) session.getAttribute("user_id");
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
 
-        if (userId != null && cart != null) {
-            saveCartToDatabase(userId, cart);
-        }
+
     }
 
 }

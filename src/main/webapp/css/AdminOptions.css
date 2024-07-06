@@ -36,6 +36,9 @@ h1, h3 {
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    width: 100%; /* Imposta la larghezza del bottone al 100% */
+    max-width: 200px; /* Limita la larghezza massima del bottone per evitare l'eccessivo allargamento */
+    box-sizing: border-box; /* Assicura che il padding sia incluso nella larghezza totale */
 }
 
 .button-container button:hover {
@@ -87,17 +90,63 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    overflow-x: auto; /* Abilita lo scrolling orizzontale per la tabella */
 }
 
 table th, table td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
+    white-space: nowrap; /* Evita il wrap del testo all'interno delle celle */
 }
 
 table th {
     background-color: #f2f2f2;
     color: #333;
+}
+
+/* Specific styles for different sections */
+
+/* Users View */
+.user-view {
+    background-color: #f0f8ea;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Orders Section */
+.generale {
+    background-color: #edf7f4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.order-details {
+    background-color: #fff3e6;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.cart-items {
+    background-color: #f6f9f6;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.total-price {
+    background-color: #eaf2ff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 /* Responsive Design */
@@ -119,11 +168,12 @@ table th {
     .button-container button {
         width: 48%;
         margin: 1%;
+        max-width: none; /* Rimuovi il limite massimo di larghezza per i bottoni */
     }
 }
 
 /* Mobile Devices */
-@media (max-width: 767px) {
+@media (max-width: 850px) {
     .container {
         width: 90%;
         padding: 10px;
@@ -132,6 +182,7 @@ table th {
     .button-container button {
         width: 100%;
         margin: 10px 0;
+        max-width: none; /* Rimuovi il limite massimo di larghezza per i bottoni */
     }
 
     /* Styles specific to the second page CSS */
@@ -169,6 +220,45 @@ table th {
     }
 
     .orderDetail td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    .userView table,
+    .userView thead,
+    .userView tbody,
+    .userView th,
+    .userView td,
+    .userView tr {
+        display: block;
+    }
+
+    .userView thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .userView tr {
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .userView td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    .userView td:before {
         content: attr(data-label);
         position: absolute;
         left: 10px;

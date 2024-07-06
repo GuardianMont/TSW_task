@@ -200,4 +200,20 @@ public class UserDaoDM implements UserDao {
         }
         return result > 0;
     }
+
+    public boolean UpdateRole(String userName, boolean role) throws SQLException {
+        String updateSQL = "UPDATE " + UserDaoDM.TABLE_NAME + " SET is_admin = ? WHERE username = ?";
+        int result = 0;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);) {
+            preparedStatement.setBoolean(1, role);
+            preparedStatement.setString(2, userName);
+            result = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Ritorna false in caso di errore
+        }
+        return result > 0; // Ritorna true se almeno una riga è stata aggiornata con successo
+    }
+
 }

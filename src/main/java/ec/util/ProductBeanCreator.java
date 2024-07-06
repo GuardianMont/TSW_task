@@ -20,6 +20,7 @@ public class ProductBeanCreator {
         double iva = Double.parseDouble(request.getParameter("iva"));
         String colore = request.getParameter("colore");
         String category = request.getParameter("categoria");
+        System.out.println(category);
         String dimension = request.getParameter("dimensioni");
         String discount = request.getParameter("sconto");
         String isVisible = request.getParameter("isVisible");
@@ -31,7 +32,12 @@ public class ProductBeanCreator {
         bean.setDisponibilita(quantity);
         bean.setFasciaIva(iva);
         bean.setColore(colore);
+        bean.setDimensioni(dimension);
+        bean.setTemp_Url(uploadedFilePath);
+        bean.setPercentualeSconto(Integer.parseInt(discount));
+        bean.setVisible(Boolean.parseBoolean(isVisible));
 
+        // Set category based on user selection
         if ("tavolo".equals(category)) {
             bean.setCategoria(request.getParameter("tipoTavolo"));
         } else if ("attrezzatura".equals(category)) {
@@ -39,11 +45,8 @@ public class ProductBeanCreator {
         } else {
             bean.setCategoria(category);
         }
-        bean.setCategoria(category);
-        bean.setDimensioni(dimension);
-        bean.setTemp_Url(uploadedFilePath);
-        bean.setPercentualeSconto(Integer.parseInt(discount));
-        bean.setVisible(Boolean.parseBoolean(isVisible));
+
         return bean;
     }
+
 }

@@ -10,11 +10,11 @@
 <body>
 <jsp:include page="../Header.jsp"/>
 
-<div class="container">+3
+<div class="container">
 
     <a href="../product" class="catalogo">Catalogo</a>
     <h2>Inserimento Prodotti</h2>
-    <form action="./product" enctype="multipart/form-data" method="post" onsubmit="handleSubmit(event)">
+    <form action="../product" enctype="multipart/form-data" method="post" onsubmit="handleSubmit(event)">
         <input type="hidden" name="opzione" value="insert">
 
         <label for="nome">Nome:</label>
@@ -65,6 +65,7 @@
                 <option value="" disabled selected>Selezionare un tipo di tavolo</option>
                 <option value="pingPong">Ping Pong</option>
                 <option value="biliardo">Biliardo</option>
+                <option value="AirHokey">Air Hokey</option>
                 <option value="multifunzione">Multifunzione</option>
             </select>
         </div>
@@ -76,8 +77,7 @@
                 <option value="stecche">Stecche</option>
                 <option value="bilie">Bilie</option>
                 <option value="palline">Palline</option>
-                <option value="spingitori">Spingitori</option>
-                <option value="dischi">dischi</option>
+                <option value="AttrezzaturaAir">Attrezzatura Air Hokey</option>
             </select>
         </div>
 
