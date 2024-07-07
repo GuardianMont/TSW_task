@@ -1,14 +1,7 @@
-<%@ page import="ec.model.user.UserBean" %><%--
-  Created by IntelliJ IDEA.
-  User: mauri
-  Date: 13/06/2024
-  Time: 16:44
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="ec.model.user.UserBean" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <!-- TODO: modificare style e layout-->
     <title>Profilo</title>
     <link rel="stylesheet" type="text/css" href="css/Profile.css">
     <link rel="stylesheet" type="text/css" href="css/Ordini.css">
@@ -21,57 +14,60 @@
 <body>
 <jsp:include page="Header.jsp"/>
 
-    <%
-        UserBean user = (UserBean) request.getAttribute("user");
-        String sessionUser = (String) request.getSession().getAttribute("userId");
+<%
+    UserBean user = (UserBean) request.getAttribute("user");
+    String sessionUser = (String) request.getSession().getAttribute("userId");
 
-        if (user != null && sessionUser != null && sessionUser.equals(user.getUsername())){
-    %>
+    if (user != null && sessionUser != null && sessionUser.equals(user.getUsername())){
+%>
 
-<div class="container main-container" id = "main-container">
+<div class="container main-container" id="main-container">
     <div class="container profile-container" id="profile-container">
         <h3>Profilo <%= user.getUsername() %></h3>
         <p>Nome: <%= user.getNome() %></p>
         <p>Cognome: <%= user.getCognome() %></p>
         <p>Email: <%= user.getEmail() %></p>
         <p>Telefono: <%= user.getPhoneNumber() %></p>
+        <button class="edit-button" onclick="editProfile()">Modifica informazioni</button>
+        <button class="edit-button" id="cambiaPassword" onclick="changePassword()">Cambia Password</button>
     </div>
 
-    <div class="container edit-container" id="edit-container">
+    <div class="container edit-container" id="edit-container" style="display: none;">
         <p id="edit-error" class="edit-error"></p>
         <h3>Modifica</h3>
-        <form id="edit-profile-form" action="updateUser" method="post" >
+        <form id="edit-profile-form" action="updateUser" method="post">
             <div class="edit-form-hidden">
                 <input type="hidden" name="option" value="update">
-                <input type="hidden" name="username"  value="<%= user.getUsername() %>">
+                <input type="hidden" name="username" value="<%= user.getUsername() %>">
             </div>
             <div class="edit-form-group">
                 <label for="edit-nome">Nome:</label><br>
-                <input id="edit-nome" name="nome" type="text" maxlength="20" required value=<%= user.getNome()%>><br>
+                <input id="edit-nome" name="nome" type="text" maxlength="20" required value="<%= user.getNome() %>"><br>
                 <span id="edit-nome-error" class="error-message">Non ci possono essere numeri o simboli.</span>
             </div>
             <div class="edit-form-group">
                 <label for="edit-cognome">Cognome:</label><br>
-                <input id="edit-cognome" name="cognome" type="text" maxlength="20" required value=<%= user.getCognome()%>><br>
+                <input id="edit-cognome" name="cognome" type="text" maxlength="20" required value="<%= user.getCognome() %>"><br>
                 <span id="edit-cognome-error" class="error-message">Non ci possono essere numeri o simboli.</span>
             </div>
             <div class="edit-form-group">
                 <label for="edit-email">Email:</label><br>
-                <input id="edit-email" name="email" type="email" required value=<%= user.getEmail()%>><br>
+                <input id="edit-email" name="email" type="email" required value="<%= user.getEmail() %>"><br>
                 <span id="edit-email-error" class="error-message">Email non valida.</span>
             </div>
             <div class="edit-form-group">
                 <label for="edit-phonenumber">Telefono:</label><br>
-                <input id="edit-phonenumber" name="phoneNumber" type="tel" required value=<%= user.getPhoneNumber()%>><br>
+                <input id="edit-phonenumber" name="phoneNumber" type="tel" required value="<%= user.getPhoneNumber() %>"><br>
                 <span id="edit-phonenumber-error" class="error-message">Numero di telefono non valido.</span>
             </div>
             <div class="edit-form-group">
-                <input type="submit" id="edit-submit" value="Salva modifiche"><input type="reset" value="Reset">
+                <input type="submit" id="edit-submit" value="Salva modifiche">
+                <input type="reset" value="Reset">
             </div>
         </form>
     </div>
 
-    <div class="container change-password-container" id="change-password-container">
+    <div class="container change-password-container" id="change-password-container" style="display: none;">
         <p id="change-password-error" class="change-password-error"></p>
         <h3>Cambia Password</h3>
         <form id="change-password-form" action="updateUser" method="post">
@@ -90,11 +86,13 @@
                 <span id="change-password-confirm-error" class="error-message">La password deve essere la stessa.</span>
             </div>
             <div class="change-password-form-submit">
-                <input type="submit" value="Cambia Password"><input type="reset" value="Reset">
+                <input type="submit" value="Cambia Password">
+                <input type="reset" value="Reset">
             </div>
         </form>
     </div>
-    <div class="ordiniEffettuati" id="ordiniEffettuati">
+
+    <div class="ordiniEffettuati" id="ordiniEffettuati" style="display: none;">
         <div class="generale">
             <div class="sorting-dropdown">
                 <select onchange="orderOrdini()" class="select-sorting" id="sortingDropdown">
@@ -106,10 +104,10 @@
         </div>
         <div id="checkOutOrdini">
             <!--li immetto con ajax-->
-
         </div>
     </div>
-    <div class="orderDetail" id="orderDetail">
+
+    <div class="orderDetail" id="orderDetail" style="display: none;">
         <div class="order-details">
             <h1>Dettagli Ordine</h1>
             <div class="order-info">
@@ -147,25 +145,25 @@
                 <h2>Prezzo Totale: <span id="prezzoTotale"></span></h2>
             </div>
         </div>
-
     </div>
-    <div class="indirizziSpedizione" id="indirizziSpedizione">
+
+    <div class="indirizziSpedizione" id="indirizziSpedizione" style="display: none;">
         <div id="shipping-address">
             <!--li immetto con ajax-->
         </div>
     </div>
-    <div class="metodiPagamento" id="metodiPagamento">
+
+    <div class="metodiPagamento" id="metodiPagamento" style="display: none;">
         <div id="shipping-payment">
             <!--li immetto con ajax-->
         </div>
     </div>
-    <div class = "container button-container">
-        <button class="edit-button" id="profilo" onclick="showProfile()">informazioni utente</button>
-        <button class="edit-button" id="modifica" onclick="editProfile()">Modifica informazioni utente</button>
-        <button class="edit-button" id="cambiaPassword" onclick="changePassword()">Cambia Password</button>
-        <button class="edit-button" id="viewOrdini" onclick="loadOrders()">visualizza Ordini</button>
-        <button class="edit-button" id="viewPayment" onclick="loadPaymentMethods()">visualizza Metodi di pagamento</button>
-        <button class="edit-button" id="viewAddresses" onclick="loadAddresses()">visualizza Indirizzi di spedizione</button>
+
+    <div class="container button-container">
+        <button class="edit-button" id="profilo" onclick="showProfile()">Informazioni utente</button>
+        <button class="edit-button" id="viewOrdini" onclick="loadOrders()">Visualizza Ordini</button>
+        <button class="edit-button" id="viewPayment" onclick="loadPaymentMethods()">Metodi di pagamento</button>
+        <button class="edit-button" id="viewAddresses" onclick="loadAddresses()">Indirizzi di spedizione</button>
         <form class="logout-form" action="${pageContext.request.contextPath}/LoginSignup">
             <input type="hidden" name="option" value="logout">
             <input type="submit" value="Logout">
@@ -173,7 +171,7 @@
     </div>
 </div>
 <%
-    }else{
+} else {
 %>
 <div class="container" id="not-logged-message">
     <h3>Devi essere loggato per visualizzare il profilo, coglione!</h3>
@@ -182,7 +180,6 @@
         Ti ci sei messo proprio d'impegno, eh?
     </p>
 </div>
-
 <%
     }
 %>
