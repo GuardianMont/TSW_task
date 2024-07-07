@@ -16,8 +16,10 @@
 <div class ="container">
     <h1>Admin Options</h1>
     <div id="admin-options" class="button-container">
-        <button onclick="viewOrders()">View Orders</button>
-        <button onclick="viewUsers()">View Users</button>
+        <button onclick="viewOrders()">Visualizza tutti gli ordini</button>
+        <button onclick="viewUsers()">Gestione Utenti</button>
+        <button onclick="window.location.href='../product'">Gestione prodotti</button>
+        <button onclick="window.location.href='../profileServlet'">Pagina utente admin</button>
     </div>
 </div>
 <div class="userView hide" id="userView">

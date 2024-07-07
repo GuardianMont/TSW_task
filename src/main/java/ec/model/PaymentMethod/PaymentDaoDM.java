@@ -31,8 +31,7 @@ public class PaymentDaoDM implements PaymentDao {
             return true;
         }
     }
-
-    /**non utilizzare: problema constraint chiavi*/
+    //ora è utilizzabile
     public boolean doDelete(String userID, int num) throws SQLException {
         String sqlDelete = "DELETE from " + PaymentDaoDM.TABLE_NAME +
                 " where utente_id=? AND num = ?";

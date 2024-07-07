@@ -95,7 +95,6 @@ public class Payment extends HttpServlet {
         sendJsonResponse(response,true, payMethods);
     }
 
-    //TODO QUESTA È UNA RICHIESTA D'AIUTO
     private void handleDeleteAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         int numId = Integer.parseInt(request.getParameter("numId"));
         String userId = (String) request.getSession().getAttribute("userId");

@@ -9,9 +9,6 @@ body {
     overflow-x: hidden; /* Nascondi overflow orizzontale del body */
 }
 
-*, *::before, *::after {
-    box-sizing: inherit;
-}
 
 .container {
     max-width: 1200px;
@@ -21,7 +18,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%; /* Assicurati che il container occupi il 100% della larghezza disponibile */
-    overflow-x: auto; /* Aggiunto per consentire lo scroll orizzontale */
+     /* Aggiunto per consentire lo scroll orizzontale */
 }
 
 .catalogo {
@@ -50,10 +47,11 @@ body {
     margin: 20px auto;
     border-collapse: collapse;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    table-layout: fixed;
 }
 
 .tabella th, .tabella td {
-    padding: 10px;
+    padding: 12px;
     text-align: center;
     border: 1px solid #ddd;
 }
@@ -137,6 +135,7 @@ body {
 }
 
 .action-button {
+    display: inline-block;
     margin: 5px 0;
     padding: 5px 10px;
     background-color: #f44336;
@@ -196,7 +195,7 @@ body {
 /* Tablet */
 @media (max-width: 768px) {
     .tabella th, .tabella td {
-        padding: 10px;
+        padding: 8px;
     }
 
     .spesa_totale, .acquista-form {
@@ -214,7 +213,7 @@ body {
     }
 }
 /* Media Queries per dispositivi mobili */
-@media (max-width: 480px) {
+@media (max-width: 610px) {
     .tabella table,
     .tabella thead,
     .tabella tbody,

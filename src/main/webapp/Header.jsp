@@ -84,10 +84,7 @@
         <a href="${pageContext.request.contextPath}/carrello"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Carrello
             <% if (cart != null && cart.getNumProdottiTot() > 0) { %>(<%= cart.getNumProdottiTot() %>)<% } %></a>
         <a href="${pageContext.request.contextPath}/profileServlet"><i class="fas fa-user" aria-hidden="true"></i> Profilo utente</a>
-        <form id="searchFormBurger" class="ricerca">
-            <input id="cercaBurger" type="text" placeholder="Cerca prodotto" aria-label="Cerca prodotto" autocomplete="off" required>
-            <button id="submitBurger" type="submit"><i class="fas fa-search" aria-hidden="true"></i><span class="sr-only">Cerca</span></button>
-        </form>
+
     </div>
 </header>
 </body>

@@ -7,8 +7,10 @@ import ec.model.CheckOut.Ordine;
 import ec.model.CheckOut.StoricoProdottiDaoDM;
 import ec.model.PaymentMethod.PayMethod;
 import ec.model.PaymentMethod.PaymentDaoDM;
+import ec.model.PaymentMethod.StroricoPagamentiDaoDM;
 import ec.model.address.AddressDaoDM;
 import ec.model.address.AddressUs;
+import ec.model.address.StoricoIndirizziDaoDM;
 import ec.model.product.ProductBean;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -29,11 +31,17 @@ public class DetailOrder extends HttpServlet {
     private CheckOutDaoDM modelCheckOut;
     private StoricoProdottiDaoDM modelStoricoProdotti;
 
+    private StoricoIndirizziDaoDM modelStoricoIndirizzi;
+
+    private StroricoPagamentiDaoDM modelStoricoPagamenti;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         modelCheckOut = new CheckOutDaoDM();
         modelStoricoProdotti = new StoricoProdottiDaoDM();
+        modelStoricoIndirizzi = new StoricoIndirizziDaoDM();
+        modelStoricoPagamenti = new StroricoPagamentiDaoDM();
     }
 
     @Override
@@ -91,8 +99,8 @@ public class DetailOrder extends HttpServlet {
     private void getOrderDetails(HttpServletRequest request, HttpServletResponse response, Ordine ordine) throws SQLException, IOException {
         JsonObject jsonOrder = new JsonObject();
         try {
-            AddressUs indirizzo = new AddressDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodAdress());
-            PayMethod metodo = new PaymentDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodMethod());
+            AddressUs indirizzo = modelStoricoIndirizzi.doRetrieveByKey(ordine.getNumId(), ordine.getUtenteId(), ordine.getCodAdress());
+            PayMethod metodo = modelStoricoPagamenti.doRetrieveByKey(ordine.getNumId(), ordine.getUtenteId(), ordine.getCodAdress());
 
             jsonOrder.add("address", indirizzo.toJson());
             jsonOrder.add("paymentMethod", metodo.toJson());

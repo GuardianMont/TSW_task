@@ -1,37 +1,68 @@
+/* Contenitore dell'ordine */
 .ordine-container {
-    border: 1px solid #ccc;
-    padding: 10px;
+    border: 1px solid #c3e6cb; /* Verde chiaro */
+    padding: 15px;
     margin-bottom: 20px;
-    border-radius: 5px;
-    margin-left: 20px;
+    border-radius: 10px;
+   margin-left: 20px;
     margin-right: 20px;
 }
 
-
+/* Informazioni dell'ordine */
 .ordine-info {
-    background-color: #f0f0f0;
+    background-color: #d4edda; /* Verde pastello */
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
     font-weight: bold;
+    color: #155724; /* Testo verde scuro */
+    border: 1px solid #c3e6cb; /* Bordo verde chiaro */
 }
 
-
+/* Div contenuti nel contenitore dell'ordine */
 .ordine-container div {
     margin-bottom: 5px;
 }
 
-
+/* Lista degli ordini */
 .ordine-container ul {
-    list-style-type: none;
-    /*più carino senza pallini*/
+    list-style-type: none; /* Più carino senza pallini */
     padding-left: 0;
 }
 
+/* Elementi della lista degli ordini */
 .ordine-container ul li {
     margin-left: 10px;
+    background-color: #f8f9fa; /* Sfondo leggermente grigio */
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #dee2e6; /* Bordo grigio chiaro */
+    margin-bottom: 5px;
 }
 
+/* Pulsante checkout ordini */
 #checkOutOrdini {
     margin: 20px;
+    padding: 10px 20px;
+    color: #000000; /* Testo bianco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+
+
+/* Stile per il testo all'interno del contenitore dell'ordine */
+.ordine-container p {
+    color: #155724; /* Testo verde scuro */
+    font-size: 14px;
+}
+
+/* Stile per i titoli all'interno del contenitore dell'ordine */
+.ordine-container h3 {
+    color: #155724; /* Testo verde scuro */
+    font-size: 18px;
+    margin-bottom: 10px;
 }

@@ -38,6 +38,8 @@ public class CartItem {
         setNumItem(this.getNumItem()+1);
     }
 
+    public void incrementNumItemof(int quantita){setNumItem(this.getNumItem()+quantita);}
+
     public void decrementNumItem(){
         setNumItem(this.getNumItem()-1);
     }

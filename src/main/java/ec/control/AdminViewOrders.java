@@ -7,8 +7,11 @@ import ec.model.CheckOut.Ordine;
 import ec.model.CheckOut.StoricoProdottiDaoDM;
 import ec.model.PaymentMethod.PayMethod;
 import ec.model.PaymentMethod.PaymentDaoDM;
+import ec.model.PaymentMethod.StroricoPagamentiDaoDM;
 import ec.model.address.AddressDaoDM;
 import ec.model.address.AddressUs;
+import ec.model.address.StoricoIndirizziDao;
+import ec.model.address.StoricoIndirizziDaoDM;
 import ec.model.cart.ShoppingCart;
 import ec.model.product.ProductBean;
 import jakarta.servlet.ServletConfig;
@@ -32,12 +35,16 @@ import static ec.util.ResponseUtils.sendJsonResponse;
 public class AdminViewOrders extends HttpServlet {
     private CheckOutDaoDM modelCheckOut;
     private StoricoProdottiDaoDM modelStoricoProdotti;
+    private StoricoIndirizziDaoDM modelStoricoIndirizzi;
+    private StroricoPagamentiDaoDM modelStoricoPagamenti;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         modelCheckOut = new CheckOutDaoDM();
         modelStoricoProdotti = new StoricoProdottiDaoDM();
+        modelStoricoIndirizzi = new StoricoIndirizziDaoDM();
+        modelStoricoPagamenti= new StroricoPagamentiDaoDM();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -129,8 +136,8 @@ public class AdminViewOrders extends HttpServlet {
     private JsonObject getOrderDetails(Ordine ordine) throws SQLException {
         JsonObject jsonOrder = new JsonObject();
 
-        AddressUs indirizzo = new AddressDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodAdress());
-        PayMethod metodo = new PaymentDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodMethod());
+        AddressUs indirizzo = modelStoricoIndirizzi.doRetrieveByKey(ordine.getNumId(), ordine.getUtenteId(), ordine.getCodAdress());
+        PayMethod metodo = modelStoricoPagamenti.doRetrieveByKey(ordine.getNumId(), ordine.getUtenteId(), ordine.getCodAdress());
 
         jsonOrder.addProperty("ordineId", ordine.getNumId());
         jsonOrder.add("address", indirizzo.toJson());

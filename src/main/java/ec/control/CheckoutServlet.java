@@ -7,8 +7,11 @@ import ec.model.CheckOut.Ordine;
 import ec.model.CheckOut.StoricoProdottiDaoDM;
 import ec.model.PaymentMethod.PayMethod;
 import ec.model.PaymentMethod.PaymentDaoDM;
+import ec.model.PaymentMethod.StroricoPagamentiDaoDM;
 import ec.model.address.AddressDaoDM;
 import ec.model.address.AddressUs;
+import ec.model.address.StoricoIndirizziDaoDM;
+import ec.model.cart.CartDaoDM;
 import ec.model.cart.CartItem;
 import ec.model.cart.ShoppingCart;
 import ec.model.product.ProductBean;
@@ -36,11 +39,21 @@ public class CheckoutServlet extends HttpServlet {
     private CheckOutDaoDM modelCheckOut;
     private StoricoProdottiDaoDM modelStoricoProdotti;
 
+    private StoricoIndirizziDaoDM modelStoricoIndirizzi;
+    private StroricoPagamentiDaoDM modelStoricoPagamenti;
+
+    private AddressDaoDM modelAddress;
+    private PaymentDaoDM modelPayment;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         modelCheckOut = new CheckOutDaoDM();
         modelStoricoProdotti = new StoricoProdottiDaoDM();
+        modelStoricoIndirizzi = new StoricoIndirizziDaoDM();
+        modelStoricoPagamenti = new StroricoPagamentiDaoDM();
+        modelAddress = new AddressDaoDM();
+        modelPayment = new PaymentDaoDM();
     }
 
     @Override
@@ -101,16 +114,30 @@ public class CheckoutServlet extends HttpServlet {
 
     private void handleAddAction(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException, IOException {
         Ordine ordine = new Ordine();
-        ordine.setUtenteId((String) session.getAttribute("userId"));
-        ordine.setCodAdress(Integer.parseInt(request.getParameter("address")));
-        ordine.setCodMethod(Integer.parseInt(request.getParameter("paymentMethod")));
-        ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+        String userID = (String) session.getAttribute("userId");
+        try {
+            int codAddress = Integer.parseInt(request.getParameter("address"));
+            int codMethod = Integer.parseInt(request.getParameter("paymentMethod"));
 
-        modelCheckOut.doSave(ordine);
-        modelStoricoProdotti.doSave(cart.getItem_ordinati(), ordine.getNumId(), (String) session.getAttribute("userId"));
-        request.setAttribute("acquistoCompletato", true);
-        session.setAttribute("cart", new ShoppingCart());
-        sendSuccessResponse(request, response,ordine, cart);
+            ordine.setUtenteId(userID);
+            ordine.setCodAdress(codAddress);
+            ordine.setCodMethod(codMethod);
+
+            ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+
+            modelCheckOut.doSave(ordine);
+            modelStoricoProdotti.doSave(cart.getItem_ordinati(), ordine.getNumId(), userID);
+            modelStoricoIndirizzi.doSave(modelAddress.doRetrieveByKey(userID, codAddress), ordine.getNumId(), userID, codAddress);
+            modelStoricoPagamenti.doSave(modelPayment.doRetrieveByKey(userID,codMethod), ordine.getNumId(), userID, codMethod);
+
+            request.setAttribute("acquistoCompletato", true);
+            new CartDaoDM().doDeleteCart("userId");
+            session.setAttribute("cart", new ShoppingCart());
+
+            sendSuccessResponse(request, response, ordine, cart);
+        } catch (NumberFormatException e) {
+            sendErrorMessage(response, "Indirizzo o metodo di pagamento non valido");
+        }
     }
     private void handleShowAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         Collection<Ordine> ordini = modelCheckOut.retriveAllOrdineUtente((String) request.getSession().getAttribute("userId"), null);
@@ -147,9 +174,8 @@ public class CheckoutServlet extends HttpServlet {
 
     private JsonObject getOrderDetails(Ordine ordine) throws SQLException {
         JsonObject jsonOrder = new JsonObject();
-
-        AddressUs indirizzo = new AddressDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodAdress());
-        PayMethod metodo = new PaymentDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodMethod());
+        AddressUs indirizzo = modelStoricoIndirizzi.doRetrieveByKey(ordine.getNumId(), ordine.getUtenteId(), ordine.getCodAdress());
+        PayMethod metodo = modelStoricoPagamenti.doRetrieveByKey(ordine.getNumId(), ordine.getUtenteId(), ordine.getCodAdress());
 
         jsonOrder.addProperty("ordineId", ordine.getNumId());
         jsonOrder.add("address", indirizzo.toJson());
@@ -185,10 +211,10 @@ public class CheckoutServlet extends HttpServlet {
         JsonObject jsonResponse = new JsonObject();
         jsonResponse.addProperty("success", true);
 
-        AddressUs indirizzo = new AddressDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodAdress());
+        AddressUs indirizzo = modelStoricoIndirizzi.doRetrieveByKey(ordine.getNumId(), ordine.getUtenteId(), ordine.getCodAdress());
         jsonResponse.add("address", indirizzo.toJson());
 
-        PayMethod metodo = new PaymentDaoDM().doRetrieveByKey(ordine.getUtenteId(), ordine.getCodMethod());
+        PayMethod metodo = modelStoricoPagamenti.doRetrieveByKey(ordine.getNumId(), ordine.getUtenteId(), ordine.getCodAdress());
         jsonResponse.add("paymentMethod", metodo.toJson());
 
         double prezzoTot = 0; // Inizializza il prezzo totale a 0

@@ -5,7 +5,10 @@
     <title>Profilo</title>
     <link rel="stylesheet" type="text/css" href="css/Profile.css">
     <link rel="stylesheet" type="text/css" href="css/Ordini.css">
+    <link rel="stylesheet" type="text/css" href="css/notifica.css">
+    <link rel="stylesheet" type="text/css" href="css/IndirizziPagamentiInfo.css">
     <script src="js/loadOrdini.js"></script>
+    <script src="js/notifica.js"></script>
     <script src="js/profileSwitchingForms.js"></script>
     <script src="js/profileLoadingFunctions.js"></script>
     <script src="js/validationEditProfile.js"></script>

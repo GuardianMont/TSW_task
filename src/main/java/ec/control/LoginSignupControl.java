@@ -1,6 +1,9 @@
 package ec.control;
 
 import ec.model.HashGenerator;
+import ec.model.cart.CartDaoDM;
+import ec.model.cart.CartItem;
+import ec.model.cart.ShoppingCart;
 import ec.model.user.UserBean;
 import ec.model.user.UserDaoDM;
 import jakarta.servlet.RequestDispatcher;
@@ -19,10 +22,12 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @WebServlet("/LoginSignup")
 public class LoginSignupControl extends HttpServlet {
     private UserDaoDM userDao;
+    private CartDaoDM cartDaoDM;
 
     @Override
     public void init() throws ServletException {
         userDao = new UserDaoDM();
+        cartDaoDM = new CartDaoDM();
         super.init();
     }
 
@@ -50,11 +55,15 @@ public class LoginSignupControl extends HttpServlet {
         if (option != null) {
             switch (option) {
                 case "login":
-                    if (!doLogin(req, resp)) {
-                        dis = "/login_signup.jsp";
-                        errorMessage = "Login fallito. username o password errati";
-                    } else {
-                        redirectFlag = true;
+                    try {
+                        if (!doLogin(req, resp)) {
+                            dis = "/login_signup.jsp";
+                            errorMessage = "Login fallito. username o password errati";
+                        } else {
+                            redirectFlag = true;
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
                     break;
 
@@ -77,7 +86,7 @@ public class LoginSignupControl extends HttpServlet {
         }
     }
 
-    protected boolean doLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected boolean doLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
         HttpSession session = req.getSession();
         String token = req.getParameter("login-token");
         String password = req.getParameter("login-password");
@@ -87,6 +96,21 @@ public class LoginSignupControl extends HttpServlet {
         UserBean user = userDao.getUserIfPasswordIsCorrect(token, password);
         if (user != null) {
             session.setAttribute("userId", user.getUsername());
+            //logica per mergiare i carrelli
+            ShoppingCart sessionCart = (ShoppingCart) session.getAttribute("cart");
+            ShoppingCart dbCart = cartDaoDM.retriveItem(user.getUsername());
+            if (sessionCart == null) {
+                //cioè se in sessione non vi è alcun carrello
+                sessionCart = new ShoppingCart();
+            }
+            //se invece nel Db non si ha il salvataggio di altri carrelli antecedenti
+            if (dbCart != null) {
+                for (CartItem item : dbCart.getItem_ordinati()) {
+                    sessionCart.addCartItem(item.getItem(), item.getNumItem());
+                }
+            }
+            session.setAttribute("cart", sessionCart);
+            //aggiorno il carrello in sessione
             if (user.isAdmin()) {
                 System.out.println("Setting isAdmin to true for user: " + user.getUsername());
                 session.setAttribute("isAdmin", true);

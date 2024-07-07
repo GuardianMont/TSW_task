@@ -55,6 +55,13 @@ public class Address extends HttpServlet {
                         sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
                     }
                     break;
+                case "delete":
+                    try{
+                        handleDeleteAction(request,response);
+                    }catch (SQLException e){
+                        sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non valida");
+
+                    }
                 default:
                     sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non valida");
                     break;
@@ -98,4 +105,10 @@ public class Address extends HttpServlet {
         sendJsonResponse(response,true, addresses);
     }
 
+    private void handleDeleteAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        int numId = Integer.parseInt(request.getParameter("numId"));
+        String userId = (String) request.getSession().getAttribute("userId");
+        model.doDelete(userId, numId);
+        sendSuccessResponse(response, request.getContextPath() + "/Profile.jsp");
+    }
 }

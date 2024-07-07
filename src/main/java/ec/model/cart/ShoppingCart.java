@@ -26,8 +26,27 @@ public class ShoppingCart {
         }
         return false;
     }
+
+    public synchronized boolean incrementCartItem(int id_Item, int quantità) {
+        CartItem Cart_I;
+        for (int i = 0; i < Item_ordinati.size(); i++) {
+            Cart_I = Item_ordinati.get(i);
+            if (Cart_I.getItem().getId() == id_Item) {
+                Cart_I.incrementNumItemof(quantità);
+                return  true;
+            }
+        }
+        return false;
+    }
     public synchronized void addItem (ProductBean item){
-        if (!incrementItem(item.getId())) Item_ordinati.add(new CartItem(item));
+        if (!incrementItem(item.getId())) {
+            Item_ordinati.add(new CartItem(item));
+        }
+    }
+    public synchronized void addCartItem (ProductBean item, int quantità){
+        if (!incrementCartItem(item.getId(), quantità)) {
+            Item_ordinati.add(new CartItem(item,quantità));
+        }
     }
 
     public synchronized void deleteItem(int id_Item) {
@@ -52,7 +71,7 @@ public class ShoppingCart {
     }
 
     public void setItem_ordinati(ArrayList<CartItem> item_ordinati) {
-        Item_ordinati = item_ordinati;
+        this.Item_ordinati = item_ordinati;
     }
 
     public double getPrezzoTot() {

@@ -1,0 +1,43 @@
+/* Stili per il contenitore principale */
+#shipping-payment,
+#shipping-address {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Stili per i singoli elementi di pagamento o indirizzo */
+#shipping-payment > div,
+#shipping-address > div {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Stili per il testo all'interno dei div */
+#shipping-payment div > div,
+#shipping-address div > div {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+/* Stili per i bottoni */
+#shipping-payment button,
+#shipping-address button {
+    padding: 8px 16px;
+    margin-top: 5px;
+    background-color: #e3443a;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#shipping-payment button:hover,
+#shipping-address button:hover {
+    background-color: #0056b3;
+}

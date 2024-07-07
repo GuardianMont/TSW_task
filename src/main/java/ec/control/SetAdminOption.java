@@ -1,16 +1,5 @@
 package ec.control;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import ec.model.CheckOut.CheckOutDaoDM;
-import ec.model.CheckOut.Ordine;
-import ec.model.CheckOut.StoricoProdottiDaoDM;
-import ec.model.PaymentMethod.PayMethod;
-import ec.model.PaymentMethod.PaymentDaoDM;
-import ec.model.address.AddressDaoDM;
-import ec.model.address.AddressUs;
-import ec.model.cart.ShoppingCart;
-import ec.model.product.ProductBean;
 import ec.model.user.UserDaoDM;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -22,9 +11,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
 
 import static ec.util.ResponseUtils.sendErrorMessage;
 import static ec.util.ResponseUtils.sendJsonResponse;

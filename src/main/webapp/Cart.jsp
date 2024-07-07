@@ -59,7 +59,15 @@
             double prezzoUnitario = item.getItem().getPrezzo();
             double prezzoScontato = item.getItem().getPrezzoScontato();
             //funzione per calcolare il prezzo scontato
-            boolean hasDiscount = prezzoScontato > 0;%>
+            boolean hasDiscount = prezzoScontato > 0;
+
+            // Se la disponibilità del prodotto è zero o inferiore, rimuovilo dal carrello
+            if (item.getItem().getDisponibilita() <= 0) {
+                cartItem.deleteItem(item.getItem().getId());
+                continue; // Passa al prossimo elemento senza generare HTML per questo prodotto
+            }
+
+            %>
         <tr>
             <td><%=item.getItem().getNome()%></td>
             <%

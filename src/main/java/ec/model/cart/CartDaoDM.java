@@ -19,13 +19,14 @@ public class CartDaoDM implements CartDao {
     public void doSave(CartItem Item, String codeUser ) throws SQLException {
         String insertSQL = "INSERT INTO " + CartDaoDM.TABLE_NAME
                 + " (prodotto_id, utente_id, quantita) "
-                + " VALUES (?, ?, ?) ";
-
+                + " VALUES (?, ?, ?) " +
+                "ON DUPLICATE KEY UPDATE quantita = VALUES(quantita)";
+        //cioè se esiste già nel carrello un record con lo stesso username e lo stesso prodotto
+        //anziché lanciare un errore lo sostituisce con la nuova quantità
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 
             preparedStatement.setInt(1,Item.getItem().getId());
-            //ho fatto con un utente finto inserito manualmente
             preparedStatement.setString(2, codeUser);
             preparedStatement.setDouble(3, Item.getNumItem());
 

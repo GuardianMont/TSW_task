@@ -66,6 +66,7 @@
                title="sconto da applicare al prodotto" required>
         <span id="sconto-error" class="error-message">Il campo sconto è obbligatorio</span>
 
+        <label for="categoria">Categoria</label>
         <select id="categoria" name="categoria" required title="Categoria dei prodotti">
             <option value="<%=product.getCategoria()%>" selected><%=product.getCategoria()%></option>
             <option value="tavolo">Tavolo</option>
@@ -90,8 +91,8 @@
                 <option value="stecche">Stecche</option>
                 <option value="bilie">Bilie</option>
                 <option value="palline">Palline</option>
-                <option value="spingitori">Spingitori</option>
-                <option value="dischi">dischi</option>
+                <option value="AttrezzaturaAir">Attrezzatura air hockey</option>
+
             </select>
         </div>
         <label for="colore">Colore</label><br>

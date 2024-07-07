@@ -44,8 +44,8 @@
 	<div class="sorting-dropdown">
 		<select onchange="window.location.href=this.value" class="select-sorting">
 			<option value="#">Ordina per</option>
-			<option value="product?sort=id">ID</option>
-			<option value="product?sort=nome">Nome</option>
+			<option value="product?sort=id">Nuove Aggiunte</option>
+			<option value="product?sort=nome">Ordine alfabetico</option>
 			<option value="product?sort=prezzo">Prezzo (Ascendente)</option>
 			<option value="product?sort=prezzoDec">Prezzo (Decrescente)</option>
 		</select>
