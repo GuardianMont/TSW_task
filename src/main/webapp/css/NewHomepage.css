@@ -1,0 +1,320 @@
+/* Css per la transizione dell'header */
+header {
+    transition: background-color 0.5s ease; /* Aggiungi una transizione per un cambiamento graduale del colore */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 1000;
+}
+.colored {
+    background-color: #E6DCC8; /* Sostituisci con il colore desiderato */
+}
+.transparent {
+    background-color: transparent;
+}
+
+/* Css per l'header */
+.header-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.numeroProdotti {
+    position: absolute;
+    top: -15px;
+    left: clamp(20px ,2.5vw, 26px);
+    background-color: #333;
+    color: white;
+    border-radius: 50%;
+    padding: 3px;
+    font-size: clamp(10px ,1vw, 16px);
+    width: clamp(13px, 1vw, 20px);
+    height: clamp(13px, 1vw, 20px);
+    text-align: center;
+    line-height: 16px;
+    z-index: 1000;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.numeroProdotti-colored{
+    background-color: #ff5555;
+    color: black;
+}
+
+
+/* Css per i link a sinistra */
+.link-container {
+    flex: 1;
+    display: inline-block;
+    white-space: nowrap;
+    margin-left: 10px;
+    justify-content: space-between;
+    width: 200px;
+}
+.link-container a{
+    display: inline-block;
+    color: #ffffff;
+    font-size: clamp(13px ,2vw, 20px);
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+    padding: 0 10px;
+}
+
+.link-container.link-colored a {
+    color: #333;
+}
+
+.link-container a:hover {
+   transform: scale(1.2);
+}
+
+/* Css per il logo */
+.logo-link {
+    flex: 2;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.logo-container svg {
+    color: #333;
+}
+
+/* Css per le icone a destra */
+.icons {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 7px;
+}
+
+.icon {
+    margin-left: 15px;
+    width: 100%;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+}
+
+.icons a {
+    margin: 0 10px;
+    height: 100%;
+    color: #ffffff;
+    max-font-size: 20px;
+    font-size: clamp(14px ,2vw, 22px);
+    position: relative;
+    z-index: 1;
+}
+
+.icons.icon-colored a{
+    color: #333;
+}
+
+/* Css per l'immagine */
+.first-image-container {
+    position: relative;
+    text-align: center;
+}
+.first-image-container img {
+    display: block;
+    width: 100%;
+    height: clamp(500px, 90vw, 900px);
+    object-fit: cover;
+}
+.text-over-image {
+    position: absolute;
+    top: 90%;
+    left: 35%;
+    text-shadow: 2px 2px 4px #000000;
+    font-size: 4vw;
+    transform: translate(-50%, -50%);
+    color: white;
+    transition: color 0.5s ease, transform 0.5s ease, text-shadow 0.5s ease;
+}
+
+/* Css per le animazioni */
+.fixed {
+    position: fixed;
+    color: white;
+}
+
+.colored {
+    background-color: #E6DCC8; /* Sostituisci con il colore desiderato */
+}
+.transparent {
+    background-color: transparent;
+    color: transparent;
+    text-shadow: none;
+}
+.text-to-animate {
+    transform: translate(-50%, 0%);
+}
+.transparent-text {
+    color: transparent;
+}
+
+
+
+
+/* Css per le sezioni doppie */
+.double-section {
+    display: flex;
+    flex-wrap: nowrap; /* Ensure images are side by side */
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.double-image-text-container {
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    align-items: stretch; /* Ensure images stretch to the same height */
+    justify-content: center;
+    margin-right: 10px; /* Add margin to separate the images */
+}
+
+.double-image-text-container:last-child {
+    margin-right: 0; /* Remove margin from the last container */
+}
+
+.double-section-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.double-section-text {
+    position: absolute;
+    bottom: 0;
+    font-size: 2.8vw;
+    color: #ffffff;
+    width: fit-content;
+    text-shadow: 3px 3px 5px #000000;
+    padding: 10px;
+    transition: transform 0.5s ease-in-out;
+}
+
+.double-section-text.left{
+    transform: translate(-50%, 100%);
+}
+
+.double-section-text.right{
+    transform: translate(50%, 100%);
+}
+
+.double-image-text-container:hover .double-section-text.left {
+    transform: translate(-50%, 0%);
+}
+.double-image-text-container:hover .double-section-text.right {
+    transform: translate(50%, 0%);
+}
+
+/* Css per le sezioni singole */
+.single-section {
+    height: 50%;
+    display: flex;
+    margin-top: 20px;
+}
+
+.single-image-text-container {
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.single-section-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.single-section-text {
+    position: absolute;
+    bottom: 0;
+    font-size: 2.8vw;
+    color: #ffffff;
+    width: fit-content;
+    text-shadow: 3px 3px 5px #000000;
+    padding: 10px;
+    transition: transform 0.5s ease-in-out;
+    transform: translate(0%, 100%);
+}
+
+.single-image-text-container:hover .single-section-text {
+    transform: translate(0%, 0%);
+}
+
+/* CSS per la sezione scrollabile */
+.scrollable-section {
+    overflow-x: auto; /* Abilita lo scroll orizzontale */
+    white-space: nowrap; /* Impedisce al contenuto di andare a capo */
+    width: 100%;
+    padding: 80px 20px; /* Aggiunge spazio sopra e sotto, e padding a sinistra e destra */
+    display: flex;
+    justify-content: flex-start; /* Allinea il contenuto a sinistra */
+    box-sizing: border-box; /* Include il padding nel calcolo della larghezza */
+}
+
+.scrollable-container {
+    display: inline-flex; /* Usa flexbox per allineare le immagini in linea */
+}
+
+.scrollable-object {
+    position: relative;
+    width: clamp(200px, 28vw, 300px); /* Larghezza delle immagini */
+    height: auto; /* Mantiene le proporzioni delle immagini */
+    margin-right: 20px; /* Spazio tra le immagini */
+    border-radius: 10px; /* Bordi arrotondati */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombreggiatura delle immagini */
+    transition: transform 0.3s ease; /* Transizione per l'effetto hover */
+}
+
+.scrollable-object:last-child {
+    margin-right: 0; /* Rimuove lo spazio dalla destra dell'ultima immagine */
+}
+
+.scrollable-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px; /* Bordi arrotondati */
+}
+
+.scrollable-text {
+    position: absolute; /* Posiziona il testo assolutamente all'interno del contenitore */
+    bottom: 10px; /* Posiziona il testo 10px dal fondo dell'immagine */
+    left: 20px; /* Posiziona il testo 20px dalla sinistra dell'immagine */
+    color: white; /* Colore del testo */
+    font-size: 20px; /* Dimensione del testo */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Ombreggiatura del testo per renderlo leggibile */
+    z-index: 2; /* Assicura che il testo sia sopra l'immagine */
+}
+
+.scrollable-object:hover {
+    transform: scale(1.1); /* Ingrandisce leggermente l'immagine al passaggio del mouse */
+}
+
+/*TODO: media query per rendere l'header e il resto completamente responsive*/

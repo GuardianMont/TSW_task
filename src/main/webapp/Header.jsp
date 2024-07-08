@@ -63,6 +63,7 @@
             <button id="submit" type="submit"><i class="fas fa-search" aria-hidden="true"></i><span class="sr-only">Cerca</span></button>
         </form>
     </div>
+
     <div class="icons">
         <a href="${pageContext.request.contextPath}/carrello" aria-label="Carrello">
             <i class="fas fa-shopping-cart" aria-hidden="true"></i>

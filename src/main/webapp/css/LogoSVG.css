@@ -1,0 +1,59 @@
+/* colori quando logo non è logo-colored */
+.logo {
+    width: 400px;
+    margin-top: 200px;
+    transition: width 0.3s ease, margin-top 0.3s ease;
+}
+
+.logo .stecche-punta {
+    fill: #000000 !important;
+    transition: fill 0.3s ease;
+}
+
+.logo .stecche-asta {
+    fill: #000000 !important;
+    transition: fill 0.3s ease;
+}
+.logo .stecche-manico {
+    fill: #000000 !important;
+    transition: fill 0.3s ease;
+}
+
+.logo .rettangolo {
+    fill: #000000 !important;
+    transition: fill 0.3s ease;
+}
+
+.logo .testo {
+    fill: #FFFFFF !important;
+    transition: fill 0.3s ease;
+}
+
+/* colori quando logo è logo-colored */
+.logo.logo-colored {
+    width: 200px;
+    margin-top: 0;
+    transition: width 0.3s ease, margin-top 0.3s ease;
+}
+
+.logo.logo-colored .stecche-punta {
+    fill: #ffffff !important;
+    transition: fill 0.3s ease;
+}
+
+.logo.logo-colored .stecche-asta {
+    fill: #552200 !important;
+    transition: fill 0.3s ease;
+}
+.logo.logo-colored .stecche-manico {
+    fill: #000000;
+    transition: fill 0.3s ease;
+}
+.logo.logo-colored .rettangolo {
+    fill: #008080 !important;
+    transition: fill 0.3s ease;
+}
+.logo.logo-colored .testo {
+    fill: #ffffff !important;
+    transition: fill 0.3s ease;
+}
