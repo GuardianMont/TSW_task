@@ -132,7 +132,7 @@ body {
 }
 
 .search-bar button {
-    padding: 8px; /* Ridotto il padding del pulsante */
+    padding: 5px; /* Ridotto il padding del pulsante */
     background-color: #4CAF49;
     color: #fff;
     border: none;

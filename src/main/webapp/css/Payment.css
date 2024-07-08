@@ -1,10 +1,7 @@
 /* Stili globali per il corpo della pagina */
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
     background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
 }
 
 /* Stile per il contenitore principale */
@@ -26,8 +23,6 @@ body {
 
 /* Stili per i form di inserimento */
 form {
-    margin-bottom: 20px;
-    padding: 20px;
     border-radius: 6px;
 }
 
