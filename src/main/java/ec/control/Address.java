@@ -25,8 +25,6 @@ public class Address extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String opzione = request.getParameter("opzione");
-        System.out.println("Paramentro doGet address: " +opzione);
         doPost(request, response);
     }
 
@@ -38,7 +36,6 @@ public class Address extends HttpServlet {
             sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Sessione non valida o utente non loggato");
             return;
         }
-        System.out.println("Paramentro address: " +opzione);
         if (opzione != null) {
             switch (opzione) {
                 case "add":
@@ -59,9 +56,9 @@ public class Address extends HttpServlet {
                     try{
                         handleDeleteAction(request,response);
                     }catch (SQLException e){
-                        sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non valida");
-
+                        sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
                     }
+                    break;
                 default:
                     sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Opzione non valida");
                     break;

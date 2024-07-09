@@ -12,7 +12,9 @@ body {
     align-items: center;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative;
+    position: sticky;
+    z-index: 1000; /* Imposta un valore alto per il layer z-index */
+    top: 0;
 }
 
 .header-container a {

@@ -57,6 +57,7 @@ public class Cart extends HttpServlet {
 
                         CartItem do_delete;
                         if ((do_delete = cart.getItem(id)) != null) {
+                            System.out.println("sto cancellando");
                             do_delete.cancelOrder();
                             cart.deleteItem(id);
                             session.setAttribute("cart", cart);
@@ -105,11 +106,6 @@ public class Cart extends HttpServlet {
                             //mi assicuro che l'utente sia loggato prima di effettuare un acquisto
                             try {
                                 handleAcquistoAction(request);
-                                //è la servelet cart che si occupa di reindirizzare
-                                //verso la servlet address per fare il fetch degli indirizzi
-                                //e proseguire verso la finalizzazione dell'acquisto
-                                //ServletContext context = getServletContext();
-                                //context.setAttribute("op", "show");
                                 dis = "/Payment.jsp";
                             } catch (SQLException e) {
                                 e.printStackTrace();
@@ -185,11 +181,6 @@ public class Cart extends HttpServlet {
         for (var e : Item_ordinati) {
                 model.doSave(e, (String)request.getSession().getAttribute("userId"));
             }
-        //session.setAttribute("cart", new ShoppingCart());
-        //request.setAttribute("acquistoCompletato", true);
-
-        // Redirect alla stessa pagina per visualizzare l'aggiornamento
-        //response.sendRedirect(request.getContextPath() + forward);
     }
 
     private void handleUpdateAction(HttpServletRequest request) throws SQLException, ServletException, IOException {

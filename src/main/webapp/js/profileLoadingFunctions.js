@@ -72,7 +72,7 @@ function loadAddresses() {
                         var deleteButton = document.createElement('button');
                         deleteButton.textContent = 'Elimina';
                         deleteButton.onclick = function() {
-                            deleteAddress(address.numId);
+                            deleteAddress(address.num_ID);
                         };
                         div.appendChild(deleteButton);
 
@@ -131,21 +131,23 @@ function deleteAddress(numId) {
             var response = JSON.parse(xhr.responseText);
             if (response.success) {
                 // Richiama la funzione per ricaricare i metodi di pagamento aggiornati dopo la cancellazione
-                loadPaymentMethods();
-                alert('Indirizzo eliminato con successo.');
+                loadAddresses();
+                showInfoNotifica('Indirizzo eliminato con successo.');
             } else {
                 console.error('Errore durante l\'eliminazione dell\'indirizzo:', response.error);
-                alert('Errore durante l\'eliminazione dell\'indirizzo.');
+                showAttentionNotifica('Errore durante l\'eliminazione dell\'indirizzo.');
             }
         } else {
             console.error('Request failed. Status:', xhr.status);
-            alert('Errore durante l\'eliminazione dell\'indirizzo. Codice errore: ' + xhr.status);
+            showAttentionNotifica('Errore durante l\'eliminazione dell\'indirizzo. Codice errore: ' + xhr.status);
         }
     };
     xhr.onerror = function() {
         console.error('Request failed. Network error.');
-        alert('Errore di rete durante l\'eliminazione dell\'indirizzo.');
+        showAttentionNotifica('Errore di rete durante l\'eliminazione dell\'indirizzo.');
     };
     var data = 'opzione=delete&numId=' + encodeURIComponent(numId);
     xhr.send(data);
 }
+
+

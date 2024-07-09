@@ -7,12 +7,20 @@
     <meta charset="UTF-8">
     <title>Dettaglio prodotto</title>
     <link href="css/ProductStyle.css" rel="stylesheet" type="text/css">
+    <script src="js/functionFavorites.js"></script>
+    <script>
+        window.onload = function() {
+            if ('<%= session.getAttribute("userId") %>' !== 'null') {
+                loadFavorites();
+            }
+        };
+    </script>
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
 
 <div class="product-container">
-    <a href="./product" class="return-button">Return</a>
+    <a href="./product" class="return-button">&#8592;</a>
     <%
         ProductBean product = (ProductBean) request.getAttribute("product");
         if (product != null) {
@@ -46,6 +54,9 @@
                 <%
                     }
                 %>
+                <% if(session.getAttribute("userId")!=null){ %>
+                <img src="uploadFile/favorites_32.png" alt="Favorite Icon" id="favorite-icon-<%= product.getId() %>" class="favorite not-added" onclick="toggleFavorite(<%= product.getId() %>)">
+                <%}%>
                 <%= product.getNome() %>
             </h1>
             <p><%= product.getDescrizione() %></p>
@@ -64,6 +75,7 @@
                 if (product.getDisponibilita() > 0) {
             %>
             <a href="carrello?opzione=add&id=<%= product.getId() %>" class="add-to-cart-button">Add to Cart</a>
+
             <%
                 }
             %>

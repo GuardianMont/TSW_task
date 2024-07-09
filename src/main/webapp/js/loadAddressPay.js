@@ -150,15 +150,6 @@ function submitAddressForm(event) {
     xhr.onerror = function() {
         console.error('Request failed. Network error.');
     };
-    //mi dava problemi con la lettura del form
-        //in questo modo si rendendo i campi del form un url
-        //tecnicamente in questo modo si potrebbe persino gestire il tutto con un
-        //doGet, ma continuo a usare Post
-        //var params = new URLSearchParams();
-        //formData.forEach((value, key) => {
-        //    params.append(key, value);
-        //});
-        //params.append("opzione", "add");
         var params = new URLSearchParams(formData);
         params.append("opzione", "add");
         xhr.send(params.toString());

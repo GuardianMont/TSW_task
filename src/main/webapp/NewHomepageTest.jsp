@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: mauri
-  Date: 04/07/2024
-  Time: 15:03
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page import="ec.model.cart.ShoppingCart" %>
 <%@ page import="ec.control.Profile" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

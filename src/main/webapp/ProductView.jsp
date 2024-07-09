@@ -19,11 +19,12 @@
 	<title>Storage DS/BF</title>
 	<script src="js/validationProduct.js"></script>
 	<script src="js/notifica.js"></script>
+	<script src="js/functionFavorites.js"></script>
 	<script>
 		window.onload = function() {
-			var signupSuccess = '<%= session.getAttribute("signupSuccess") != null %>' === 'true';
-			var user = '<%= session.getAttribute("userId") != null %>' === 'true';
-			var insert = '<%= session.getAttribute("inserted") != null %>' === 'true';
+			var signupSuccess = '<%= session.getAttribute("signupSuccess") %>' === 'true';
+			var user = '<%= session.getAttribute("userId") %>' !== 'null';
+			var insert = '<%= session.getAttribute("inserted") %>' === 'true';
 
 			if (signupSuccess && user) {
 				showInfoNotifica("Login effettuato! Benvenuto " + '<%= session.getAttribute("userId") %>' + "!");
@@ -34,12 +35,16 @@
 				showInfoNotifica("Inserimento prodotto avvenuto con successo");
 				<% session.removeAttribute("inserted"); %>
 			}
+
+			if ('<%= session.getAttribute("userId") %>' !== 'null') {
+				loadFavorites();
+			}
 		};
 	</script>
 </head>
 <body>
 
-<jsp:include page="Header.jsp"/>
+<jsp:include page="Header.jsp" />
 <div class="generale">
 	<div class="sorting-dropdown">
 		<select onchange="window.location.href=this.value" class="select-sorting">
@@ -58,10 +63,11 @@
 %>
 <div class="button-container">
 	<a href="admin/insert.jsp" id="insert-a" class="add-button">Inserire prodotto</a>
+	<a href="admin/AdminOptions.jsp" id="opzioniAd-a" class="add-button">Opzioni Admin</a>
 </div>
 <% } %>
 <%
-	if (products == null && products.isEmpty()) { %>
+	if (products == null || products.isEmpty()) { %>
 <div>
 	<div class="no-product-wrapper">
 		<div class="No-product">
@@ -76,15 +82,11 @@
 		if (products != null && !products.isEmpty()) {
 			for (Object obj : products) {
 				ProductBean bean = (ProductBean) obj;
-				//lo uso per settare se il prodotto è esaurito o meno
 				boolean outOfStock = bean.getDisponibilita() == 0;
 				double prezzoUnitario = bean.getPrezzo();
 				double prezzoScontato = bean.getPrezzoScontato();
-				//funzione per calcolare il prezzo scontato
-				boolean hasDiscount = prezzoScontato>0 ? true : false;
-
+				boolean hasDiscount = prezzoScontato > 0;
 	%>
-
 	<div class="product <%= outOfStock ? "out-of-stock" : "" %>">
 		<div class="product-content">
 			<div class="immagini">
@@ -99,55 +101,59 @@
 				<%
 					if (hasDiscount) {
 				%>
-					<div class="sconto-visible">
-						<%=bean.getPercentualeSconto() + "%" %>
-					</div>
+				<div class="sconto-visible">
+					<%=bean.getPercentualeSconto() %>%
+				</div>
 				<% } %>
 			</div>
 			<h2 onclick="window.location.href='product?opzione=read&id=<%= bean.getId() %>'"><%= bean.getNome() %></h2>
 			<p>
-				<% if (hasDiscount){ %>
-				<span class="prezzo-unitario"><%= String.format("%.2f", bean.getPrezzo()) %> &euro;</span>
+				<% if (hasDiscount) { %>
+				<span class="prezzo-unitario"><%= String.format("%.2f", prezzoUnitario) %> &euro;</span>
 				<span class="prezzo-scontato"><%= String.format("%.2f", prezzoScontato) %> &euro;</span>
-                <% } else { %>
-				<span><%= bean.getPrezzo() %> &euro;</span>
+				<% } else { %>
+				<span><%= prezzoUnitario %> &euro;</span>
 				<% } %>
 			</p>
 			<div class="button-container">
 				<p>
-					<%
-					if (userId != null && isAdmin != null && (boolean) isAdmin) {
+						<%
+                    if (userId != null && isAdmin != null && (boolean) isAdmin) {
                     %>
 					<a href="product?opzione=delete&id=<%= bean.getId() %>" class="remove-button">Delete</a> <br>
 					<a href="product?opzione=show&id=<%= bean.getId() %>" class="add-button">Modifica</a>
-					<%
+						<%
                     }
                     if (bean.getDisponibilita() > 0) {
                     %>
 					<a href="carrello?opzione=add&id=<%= bean.getId() %>" class="add-button">Aggiungi al carrello</a> <br>
-					<%
+						<%
                     } else {
                     %>
-					<div class="out-of-stock-message">
-						<img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="15" height="15">
-						<span id="out-of-stock-message-text">Esaurito</span>
-					</div>
-					<br>
-					<%
+				<div class="out-of-stock-message">
+					<img src="uploadFile/erroreAttentionIcon.png" alt="Info Icon" width="15" height="15">
+					<span id="out-of-stock-message-text">Esaurito</span>
+				</div>
+				<br>
+				<%
 					}
-					%>
+				%>
+				<% if(userId!=null){
+				//l'immgine dei preferiti viene visualizzata solo in caso vi sia un utente loggato%>
+				<img src="uploadFile/favorites_32.png" alt="Favorite Icon" id="favorite-icon-<%= bean.getId() %>"
+					 class="favorite not-added" onclick="toggleFavorite(<%= bean.getId() %>)">
+
+				<%}%>
 				</p>
 			</div>
 		</div>
 	</div>
-
 	<%
+			}
 		}
-	}
 	%>
 </div>
-
-
+<jsp:include page="Footer.jsp" />
 
 <script>
 	// JavaScript per gestire il click sul pulsante
@@ -159,6 +165,5 @@
 	}
 </script>
 
-<jsp:include page="Footer.jsp"/>
 </body>
 </html>

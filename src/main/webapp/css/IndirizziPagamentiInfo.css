@@ -39,5 +39,5 @@
 
 #shipping-payment button:hover,
 #shipping-address button:hover {
-    background-color: #0056b3;
+    background-color: darkred;
 }

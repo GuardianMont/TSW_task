@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="css/notifica.css">
     <link rel="stylesheet" href="css/Payment.css">
     <link rel="stylesheet" href="css/confermaAcquisto.css">
-    <style>
-        /* Include inline CSS from the previous snippet here */
-    </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/validationAddress.js"></script>
     <script src="js/validationPayMathods.js"></script>

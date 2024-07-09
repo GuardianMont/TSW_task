@@ -7,12 +7,15 @@
     <link rel="stylesheet" type="text/css" href="css/Ordini.css">
     <link rel="stylesheet" type="text/css" href="css/notifica.css">
     <link rel="stylesheet" type="text/css" href="css/IndirizziPagamentiInfo.css">
-    <script src="js/loadOrdini.js"></script>
+    <link rel="stylesheet" type ="text/css" href="css/FormAddressStyle.css">
     <script src="js/notifica.js"></script>
     <script src="js/profileSwitchingForms.js"></script>
     <script src="js/profileLoadingFunctions.js"></script>
     <script src="js/validationEditProfile.js"></script>
+    <script src="js/validationAddress.js"></script>
+    <script src="js/validationPayMathods.js"></script>
     <script src="js/validationFunctions.js"></script>
+    <script src="js/loadOrdini.js"></script>
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
@@ -25,6 +28,16 @@
 %>
 
 <div class="container main-container" id="main-container">
+    <form class="logout-form" action="${pageContext.request.contextPath}/LoginSignup">
+        <input type="hidden" name="option" value="logout">
+        <input type="submit" value="Logout">
+    </form>
+    <div class="container button-container">
+        <button class="edit-button" id="profilo" onclick="showProfile()">Informazioni utente</button>
+        <button class="edit-button" id="viewOrdini" onclick="loadOrders()">Visualizza Ordini</button>
+        <button class="edit-button" id="viewPayment" onclick="loadPaymentMethods()">Metodi di Pagamento</button>
+        <button class="edit-button" id="viewAddresses" onclick="loadAddresses()">Indirizzi di spedizione</button>
+    </div>
     <div class="container profile-container" id="profile-container">
         <h3>Profilo <%= user.getUsername() %></h3>
         <p>Nome: <%= user.getNome() %></p>
@@ -151,27 +164,126 @@
     </div>
 
     <div class="indirizziSpedizione" id="indirizziSpedizione" style="display: none;">
+        <button id="add-address" class="add-button add-methods-button" onclick="toggleAddressForm()">
+            <i class="fas fa-plus"></i>
+        </button>
         <div id="shipping-address">
             <!--li immetto con ajax-->
+        </div>
+        <div id="remove-button" class="hidden">
+            <button class="remove-button" onclick="toggleAddressForm()">X</button>
+        </div>
+        <div id="new-address-form" class="hidden form-container">
+            <form id="addressForm" action="AddressManagement" method="POST">
+                <input type="hidden" name="opzione" value="add">
+
+                <div class="form-group">
+                    <label for="via">Via:</label>
+                    <input id="via" name="via" type="text" maxlength="20" placeholder="Via Muni..." pattern="^[a-zA-Z0-9\s]+$" required>
+                    <span id="via-error" class="error-message">Il campo 'Via' è obbligatorio.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="n_civico">Numero civico:</label>
+                    <input id="n_civico" name="n_civico" type="text" maxlength="4" required>
+                    <span id="n_civico-error" class="error-message">Inserisci un numero civico valido.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="preferenze">Preferenze spedizione:</label>
+                    <textarea class="textarea" id="preferenze" name="preferenze" maxlength="30" placeholder="Inserire preferenze di spedizione" pattern="^[a-zA-Z0-9\s]+$"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="cap">CAP:</label>
+                    <input id="cap" name="cap" type="text" maxlength="5" placeholder="00000" required>
+                    <span id="cap-error" class="error-message">Inserisci un CAP valido (5 cifre).</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="citta">Città:</label>
+                    <input id="citta" name="citta" type="text" placeholder="Città" pattern="^[a-zA-Z0-9\s]+$" required>
+                    <span id="citta-error" class="error-message">Il campo 'Città' è obbligatorio.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="provincia">Provincia:</label>
+                    <input id="provincia" name="provincia" type="text" maxlength="2" required>
+                    <span id="provincia-error" class="error-message">Inserisci una provincia valida (2 lettere).</span>
+                </div>
+
+                <div class="button-container">
+                    <input type="submit" value="Aggiungi Indirizzo" class="submit-button">
+                    <input type="reset" value="Reset" class="reset-button">
+                </div>
+            </form>
         </div>
     </div>
 
     <div class="metodiPagamento" id="metodiPagamento" style="display: none;">
+        <button id="add-pay-button" class="add-button add-methods-button" onclick="togglePayMethodForm()">
+            <i class="fas fa-plus"></i>
+        </button>
         <div id="shipping-payment">
             <!--li immetto con ajax-->
         </div>
+        <div id="remove-pay-form" class="button-container hidden">
+            <button class="remove-button" onclick="togglePayMethodForm()">X</button>
+        </div>
+        <div id="new-payMethod-form" class="hidden form-container">
+            <!--form per l'aggiunta di un nuovo metodo di pagamento celato se l'utente non clicca il bottone-->
+            <form id="payMethodsForm" action="payMethodsManager" method="post">
+                <input type="hidden" name="opzione" value="add">
+                <div class="form-group">
+                    <label for="NumeroCarta">Numero Carta:</label>
+                    <input id="NumeroCarta" name="NumeroCarta" type="text" pattern="\d{16}" maxlength="16" required placeholder="Numero Carta">
+                    <span id="NumeroCartaError" class="error-message">Il campo Numero Carta è obbligatorio.</span>
+                </div>
+                <div class="form-group">
+                    <div class="data-scadenza">
+                       <label for="meseScadenza">Data Scadenza:</label>
+                        <input id="meseScadenza" name="meseScadenza" type="text" maxlength="2" placeholder="MM" pattern="(0[1-9]|1[0-2])" required>
+                       <label for="annoScadenza">/</label>
+                       <input id="annoScadenza" name="annoScadenza" type="text" maxlength="2" placeholder="YY" pattern="([2-9][4-9]|[3-9][0-9])" required>
+                    </div>
+                    <span id="dataScadenzaError" class="error-message">Inserisci una data di scadenza valida (MM/YY).</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="cvv">CVV:</label>
+                    <input id="cvv" name="cvv" type="text" maxlength="3" placeholder="000" required>
+                    <span id="CvvError" class="error-message">Inserisci un CVV valido (3 cifre).</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="circuito">Circuito:</label>
+                    <select id="circuito" name="circuito" required>
+                        <option value="" disabled selected>Seleziona un circuito</option>
+                        <option value="visa">Visa</option>
+                        <option value="mastercard">Mastercard</option>
+                        <option value="amex">American Express</option>
+                        <option value="discover">Discover</option>
+                        <option value="diners">Diners Club</option>
+                        <option value="bancomat">Bancomat</option>
+                    </select>
+                    <span id="circuitoError" class="error-message">Il campo 'Circuito' è obbligatorio.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="titolareCarta">Titolare Carta:</label>
+                    <input id="titolareCarta" name="titolareCarta" type="text" placeholder="Nome Cognome" pattern="^[a-zA-Z0-9\s]+$" required>
+                    <span id="titolareError" class="error-message">Il campo Titolare Carta è obbligatorio.</span>
+                </div>
+
+                <div class="button-container">
+                    <input type="submit" value="Aggiungi Metodo" class="add-methods-button">
+                    <input type="reset" value="Reset">
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div class="container button-container">
-        <button class="edit-button" id="profilo" onclick="showProfile()">Informazioni utente</button>
-        <button class="edit-button" id="viewOrdini" onclick="loadOrders()">Visualizza Ordini</button>
-        <button class="edit-button" id="viewPayment" onclick="loadPaymentMethods()">Metodi di pagamento</button>
-        <button class="edit-button" id="viewAddresses" onclick="loadAddresses()">Indirizzi di spedizione</button>
-        <form class="logout-form" action="${pageContext.request.contextPath}/LoginSignup">
-            <input type="hidden" name="option" value="logout">
-            <input type="submit" value="Logout">
-        </form>
-    </div>
+
 </div>
 <%
 } else {
