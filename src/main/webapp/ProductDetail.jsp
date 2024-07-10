@@ -7,6 +7,8 @@
     <meta charset="UTF-8">
     <title>Dettaglio prodotto</title>
     <link href="css/ProductStyle.css" rel="stylesheet" type="text/css">
+    <link href="css/notifica.css" rel ="stylesheet" type="text/css">
+    <script src ="js/notifica.js"></script>
     <script src="js/functionFavorites.js"></script>
     <script>
         window.onload = function() {
