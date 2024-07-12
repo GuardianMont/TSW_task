@@ -51,10 +51,10 @@ public class FavoritesUser extends HttpServlet {
             String userId = (String) session.getAttribute("userId");
             Collection<ProductBean> result = model.retriveProductFavorites(userId);
 
-            request.setAttribute("products", result);
+            request.setAttribute("preferiti", result);
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ProductView.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Preferiti.jsp");
             dispatcher.forward(request, response);
 
         } catch (SQLException e) {

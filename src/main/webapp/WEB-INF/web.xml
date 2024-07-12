@@ -20,7 +20,7 @@
     <listener-class>ec.control.listener.CartSessionListener</listener-class>
   </listener>
   <welcome-file-list>
-    <welcome-file>ProductView.jsp</welcome-file>
+    <welcome-file>NewHomepageTest.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
     <servlet-name>ProductControl</servlet-name>

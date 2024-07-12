@@ -17,6 +17,8 @@
 	<link rel="stylesheet" href="css/notifica.css">
 	<link rel="stylesheet" href="css/Sconto.css">
 	<title>Storage DS/BF</title>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="js/functionSweetAlert.js"></script>
 	<script src="js/validationProduct.js"></script>
 	<script src="js/notifica.js"></script>
 	<script src="js/functionFavorites.js"></script>
@@ -120,7 +122,7 @@
 						<%
                     if (userId != null && isAdmin != null && (boolean) isAdmin) {
                     %>
-					<a href="product?opzione=delete&id=<%= bean.getId() %>" class="remove-button">Delete</a> <br>
+					<a href="#" class="remove-button" onclick="confirmDelete(<%= bean.getId() %>)">Delete</a> <br>
 					<a href="product?opzione=show&id=<%= bean.getId() %>" class="add-button">Modifica</a>
 						<%
                     }
