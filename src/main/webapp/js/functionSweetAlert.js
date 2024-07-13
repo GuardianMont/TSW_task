@@ -12,5 +12,5 @@ function confirmDelete(productId) {
         if (result.isConfirmed) {
             window.location.href = 'product?opzione=delete&id=' + productId;
         }
-    })
+    });
 }

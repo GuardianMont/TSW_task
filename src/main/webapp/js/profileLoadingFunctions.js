@@ -25,7 +25,7 @@ function loadPaymentMethods() {
                         var deleteButton = document.createElement('button');
                         deleteButton.textContent = 'Elimina';
                         deleteButton.onclick = function() {
-                            deletePaymentMethod(payMethod.numId);
+                            confirmDeletePaymentMethod(payMethod.numId);
                         };
                         div.appendChild(deleteButton);
 
@@ -72,7 +72,7 @@ function loadAddresses() {
                         var deleteButton = document.createElement('button');
                         deleteButton.textContent = 'Elimina';
                         deleteButton.onclick = function() {
-                            deleteAddress(address.num_ID);
+                            confirmDeleteAddress(address.num_ID);
                         };
                         div.appendChild(deleteButton);
 
@@ -150,4 +150,36 @@ function deleteAddress(numId) {
     xhr.send(data);
 }
 
+function confirmDeletePaymentMethod(paymentMethodId) {
+    Swal.fire({
+        title: 'Sei sicuro?',
+        text: "Non potrai annullare questa azione!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sì, elimina!',
+        cancelButtonText: 'Annulla'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deletePaymentMethod(paymentMethodId);
+        }
+    });
+}
 
+function confirmDeleteAddress(addressId) {
+    Swal.fire({
+        title: 'Sei sicuro?',
+        text: "Non potrai annullare questa azione!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sì, elimina!',
+        cancelButtonText: 'Annulla'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteAddress(addressId);
+        }
+    });
+}

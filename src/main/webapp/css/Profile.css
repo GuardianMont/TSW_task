@@ -17,6 +17,7 @@ h3 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 800px;
 }
+
 .logout-form {
     position: sticky;
     top: 10px; /* Distanza dalla parte superiore del viewport */
@@ -147,13 +148,48 @@ input[type="reset"] {
     margin: 5px auto;
     font-size: 14px;
     display: inline-block;
-    max-width: 200px  ;
+    max-width: 200px;
 }
 
 .edit-button:hover,
 input[type="submit"]:hover {
     background-color: #45a049;
 }
+
+input[type="reset"]:hover {
+    background-color: darkred;
+}
+
+/* Nuove classi per i bottoni con icone */
+.edit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.edit-button i {
+    margin-right: 10px;
+}
+
+.edit-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.edit-button:active {
+    background-color: #3e8e41;
+}
+
+/* Styles for Add Button */
 .add-button {
     background-color: #4CAF50; /* Colore di sfondo */
     color: white; /* Colore del testo */
@@ -171,10 +207,6 @@ input[type="submit"]:hover {
 .add-button:hover {
     background-color: #45a049; /* Cambia colore al passaggio del mouse */
 }
-input[type="reset"]:hover {
-    background-color: darkred;
-}
-
 
 /* Dropdown Styles */
 .select-sorting {
@@ -214,11 +246,13 @@ input[type="reset"]:hover {
         width: 90%;
         padding: 10px;
     }
+
     .button-container .edit-button,
     .button-container input[type="submit"],
     .button-container input[type="reset"] {
         max-width: 100%; /* A larghezza piena su schermi più piccoli */
     }
+
     button.edit-button,
     .logout-form input[type="submit"] {
         width: 100%;

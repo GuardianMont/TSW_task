@@ -12,20 +12,61 @@ body {
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.return-button {
-	display: inline-block;
-	margin-bottom: 20px;
-	padding: 10px 20px;
-	background-color: #4CAF50;
-	color: #fff;
+/* Bottone di ritorno con animazione */
+.btn {
 	border: none;
-	border-radius: 5px;
-	text-decoration: none;
-	text-align: center;
+	font-family: inherit;
+	font-size: 14px;
+	cursor: pointer;
+	padding: 10px 40px;
+	display: inline-block;
+	letter-spacing: 1px;
+	outline: none;
+	position: relative;
+	overflow: hidden; /* Assicura che il contenuto fuori dal pulsante sia nascosto */
+	transition: all 0.3s;
 }
 
-.return-button:hover {
-	background-color: #45a049;
+.btn-4 {
+	position: relative;
+	border-radius: 30px;
+	background-color: #008080;
+	color: white;
+	transition: color 0.3s, border-color 0.3s;
+}
+
+.btn-4:active {
+	color: #005859;
+}
+
+.btn-4::after {
+	content: '\2190'; /* Freccia sinistra */
+	position: absolute;
+	top: 100%; /* Posiziona la freccia fuori dal pulsante */
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: xx-large;
+	color: white;
+	transition: top 0.3s ease-in-out;
+	opacity: 0; /* Nasconde la freccia inizialmente */
+}
+
+.btn-4:hover {
+	color: transparent; /* Nasconde il testo durante l'hover */
+}
+
+.btn-4:hover::after {
+	top: 0%; /* Porta la freccia al centro del pulsante */
+	opacity: 1; /* Mostra la freccia durante l'hover */
+}
+
+.btn-4 span {
+	display: inline-block;
+	transition: transform 0.3s ease-in-out;
+}
+
+.btn-4:hover span {
+	transform: translateY(-100%); /* Sposta il testo verso l'alto */
 }
 
 .product-content {
@@ -46,6 +87,7 @@ body {
 	flex-grow: 1;
 	min-width: 200px;
 }
+
 .product-details h1 {
 	display: flex;
 	align-items: center;
@@ -87,7 +129,7 @@ body {
 
 .add-to-cart-button {
 	margin-top: 10px;
-	padding: 10px 20px;
+	padding: 10px 15px;
 	background-color: #4CAF50;
 	color: #fff;
 	border: none;
@@ -170,6 +212,11 @@ body {
 		width: 100%;
 		text-align: center;
 	}
+
+	.btn {
+		font-size: 12px;
+		padding: 12px 30px;
+	}
 }
 
 @media (max-width: 480px) {
@@ -190,4 +237,22 @@ body {
 	.prezzo-unitario, .prezzo-scontato {
 		display: inline-block;
 	}
+	.btn {
+		font-size: 10px;
+		padding: 10px 20px;
+	}
+	.btn-4::after {
+		content: '\2190'; /* Freccia sinistra */
+		position: absolute;
+		top: 100%; /* Posiziona la freccia fuori dal pulsante */
+		left: 50%;
+		transform: translateX(-50%);
+		font-size: xx-large;
+		line-height: 0.8;
+		color: white;
+		transition: top 0.3s ease-in-out;
+		opacity: 0; /* Nasconde la freccia inizialmente */
+	}
+
+
 }

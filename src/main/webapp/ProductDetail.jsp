@@ -22,7 +22,9 @@
 <jsp:include page="Header.jsp"/>
 
 <div class="product-container">
-    <a href="./product" class="return-button">&#8592;</a>
+    <button class="btn btn-4 btn-4d icon-arrow-left" onclick="window.location.href='./product'">
+        <span>Return</span>
+    </button>
     <%
         ProductBean product = (ProductBean) request.getAttribute("product");
         if (product != null) {

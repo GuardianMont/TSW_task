@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/IndirizziPagamentiInfo.css">
     <link rel="stylesheet" type ="text/css" href="css/FormAddressStyle.css">
     <script src="js/notifica.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/profileSwitchingForms.js"></script>
     <script src="js/profileLoadingFunctions.js"></script>
     <script src="js/validationEditProfile.js"></script>
@@ -33,10 +34,18 @@
         <input type="submit" value="Logout">
     </form>
     <div class="container button-container">
-        <button class="edit-button" id="profilo" onclick="showProfile()">Informazioni utente</button>
-        <button class="edit-button" id="viewOrdini" onclick="loadOrders()">Visualizza Ordini</button>
-        <button class="edit-button" id="viewPayment" onclick="loadPaymentMethods()">Metodi di Pagamento</button>
-        <button class="edit-button" id="viewAddresses" onclick="loadAddresses()">Indirizzi di spedizione</button>
+        <button class="edit-button" id="profilo" onclick="showProfile()">
+            <i class="fas fa-user"></i> Informazioni utente
+        </button>
+        <button class="edit-button" id="viewOrdini" onclick="loadOrders()">
+            <i class="fas fa-box"></i> Visualizza Ordini
+        </button>
+        <button class="edit-button" id="viewPayment" onclick="loadPaymentMethods()">
+            <i class="fas fa-credit-card"></i> Metodi di Pagamento
+        </button>
+        <button class="edit-button" id="viewAddresses" onclick="loadAddresses()">
+            <i class="fas fa-map-marker-alt"></i> Indirizzi di spedizione
+        </button>
     </div>
     <div class="container profile-container" id="profile-container">
         <h3>Profilo <%= user.getUsername() %></h3>
@@ -44,8 +53,12 @@
         <p>Cognome: <%= user.getCognome() %></p>
         <p>Email: <%= user.getEmail() %></p>
         <p>Telefono: <%= user.getPhoneNumber() %></p>
-        <button class="edit-button" onclick="editProfile()">Modifica informazioni</button>
-        <button class="edit-button" id="cambiaPassword" onclick="changePassword()">Cambia Password</button>
+        <button class="edit-button" onclick="editProfile()">
+            <i class="fas fa-edit"></i> Modifica informazioni
+        </button>
+        <button class="edit-button" id="cambiaPassword" onclick="changePassword()">
+            <i class="fas fa-key"></i> Cambia Password
+        </button>
     </div>
 
     <div class="container edit-container" id="edit-container" style="display: none;">
