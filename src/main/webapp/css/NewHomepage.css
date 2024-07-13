@@ -1,3 +1,8 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
 /* Css per la transizione dell'header */
 header {
     transition: background-color 0.5s ease; /* Aggiungi una transizione per un cambiamento graduale del colore */
@@ -27,7 +32,7 @@ header {
 .numeroProdotti {
     position: absolute;
     top: -15px;
-    left: clamp(20px ,2.5vw, 26px);
+    left: clamp(35px ,2.5vw, 26px);
     background-color: #333;
     color: white;
     border-radius: 50%;
