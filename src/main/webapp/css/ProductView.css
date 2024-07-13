@@ -86,7 +86,6 @@ body {
     margin-right: 5px;
 }
 
-
 .button-container {
     display: flex;
     flex-direction: column;
@@ -95,7 +94,7 @@ body {
     margin-top: 20px;
 }
 
-.button-container a {
+.add-button {
     display: inline-block;
     margin: 5px;
     padding: 10px 20px;
@@ -108,8 +107,25 @@ body {
     transition: background-color 0.3s;
 }
 
-.button-container a:hover {
+.add-button:hover {
     background-color: #45a049;
+}
+
+.remove-button {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s;
+    background-color: red;
+}
+
+.remove-button:hover {
+    background-color: darkred;
 }
 
 .favorite {
