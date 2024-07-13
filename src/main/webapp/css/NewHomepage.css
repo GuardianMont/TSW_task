@@ -1,8 +1,3 @@
-body{
-    margin: 0 !important;
-    padding: 0;
-
-}
 /* Css per la transizione dell'header */
 header {
     transition: background-color 0.5s ease; /* Aggiungi una transizione per un cambiamento graduale del colore */

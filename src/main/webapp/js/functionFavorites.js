@@ -18,6 +18,7 @@ function toggleFavorite(productId) {
                     icon.classList.remove('added');
                     icon.classList.add('not-added');
                 } else {
+                    showFavoritesNotifica();
                     icon.classList.remove('not-added');
                     icon.classList.add('added');
                 }

@@ -75,6 +75,9 @@
         <a href="${pageContext.request.contextPath}/profileServlet" aria-label="Profilo utente">
             <i class="fas fa-user" aria-hidden="true"></i>
         </a>
+        <a href="${pageContext.request.contextPath}/favoritesUser" aria-label="Favourites-User">
+            <i class="fas fa-star" aria-hidden="true"></i>
+        </a>
     </div>
     <div class="burger-menu">
         <span class="burger-icon">&#9776;</span>
@@ -85,7 +88,7 @@
         <a href="${pageContext.request.contextPath}/carrello"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Carrello
             <% if (cart != null && cart.getNumProdottiTot() > 0) { %>(<%= cart.getNumProdottiTot() %>)<% } %></a>
         <a href="${pageContext.request.contextPath}/profileServlet"><i class="fas fa-user" aria-hidden="true"></i> Profilo utente</a>
-
+        <a href="${pageContext.request.contextPath}/favoritesUser" ><i class="fas fa-star" aria-hidden="true"></i> Preferiti</a>
     </div>
 </header>
 </body>
