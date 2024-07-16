@@ -18,7 +18,7 @@
 <body>
 <header class="header-container">
     <div class="logo">
-        <a href="${pageContext.request.contextPath}/Homepage.jsp">
+        <a href="${pageContext.request.contextPath}/NewHomepageTest.jsp">
             <img src="${pageContext.request.contextPath}/uploadFile/loghino.svg" alt="Tavolando">
         </a>
     </div>

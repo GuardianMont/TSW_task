@@ -18,8 +18,8 @@ body {
 }
 
 .container {
-    max-width: 1200px;
-    margin: 20px auto;
+    max-width: 100%;
+    margin: 8px;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -35,6 +35,62 @@ body {
     color: white;
     text-decoration: none;
     border-radius: 5px;
+}
+/* Bottone di ritorno con animazione */
+.btn {
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 10px 40px;
+    display: inline-block;
+    letter-spacing: 1px;
+    outline: none;
+    position: relative;
+    overflow: hidden; /* Assicura che il contenuto fuori dal pulsante sia nascosto */
+    transition: all 0.3s;
+}
+
+.btn-4 {
+    position: relative;
+    border-radius: 10px;
+    background-color: #008080;
+    color: white;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.btn-4:active {
+    color: #005859;
+}
+
+.btn-4::after {
+    content: '\2190'; /* Freccia sinistra */
+    position: absolute;
+    top: 100%; /* Posiziona la freccia fuori dal pulsante */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: xx-large;
+    color: white;
+    transition: top 0.3s ease-in-out;
+    opacity: 0; /* Nasconde la freccia inizialmente */
+}
+
+.btn-4:hover {
+    color: transparent; /* Nasconde il testo durante l'hover */
+}
+
+.btn-4:hover::after {
+    top: 0%; /* Porta la freccia al centro del pulsante */
+    opacity: 1; /* Mostra la freccia durante l'hover */
+}
+
+.btn-4 span {
+    display: inline-block;
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-4:hover span {
+    transform: translateY(-100%); /* Sposta il testo verso l'alto */
 }
 
 .prodotti_carrello {
@@ -63,7 +119,7 @@ body {
 }
 
 .tabella th {
-    background-color: #4CAF50;
+    background-color: #28180b;
     color: white;
 }
 
@@ -129,7 +185,7 @@ body {
 
 .acquista-button {
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #008080;
     color: white;
     border: none;
     border-radius: 5px;
@@ -137,14 +193,14 @@ body {
 }
 
 .acquista-button:hover {
-    background-color: #45a049;
+    background-color: #005859;
 }
 
 .action-button {
     display: inline-block;
     margin: 5px 0;
     padding: 5px 10px;
-    background-color: #f44336;
+    background-color: #bb4561;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -152,7 +208,7 @@ body {
 
 .quantity-form button {
     padding: 8px 12px;
-    background-color: #4CAF50;
+    background-color: #008080;
     color: white;
     border: none;
     border-radius: 5px;
@@ -162,7 +218,7 @@ body {
 }
 
 .quantity-form button:hover {
-    background-color: #45a049;
+    background-color: #005859;
 }
 
 .no_product {

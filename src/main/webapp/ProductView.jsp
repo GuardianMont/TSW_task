@@ -129,8 +129,10 @@
                     }
                     if (bean.getDisponibilita() > 0) {
                     %>
-					<a href="carrello?opzione=add&id=<%= bean.getId() %>" class="add-button">Aggiungi al carrello</a> <br>
-						<%
+							<button class="btn btn-3 btn-3d icon-cart-left" onclick="window.location.href='carrello?opzione=add&id=<%= bean.getId() %>'">
+								<span>Aggiungi al carrello</span>
+							</button>
+					<%
                     } else {
                     %>
 				<div class="out-of-stock-message">

@@ -14,8 +14,9 @@ header {
     z-index: 1000;
 }
 .colored {
-    background-color: #E6DCC8; /* Sostituisci con il colore desiderato */
+    background-color: #ffefe5;
 }
+
 .transparent {
     background-color: transparent;
 }

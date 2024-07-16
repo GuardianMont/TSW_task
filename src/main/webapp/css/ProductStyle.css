@@ -29,7 +29,7 @@ body {
 
 .btn-4 {
 	position: relative;
-	border-radius: 30px;
+	border-radius: 10px;
 	background-color: #008080;
 	color: white;
 	transition: color 0.3s, border-color 0.3s;
@@ -51,6 +51,7 @@ body {
 	opacity: 0; /* Nasconde la freccia inizialmente */
 }
 
+
 .btn-4:hover {
 	color: transparent; /* Nasconde il testo durante l'hover */
 }
@@ -66,6 +67,95 @@ body {
 }
 
 .btn-4:hover span {
+	transform: translateY(-100%); /* Sposta il testo verso l'alto */
+}
+.btn-4 {
+	position: relative;
+	border-radius: 10px;
+	background-color: #008080;
+	color: white;
+	transition: color 0.3s, border-color 0.3s;
+}
+
+.btn-4:active {
+	color: #005859;
+}
+
+.btn-4::after {
+	content: '\2190'; /* Freccia sinistra */
+	position: absolute;
+	top: 100%; /* Posiziona la freccia fuori dal pulsante */
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: xx-large;
+	color: white;
+	transition: top 0.3s ease-in-out;
+	opacity: 0; /* Nasconde la freccia inizialmente */
+}
+
+
+.btn-4:hover {
+	color: transparent; /* Nasconde il testo durante l'hover */
+}
+
+.btn-4:hover::after {
+	top: 0%; /* Porta la freccia al centro del pulsante */
+	opacity: 1; /* Mostra la freccia durante l'hover */
+}
+
+.btn-4 span {
+	display: inline-block;
+	transition: transform 0.3s ease-in-out;
+}
+
+.btn-4:hover span {
+	transform: translateY(-100%); /* Sposta il testo verso l'alto */
+}
+
+/*bottone cart*/
+
+.btn-3 {
+	position: relative;
+	border-radius: 10px;
+	background-color: #008080;
+	color: white;
+	transition: color 0.3s, border-color 0.3s;
+}
+
+.btn-3:active {
+	color: #005859;
+}
+
+.btn-3::after {
+	content: "\f07a \f067"; /* Unicode per fa-shopping-cart e fa-plus */
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	position: absolute;
+	top: 100%; /* Posiziona la freccia fuori dal pulsante */
+	left: 50%;
+	transform: translateX(-50%);
+	line-height: 2;
+	font-size: large;
+	color: white;
+	transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
+	opacity: 0; /* Nasconde la freccia inizialmente */
+}
+
+.btn-3:hover {
+	color: transparent; /* Nasconde il testo durante l'hover */
+}
+
+.btn-3:hover::after {
+	top: 0%; /* Porta la freccia al centro del pulsante */
+	opacity: 1; /* Mostra la freccia durante l'hover */
+}
+
+.btn-3 span {
+	display: inline-block;
+	transition: transform 0.3s ease-in-out;
+}
+
+.btn-3:hover span {
 	transform: translateY(-100%); /* Sposta il testo verso l'alto */
 }
 
@@ -92,6 +182,7 @@ body {
 	display: flex;
 	align-items: center;
 	gap: 10px;
+	color: #28180b
 }
 
 .product-price {
@@ -99,6 +190,7 @@ body {
 	flex-direction: column;
 	align-items: flex-start;
 	flex-shrink: 0;
+	justify-content: center;
 }
 
 .sconto-prezzo-container {
@@ -125,22 +217,6 @@ body {
 	color: red;
 	font-size: 24px;
 	white-space: nowrap;
-}
-
-.add-to-cart-button {
-	margin-top: 10px;
-	padding: 10px 15px;
-	background-color: #4CAF50;
-	color: #fff;
-	border: none;
-	border-radius: 5px;
-	text-decoration: none;
-	text-align: center;
-	white-space: nowrap;
-}
-
-.add-to-cart-button:hover {
-	background-color: #45a049;
 }
 
 .favorite {

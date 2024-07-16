@@ -11,6 +11,15 @@ document.addEventListener('DOMContentLoaded', function() {
         checkoutForm(event);
     });
 
+    var cartDrawerToggles = document.querySelectorAll('.cart-drawer-toggle');
+
+    cartDrawerToggles.forEach(function(toggle) {
+        toggle.addEventListener('click', function() {
+            var cartDrawer = document.querySelector('.cart-drawer');
+            cartDrawer.classList.toggle('open');
+        });
+    });
+
 });
    function checkoutForm(event){
         let addressSelected = document.querySelector("input[name='selectedAddress']:checked");

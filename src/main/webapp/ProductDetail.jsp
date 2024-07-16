@@ -78,7 +78,10 @@
             <%
                 if (product.getDisponibilita() > 0) {
             %>
-            <a href="carrello?opzione=add&id=<%= product.getId() %>" class="add-to-cart-button">Add to Cart</a>
+            <button class="btn btn-3 btn-3d icon-cart-left" onclick="window.location.href='carrello?opzione=add&id=<%= product.getId() %>'">
+                <span>Aggiungi al carrello</span>
+            </button>
+
 
             <%
                 }

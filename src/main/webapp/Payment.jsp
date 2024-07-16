@@ -1,3 +1,6 @@
+<%@ page import="ec.model.cart.ShoppingCart" %>
+<%@ page import="ec.model.cart.CartItem" %>
+<%@ page import="java.util.Base64" %>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -17,22 +20,22 @@
 <body>
 <jsp:include page="Header.jsp"/>
 <div class="main-container">
-    <div class="container">
-        <div class="section_1">
+    <div class="left-section">
+        <div class="section">
             <h2>Indirizzo di Spedizione</h2>
             <div id="shipping-addresses">
-                <!--immetto le informazioni con ajax -->
+                <!-- Contenuto dinamico caricato tramite AJAX -->
             </div>
-            <div id="add-button" class="button-container">
-                <button class="add-button add-methods-button" onclick="aggiungiIndirizzo()">
+            <div class="button-container">
+                <button class="add-button" onclick="aggiungiIndirizzo()">
                     <i class="fas fa-plus"></i> Aggiungi Nuovo Indirizzo
                 </button>
-            </div>
-            <div id="remove-button" class="button-container hidden">
-                <button class="remove-button" onclick="removeForm()">X</button>
+                <button class="add-button hidden" id="remove-button" onclick="removeForm()">
+                    <i class="fas fa-minus"></i> Rimuovi Form
+                </button>
             </div>
             <div id="new-address-form" class="hidden">
-                <!--form per l'aggiunta di un nuovo indirizzo celato se l'utente non clicca il bottone-->
+                <!-- Form per l'aggiunta di un nuovo indirizzo -->
                 <form id="addressForm" action="AddressManagement" method="POST">
                     <input type="hidden" name="opzione" value="add">
                     <label for="via">Via:</label>
@@ -65,21 +68,26 @@
                 </form>
             </div>
         </div>
-        <div class="section_2">
+    </div>
+    <div class="vertical-line"></div>
+    <div class="right-section">
+        <div class="section">
             <h2>Metodo di Pagamento</h2>
             <div id="shipping-payment">
-                <!--immetto le informazioni con ajax -->
+                <!-- Contenuto dinamico caricato tramite AJAX -->
             </div>
-            <div id="add-pay-button" class="button-container">
-                <button class="add-button add-methods-button" onclick="aggiungiPayMethods()">
+            <div class="button-container">
+                <button class="add-button" onclick="aggiungiPayMethods()">
                     <i class="fas fa-plus"></i> Aggiungi Nuovo Metodo di Pagamento
                 </button>
             </div>
             <div id="remove-pay-form" class="button-container hidden">
-                <button class="remove-button" onclick="removePayForm()">X</button>
+                <button class="remove-button" onclick="removePayForm()">
+                    <i class="fas fa-minus"></i> Rimuovi Form
+                </button>
             </div>
             <div id="new-payMethod-form" class="hidden">
-                <!--form per l'aggiunta di un nuovo metodo di pagamento celato se l'utente non clicca il bottone-->
+                <!-- Form per l'aggiunta di un nuovo metodo di pagamento -->
                 <form id="payMethodsForm" action="payMethodsManager" method="post">
                     <input type="hidden" name="opzione" value="add">
 
@@ -122,11 +130,79 @@
                 </form>
             </div>
         </div>
-        <form id="check-out-form" action="CheckoutServlet" method="post">
-            <input type="submit" value="Procedi al Checkout" class="proceed-button">
-        </form>
+    </div>
+    <div class="cart-summary">
+        <h2>Riepilogo Carrello</h2>
+        <div class="cart-items">
+            <% ShoppingCart cart = (ShoppingCart) request.getSession(false).getAttribute("cart");
+                if (cart == null || cart.getItem_ordinati().isEmpty()) {
+            %>
+            <p>Il carrello è vuoto.</p>
+            <%
+            } else {
+                for (CartItem item : cart.getItem_ordinati()) {
+            %>
+            <div class="cart-item">
+                <%
+                    String stockImg = "";
+                    byte[] imageData = item.getItem().getImmagineUrl();
+                    if (imageData != null) {
+                        stockImg = Base64.getEncoder().encodeToString(imageData);
+                    }
+                %>
+                <img src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="Immagine prodotto">
+                <div class="item-details">
+                    <p class="product-name"><%= item.getItem().getNome() %></p>
+                    <p class="quantity">Quantità: <%= item.getNumItem() %></p>
+                    <p class="price">Prezzo: &euro;<%= item.getItem().getPrezzo() %></p>
+                </div>
+            </div>
+            <%
+                    }
+                }
+            %>
+        </div>
     </div>
 </div>
+
+<div class="cart-drawer-toggle">
+    <i class="fas fa-shopping-cart"></i>
+</div>
+<div class="cart-drawer">
+    <h2>Riepilogo Carrello</h2>
+    <div class="cart-items">
+        <%
+            if (cart == null || cart.getItem_ordinati().isEmpty()) {
+        %>
+        <p>Il carrello è vuoto.</p>
+        <%
+        } else {
+            for (CartItem item : cart.getItem_ordinati()) {
+        %>
+        <div class="cart-item">
+            <%
+                String stockImg = "";
+                byte[] imageData = item.getItem().getImmagineUrl();
+                if (imageData != null) {
+                    stockImg = Base64.getEncoder().encodeToString(imageData);
+                }
+            %>
+            <img src="data:image/jpeg;base64,<%= stockImg %>" class="img-product" alt="Immagine prodotto">
+            <div class="item-details">
+                <p class="product-name"><%= item.getItem().getNome() %></p>
+                <p class="quantity">Quantità: <%= item.getNumItem() %></p>
+                <p class="price">Prezzo: &euro;<%= item.getItem().getPrezzo() %></p>
+            </div>
+        </div>
+        <%
+                }
+            }
+        %>
+    </div>
+</div>
+<form id="check-out-form" class="check-out-form" action="CheckoutServlet" method="post">
+    <input type="submit" value="Procedi al Checkout" class="proceed-button">
+</form>
 <jsp:include page="Footer.jsp"/>
 </body>
 </html>

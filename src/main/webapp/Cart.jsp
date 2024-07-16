@@ -28,7 +28,9 @@
 <body>
 <jsp:include page="Header.jsp"/>
 <div class="container">
-    <a href="product" class="catalogo">Catalogo</a>
+    <button class="btn btn-4 btn-4d icon-arrow-left" onclick="window.location.href='./product'">
+        <span>Return</span>
+    </button>
     <h2 class="prodotti_carrello">Prodotti nel Carrello</h2>
     <%
         Boolean buy = (Boolean) request.getAttribute("acquistoCompletato");

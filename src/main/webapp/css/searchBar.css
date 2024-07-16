@@ -52,13 +52,13 @@
 
 .search-bar button {
     padding: 10px;
-    background-color: #4CAF49;
-    color: #fff;
+    background-color: #28180b;
+    color: #ffefe5;
     border: none;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
 }
 
 .search-bar button:hover {
-    background-color: #4CAF50;
+    background-color: #170e04;
 }

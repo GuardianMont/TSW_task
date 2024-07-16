@@ -1,14 +1,15 @@
 /* Global Styles */
 body {
     font-family: 'Open Sans', Arial, serif;
-    background-color: #f5f5f5;
+    background-color: #fff;
+    color: #28180b;
     margin: 0;
     padding: 0;
 }
 
 /* Header Styles */
 .header-container {
-    background-color: #fff;
+    background-color: #ffefe5;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,7 +22,7 @@ body {
 
 .header-container a {
     text-decoration: none;
-    color: #333;
+    color: #28180b;
 }
 
 .logo {
@@ -166,7 +167,7 @@ body {
     position: absolute;
     top: -15px;
     background-color: #ff0000;
-    color: black;
+    color: white;
     border-radius: 50%;
     padding: 3px;
     font-size: 10px;
@@ -242,7 +243,7 @@ body {
         display: none;
         flex-direction: column;
         align-items: center;
-        background-color: #fff;
+        background-color: #ffefe5;
         position: absolute;
         top: 100%;
         left: 0;
