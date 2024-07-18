@@ -16,7 +16,6 @@ header {
 .colored {
     background-color: #ffefe5;
 }
-
 .transparent {
     background-color: transparent;
 }
@@ -48,7 +47,7 @@ header {
 }
 
 .numeroProdotti-colored{
-    background-color: #ff5555;
+    background-color: #bb4561;
     color: black;
 }
 
@@ -72,7 +71,7 @@ header {
 }
 
 .link-container.link-colored a {
-    color: #333;
+    color: #28180b;
 }
 
 .link-container a:hover {
@@ -97,7 +96,7 @@ header {
 }
 
 .logo-container svg {
-    color: #333;
+    color: #28180b;
 }
 
 /* Css per le icone a destra */
@@ -130,7 +129,7 @@ header {
 }
 
 .icons.icon-colored a{
-    color: #333;
+    color: #28180b;
 }
 
 /* Css per l'immagine */
@@ -162,7 +161,7 @@ header {
 }
 
 .colored {
-    background-color: #E6DCC8; /* Sostituisci con il colore desiderato */
+    background-color: #ffefe5; /* Sostituisci con il colore desiderato */
 }
 .transparent {
     background-color: transparent;

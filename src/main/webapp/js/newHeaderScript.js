@@ -50,8 +50,12 @@ function doHeaderAnimations(){
     }
 }
 
+function doTextAnimations(){
+    doFirstTextAnimations();
+    doSingleTextAnimation();
+}
 
-function doTextAnimations() {
+function doFirstTextAnimations() {
     const firstImageContainer = document.getElementById('fist-image-container');
     const firstText = document.getElementById('text-over-image');
     const imageRect = firstImageContainer.getBoundingClientRect();
@@ -66,5 +70,31 @@ function doTextAnimations() {
         firstText.classList.remove('fixed');
         firstText.classList.remove('text-to-animate');
         firstText.classList.remove('transparent');
+    }
+}
+
+function doSingleTextAnimation() {
+
+    const ImageContainer = document.getElementById('second-section');
+    const text = document.getElementById('text-over-image2');
+    const imageRect = ImageContainer.getBoundingClientRect();
+    const viewWindowBottom = window.innerHeight + window.scrollY;
+    const viewWindowTop = window.scrollY;
+    const imageBottom = imageRect.height + imageRect.y + window.scrollY;
+    const imageTop = imageRect.y + window.scrollY + (imageRect.height * 0.12) + (text.offsetHeight);
+
+    if(viewWindowBottom <= imageTop){
+        text.classList.remove('fixed');
+        text.style.top = `${(imageRect.height) * 0.15}px`;
+    }
+    else if (viewWindowBottom < imageBottom && viewWindowBottom >= imageTop ) {
+        text.classList.add('fixed');
+        text.style.top = `${(imageRect.height)*0.85 - (imageRect.height-window.innerHeight)}px`;
+    } else if (viewWindowBottom >= imageBottom) {
+
+        text.style.top = `${(imageRect.height)*0.85}px`;
+        text.classList.remove('fixed');
+        text.classList.remove('text-to-animate');
+        text.classList.remove('transparent');
     }
 }

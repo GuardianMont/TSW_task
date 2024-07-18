@@ -75,7 +75,7 @@
     <div class="single-section" id="second-section">
         <div class="single-image-text-container">
             <img src="uploadFile/tabletennisroba.jpg" alt="Immagine 3" class="single-section-image">
-            <div class="single-section-text">Palle giganterrime</div>
+            <div class="text-over-image transparent text-to-animate" id="text-over-image2">Palle giganterrime</div>
         </div>
     </div>
 
@@ -83,20 +83,32 @@
         <div class="scrollable-container">
 
             <div class="scrollable-object">
-                <img src="uploadFile/pallanera.jpg" alt="Immagine 3" class="scrollable-image">
-                <div class="scrollable-text">Palle giganterrime</div>
+                <img src="uploadFile/tavolobiliardo.jpg" alt="Immagine" class="scrollable-image">
+                <div class="scrollable-text">Tavoli Biliardo</div>
             </div>
             <div class="scrollable-object">
-                <img src="uploadFile/pallecolorate.jpg" alt="Immagine 3" class="scrollable-image">
-                <div class="scrollable-text">Palle giganterrime</div>
+                <img src="uploadFile/pallecolorate.jpg" alt="Immagine" class="scrollable-image">
+                <div class="scrollable-text">Set Bilie</div>
             </div>
             <div class="scrollable-object">
-                <img src="uploadFile/racchettepallina.jpg" alt="Immagine 3" class="scrollable-image">
-                <div class="scrollable-text">Palle giganterrime</div>
+                <img src="uploadFile/steccabiliardo.jpg" alt="Immagine" class="scrollable-image">
+                <div class="scrollable-text">Stecche Biliardo</div>
             </div>
             <div class="scrollable-object">
-                <img src="uploadFile/pallecoloratissime.jpg" alt="Immagine 3" class="scrollable-image">
-                <div class="scrollable-text">Palle giganterrime</div>
+                <img src="uploadFile/airhockeysonic.jpg" alt="Immagine" class="scrollable-image">
+                <div class="scrollable-text">Tavoli Air Hockey</div>
+            </div>
+            <div class="scrollable-object">
+                <img src="uploadFile/tavolopingpong.jpg" alt="Immagine" class="scrollable-image">
+                <div class="scrollable-text">Tavoli Ping Pong</div>
+            </div>
+            <div class="scrollable-object">
+                <img src="uploadFile/racchettepallina.jpg" alt="Immagine" class="scrollable-image">
+                <div class="scrollable-text">Racchette Ping Pong</div>
+            </div>
+            <div class="scrollable-object">
+                <img src="uploadFile/pingpongbluarancio.jpg" alt="Immagine" class="scrollable-image">
+                <div class="scrollable-text">Palline Ping Pong</div>
             </div>
 
         </div>
