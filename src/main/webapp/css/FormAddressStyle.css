@@ -32,7 +32,7 @@
 /* Error Message Styles */
 .error-message {
     display: none;
-    color: #d9534f;
+    color: #bb4561;
     font-size: 12px;
     margin-top: 5px;
 }
@@ -55,31 +55,31 @@
 }
 
 .submit-button {
-    background-color: #5cb85c;
+    background-color: #008080;
     color: #fff;
 }
 
 .submit-button:hover {
-    background-color: #4cae4c;
+    background-color: #005859;
 }
 
 .reset-button {
-    background-color: #f0ad4e;
+    background-color: #bb4561;
     color: #fff;
 }
 
 .reset-button:hover {
-    background-color: #ec971f;
+    background-color: #a92142;
 }
 
 .remove-button {
-    background-color: #d9534f;
+    background-color: #bb4561;
     color: #fff;
 
 }
 
 .remove-button:hover {
-    background-color: #c9302c;
+    background-color: #a92142;
 }
 
 /* Hidden Class */

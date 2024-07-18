@@ -15,7 +15,7 @@
 
 .confirmation-message h2 {
     margin-top: 0;
-    color: #4CAF50;
+    color: #28180b;
     font-size: 24px;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .confirmation-message button {
-    background-color: #4CAF50;
+    background-color: #008080;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -36,5 +36,5 @@
 }
 
 .confirmation-message button:hover {
-    background-color: #45a049;
+    background-color: #005859;
 }

@@ -29,7 +29,7 @@
 #shipping-address button {
     padding: 8px 16px;
     margin-top: 5px;
-    background-color: #e3443a;
+    background-color: #bb4561;
     color: #fff;
     border: none;
     border-radius: 3px;
@@ -39,5 +39,5 @@
 
 #shipping-payment button:hover,
 #shipping-address button:hover {
-    background-color: darkred;
+    background-color: #a92142;
 }

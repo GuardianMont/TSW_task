@@ -45,13 +45,13 @@ body {
     padding: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #4CAF49;
+    background-color: #008080;
     color: #fff;
     cursor: pointer;
 }
 
 .form-group button:hover {
-    background-color: #4CAF50;
+    background-color: #005859;
 }
 
 .form-group .form-switch {

@@ -30,6 +30,8 @@
                 <button class="add-button" onclick="aggiungiIndirizzo()">
                     <i class="fas fa-plus"></i> Aggiungi Nuovo Indirizzo
                 </button>
+            </div>
+            <div>
                 <button class="add-button hidden" id="remove-button" onclick="removeForm()">
                     <i class="fas fa-minus"></i> Rimuovi Form
                 </button>

@@ -1,12 +1,12 @@
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #f5f5f5;
     color: #333;
 }
 
 h1, h3 {
-    color: #4CAF50;
+    color: #28180b;
 }
 
 /* Container Styles */
@@ -28,7 +28,7 @@ h1, h3 {
 .button-container button {
     margin: 5px;
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #008080;
     color: white;
     border: none;
     border-radius: 4px;
@@ -40,7 +40,7 @@ h1, h3 {
 }
 
 .button-container button:hover {
-    background-color: #45a049;
+    background-color: #005859;
 }
 
 /* Dropdown Styles */
@@ -67,7 +67,7 @@ h1, h3 {
 
 .date-range button {
     padding: 5px 10px;
-    background-color: #4CAF50;
+    background-color: #008080;
     color: white;
     border: none;
     border-radius: 4px;
@@ -75,7 +75,7 @@ h1, h3 {
 }
 
 .date-range button:hover {
-    background-color: #45a049;
+    background-color: #005859;
 }
 
 /* Hide elements */
