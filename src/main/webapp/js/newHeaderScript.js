@@ -86,13 +86,13 @@ function doSingleTextAnimation() {
     if(viewWindowBottom <= imageTop){
         text.classList.remove('fixed');
         text.style.top = `${(imageRect.height) * 0.15}px`;
-    }
-    else if (viewWindowBottom < imageBottom && viewWindowBottom >= imageTop ) {
-        text.classList.add('fixed');
-        text.style.top = `${(imageRect.height)*0.85 - (imageRect.height-window.innerHeight)}px`;
-    } else if (viewWindowBottom >= imageBottom) {
 
-        text.style.top = `${(imageRect.height)*0.85}px`;
+    } else if (viewWindowBottom < imageBottom && viewWindowBottom >= imageTop ) {
+        text.classList.add('fixed');
+        text.style.top = `${(imageRect.height) * 0.85 - (imageRect.height-window.innerHeight)}px`;
+
+    } else if (viewWindowBottom >= imageBottom) {
+        text.style.top = `${(imageRect.height) * 0.85}px`;
         text.classList.remove('fixed');
         text.classList.remove('text-to-animate');
         text.classList.remove('transparent');
