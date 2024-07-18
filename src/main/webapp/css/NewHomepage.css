@@ -1,4 +1,6 @@
-body{
+body {
+    background-color: #f2f2f2;
+    color: #28180b;
     margin: 0;
     padding: 0;
 }
@@ -15,6 +17,7 @@ header {
 }
 .colored {
     background-color: #ffefe5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .transparent {
     background-color: transparent;
@@ -81,7 +84,7 @@ header {
 /* Css per il logo */
 .logo-link {
     flex: 2;
-    width: 50%;
+    width: 50vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -109,7 +112,6 @@ header {
 }
 
 .icon {
-    margin-left: 15px;
     width: 100%;
     transition: transform 0.3s ease, color 0.3s ease;
 }
@@ -162,6 +164,7 @@ header {
 
 .colored {
     background-color: #ffefe5; /* Sostituisci con il colore desiderato */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .transparent {
     background-color: transparent;
@@ -226,12 +229,19 @@ header {
 .double-section-text.right{
     transform: translate(50%, 100%);
 }
+@media screen and (min-width: 980px) {
+    .double-image-text-container:hover .double-section-text.left {
+        transform: translate(-50%, 0%);
+    }
 
-.double-image-text-container:hover .double-section-text.left {
-    transform: translate(-50%, 0%);
+    .double-image-text-container:hover .double-section-text.right {
+        transform: translate(50%, 0%);
+    }
 }
-.double-image-text-container:hover .double-section-text.right {
-    transform: translate(50%, 0%);
+@media screen and (max-width: 980px) {
+    .double-image-text-container .double-section-text {
+        transform: translate(0%, 0%);
+    }
 }
 
 /* Css per le sezioni singole */

@@ -47,8 +47,11 @@
                     <span class="numeroProdotti" id="numeroProdotti"><%= cart.getNumProdottiTot() %></span>
                     <% } %>
                 </a>
-                <a class="last-icon" href="${pageContext.request.contextPath}/profileServlet" aria-label="Profilo utente">
+                <a href="${pageContext.request.contextPath}/profileServlet" aria-label="Profilo utente">
                     <i class="fas fa-user icon" aria-hidden="true"></i>
+                </a>
+                <a class="last-icon" href="${pageContext.request.contextPath}/favoritesUser" aria-label="Favourites-User">
+                    <i class="fas fa-star icon" aria-hidden="true"></i>
                 </a>
             </div>
         </div>
@@ -67,55 +70,56 @@
 
         <div class="double-image-text-container">
             <img src="uploadFile/pallecoloratissime.jpg" alt="Immagine 2" class="double-section-image">
-            <div class="double-section-text right">Mia sorella morta</div>
+            <div class="double-section-text right">Ultime aggiunte</div>
         </div>
     </div>
 
-    <!-- TODO: aggiungere testo a scorrimento simile a first-image -->
     <div class="single-section" id="second-section">
         <div class="single-image-text-container">
             <img src="uploadFile/tabletennisroba.jpg" alt="Immagine 3" class="single-section-image">
-            <div class="text-over-image transparent text-to-animate" id="text-over-image2">Palle giganterrime</div>
+            <div class="text-over-image transparent text-to-animate" id="text-over-image2">Solo attrezzatura di qualità.</div>
         </div>
     </div>
 
     <div class="scrollable-section" id="third-section">
         <div class="scrollable-container">
 
-            <div class="scrollable-object">
+            <a class="scrollable-object" href="${pageContext.request.contextPath}/SearchByCategory?categoria=biliardo">
                 <img src="uploadFile/tavolobiliardo.jpg" alt="Immagine" class="scrollable-image">
                 <div class="scrollable-text">Tavoli Biliardo</div>
-            </div>
-            <div class="scrollable-object">
+            </a>
+            <a class="scrollable-object" href="${pageContext.request.contextPath}/SearchByCategory?categoria=bilie">
                 <img src="uploadFile/pallecolorate.jpg" alt="Immagine" class="scrollable-image">
                 <div class="scrollable-text">Set Bilie</div>
-            </div>
-            <div class="scrollable-object">
+            </a>
+            <a class="scrollable-object" href="${pageContext.request.contextPath}/SearchByCategory?categoria=stecche">
                 <img src="uploadFile/steccabiliardo.jpg" alt="Immagine" class="scrollable-image">
                 <div class="scrollable-text">Stecche Biliardo</div>
-            </div>
-            <div class="scrollable-object">
+            </a>
+            <a class="scrollable-object" href="${pageContext.request.contextPath}/SearchByCategory?categoria=AirHokey">
                 <img src="uploadFile/airhockeysonic.jpg" alt="Immagine" class="scrollable-image">
                 <div class="scrollable-text">Tavoli Air Hockey</div>
-            </div>
-            <div class="scrollable-object">
+            </a>
+            <a class="scrollable-object" href="${pageContext.request.contextPath}/SearchByCategory?categoria=palline">
+                <img src="uploadFile/attrezzaturaairochei.jpg" alt="Immagine" class="scrollable-image">
+                <div class="scrollable-text">Attrezzatura AirHockey</div>
+            </a>
+            <a class="scrollable-object" href="${pageContext.request.contextPath}/SearchByCategory?categoria=AttrezzaturaAir">
                 <img src="uploadFile/tavolopingpong.jpg" alt="Immagine" class="scrollable-image">
                 <div class="scrollable-text">Tavoli Ping Pong</div>
-            </div>
-            <div class="scrollable-object">
+            </a>
+            <a class="scrollable-object" href="${pageContext.request.contextPath}/SearchByCategory?categoria=racchette">
                 <img src="uploadFile/racchettepallina.jpg" alt="Immagine" class="scrollable-image">
                 <div class="scrollable-text">Racchette Ping Pong</div>
-            </div>
-            <div class="scrollable-object">
+            </a>
+            <a class="scrollable-object" href="${pageContext.request.contextPath}/SearchByCategory?categoria=palline">
                 <img src="uploadFile/pingpongbluarancio.jpg" alt="Immagine" class="scrollable-image">
                 <div class="scrollable-text">Palline Ping Pong</div>
-            </div>
+            </a>
+
 
         </div>
     </div>
-
-
-
 
     <jsp:include page="Footer.jsp"/>
 </body>

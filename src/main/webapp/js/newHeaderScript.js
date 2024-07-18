@@ -75,13 +75,13 @@ function doFirstTextAnimations() {
 
 function doSingleTextAnimation() {
 
-    const ImageContainer = document.getElementById('second-section');
+    const imageContainer = document.getElementById('second-section');
     const text = document.getElementById('text-over-image2');
-    const imageRect = ImageContainer.getBoundingClientRect();
+    const imageRect = imageContainer.getBoundingClientRect();
     const viewWindowBottom = window.innerHeight + window.scrollY;
-    const viewWindowTop = window.scrollY;
+    const textHeight = text.offsetHeight;
     const imageBottom = imageRect.height + imageRect.y + window.scrollY;
-    const imageTop = imageRect.y + window.scrollY + (imageRect.height * 0.12) + (text.offsetHeight);
+    const imageTop = imageRect.y + window.scrollY + (imageRect.height * 0.15) + textHeight;
 
     if(viewWindowBottom <= imageTop){
         text.classList.remove('fixed');
