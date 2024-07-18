@@ -10,13 +10,12 @@
 
 /* Informazioni dell'ordine */
 .ordine-info {
-    background-color: #d4edda; /* Verde pastello */
+    background-color: #28180b; /* Verde pastello */
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
     font-weight: bold;
-    color: #155724; /* Testo verde scuro */
-    border: 1px solid #c3e6cb; /* Bordo verde chiaro */
+    color: #ffefe5; /* Testo verde scuro */
 }
 
 /* Div contenuti nel contenitore dell'ordine */
@@ -45,12 +44,12 @@
     margin: 20px;
     padding: 10px 20px;
     color: #000000; /* Testo bianco */
-    border: none;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
 }
+
 
 
 

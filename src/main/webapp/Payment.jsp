@@ -25,7 +25,6 @@
             <h2>Indirizzo di Spedizione</h2>
             <div id="shipping-addresses">
                 <!-- Contenuto dinamico caricato tramite AJAX -->
-                <p id="no-addresses-error" class="error-message" style="display: none;">Inserire almeno un indirizzo per proseguire.</p>
             </div>
 
             <div class="button-container">

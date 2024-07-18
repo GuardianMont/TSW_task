@@ -378,7 +378,7 @@ input[type="reset"]:hover {
 .orderDetail h1 {
     margin-bottom: 20px;
     font-size: 24px;
-    color: #4CAF50;
+    color: #28180b;
 }
 
 .orderDetail .order-info,
@@ -445,7 +445,7 @@ input[type="reset"]:hover {
 .payment-method-info h2,
 .address-info h2 {
     margin-bottom: 10px;
-    color: #4CAF50;
+    color: #28180b;
 }
 
 .payment-method-info p,

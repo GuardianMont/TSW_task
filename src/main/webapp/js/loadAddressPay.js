@@ -146,8 +146,8 @@ function submitAddressForm(event) {
             if (response.success) {
                 console.log("Operazione completata con successo");
                 showInfoNotifica("indirizzo inserito correttamente");
-                removeForm();
                 loadAddresses();
+                removeForm();
                 resetAddressForm();
             } else {
                 showAttentionNotifica('Errore: ' + response.error);
@@ -182,8 +182,8 @@ function submitPaymentForm(event) {
                 if (response.success) {
                     console.log("Operazione completata con successo");
                     showInfoNotifica("indirizzo inserito correttamente");
-                    removePayForm();
                     loadPaymentMethods();
+                    removePayForm();
                     resetPaymentForm();
                 } else {
                     showAttentionNotifica('Errore: ' + response.error);
@@ -209,13 +209,12 @@ function loadAddresses() {
         if (xhr.status === 200) {
             var response = JSON.parse(xhr.responseText);
             const container = document.getElementById("shipping-addresses");
-            const errorElement = document.getElementById("no-addresses-error");
             if (response.success) {
                 var addresses = response.data;
                 container.innerHTML = '';
                 if (addresses.length === 0) {
-                    errorElement.style.display = 'block';
-                } else {
+                        container.textContent = 'Nessun indirizzo di spedizione salvato, aggiungerne uno per proseguire all\'acquisto';
+                    } else {
                     errorElement.style.display = 'none';
                     addresses.forEach(function(address) {
                         let div = document.createElement('div');
@@ -252,6 +251,9 @@ function loadPaymentMethods() {
                 var payMethod = response.data;
                 const container = document.getElementById("shipping-payment");
                 container.innerHTML = '';
+                if (payMethod.length === 0) {
+                    container.textContent = 'Nessun metodo di pagamento salvato, aggiungerne uno per proseguire all\'acquisto';
+                } else {
                 payMethod.forEach(function(payMethod) {
                     let div = document.createElement('div');
                     div.innerHTML =  '<div><input type="radio" name="selectedPayMethod" value="' + payMethod.numId + '"> Numero carta: ' + payMethod.numCarta +
@@ -259,6 +261,7 @@ function loadPaymentMethods() {
                         'Titolare Carta: ' + payMethod.titolareCarta + '</div>';
                     container.appendChild(div);
                 });
+                }
             } else {
                 console.error('Error loading metodo di pagamento:', response.error);
             }

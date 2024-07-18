@@ -61,64 +61,69 @@ function orderOrdini(){
 function renderOrders(ordini) {
     const container = document.getElementById("checkOutOrdini");
     container.innerHTML = '';
-    ordini.forEach(function(ordine) {
-        console.log(ordine);
-        let div = document.createElement('div');
-        div.classList.add('ordine-container');
-        //ordine container è il nome della classe che uso per definire il css che avvolge gli ordini
+    if (ordini.length === 0){
+        container.textContent = 'Ancora nessun ordine effettuato';
+    }else {
+        ordini.forEach(function (ordine) {
+            console.log(ordine);
+            let div = document.createElement('div');
+            div.classList.add('ordine-container');
+            //ordine container è il nome della classe che uso per definire il css che avvolge gli ordini
 
-        let orderInfo = document.createElement('div');
-        orderInfo.classList.add('ordine-info');
-        orderInfo.innerHTML = '<div>Ordine effettuato il: ' + ordine.dataOrdine +
-            ', Codice Fattura: ' + ordine.ordineFattura + '</div>';
-        // per visualizzare il rettangolino solo con info ordini faccio questo div sepratore
-        //con ovviamente classe specifica
+            let orderInfo = document.createElement('div');
+            orderInfo.classList.add('ordine-info');
+            orderInfo.innerHTML = '<div>Ordine effettuato il: ' + ordine.dataOrdine +
+                ', Codice Fattura: ' + ordine.ordineFattura + '</div>';
+            // per visualizzare il rettangolino solo con info ordini faccio questo div sepratore
+            //con ovviamente classe specifica
 
-        //bottone aggiunta per scaricare il pdf
-        let buttonFattura = document.createElement("button");
-        let buttonDettagli = document.createElement("button");
-        buttonFattura.textContent = 'Scarica Fattura';
-        buttonFattura.addEventListener("click", function() {
-            downloadInvoice(ordine.ordineId);
-        });
-        buttonDettagli.textContent="Dettaglio Ordine"
-        buttonDettagli.addEventListener("click", function (){
-            detaglioOrder(ordine.ordineId)
-        })
-
-
-        let address = ordine.address ? ordine.address.via : 'No info';
-        let paymentMethod = ordine.paymentMethod ? ordine.paymentMethod.numCarta : 'No info';
-        //in pratica se indirizzo o metodo di pagamento per sbaglio non vengono correttamente estratti pongo un No info
-
-        let prezzoTotale = ordine.prezzototale.toFixed(2);
-        //mi assicuro di arrotondare il prezzo a due cifre decimali
-
-        let orderDetails = document.createElement('div');
-        orderDetails.innerHTML = '<div>Indirizzo: ' + address + '</div>' +
-            '<div>Metodo di Pagamento: ' + paymentMethod + '</div>' +
-            '<div>Prezzo Totale: ' + prezzoTotale + '€</div>' +
-            '<div>Prodotti:</div>';
-
-        let prodottiList = document.createElement('ul');
-        if (ordine.cartItems) {
-            ordine.cartItems.forEach(function (item) {
-                let prezzo = item.prezzoUnitario.toFixed(2);
-                let prodotto = document.createElement("li");
-                prodotto.innerHTML = 'Nome: ' + item.nome +
-                    ', Quantità: ' + item.quantity +
-                    ', Prezzo: ' + prezzo + '€';
-                prodottiList.appendChild(prodotto);
+            //bottone aggiunta per scaricare il pdf
+            let buttonFattura = document.createElement("button");
+            let buttonDettagli = document.createElement("button");
+            buttonFattura.textContent = 'Scarica Fattura';
+            buttonFattura.addEventListener("click", function () {
+                downloadInvoice(ordine.ordineId);
             });
-        }
-        orderDetails.appendChild(prodottiList);
+            buttonDettagli.textContent = "Dettaglio Ordine"
+            buttonDettagli.addEventListener("click", function () {
+                detaglioOrder(ordine.ordineId)
+            })
 
-        div.appendChild(orderInfo);
-        div.appendChild(buttonFattura);
-        div.appendChild(buttonDettagli);
-        div.appendChild(orderDetails);
-        container.appendChild(div);
-    });
+
+            let address = ordine.address ? ordine.address.via : 'No info';
+            let paymentMethod = ordine.paymentMethod ? ordine.paymentMethod.numCarta : 'No info';
+            //in pratica se indirizzo o metodo di pagamento per sbaglio non vengono correttamente estratti pongo un No info
+
+            let prezzoTotale = ordine.prezzototale.toFixed(2);
+            //mi assicuro di arrotondare il prezzo a due cifre decimali
+
+            let orderDetails = document.createElement('div');
+            orderDetails.innerHTML = '<div>Indirizzo: ' + address + '</div>' +
+                '<div>Metodo di Pagamento: ' + paymentMethod + '</div>' +
+                '<div>Prezzo Totale: ' + prezzoTotale + '€</div>' +
+                '<div>Prodotti:</div>';
+
+            let prodottiList = document.createElement('ul');
+            if (ordine.cartItems) {
+                ordine.cartItems.forEach(function (item) {
+                    let prezzo = item.prezzoUnitario.toFixed(2);
+                    let prodotto = document.createElement("li");
+                    prodotto.innerHTML = 'Nome: ' + item.nome +
+                        ', Quantità: ' + item.quantity +
+                        ', Prezzo: ' + prezzo + '€';
+                    prodottiList.appendChild(prodotto);
+                });
+            }
+            orderDetails.appendChild(prodottiList);
+
+            div.appendChild(orderInfo);
+            div.appendChild(buttonFattura);
+            div.appendChild(buttonDettagli);
+            div.appendChild(orderDetails);
+            container.appendChild(div);
+
+        });
+    }
 }
 
 function downloadInvoice(orderId) {

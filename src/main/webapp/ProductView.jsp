@@ -70,7 +70,7 @@
 </div>
 <% } %>
 <%
-	if (products == null || products.isEmpty()) { %>
+	if (products.isEmpty()) { %>
 <div>
 	<div class="no-product-wrapper">
 		<div class="No-product">
@@ -123,7 +123,7 @@
 						<%
                     if (userId != null && isAdmin != null && (boolean) isAdmin) {
                     %>
-					<a href="#" class="remove-button" onclick="confirmDelete(<%= bean.getId() %>">Delete</a> <br>
+							<a href="#" id="delete-button-<%= bean.getId() %>" class="remove-button" onclick="confirmDelete(<%= bean.getId() %>); return false;">Delete</a> <br>
 					<a href="product?opzione=show&id=<%= bean.getId() %>" class="add-button">Modifica</a>
 						<%
                     }
