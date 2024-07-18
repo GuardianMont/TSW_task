@@ -45,12 +45,18 @@ public class Payment extends HttpServlet {
             try {
                 switch (opzione) {
                     case "add":
+                        //aggiunta di un nuovo metodo di pagamento
                         handleAddAction(request, response);
                         break;
                     case "show":
+                        //mostra tutti i metodi di pagamento sulla base dell'username
                         handleShowAction(request, response);
                         break;
                     case "delete":
+                        //si cancella il metodo di pagamento specificato dall'username ed il numero id identificante
+                        //per quel utente
+                        //NB si da la possibilità di cancellare anche metodi di pagamento utilizzati durante degli ordini
+                        //mantenendo però le info di tali metodi nel db (StoricoMetodoPagamenti)
                         handleDeleteAction(request, response);
                         break;
                     default:
@@ -67,16 +73,15 @@ public class Payment extends HttpServlet {
 
     private void handleAddAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         PayMethod pay = new PayMethod();
-        //hash cvv e numero carta e scadenza ??
+
         pay.setNumCarta(request.getParameter("NumeroCarta"));
         String mese = request.getParameter("meseScadenza");
         String anno = request.getParameter("annoScadenza");
         pay.setDataScadenza(mese + "/" + anno);
         pay.setCircuito(request.getParameter("circuito"));
         pay.setTitolareCarta(request.getParameter("titolareCarta"));
-        //fai cvv hash
         byte[] salt = HashGenerator.generateSalt();
-
+        //si salva solo il cvv in hash dato che è l'unica vera informazione sensibile delle carte di credito
         try {
             byte[] cvvHash = HashGenerator.generateHash(request.getParameter("cvv"),salt);
             pay.setSalt(salt);

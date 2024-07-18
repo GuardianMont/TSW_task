@@ -83,11 +83,14 @@ public class ProductControl extends HttpServlet {
 	}
 
 	private void handleReadAction(HttpServletRequest request) throws SQLException {
+		//prende le informazioni del prodotto specificato dall'id
 		int id = Integer.parseInt(request.getParameter("id"));
 		request.setAttribute("product", model.doRetrieveByKey(id));
 	}
 
 	private void handleDeleteAction(HttpServletRequest request) throws SQLException {
+		//a seconda dell'id cancella quel particolare articolo
+		// lasciato al frontend la richiesta di conferma per la cancellazione
 		int id = Integer.parseInt(request.getParameter("id"));
 		model.doDelete(id);
 		CartManager.removeProductFromCart(request.getSession(), id);
@@ -95,6 +98,7 @@ public class ProductControl extends HttpServlet {
 	}
 
 	private boolean handleUpdateAction(HttpServletRequest request) throws SQLException, ServletException, IOException {
+		//gestisce la modifica di informazioni relativo ad un prodotto
 		int id = Integer.parseInt(request.getParameter("identificatore"));;
 		String relativePath = "/uploadFile";
 		String appPath = getServletContext().getRealPath(relativePath);
@@ -102,8 +106,10 @@ public class ProductControl extends HttpServlet {
 		List<Part> fileParts = request.getParts().stream().filter(part -> "img".equals(part.getName()) && part.getSize() > 0).toList();
 		String uploadedFilePath = FileUploadManager.saveUploadedFiles(appPath, relativePath, fileParts);
 		//gestione esterna per la scrittura e salvataggio del file
+		// NB con i check in FileUploadManager ci si accerta anche che due immagini non abbiano lo stesso nome
+		//per evitare conflitti, perciò in ogni caso prestare attenzione ai nomi dei file che si inseriscono
 		ProductBean bean = ProductBeanCreator.createProductBean(request, uploadedFilePath);
-		//creazione esterna del bean
+		//creazione esterna dell'istanza del prodotto
 		bean.setId(id);
 		model.doUpdate(bean);
 		return CartManager.updateProductInCart(request.getSession(), id);

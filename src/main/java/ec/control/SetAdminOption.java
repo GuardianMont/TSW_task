@@ -16,6 +16,8 @@ import static ec.util.ResponseUtils.sendErrorMessage;
 import static ec.util.ResponseUtils.sendJsonResponse;
 
 @WebServlet("/SetAdminOption")
+//è una servlet per la gestione del setting dei ruoli
+//ovvero da utente normale un admin può decidere di trasformarlo in un altro admin
 public class SetAdminOption extends HttpServlet {
     private UserDaoDM modelUser;
 
@@ -36,7 +38,6 @@ public class SetAdminOption extends HttpServlet {
             sendErrorMessage(response, "Sessione non valida o utente non autenticato");
             return;
         }
-
 
         String userId = (String) session.getAttribute("userId");
         if (userId == null) {
@@ -61,7 +62,7 @@ public class SetAdminOption extends HttpServlet {
             e.printStackTrace();
             sendErrorMessage(response, "Errore nel DB durante opzione: "+ opzione);
         }
-
+        //se va tutto bene l'utente diventa admin
         sendJsonResponse(response,true,null);
     }
 

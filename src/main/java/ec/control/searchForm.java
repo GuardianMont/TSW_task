@@ -23,6 +23,9 @@ public class searchForm extends HttpServlet {
         if (query != null && !query.isEmpty()) {
             try {
                 Collection<ProductBean> searchResults = performSearch(query);
+                //per la gestione della risposta uso l'attributo specifico products
+                //in modo da rimanere coerenti con il funzionamento del catalogo (ProductView)
+                //ed evitare un ulteriore aggiunta di codice specifico per la search bar
                 request.setAttribute("products", searchResults);
                 response.setContentType("text/plain");
                 response.setCharacterEncoding("UTF-8");
@@ -39,6 +42,8 @@ public class searchForm extends HttpServlet {
 
     private Collection<ProductBean> performSearch(String query) throws SQLException, IOException {
         ProductDaoDM productDao = new ProductDaoDM();
+        //cerco i prodotti in base alla query ovvero alle parole specificate nell'utente nella barra di ricerca
         return productDao.searchBarProducts(query);
+        //inoltre la ricerca sulla base della query è specificata in prodoctDAO
     }
 }

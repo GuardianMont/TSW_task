@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import static ec.util.ResponseUtils.*;
 
 @WebServlet("/favorites")
+//si occupa di più operazioni con risposte a chiamate ajax
+//per l'estrazione dei prodotti preferiti per visualizzare di conseguenza le stelline nel catalogo
+//per l'aggiunta di un nuovo prodotto nei preferiti
+//per l'eliminazione di un prodotto dai preferti
 public class Favorites extends HttpServlet {
     private FavoritesDaoDM favoritesDao = new FavoritesDaoDM();
 

@@ -208,17 +208,23 @@ function loadAddresses() {
     xhr.onload = function() {
         if (xhr.status === 200) {
             var response = JSON.parse(xhr.responseText);
+            const container = document.getElementById("shipping-addresses");
+            const errorElement = document.getElementById("no-addresses-error");
             if (response.success) {
                 var addresses = response.data;
-                const container = document.getElementById("shipping-addresses");
                 container.innerHTML = '';
-                addresses.forEach(function(address) {
-                    let div = document.createElement('div');
-                    div.innerHTML = '<div></div><input type="radio" name="selectedAddress" value="' + address.num_ID + '"> Indirizzo: ' + address.via + ' , num: ' +
-                        address.numCiv + '<br> citta: ' + address.citta + ', provincia: ' + address.provincia + ', cap:' + address.cap +
-                        '<br>preferenze:' + address.preferenze + '</div>';
-                    container.appendChild(div);
-                });
+                if (addresses.length === 0) {
+                    errorElement.style.display = 'block';
+                } else {
+                    errorElement.style.display = 'none';
+                    addresses.forEach(function(address) {
+                        let div = document.createElement('div');
+                        div.innerHTML = '<div></div><input type="radio" name="selectedAddress" value="' + address.num_ID + '"> Indirizzo: ' + address.via + ' , num: ' +
+                            address.numCiv + '<br> citta: ' + address.citta + ', provincia: ' + address.provincia + ', cap:' + address.cap +
+                            '<br>preferenze:' + address.preferenze + '</div>';
+                        container.appendChild(div);
+                    });
+                }
             } else {
                 console.error('Error loading addresses:', response.error);
             }

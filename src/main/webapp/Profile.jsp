@@ -1,5 +1,14 @@
 <%@ page import="ec.model.user.UserBean" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%  //check nel caso in cui l'utente cercasse di accedere alla pagina del profilo da url
+    UserBean user = (UserBean) request.getAttribute("user");
+    String sessionUser = (String) request.getSession().getAttribute("userId");
+
+    if (user == null || sessionUser == null || !sessionUser.equals(user.getUsername())) {
+        response.sendRedirect("login_signup.jsp");
+        return;
+    }
+%>
 <html>
 <head>
     <title>Profilo</title>
@@ -22,14 +31,11 @@
 <jsp:include page="Header.jsp"/>
 
 <%
-    UserBean user = (UserBean) request.getAttribute("user");
-    String sessionUser = (String) request.getSession().getAttribute("userId");
-
     if (user != null && sessionUser != null && sessionUser.equals(user.getUsername())){
 %>
 
 <div class="container main-container" id="main-container">
-    <form class="logout-form" action="${pageContext.request.contextPath}/LoginSignup">
+    <form class="logout-form" action="${pageContext.request.contextPath}/Logout">
         <input type="hidden" name="option" value="logout">
         <input type="submit" value="Logout">
     </form>
@@ -136,6 +142,7 @@
         </div>
     </div>
 
+
     <div class="orderDetail" id="orderDetail" style="display: none;">
         <div class="order-details">
             <h1>Dettagli Ordine</h1>
@@ -176,6 +183,7 @@
         </div>
     </div>
 
+    <!--si da la possibilità di aggiungere indirizzi di spedizione dalla pagina utente-->
     <div class="indirizziSpedizione" id="indirizziSpedizione" style="display: none;">
         <button id="add-address" class="add-button add-methods-button" onclick="toggleAddressForm()">
             <i class="fas fa-plus"></i>
@@ -233,6 +241,7 @@
         </div>
     </div>
 
+    <!--si da la possibilità di aggiungere metodi di pagamento dalla pagina utente-->
     <div class="metodiPagamento" id="metodiPagamento" style="display: none;">
         <button id="add-pay-button" class="add-button add-methods-button" onclick="togglePayMethodForm()">
             <i class="fas fa-plus"></i>

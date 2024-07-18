@@ -25,12 +25,12 @@ public class AdminFilter implements Filter {
         // Se la sessione non esiste o non è un amministratore, reindirizza alla homepage
         if (session == null) {
             System.out.println("Session is null");
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/Homepage.jsp");
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/NewHomepageTest.jsp");
         } else {
             Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
             if (isAdmin == null || !isAdmin) {
                 System.out.println("User is not admin: " + isAdmin);
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/Homepage.jsp");
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/NewHomepageTest.jsp");
             } else {
                 System.out.println("User is admin: " + isAdmin);
                 chain.doFilter(request, response);

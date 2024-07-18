@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="ec.model.cart.ShoppingCart" %>
 <%@ page import="ec.model.cart.CartItem" %>
 <%@ page import="java.util.Base64" %>
@@ -11,7 +12,6 @@
     <link rel="stylesheet" href="css/notifica.css">
     <link rel="stylesheet" href="css/Payment.css">
     <link rel="stylesheet" href="css/confermaAcquisto.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/validationAddress.js"></script>
     <script src="js/validationPayMathods.js"></script>
     <script src="js/notifica.js"></script>
@@ -25,14 +25,16 @@
             <h2>Indirizzo di Spedizione</h2>
             <div id="shipping-addresses">
                 <!-- Contenuto dinamico caricato tramite AJAX -->
+                <p id="no-addresses-error" class="error-message" style="display: none;">Inserire almeno un indirizzo per proseguire.</p>
             </div>
+
             <div class="button-container">
                 <button class="add-button" onclick="aggiungiIndirizzo()">
                     <i class="fas fa-plus"></i> Aggiungi Nuovo Indirizzo
                 </button>
             </div>
             <div>
-                <button class="add-button hidden" id="remove-button" onclick="removeForm()">
+                <button class="remove-button hidden" id="remove-button" onclick="removeForm()">
                     <i class="fas fa-minus"></i> Rimuovi Form
                 </button>
             </div>
@@ -193,17 +195,23 @@
             <div class="item-details">
                 <p class="product-name"><%= item.getItem().getNome() %></p>
                 <p class="quantity">Quantità: <%= item.getNumItem() %></p>
-                <p class="price">Prezzo: &euro;<%= item.getItem().getPrezzo() %></p>
+                <p class="price">Prezzo per unità: &euro;<%= item.getItem().getPrezzoScontato()>0?
+                        item.getItem().getPrezzoScontato():item.getItem().getPrezzo() %></p>
+                <p class="totPrice">totale prodotto:  &euro;<%=item.prezzoAllItem()%></p>
             </div>
         </div>
         <%
-                }
+                } %>
+        <h2>Totale spesa: &euro;<%=cart.getPrezzoTot()%></h2>
+        <%
             }
         %>
     </div>
 </div>
 <form id="check-out-form" class="check-out-form" action="CheckoutServlet" method="post">
-    <input type="submit" value="Procedi al Checkout" class="proceed-button">
+    <button type="submit" class="btn btn-6 btn-6d icon-proceed proceed-button" >
+        <span>Procedi al Checkout</span>
+    </button>
 </form>
 <jsp:include page="Footer.jsp"/>
 </body>

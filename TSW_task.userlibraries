@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Maven: org.junit.platform:junit-platform-commons:1.9.2">
+    <archive path="C:/Users/user/.m2/repository/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.jar" />
+  </library>
+  <library name="Maven: org.apiguardian:apiguardian-api:1.1.2">
+    <archive path="C:/Users/user/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar" />
+  </library>
+  <library name="Maven: org.junit.jupiter:junit-jupiter-api:5.9.2">
+    <archive path="C:/Users/user/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.2/junit-jupiter-api-5.9.2.jar" />
+  </library>
+  <library name="Maven: org.opentest4j:opentest4j:1.2.0">
+    <archive path="C:/Users/user/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar" />
+  </library>
+  <library name="Maven: jakarta.servlet:jakarta.servlet-api:5.0.0">
+    <archive path="C:/Users/user/.m2/repository/jakarta/servlet/jakarta.servlet-api/5.0.0/jakarta.servlet-api-5.0.0.jar" />
+  </library>
+  <library name="Maven: org.junit.jupiter:junit-jupiter-engine:5.9.2">
+    <archive path="C:/Users/user/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.2/junit-jupiter-engine-5.9.2.jar" />
+  </library>
+  <library name="Maven: org.junit.platform:junit-platform-engine:1.9.2">
+    <archive path="C:/Users/user/.m2/repository/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar" />
+  </library>
+  <library name="Maven: com.google.protobuf:protobuf-java:3.11.4">
+    <archive path="C:/Users/user/.m2/repository/com/google/protobuf/protobuf-java/3.11.4/protobuf-java-3.11.4.jar" />
+  </library>
+  <library name="Maven: org.json:json:20210307">
+    <archive path="C:/Users/user/.m2/repository/org/json/json/20210307/json-20210307.jar" />
+  </library>
+  <library name="Maven: commons-logging:commons-logging:1.3.0">
+    <archive path="C:/Users/user/.m2/repository/commons-logging/commons-logging/1.3.0/commons-logging-1.3.0.jar" />
+  </library>
+  <library name="Maven: org.apache.commons:commons-dbcp2:2.12.0">
+    <archive path="C:/Users/user/.m2/repository/org/apache/commons/commons-dbcp2/2.12.0/commons-dbcp2-2.12.0.jar" />
+  </library>
+  <library name="Maven: org.apache.commons:commons-pool2:2.12.0">
+    <archive path="C:/Users/user/.m2/repository/org/apache/commons/commons-pool2/2.12.0/commons-pool2-2.12.0.jar" />
+  </library>
+  <library name="Maven: jakarta.transaction:jakarta.transaction-api:1.3.3">
+    <archive path="C:/Users/user/.m2/repository/jakarta/transaction/jakarta.transaction-api/1.3.3/jakarta.transaction-api-1.3.3.jar" />
+  </library>
+  <library name="Maven: mysql:mysql-connector-java:8.0.28">
+    <archive path="C:/Users/user/.m2/repository/mysql/mysql-connector-java/8.0.28/mysql-connector-java-8.0.28.jar" />
+  </library>
+  <library name="Maven: com.google.code.gson:gson:2.8.9">
+    <archive path="C:/Users/user/.m2/repository/com/google/code/gson/gson/2.8.9/gson-2.8.9.jar" />
+  </library>
+  <library name="Maven: xml-apis:xml-apis-ext:1.3.04">
+    <archive path="C:/Users/user/.m2/repository/xml-apis/xml-apis-ext/1.3.04/xml-apis-ext-1.3.04.jar" />
+  </library>
+  <library name="Maven: org.apache.pdfbox:pdfbox:3.0.0">
+    <archive path="C:/Users/user/.m2/repository/org/apache/pdfbox/pdfbox/3.0.0/pdfbox-3.0.0.jar" />
+  </library>
+  <library name="Maven: org.apache.pdfbox:fontbox:3.0.0">
+    <archive path="C:/Users/user/.m2/repository/org/apache/pdfbox/fontbox/3.0.0/fontbox-3.0.0.jar" />
+  </library>
+  <library name="Maven: ch.qos.logback:logback-core:1.2.3">
+    <archive path="C:/Users/user/.m2/repository/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar" />
+  </library>
+  <library name="Maven: ch.qos.logback:logback-classic:1.2.3">
+    <archive path="C:/Users/user/.m2/repository/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar" />
+  </library>
+  <library name="Maven: org.slf4j:slf4j-api:1.7.30">
+    <archive path="C:/Users/user/.m2/repository/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-script:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-script/1.14/batik-script-1.14.jar" />
+  </library>
+  <library name="Maven: xalan:xalan:2.7.2">
+    <archive path="C:/Users/user/.m2/repository/xalan/xalan/2.7.2/xalan-2.7.2.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-awt-util:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-awt-util/1.14/batik-awt-util-1.14.jar" />
+  </library>
+  <library name="Maven: commons-io:commons-io:1.3.1">
+    <archive path="C:/Users/user/.m2/repository/commons-io/commons-io/1.3.1/commons-io-1.3.1.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-util:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-util/1.14/batik-util-1.14.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-i18n:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-i18n/1.14/batik-i18n-1.14.jar" />
+  </library>
+  <library name="Maven: xml-apis:xml-apis:1.4.01">
+    <archive path="C:/Users/user/.m2/repository/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-shared-resources:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-shared-resources/1.14/batik-shared-resources-1.14.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-css:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-css/1.14/batik-css-1.14.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-parser:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-parser/1.14/batik-parser-1.14.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-transcoder:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-transcoder/1.14/batik-transcoder-1.14.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-dom:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-dom/1.14/batik-dom-1.14.jar" />
+  </library>
+  <library name="Maven: xalan:serializer:2.7.2">
+    <archive path="C:/Users/user/.m2/repository/xalan/serializer/2.7.2/serializer-2.7.2.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:xmlgraphics-commons:2.6">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/xmlgraphics-commons/2.6/xmlgraphics-commons-2.6.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-bridge:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-bridge/1.14/batik-bridge-1.14.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-constants:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-constants/1.14/batik-constants-1.14.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-xml:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-xml/1.14/batik-xml-1.14.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-gvt:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-gvt/1.14/batik-gvt-1.14.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-svggen:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-svggen/1.14/batik-svggen-1.14.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-ext:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-ext/1.14/batik-ext-1.14.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-svg-dom:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-svg-dom/1.14/batik-svg-dom-1.14.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlgraphics:batik-anim:1.14">
+    <archive path="C:/Users/user/.m2/repository/org/apache/xmlgraphics/batik-anim/1.14/batik-anim-1.14.jar" />
+  </library>
+  <library name="Maven: org.bouncycastle:bcprov-jdk18on:1.76">
+    <archive path="C:/Users/user/.m2/repository/org/bouncycastle/bcprov-jdk18on/1.76/bcprov-jdk18on-1.76.jar" />
+  </library>
+  <library name="Maven: org.bouncycastle:bcutil-jdk18on:1.76">
+    <archive path="C:/Users/user/.m2/repository/org/bouncycastle/bcutil-jdk18on/1.76/bcutil-jdk18on-1.76.jar" />
+  </library>
+  <library name="Maven: org.bouncycastle:bcpkix-jdk18on:1.76">
+    <archive path="C:/Users/user/.m2/repository/org/bouncycastle/bcpkix-jdk18on/1.76/bcpkix-jdk18on-1.76.jar" />
+  </library>
+  <library name="Maven: com.itextpdf:io:7.2.0">
+    <archive path="C:/Users/user/.m2/repository/com/itextpdf/io/7.2.0/io-7.2.0.jar" />
+  </library>
+  <library name="Maven: org.apache.pdfbox:pdfbox-io:3.0.0">
+    <archive path="C:/Users/user/.m2/repository/org/apache/pdfbox/pdfbox-io/3.0.0/pdfbox-io-3.0.0.jar" />
+  </library>
+  <library name="Maven: com.itextpdf:commons:7.2.0">
+    <archive path="C:/Users/user/.m2/repository/com/itextpdf/commons/7.2.0/commons-7.2.0.jar" />
+  </library>
+  <library name="Maven: org.bouncycastle:bcpkix-jdk15on:1.68">
+    <archive path="C:/Users/user/.m2/repository/org/bouncycastle/bcpkix-jdk15on/1.68/bcpkix-jdk15on-1.68.jar" />
+  </library>
+  <library name="Maven: com.itextpdf:kernel:7.2.0">
+    <archive path="C:/Users/user/.m2/repository/com/itextpdf/kernel/7.2.0/kernel-7.2.0.jar" />
+  </library>
+  <library name="Maven: com.itextpdf:layout:7.1.11">
+    <archive path="C:/Users/user/.m2/repository/com/itextpdf/layout/7.1.11/layout-7.1.11.jar" />
+  </library>
+  <library name="Maven: org.bouncycastle:bcprov-jdk15on:1.68">
+    <archive path="C:/Users/user/.m2/repository/org/bouncycastle/bcprov-jdk15on/1.68/bcprov-jdk15on-1.68.jar" />
+  </library>
+  <library name="font-awesome">
+    <archive path="C:/Users/user/AppData/Roaming/JetBrains/IntelliJIdea2023.3/javascript/extLibs/http_cdnjs.cloudflare.com_ajax_libs_font-awesome_5.15.3_css_all.css" />
+  </library>
+</eclipse-userlibraries>
+

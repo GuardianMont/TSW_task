@@ -31,6 +31,8 @@ body {
     padding-top: 20px;
 }
 
+
+
 /* Stili per i titoli delle sezioni */
 .section {
     margin-bottom: 20px;
@@ -63,11 +65,11 @@ form select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    /*margin-bottom: 10px;*/
+    margin-bottom: 10px;
 }
 
 form input[type="reset"] {
-    background-color: #bb4561;
+    background-color: red;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -77,12 +79,12 @@ form input[type="reset"] {
 }
 
 form input[type="reset"]:hover {
-    background-color: #a92142;
+    background-color: darkred;
 }
 
 form input[type="submit"],
 form button {
-    background-color: #008080;
+    background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -105,7 +107,80 @@ form button:hover {
     display: none;
 }
 
+/*stile bottone proceed*/
+.btn {
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 10px 40px;
+    display: inline-block;
+    letter-spacing: 1px;
+    outline: none;
+    position: relative;
+    overflow: hidden; /* Assicura che il contenuto fuori dal pulsante sia nascosto */
+    transition: all 0.3s;
+}
+.btn-6 {
+    position: relative;
+    border-radius: 10px;
+    background-color: #008080;
+    color: white;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.btn-6:active {
+    color: #005859;
+}
+
+.btn-6::after {
+    content: "\f0d1"; /* Unicode per fa-shopping-cart e fa-plus */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 100%; /* Posiziona la freccia fuori dal pulsante */
+    left: 50%;
+    transform: translateX(-50%);
+    line-height: 2;
+    font-size: large;
+    color: white;
+    transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0; /* Nasconde la freccia inizialmente */
+}
+
+.btn-6:hover {
+    color: transparent; /* Nasconde il testo durante l'hover */
+}
+
+.btn-6:hover::after {
+    top: 0%; /* Porta la freccia al centro del pulsante */
+    opacity: 1; /* Mostra la freccia durante l'hover */
+}
+
+.btn-6 span {
+    display: inline-block;
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-6:hover span {
+    transform: translateY(-100%); /* Sposta il testo verso l'alto */
+}
+
 /* Stili per i bottoni di aggiunta e rimozione */
+.add-button{
+    background-color: #008080;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+.remove-button {
+    background-color: #bb4561;
+}
+
 .add-button{
     background-color: #008080;
     color: white;
@@ -126,6 +201,13 @@ form button:hover {
     cursor: pointer;
     margin-bottom: 10px;
     transition: background-color 0.3s;
+}
+
+.add-button:hover {
+    background-color: #005859;
+}
+.remove-button:hover {
+    background-color: #a92142;
 }
 
 #remove-button {
@@ -198,8 +280,12 @@ form button:hover {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
 }
-
+.cart-item:last-child {
+    border-bottom: none; /* Rimuove la linea di separazione dall'ultimo elemento */
+}
 .cart-item img {
     width: 100px;
     height: auto;

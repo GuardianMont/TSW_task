@@ -36,8 +36,6 @@ public class UpdateUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String option = req.getParameter("option");
-
-        //
         if(option != null) {
             switch (option) {
                 case "update":

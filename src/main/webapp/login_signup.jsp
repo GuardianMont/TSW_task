@@ -42,7 +42,8 @@
             if (errorMessage != null && !errorMessage.isEmpty()) { %>
         <p style="color: red;"><%= errorMessage %></p>
         <% } %>
-        <form id = "login-form" action="LoginSignup" method="post">
+        <!--form per il login-->
+        <form id = "login-form" action="Login" method="post">
             <input type="hidden" id="login-option" name="option" value="login">
             <div class = "form-group">
                 <label for = "login-token"> Email</label>
@@ -64,7 +65,8 @@
             </div>
         </form>
 
-        <form id="signup-form" style="display:none" action="LoginSignup" method="post">
+        <!--form per registrarsi -->
+        <form id="signup-form" style="display:none" action="Signup" method="post">
             <input type="hidden" id="signup-option" name="option" value="signup">
             <div class="form-group">
                 <label for = "signup-username"> Username:</label>

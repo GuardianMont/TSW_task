@@ -216,4 +216,32 @@ public class UserDaoDM implements UserDao {
         return result > 0; // Ritorna true se almeno una riga è stata aggiornata con successo
     }
 
+    public int countByUsername(String username) throws SQLException {
+        String query = "SELECT COUNT(*) AS count FROM  " +  UserDaoDM.TABLE_NAME + " WHERE username = ?";
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("count");
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int countByEmail(String email) throws SQLException {
+        String query = "SELECT COUNT(*) AS count FROM " +  UserDaoDM.TABLE_NAME + " WHERE email = ?";
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("count");
+                }
+            }
+        }
+        return 0;
+    }
+
 }

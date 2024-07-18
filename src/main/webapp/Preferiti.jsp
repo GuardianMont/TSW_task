@@ -37,6 +37,18 @@
 
 <jsp:include page="Header.jsp" />
 
+
+<%
+    if (products == null || products.isEmpty()) { %>
+<div class="no-product-wrapper">
+    <div class="No-product">
+        <h1>Nessun risultato</h1>
+        <p>Non hai selezionato ancora nessun prodotto tra i preferiti</p>
+        <p>Per farlo puoi dal catalogo interagire con la stellina posta su ogni prodotto</p>
+        <p>e creare la tua selezione di prodotti personale</p>
+    </div>
+</div>
+<% } else {%>
 <div class="generale">
     <h1>La tua selezione di prodotti preferiti</h1>
     <div class="sorting-dropdown">
@@ -49,19 +61,6 @@
         </select>
     </div>
 </div>
-
-<%
-    if (products == null || products.isEmpty()) { %>
-<div class="no-product-wrapper">
-    <div class="No-product">
-        <h1>Nessun risultato</h1>
-        <p>Non hai selezionato ancora nessun prodotto tra i preferiti</p>
-        <p>Per farlo puoi dal catalogo interagire con la stellina posta su ogni prodotto</p>
-        <p>e creare la tua selezione di prodotti personale</p>
-    </div>
-</div>
-<% } %>
-
 <div class="container">
     <%
         if (products != null && !products.isEmpty()) {
@@ -121,6 +120,7 @@
     </div>
     <%
             }
+        }
         }
     %>
 </div>

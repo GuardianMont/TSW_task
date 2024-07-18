@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="TSW_task:war2">
+    <output-path>$PROJECT_DIR$/out/artifacts/TSW_task_war2</output-path>
+    <root id="archive" name="TSW_task_war.war">
+      <element id="artifact" artifact-name="TSW_task:war exploded" />
+    </root>
+  </artifact>
+</component>

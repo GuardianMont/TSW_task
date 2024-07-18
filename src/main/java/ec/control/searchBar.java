@@ -17,6 +17,11 @@ import ec.util.ResponseUtils.*;
 import static ec.util.ResponseUtils.*;
 
 @WebServlet("/search")
+//da non confondere con SearchForm dato che quest'ultima si occupa della visualizzazione dei prodotti
+//e di reindirizzare la risposta al catalogo
+//
+// !!! mentre searchBar si occupa della comunicazione con ajax per rappresentare i prodotti risultati
+//dalla ricerca con la query nella tendina a schermo
 public class searchBar extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String query = request.getParameter("query");

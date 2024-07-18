@@ -26,7 +26,7 @@
             </div>
 
             <!-- Logo -->
-            <a href="${pageContext.request.contextPath}/Homepage.jsp" class="logo-link">
+            <a href="${pageContext.request.contextPath}/NewHomepageTest.jsp" class="logo-link">
                 <!-- Div in cui viene caricato il logo -->
                 <div id="logo-container" class="logo-container"></div>
             </a>

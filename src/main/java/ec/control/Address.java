@@ -15,7 +15,7 @@ import java.util.Collection;
 
 import static ec.util.ResponseUtils.*;
 
-@WebServlet("/AddressManagement")
+@WebServlet("/AddressManagement") /*gestione operazioni varie sugli indirizzi */
 public class Address extends HttpServlet {
     private AddressDaoDM model;
     @Override

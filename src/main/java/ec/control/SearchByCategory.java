@@ -18,6 +18,7 @@ import static ec.util.ResponseUtils.sendErrorResponse;
 import static ec.util.ResponseUtils.sendJsonResponse;
 
 @WebServlet("/SearchByCategory")
+//ovvero a seconda della categoria specifica restituisce una certa lista di prodotti
 public class SearchByCategory extends HttpServlet {
     private ProductDaoDM model;
 
@@ -43,6 +44,9 @@ public class SearchByCategory extends HttpServlet {
         if (categoria != null && !categoria.isEmpty()) {
             try {
                 Collection<ProductBean> result = new ArrayList<>();
+                //le categorie utilizzate sono le stesse che vengono forzate con l'inserimento e la modifica
+                //di un prodotto, in ogni caso i check per le categorie ulteriori oltre a quelli in js sono
+                // in ProductBeanCreator
                 switch (categoria) {
                     case "tavolo":
                         result = handleTavoloSearch();
