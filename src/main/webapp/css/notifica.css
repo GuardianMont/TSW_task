@@ -17,15 +17,15 @@
 }
 
 .notification.info {
-    background-color: #4CAF50;
+    background-color: #008080;
 }
 
 .notification.attention {
-    background-color: #e3443a;
+    background-color: #bb4561;
 }
 
 .notification.favorites {
-    background-color: #20AFA8;
+    background-color: #008080;
     color:white;
 
 }
