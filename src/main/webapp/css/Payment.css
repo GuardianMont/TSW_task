@@ -66,7 +66,7 @@ form select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 form input[type="reset"] {
@@ -183,24 +183,13 @@ form button:hover {
     color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
     margin-bottom: 10px;
     transition: background-color 0.3s;
 }
 .remove-button {
     background-color: #bb4561;
-}
-
-.add-button{
-    background-color: #008080;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    transition: background-color 0.3s;
 }
 
 .remove-button {
