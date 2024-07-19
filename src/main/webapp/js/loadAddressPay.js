@@ -215,7 +215,6 @@ function loadAddresses() {
                 if (addresses.length === 0) {
                         container.textContent = 'Nessun indirizzo di spedizione salvato, aggiungerne uno per proseguire all\'acquisto';
                     } else {
-                    errorElement.style.display = 'none';
                     addresses.forEach(function(address) {
                         let div = document.createElement('div');
                         div.innerHTML = '<div></div><input type="radio" name="selectedAddress" value="' + address.num_ID + '"> Indirizzo: ' + address.via + ' , num: ' +

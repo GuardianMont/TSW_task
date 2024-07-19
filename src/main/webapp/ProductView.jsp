@@ -123,7 +123,7 @@
 						<%
                     if (userId != null && isAdmin != null && (boolean) isAdmin) {
                     %>
-					<a href="#" class="remove-button" onclick="confirmDelete(<%= bean.getId() %>">Delete</a> <br>
+					<a href="#" id="delete-button-<%= bean.getId() %>" class="remove-button" onclick="confirmDelete(<%= bean.getId() %>); return false;">Delete</a> <br>
 					<a href="product?opzione=show&id=<%= bean.getId() %>" class="add-button">Modifica</a>
 						<%
                     }
@@ -144,7 +144,7 @@
 					}
 				%>
 				<% if(userId!=null){
-					//l'immgine dei preferiti viene visualizzata solo in caso vi sia un utente loggato%>
+					//l'immagine dei preferiti viene visualizzata solo in caso vi sia un utente loggato%>
 				<img src="uploadFile/favorites_32.png" alt="Favorite Icon" id="favorite-icon-<%= bean.getId() %>"
 					 class="favorite not-added" onclick="toggleFavorite(<%= bean.getId() %>)">
 

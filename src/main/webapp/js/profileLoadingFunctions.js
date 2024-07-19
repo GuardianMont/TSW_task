@@ -1,39 +1,50 @@
 
 function loadPaymentMethods() {
+    console.log("Loading payment methods...");
     viewPaymentMethods(); // Funzione viewPaymentMethods presumibilmente visualizza qualcosa nell'interfaccia utente
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'payMethodsManager');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
+        console.log("Response received:", xhr.responseText);
         if (xhr.status === 200) {
-            var response = JSON.parse(xhr.responseText);
-            if (response.success) {
-                var payMethods = response.data;
-                const container = document.getElementById("shipping-payment");
-                container.innerHTML = '';
-                if (payMethods.length === 0) {
-                    container.textContent = 'Nessun metodo di pagamento disponibile';
+            try {
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    var payMethods = response.data;
+                    console.log("Payment methods data:", payMethods);
+                    const container = document.getElementById("shipping-payment");
+                    if (container) {
+                        container.innerHTML = '';
+                        if (payMethods.length === 0) {
+                            container.textContent = 'Nessun metodo di pagamento disponibile';
+                        } else {
+                            payMethods.forEach(function(payMethod) {
+                                var div = document.createElement('div');
+                                var innerDiv = document.createElement('div');
+                                innerDiv.textContent = 'Numero carta: ' + payMethod.numCarta +
+                                    '\nData scadenza: ' + payMethod.dataScadenza +
+                                    '\nTitolare Carta: ' + payMethod.titolareCarta;
+                                div.appendChild(innerDiv);
+
+                                var deleteButton = document.createElement('button');
+                                deleteButton.textContent = 'Elimina';
+                                deleteButton.onclick = function() {
+                                    confirmDeletePaymentMethod(payMethod.numId);
+                                };
+                                div.appendChild(deleteButton);
+
+                                container.appendChild(div);
+                            });
+                        }
+                    } else {
+                        console.error("Container element not found");
+                    }
                 } else {
-                    payMethods.forEach(function(payMethod) {
-                        var div = document.createElement('div');
-                        var innerDiv = document.createElement('div');
-                        innerDiv.textContent = 'Numero carta: ' + payMethod.numCarta +
-                            '\nData scadenza: ' + payMethod.dataScadenza +
-                            '\nTitolare Carta: ' + payMethod.titolareCarta;
-                        div.appendChild(innerDiv);
-
-                        var deleteButton = document.createElement('button');
-                        deleteButton.textContent = 'Elimina';
-                        deleteButton.onclick = function() {
-                            confirmDeletePaymentMethod(payMethod.numId);
-                        };
-                        div.appendChild(deleteButton);
-
-                        container.appendChild(div);
-                    });
+                    console.error('Error loading payment methods:', response.error);
                 }
-            } else {
-                console.error('Error loading payment methods:', response.error);
+            } catch (e) {
+                console.error('Error parsing JSON response:', e);
             }
         } else {
             console.error('Request failed. Status:', xhr.status);
@@ -45,6 +56,7 @@ function loadPaymentMethods() {
     var data = 'opzione=show';
     xhr.send(data);
 }
+
 
 function loadAddresses() {
     viewAddresses(); // Funzione viewAddresses presumibilmente visualizza qualcosa nell'interfaccia utente

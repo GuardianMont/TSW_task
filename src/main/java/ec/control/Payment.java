@@ -1,14 +1,11 @@
 package ec.control;
-import static ec.util.ResponseUtils.*;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import static ec.util.ResponseUtils.*;
 import ec.model.HashGenerator;
 import ec.model.PaymentMethod.PayMethod;
 import ec.model.PaymentMethod.PaymentDaoDM;
 
 import jakarta.servlet.ServletConfig;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,42 +18,41 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
 
-@WebServlet ("/payMethodsManager")
+@WebServlet("/payMethodsManager")
 public class Payment extends HttpServlet {
     private PaymentDaoDM model;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         model = new PaymentDaoDM();
     }
 
-    public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request, response);
     }
-    public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String opzione = request.getParameter("opzione");
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("userId") == null) {
             sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Sessione non valida o utente non loggato");
             return;
         }
+
         System.out.println("Parametri payment: " + opzione);
         if (opzione != null) {
             try {
                 switch (opzione) {
                     case "add":
-                        //aggiunta di un nuovo metodo di pagamento
                         handleAddAction(request, response);
                         break;
                     case "show":
-                        //mostra tutti i metodi di pagamento sulla base dell'username
                         handleShowAction(request, response);
                         break;
                     case "delete":
-                        //si cancella il metodo di pagamento specificato dall'username ed il numero id identificante
-                        //per quel utente
-                        //NB si da la possibilità di cancellare anche metodi di pagamento utilizzati durante degli ordini
-                        //mantenendo però le info di tali metodi nel db (StoricoMetodoPagamenti)
                         handleDeleteAction(request, response);
                         break;
                     default:
@@ -64,6 +60,7 @@ public class Payment extends HttpServlet {
                         break;
                 }
             } catch (SQLException | IOException e) {
+                e.printStackTrace();
                 sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
             }
         } else {
@@ -74,37 +71,66 @@ public class Payment extends HttpServlet {
     private void handleAddAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         PayMethod pay = new PayMethod();
 
-        pay.setNumCarta(request.getParameter("NumeroCarta"));
-        String mese = request.getParameter("meseScadenza");
-        String anno = request.getParameter("annoScadenza");
-        pay.setDataScadenza(mese + "/" + anno);
-        pay.setCircuito(request.getParameter("circuito"));
-        pay.setTitolareCarta(request.getParameter("titolareCarta"));
-        byte[] salt = HashGenerator.generateSalt();
-        //si salva solo il cvv in hash dato che è l'unica vera informazione sensibile delle carte di credito
         try {
-            byte[] cvvHash = HashGenerator.generateHash(request.getParameter("cvv"),salt);
+            String numCarta = request.getParameter("NumeroCarta");
+            String mese = request.getParameter("meseScadenza");
+            String anno = request.getParameter("annoScadenza");
+            String circuito = request.getParameter("circuito");
+            String titolareCarta = request.getParameter("titolareCarta");
+            String cvv = request.getParameter("cvv");
+
+            if (numCarta == null || mese == null || anno == null || circuito == null || titolareCarta == null || cvv == null) {
+                throw new IllegalArgumentException("Tutti i campi sono obbligatori.");
+            }
+
+            pay.setNumCarta(numCarta);
+            pay.setDataScadenza(mese + "/" + anno);
+            pay.setCircuito(circuito);
+            pay.setTitolareCarta(titolareCarta);
+
+            byte[] salt = HashGenerator.generateSalt();
+            byte[] cvvHash = HashGenerator.generateHash(cvv, salt);
+
             pay.setSalt(salt);
             pay.setCvv(cvvHash);
-        } catch (BadAttributeValueExpException e) {
-            sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore generazione hash");
+
+            int n = model.checkNum((String) request.getSession().getAttribute("userId"));
+            pay.setNumId(n + 1);
+
+            model.doSave(pay, (String) request.getSession().getAttribute("userId"), pay.getNumId());
+
+            sendSuccessResponse(response, "Metodo di pagamento aggiunto con successo.");
+        } catch (BadAttributeValueExpException | IllegalArgumentException e) {
+            sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore durante l'aggiunta del metodo di pagamento.");
         }
-        int n = model.checkNum((String) request.getSession().getAttribute("userId"));
-        pay.setNumId(n+1);
-        model.doSave(pay, (String) request.getSession().getAttribute("userId"), pay.getNumId());
-        sendSuccessResponse(response, request.getContextPath() + "/Payment.jsp");
     }
 
     private void handleShowAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        Collection<PayMethod> payMethods = model.doRetrieveAll((String) request.getSession().getAttribute("userId"));
-        sendJsonResponse(response,true, payMethods);
+        try {
+            Collection<PayMethod> payMethods = model.doRetrieveAll((String) request.getSession().getAttribute("userId"));
+            sendJsonResponse(response, true, payMethods);
+        } catch (Exception e) {
+            e.printStackTrace();
+            sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore durante il recupero dei metodi di pagamento.");
+        }
     }
 
     private void handleDeleteAction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        int numId = Integer.parseInt(request.getParameter("numId"));
-        String userId = (String) request.getSession().getAttribute("userId");
-        model.doDelete(userId, numId);
-        sendSuccessResponse(response, request.getContextPath() + "/Profile.jsp");
+        try {
+            int numId = Integer.parseInt(request.getParameter("numId"));
+            String userId = (String) request.getSession().getAttribute("userId");
+
+            model.doDelete(userId, numId);
+
+            sendSuccessResponse(response, "Metodo di pagamento eliminato con successo.");
+        } catch (NumberFormatException e) {
+            sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "ID metodo di pagamento non valido.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore durante l'eliminazione del metodo di pagamento.");
+        }
     }
 }
-
