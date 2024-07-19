@@ -123,7 +123,7 @@
 						<%
                     if (userId != null && isAdmin != null && (boolean) isAdmin) {
                     %>
-					<a href="#" class="remove-button" onclick="confirmDelete(<%= bean.getId() %>)">Delete</a> <br>
+					<a href="#" class="remove-button" onclick="confirmDelete(<%= bean.getId() %>">Delete</a> <br>
 					<a href="product?opzione=show&id=<%= bean.getId() %>" class="add-button">Modifica</a>
 						<%
                     }

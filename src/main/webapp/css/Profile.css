@@ -150,7 +150,6 @@ input[type="submit"] {
     margin: 5px auto;
     font-size: 14px;
     display: inline-block;
-    max-width: 100px;
     /*width: 100%;*/
 }
 
@@ -185,7 +184,6 @@ input[type="reset"]:hover {
     margin: 10px 0;
     border: none;
     cursor: pointer;
-    width: 100%;
     font-size: 16px;
     display: flex;
     align-items: center;
@@ -252,7 +250,7 @@ input[type="reset"]:hover {
 
     button.edit-button,
     .logout-form input[type="submit"] {
-        width: 48%;
+        width: 20%;
         margin: 1%;
     }
 }
