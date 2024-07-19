@@ -23,6 +23,7 @@ body {
 .select-sorting {
     position: relative;
     top: 35%;
+    border-radius: 10px;
 }
 
 /* For the product images */
@@ -111,7 +112,7 @@ body {
     background-color: #008080;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     text-decoration: none;
     text-align: center;
     transition: background-color 0.3s;
@@ -127,7 +128,7 @@ body {
     padding: 10px 20px;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     text-decoration: none;
     text-align: center;
     transition: background-color 0.3s;

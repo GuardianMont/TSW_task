@@ -35,7 +35,7 @@ header {
 .numeroProdotti {
     position: absolute;
     top: -15px;
-    left: clamp(35px ,2.5vw, 26px);
+    /*left: clamp(35px ,2.5vw, 26px);*/
     background-color: #333;
     color: white;
     border-radius: 50%;

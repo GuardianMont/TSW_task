@@ -188,7 +188,7 @@ body {
     background-color: #008080;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -203,7 +203,7 @@ body {
     background-color: #bb4561;
     color: white;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 .action-button:hover{
     background-color: #a92142;
@@ -214,7 +214,7 @@ body {
     background-color: #008080;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
     margin: 0;
