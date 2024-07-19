@@ -178,7 +178,7 @@
                 </table>
             </div>
             <div class="total-price">
-                <h2>Prezzo Totale: <span id="prezzoTotale"></span></h2>
+                <h3>Prezzo Totale: <span id="prezzoTotale"></span></h3>
             </div>
         </div>
     </div>

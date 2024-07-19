@@ -98,7 +98,7 @@ h3 {
 .change-password-container,
 .ordiniEffettuati,
 .indirizziSpedizione,
-.orderDetail,
+/*.orderDetail,*/
 .metodiPagamento {
     display: none;
 }
@@ -226,10 +226,10 @@ input[type="reset"]:hover {
 
 /* Dropdown Styles */
 .select-sorting {
-    width: 100%;
+    width: 25%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 10px;
     margin-bottom: 10px;
 }
 
@@ -279,92 +279,95 @@ input[type="reset"]:hover {
         width: 100%;
     }
 
-    .orderDetail table,
-    .orderDetail thead,
-    .orderDetail tbody,
-    .orderDetail th,
-    .orderDetail td,
-    .orderDetail tr {
-        display: block;
+    /*
+        .orderDetail table,
+        .orderDetail thead,
+        .orderDetail tbody,
+        .orderDetail th,
+        .orderDetail td,
+        .orderDetail tr {
+            display: block;
+        }
+
+        .orderDetail thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        .orderDetail tr {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        .orderDetail td {
+            border: none;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 50%;
+            text-align: left;
+            white-space: normal;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .orderDetail td:before {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            width: calc(50% - 20px);
+            padding-right: 10px;
+            white-space: nowrap;
+            text-align: left;
+            font-weight: bold;
+            transform: translateY(-50%);
+        }
+
+        .orderDetail td:nth-of-type(1):before { content: "Prodotto"; }
+        .orderDetail td:nth-of-type(2):before { content: "Nome"; }
+        .orderDetail td:nth-of-type(3):before { content: "IVA"; }
+        .orderDetail td:nth-of-type(4):before { content: "Quantità"; }
+        .orderDetail td:nth-of-type(5):before { content: "Prezzo Unitario"; }
+        .orderDetail td:nth-of-type(6):before { content: "Sconto"; }
+        .orderDetail td:nth-of-type(7):before { content: "Prezzo Totale"; }
+        .orderDetail td:nth-of-type(8):before { content: "Immagine"; }
     }
 
-    .orderDetail thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
+     */
+    /* Not Logged In Message */
+    #not-logged-message {
+        text-align: center;
+        color: #e74c3c;
     }
 
-    .orderDetail tr {
-        border: 1px solid #ccc;
+    #not-logged-message h3 {
+        margin-bottom: 20px;
+    }
+
+    /* Additional Container Styles */
+    .button-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .generale {
         margin-bottom: 10px;
     }
 
-    .orderDetail td {
-        border: none;
-        border-bottom: 1px solid #eee;
-        position: relative;
-        padding-left: 50%;
-        text-align: left;
-        white-space: normal;
-        padding-top: 15px;
-        padding-bottom: 15px;
+    .generale .sorting-dropdown {
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 20px;
     }
 
-    .orderDetail td:before {
-        position: absolute;
-        top: 50%;
-        left: 10px;
-        width: calc(50% - 20px);
-        padding-right: 10px;
-        white-space: nowrap;
-        text-align: left;
-        font-weight: bold;
-        transform: translateY(-50%);
+    .ordiniEffettuati,
+    .indirizziSpedizione,
+    .metodiPagamento {
+        display: none;
     }
 
-    .orderDetail td:nth-of-type(1):before { content: "Prodotto"; }
-    .orderDetail td:nth-of-type(2):before { content: "Nome"; }
-    .orderDetail td:nth-of-type(3):before { content: "IVA"; }
-    .orderDetail td:nth-of-type(4):before { content: "Quantità"; }
-    .orderDetail td:nth-of-type(5):before { content: "Prezzo Unitario"; }
-    .orderDetail td:nth-of-type(6):before { content: "Sconto"; }
-    .orderDetail td:nth-of-type(7):before { content: "Prezzo Totale"; }
-    .orderDetail td:nth-of-type(8):before { content: "Immagine"; }
-}
-
-/* Not Logged In Message */
-#not-logged-message {
-    text-align: center;
-    color: #e74c3c;
-}
-
-#not-logged-message h3 {
-    margin-bottom: 20px;
-}
-
-/* Additional Container Styles */
-.button-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.generale {
-    margin-bottom: 10px;
-}
-
-.generale .sorting-dropdown {
-    display: inline-block;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.ordiniEffettuati,
-.indirizziSpedizione,
-.metodiPagamento {
-    display: none;
-}
-
-/* Order Details Styles */
+    /* Order Details Styles*/
+    /*
 .orderDetail {
     display: none;
     padding: 20px;
@@ -423,8 +426,9 @@ input[type="reset"]:hover {
     display: block;
     margin: 0 auto;
 }
-
-/* Fix overlapping issues */
+*/
+    /*Fix overlapping issues*/
+    /*
 .orderDetail td {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -435,45 +439,148 @@ input[type="reset"]:hover {
     transform: translateY(-50%);
 }
 
-/* Payment Methods and Addresses */
-.payment-method-info,
-.address-info {
-    margin-top: 20px;
+     */
+    /* Payment Methods and Addresses */
+    .payment-method-info,
+    .address-info {
+        margin-top: 20px;
+    }
+
+    .payment-method-info h2,
+    .address-info h2 {
+        margin-bottom: 10px;
+        color: #28180b;
+    }
+
+    .payment-method-info p,
+    .address-info p {
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+    }
+
+    /* Ensure that both sections are consistent with the general style */
+    .metodiPagamento .payment-method-info,
+    .indirizziSpedizione .address-info {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .metodiPagamento .payment-method-info h2,
+    .indirizziSpedizione .address-info h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .metodiPagamento .payment-method-info p,
+    .indirizziSpedizione .address-info p {
+        font-size: 16px;
+        margin: 10px 0;
+        padding: 10px;
+    }
 }
 
-.payment-method-info h2,
-.address-info h2 {
-    margin-bottom: 10px;
-    color: #28180b;
+/* Stili per la tabella degli articoli nel carrello */
+.orderDetail table {
+    width: 100%;
+    border-collapse: collapse; /* Rimuove gli spazi tra i bordi delle celle */
+    margin-bottom: 30px;
+    background-color: #fff; /* Sfondo bianco per la tabella */
+    border-radius: 8px; /* Angoli arrotondati per la tabella */
+    overflow: hidden; /* Nasconde gli angoli arrotondati */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Ombra morbida */
 }
 
-.payment-method-info p,
-.address-info p {
-    background: #f9f9f9;
-    padding: 10px;
-    border-radius: 4px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
+.orderDetail th,
+.orderDetail td {
+    padding: 15px; /* Spazio interno maggiore */
+    text-align: left; /* Allineamento a sinistra per le celle */
+    border-bottom: 1px solid #ddd; /* Bordo inferiore per le celle */
 }
 
-/* Ensure that both sections are consistent with the general style */
-.metodiPagamento .payment-method-info,
-.indirizziSpedizione .address-info {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.orderDetail th {
+    background-color: #008080; /* Colore di sfondo per l'intestazione */
+    color: #fff; /* Colore del testo per l'intestazione */
+    font-size: 16px; /* Font più grande per le intestazioni */
+    font-weight: bold; /* Testo in grassetto per le intestazioni */
 }
 
-.metodiPagamento .payment-method-info h2,
-.indirizziSpedizione .address-info h2 {
-    font-size: 20px;
-    margin-bottom: 15px;
+.orderDetail tr:nth-child(even) {
+    background-color: #f9f9f9; /* Sfondo alternato per righe pari */
 }
 
-.metodiPagamento .payment-method-info p,
-.indirizziSpedizione .address-info p {
-    font-size: 16px;
-    margin: 10px 0;
-    padding: 10px;
+.orderDetail tr:hover {
+    background-color: #f1f1f1; /* Sfondo leggero per righe al passaggio del mouse */
 }
+
+.orderDetail td img {
+    max-width: 100px; /* Dimensione massima dell'immagine */
+    height: auto; /* Mantiene le proporzioni delle immagini */
+    display: block; /* Blocca le immagini per l'allineamento */
+    margin: 0 auto; /* Allinea le immagini al centro */
+    border-radius: 4px; /* Angoli arrotondati per le immagini */
+}
+
+/* Responsive Design per la Tabella */
+@media (max-width: 767px) {
+    .orderDetail table,
+    .orderDetail thead,
+    .orderDetail tbody,
+    .orderDetail th,
+    .orderDetail td,
+    .orderDetail tr {
+        display: block; /* Rendi la tabella a blocchi */
+    }
+
+    .orderDetail thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .orderDetail tr {
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        background-color: #f9f9f9; /* Sfondo leggero per le righe */
+    }
+
+    .orderDetail td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%; /* Spazio per etichetta */
+        text-align: left;
+        white-space: normal;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .orderDetail td:before {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        width: calc(50% - 20px);
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        background-color: #f5f5f5; /* Sfondo leggero per le etichette */
+        border-radius: 4px; /* Angoli arrotondati per le etichette */
+        padding: 5px;
+        transform: translateY(-50%);
+    }
+
+    .orderDetail td:nth-of-type(1):before { content: "Prodotto"; }
+    .orderDetail td:nth-of-type(2):before { content: "Nome"; }
+    .orderDetail td:nth-of-type(3):before { content: "IVA"; }
+    .orderDetail td:nth-of-type(4):before { content: "Quantità"; }
+    .orderDetail td:nth-of-type(5):before { content: "Prezzo Unitario"; }
+    .orderDetail td:nth-of-type(6):before { content: "Sconto"; }
+    .orderDetail td:nth-of-type(7):before { content: "Prezzo Totale"; }
+    .orderDetail td:nth-of-type(8):before { content: "Immagine"; }
+}
+
