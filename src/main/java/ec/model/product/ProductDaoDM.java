@@ -135,14 +135,14 @@ public class ProductDaoDM implements ProductDao {
 		String selectSQL = "SELECT * FROM " + ProductDaoDM.TABLE_NAME;
 		try (Connection connection = ConnectionPool.getInstance().getConnection()) {
 			if (order != null && !order.isEmpty()) {
-				selectSQL += " ORDER BY ";
-				if (order.equals("prezzoDec")) {
-					// prezzo decrescente
-					selectSQL += "prezzo DESC";
-				} else {
-					// prezzo crescente e tutti gli altri
-					selectSQL += order;
-				}
+				// non concateno direttamente la stringa perché lo renderebbe vulnerabile a SQL-injection
+                switch (order) {
+                    case "filtraScontati" -> selectSQL += " WHERE percentuale_sconto IS NOT NULL AND percentuale_sconto > 0";
+                    case "id" -> selectSQL += " ORDER BY id ASC";
+                    case "nome" -> selectSQL += " ORDER BY nome ASC";
+                    case "prezzo" -> selectSQL += " ORDER BY prezzo ASC";
+                    case "prezzoDec" -> selectSQL += " ORDER BY prezzo DESC";
+                }
 			}
 			preparedStatement = connection.prepareStatement(selectSQL);
 			ResultSet rs = preparedStatement.executeQuery();
@@ -165,6 +165,8 @@ public class ProductDaoDM implements ProductDao {
 
 				products.add(bean);
 			}
+		}catch (SQLException e){
+			e.printStackTrace();
 		} finally {
 			try {
 				if (preparedStatement != null)

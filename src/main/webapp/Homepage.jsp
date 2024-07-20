@@ -26,7 +26,7 @@
             </div>
 
             <!-- Logo -->
-            <a href="${pageContext.request.contextPath}/NewHomepageTest.jsp" class="logo-link">
+            <a href="${pageContext.request.contextPath}/Homepage.jsp" class="logo-link">
                 <!-- Div in cui viene caricato il logo -->
                 <div id="logo-container" class="logo-container"></div>
             </a>
@@ -63,15 +63,15 @@
     </div>
 
     <div class="double-section" id="first-section">
-        <div class="double-image-text-container">
+        <a class="double-image-text-container" href="${pageContext.request.contextPath}/product?sort=filtraScontati">
             <img src="uploadFile/airochei.jpg" alt="Immagine 1" class="double-section-image">
             <div class="double-section-text left">Prodotti scontati</div>
-        </div>
+        </a>
 
-        <div class="double-image-text-container">
+        <a class="double-image-text-container" href="${pageContext.request.contextPath}/product?sort=id">
             <img src="uploadFile/pallecoloratissime.jpg" alt="Immagine 2" class="double-section-image">
             <div class="double-section-text right">Ultime aggiunte</div>
-        </div>
+        </a>
     </div>
 
     <div class="single-section" id="second-section">

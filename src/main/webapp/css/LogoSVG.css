@@ -1,8 +1,16 @@
 /* colori quando logo non è logo-colored */
 .logo {
-    width: 400px;
-    margin-top: 200px;
-    transition: width 0.3s ease, margin-top 0.3s ease;
+    width: 200px;
+    height: auto;
+    margin-top: 10px;
+    transition: width 0.3s ease, margin-top 0.3s ease, transform 0.3s ease;
+}
+
+@media screen and (min-width: 500px){
+    .logo{
+        width: 400px;
+        transform: translateY(50%);
+    }
 }
 
 .logo .stecche-punta {
@@ -32,8 +40,8 @@
 /* colori quando logo è logo-colored */
 .logo.logo-colored {
     width: 200px;
-    margin-top: 0;
-    transition: width 0.3s ease, margin-top 0.3s ease;
+    transform: translateY(0);
+    transition: width 0.3s ease, margin-top 0.3s ease, transform 0.3s ease;
 }
 
 .logo.logo-colored .stecche-punta {

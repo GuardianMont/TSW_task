@@ -51,11 +51,12 @@
 <div class="generale">
 	<div class="sorting-dropdown">
 		<select onchange="window.location.href=this.value" class="select-sorting">
-			<option value="#">Ordina per</option>
+			<option value="#">Ordina o filtra per</option>
 			<option value="product?sort=id">Nuove Aggiunte</option>
 			<option value="product?sort=nome">Ordine alfabetico</option>
 			<option value="product?sort=prezzo">Prezzo (Ascendente)</option>
 			<option value="product?sort=prezzoDec">Prezzo (Decrescente)</option>
+			<option value="product?sort=filtraScontati">Prodotti Scontati</option>
 		</select>
 	</div>
 </div>
@@ -75,7 +76,7 @@
 	<div class="no-product-wrapper">
 		<div class="No-product">
 			<h1>Nessun risultato</h1>
-			<p>prova a cercare con altre parole</p>
+			<p>Nessuno dei prodotti nel catalogo coincide con i dati di ricerca.</p>
 		</div>
 	</div>
 </div>

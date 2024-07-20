@@ -18,14 +18,14 @@
 <body>
 <header class="header-container">
     <div class="logo">
-        <a href="${pageContext.request.contextPath}/NewHomepageTest.jsp">
+        <a href="${pageContext.request.contextPath}/Homepage.jsp">
             <img src="${pageContext.request.contextPath}/uploadFile/loghino.svg" alt="Tavolando">
         </a>
     </div>
     <nav class="nav-menu">
         <ul>
             <li>
-                <a href="${pageContext.request.contextPath}/NewHomepageTest.jsp">Home</a>
+                <a href="${pageContext.request.contextPath}/Homepage.jsp">Home</a>
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/product">Catalogo</a>
@@ -83,7 +83,7 @@
         <span class="burger-icon">&#9776;</span>
     </div>
     <div class="burger-menu-container">
-        <a href="${pageContext.request.contextPath}/NewHomepageTest.jsp">Home</a>
+        <a href="${pageContext.request.contextPath}/Homepage.jsp">Home</a>
         <a href="${pageContext.request.contextPath}/product">Catalogo</a>
         <a href="${pageContext.request.contextPath}/carrello"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Carrello
             <% if (cart != null && cart.getNumProdottiTot() > 0) { %>(<%= cart.getNumProdottiTot() %>)<% } %></a>
