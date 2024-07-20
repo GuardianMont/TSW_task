@@ -84,30 +84,30 @@ h1, h3 {
 }
 
 /* Table Styles */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Abilita lo scrolling orizzontale per la tabella */
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    overflow-x: auto; /* Abilita lo scrolling orizzontale per la tabella */
 }
 
 table th, table td {
     border: 1px solid #ccc;
     padding: 8px;
-    text-align: left;
     white-space: nowrap; /* Evita il wrap del testo all'interno delle celle */
 }
 
 table th {
-    background-color: #f2f2f2;
-    color: #333;
+    background-color: #008080;
+    color: #ffffff;
 }
 
-/* Specific styles for different sections */
-
-/* Users View */
 .user-view {
-    background-color: #f0f8ea;
+    background-color: #f2f2f2;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -147,122 +147,112 @@ table th {
     margin-top: 20px;
 }
 
-/* Responsive Design */
-/* Desktop and Large Screens */
-@media (min-width: 1024px) {
-    .container {
-        max-width: 800px;
-        padding: 20px;
-    }
-}
-
-/* Tablets */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .container {
-        max-width: 700px;
-        padding: 15px;
+/* Responsive Styles for Tablets */
+@media screen and (max-width: 950px) {
+    table {
+        font-size: 14px; /* Riduce la dimensione del testo per adattarsi meglio */
     }
 
-    .button-container button {
-        width: 48%;
-        margin: 1%;
-        max-width: none; /* Rimuovi il limite massimo di larghezza per i bottoni */
-    }
-}
-
-/* Mobile Devices */
-@media (max-width: 850px) {
-    .container {
-        width: 90%;
-        padding: 10px;
+    /* Riduce la larghezza delle celle per evitare il taglio del contenuto */
+    table th, table td {
+        padding: 8px; /* Riduce il padding per fare spazio */
     }
 
-    .button-container button {
-        width: 100%;
-        margin: 10px 0;
-        max-width: none; /* Rimuovi il limite massimo di larghezza per i bottoni */
+    thead {
+        display: none; /* Nasconde l'intestazione della tabella */
     }
 
-    /* Styles specific to the second page CSS */
-    .generale .sorting-dropdown {
-        width: 100%;
-    }
-
-    .orderDetail table,
-    .orderDetail thead,
-    .orderDetail tbody,
-    .orderDetail th,
-    .orderDetail td,
-    .orderDetail tr {
+    tbody, tr {
         display: block;
+        width: 100%;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc; /* Separatore tra righe */
     }
 
-    .orderDetail thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
-
-    .orderDetail tr {
-        border: 1px solid #ccc;
-        margin-bottom: 15px;
-        border-radius: 8px;
-        padding: 10px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .orderDetail td {
-        border: none;
+    td {
+        display: block;
+        text-align: right;
+        padding: 8px;
         position: relative;
-        padding-left: 50%;
+        border: none;
+        width: 100%;
+        box-sizing: border-box; /* Include padding e bordo nella larghezza totale */
+        background-color: #fff; /* Assicura che lo sfondo sia bianco per visibilità */
     }
 
-    .orderDetail td:before {
+    td:before {
         content: attr(data-label);
         position: absolute;
-        left: 10px;
+        left: 0;
         width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
+        text-align: left;
         font-weight: bold;
+        background-color: transparent; /* Rimuove lo sfondo dell’etichetta */
+        padding: 5px;
+        border: none; /* Rimuove il bordo sotto l'etichetta */
+        box-sizing: border-box; /* Include padding nella larghezza totale */
+        color: #333; /* Colore del testo per le etichette */
     }
 
-    .userView table,
-    .userView thead,
-    .userView tbody,
-    .userView th,
-    .userView td,
-    .userView tr {
+    /* Adatta le etichette per i cellulari */
+    td:nth-of-type(1):before { content: "Username"; }
+    td:nth-of-type(2):before { content: "Email"; }
+    td:nth-of-type(3):before { content: "Nome"; }
+    td:nth-of-type(4):before { content: "Cognome"; }
+    td:nth-of-type(5):before { content: "Numero di Telefono"; }
+    td:nth-of-type(6):before { content: "Ruolo"; }
+    td:nth-of-type(7):before { content: "View"; }
+}
+
+
+/* Responsive Styles for Mobile Devices */
+@media screen and (max-width: 600px) {
+    table {
+        font-size: 12px; /* Riduce ulteriormente la dimensione del testo per schermi molto piccoli */
+    }
+
+    thead {
+        display: none; /* Nasconde l'intestazione della tabella */
+    }
+
+    tbody, tr {
         display: block;
+        width: 100%;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc; /* Separatore tra righe */
     }
 
-    .userView thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
-
-    .userView tr {
-        border: 1px solid #ccc;
-        margin-bottom: 15px;
-        border-radius: 8px;
+    td {
+        display: block;
+        text-align: right;
         padding: 10px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .userView td {
-        border: none;
         position: relative;
-        padding-left: 50%;
+        border: none;
+        width: 100%;
+        box-sizing: border-box; /* Include padding e bordo nella larghezza totale */
+        background-color: #fff;
     }
 
-    .userView td:before {
+    td:before {
         content: attr(data-label);
         position: absolute;
-        left: 10px;
+        left: 0;
         width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
+        text-align: left;
         font-weight: bold;
+        background-color: transparent; /* Colore di sfondo per le etichette */
+        padding: 5px;
+        border: none;
+        box-sizing: border-box;
+        color: #333;
     }
+
+    /* Adatta le etichette per i cellulari */
+    td:nth-of-type(1):before { content: "Username"; }
+    td:nth-of-type(2):before { content: "Email"; }
+    td:nth-of-type(3):before { content: "Nome"; }
+    td:nth-of-type(4):before { content: "Cognome"; }
+    td:nth-of-type(5):before { content: "Numero di Telefono"; }
+    td:nth-of-type(6):before { content: "Ruolo"; }
+    td:nth-of-type(7):before { content: "View"; }
 }

@@ -8,12 +8,11 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/notifica.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AdminOptions.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Ordini.css">
-
 </head>
 <body>
-<jsp:include page="/Header.jsp"/>
+<jsp:include page="../Header.jsp"/>
 
-<div class ="container">
+<div class="container">
     <h1>Admin Options</h1>
     <div id="admin-options" class="button-container">
         <button onclick="viewOrders()">Visualizza tutti gli ordini</button>
@@ -22,12 +21,13 @@
         <button onclick="window.location.href='../profileServlet'">Pagina utente admin</button>
     </div>
 </div>
+
 <div class="userView hide" id="userView">
     <div class="user-view">
         <h1>Utenti Registrati</h1>
-        <div class="Utenti-info">
-            <table>
-                <thead class="hide-elements">
+        <div class="Utenti-info table-container">
+            <table class="tabella">
+                <thead>
                 <tr>
                     <th>Username</th>
                     <th>Email</th>
@@ -43,6 +43,7 @@
         </div>
     </div>
 </div>
+
 <div class="ordiniEffettuati hide" id="ordiniEffettuati">
     <div class="generale">
         <div class="sorting-dropdown">
@@ -96,7 +97,7 @@
             </div>
             <div class="cart-items">
                 <h2>Articoli nel Carrello</h2>
-                <table>
+                <table class="tabella">
                     <thead>
                     <tr>
                         <th>Prodotto</th>
@@ -117,6 +118,8 @@
             </div>
         </div>
     </div>
+</div>
+
 <jsp:include page="../Footer.jsp"/>
 </body>
 </html>
