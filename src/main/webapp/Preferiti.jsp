@@ -42,15 +42,15 @@
     if (products == null || products.isEmpty()) { %>
 <div class="no-product-wrapper">
     <div class="No-product">
-        <h1>Nessun risultato</h1>
+        <h1> <img src="uploadFile/favorites_32.png" alt="Favorite Icon"/> Nessun risultato <img src="uploadFile/favorites_32.png" alt="Favorite Icon"/></h1>
         <p>Non hai selezionato ancora nessun prodotto tra i preferiti</p>
         <p>Per farlo puoi dal catalogo interagire con la stellina posta su ogni prodotto</p>
-        <p>e creare la tua selezione di prodotti personale</p>
+        <p>e creare così la tua selezione di prodotti personale</p>
     </div>
 </div>
 <% } else {%>
 <div class="generale">
-    <h1>La tua selezione di prodotti preferiti</h1>
+    <h1 style="color: #008080"> <img src="uploadFile/favorites_32.png" alt="Favorite Icon"/> La tua selezione di prodotti preferiti <img src="uploadFile/favorites_32.png" alt="Favorite Icon"/> </h1>
     <div class="sorting-dropdown">
         <select onchange="window.location.href=this.value" class="select-sorting">
             <option value="#">Ordina per</option>
