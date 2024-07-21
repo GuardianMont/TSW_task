@@ -86,7 +86,7 @@
 .btn-down {
     position: relative;
     border-radius: 10px;
-    background-color: #28180b; /* Marrone scuro */
+    background-color: #008080; /* Marrone scuro */
     color: white;
     transition: color 0.3s, border-color 0.3s;
 }
@@ -132,7 +132,7 @@
 .btn-detail {
     position: relative;
     border-radius: 10px;
-    background-color: #28180b; /* Marrone scuro */
+    background-color: #008080;
     color: white;
     transition: color 0.3s, border-color 0.3s;
 }
