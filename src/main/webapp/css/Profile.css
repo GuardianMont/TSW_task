@@ -180,7 +180,7 @@ input[type="reset"]:hover {
 .edit-button {
     background-color: #008080;
     color: white;
-    padding: 15px 20px;
+    padding: 10px 15px;
     margin: 10px 0;
     border-radius: 10px;
     border: none;
@@ -498,7 +498,7 @@ input[type="reset"]:hover {
 .orderDetail th,
 .orderDetail td {
     padding: 15px; /* Spazio interno maggiore */
-    text-align: left; /* Allineamento a sinistra per le celle */
+    text-align: center; /* Allineamento a sinistra per le celle */
     border-bottom: 1px solid #ddd; /* Bordo inferiore per le celle */
 }
 

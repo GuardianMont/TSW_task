@@ -99,14 +99,14 @@
 
             <div class="form-group">
                 <label for = "signup-password"> Password:</label>
-                <input type="text" id="signup-password" name="signup-password" required maxlength="20"
+                <input type="password" id="signup-password" name="signup-password" required maxlength="20"
                        pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$"
                        title = "la password deve avere: minimo 8 caretteri, almeno una lettere maiuscola ed una minuscola"
                        placeholder="pAssword1234">
             </div>
             <div class="form-group">
                 <label for = "signup-rep-password"> Repeat Password:</label>
-                <input type="text" id="signup-rep-password" name="signup-rep-password" maxlength="20"
+                <input type="password" id="signup-rep-password" name="signup-rep-password" maxlength="20"
                        pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$" title="ripeti password" placeholder="pAssword1234" required>
                 <span id="signup-password-error" class="error-message">Le password non coincidono.</span>
             </div>
