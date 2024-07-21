@@ -59,7 +59,7 @@
 
     <div class="first-image-container" id="fist-image-container">
         <img src="uploadFile/altrepalle.jpg" alt="immagine home">
-        <div class="text-over-image transparent text-to-animate" id="text-over-image">"Il problema non è il numero di palle che hai,<br> ma come le giochi."</div>
+        <div class="text-over-image transparent text-to-animate" id="text-over-image">Precisione e qualità,<br>per le tue sfide più avvincenti.</div>
     </div>
 
     <div class="double-section" id="first-section">
@@ -77,7 +77,7 @@
     <div class="single-section" id="second-section">
         <div class="single-image-text-container">
             <img src="uploadFile/tabletennisroba.jpg" alt="Immagine 3" class="single-section-image">
-            <div class="text-over-image transparent text-to-animate" id="text-over-image2">Solo attrezzatura di qualità.</div>
+            <div class="text-over-image transparent text-to-animate" id="text-over-image2">Ogni prodotto è progettato per la passione del gioco.</div>
         </div>
     </div>
 

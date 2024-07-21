@@ -188,7 +188,7 @@ header {
 }
 .text-over-image {
     position: absolute;
-    top: 90%;
+    top: 75%;
     left: 35%;
     text-shadow: 2px 2px 4px #000000;
     font-size: clamp(30px ,4vw, 300px);

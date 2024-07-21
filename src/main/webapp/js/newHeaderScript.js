@@ -81,18 +81,18 @@ function doSingleTextAnimation() {
     const viewWindowBottom = window.innerHeight + window.scrollY;
     const textHeight = text.offsetHeight;
     const imageBottom = imageRect.height + imageRect.y + window.scrollY;
-    const imageTop = imageRect.y + window.scrollY + (imageRect.height * 0.15) + textHeight;
+    const imageTop = imageRect.y + window.scrollY + (imageRect.height * 0.50)  ;
 
     if(viewWindowBottom <= imageTop){
         text.classList.remove('fixed');
-        text.style.top = `${(imageRect.height) * 0.15}px`;
+        text.style.top = `${(((imageRect.height) * 0.25))}px`;
 
     } else if (viewWindowBottom < imageBottom && viewWindowBottom >= imageTop ) {
         text.classList.add('fixed');
-        text.style.top = `${(imageRect.height) * 0.85 - (imageRect.height-window.innerHeight)}px`;
+        text.style.top = `${(window.innerHeight) - (imageRect.height * 0.25)}px`;
 
     } else if (viewWindowBottom >= imageBottom) {
-        text.style.top = `${(imageRect.height) * 0.85}px`;
+        text.style.top = `${(imageRect.height) * 0.75}px`;
         text.classList.remove('fixed');
         text.classList.remove('text-to-animate');
         text.classList.remove('transparent');
