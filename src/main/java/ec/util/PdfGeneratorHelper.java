@@ -107,11 +107,11 @@ public class PdfGeneratorHelper {
                 table.setWidth(UnitValue.createPercentValue(100));
 
                 table.addHeaderCell(new Cell().add(new Paragraph("Quantità").setFont(font).setBold().setFontSize(10)));
-                table.addHeaderCell(new Cell().add(new Paragraph("Nome Prodotto").setFont(font).setBold().setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f))));
-                table.addHeaderCell(new Cell().add(new Paragraph("IVA").setFont(font).setBold().setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f))));
-                table.addHeaderCell(new Cell().add(new Paragraph("Sconto").setFont(font).setBold().setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f))));
-                table.addHeaderCell(new Cell().add(new Paragraph("Prezzo Unitario").setFont(font).setBold().setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f))));
-                table.addHeaderCell(new Cell().add(new Paragraph("Prezzo Riga").setFont(font).setBold().setFontSize(10).setBorder(new SolidBorder(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY, 0.5f))));
+                table.addHeaderCell(new Cell().add(new Paragraph("Nome Prodotto").setFont(font).setBold().setFontSize(10)));
+                table.addHeaderCell(new Cell().add(new Paragraph("IVA").setFont(font).setBold().setFontSize(10)));
+                table.addHeaderCell(new Cell().add(new Paragraph("Sconto").setFont(font).setBold().setFontSize(10)));
+                table.addHeaderCell(new Cell().add(new Paragraph("Prezzo Unitario").setFont(font).setBold().setFontSize(10)));
+                table.addHeaderCell(new Cell().add(new Paragraph("Prezzo Riga").setFont(font).setBold().setFontSize(10)));
 
                 for (int i = 0; i < cartItems.size(); i++) {
                     JsonObject item = cartItems.get(i).getAsJsonObject();
@@ -146,7 +146,6 @@ public class PdfGeneratorHelper {
             document.add(new Paragraph("grazie per l'acquisto")
                     .setFont(font)
                     .setFontSize(9)
-                    .setFontColor(com.itextpdf.kernel.colors.ColorConstants.LIGHT_GRAY)
                     .setTextAlignment(TextAlignment.CENTER));
             document.add(ls_2);
 

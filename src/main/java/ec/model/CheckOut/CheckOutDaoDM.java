@@ -72,13 +72,47 @@ public class CheckOutDaoDM implements CheckOutDao {
             sqlSelectFattura += " ORDER BY data";
         } else if ("dataDESC".equals(order)) {
             // Order by data decrescente
-            sqlSelectFattura += " ORDER BY data DESC";
+            sqlSelectFattura += " ORDER BY data DESC ";
         }
         Collection<Ordine> ordini = new LinkedList<>();
 
         try (Connection connection =ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement= connection.prepareStatement(sqlSelectFattura)){
             preparedStatement.setString(1, utenteID);
+
+            ResultSet res = preparedStatement.executeQuery();
+
+            while (res.next()){
+                Ordine ordine = new Ordine(res.getInt("num"));
+                ordine.setUtenteId(res.getString("utente_id"));
+                ordine.setCodAdress(res.getInt("cod_address"));
+                ordine.setCodMethod(res.getInt("cod_method"));
+
+                Timestamp timestamp = res.getTimestamp("data");
+                if (timestamp != null) {
+                    Calendar calendar = GregorianCalendar.getInstance();
+                    calendar.setTimeInMillis(timestamp.getTime());
+                    ordine.setData((GregorianCalendar) calendar);
+                }
+                ordini.add(ordine);
+            }
+        }
+        return ordini;
+    }
+
+    public Collection<Ordine> retriveAllOrdineFilter (String order) throws SQLException{
+        String sqlSelectFattura = "SELECT * FROM "+ CheckOutDaoDM.TABLE_NAME;
+        if ("data".equals(order)) {
+            // Order by data crescente
+            sqlSelectFattura += " ORDER BY data";
+        } else if ("dataDESC".equals(order)) {
+            // Order by data decrescente
+            sqlSelectFattura += " ORDER BY data DESC ";
+        }
+        Collection<Ordine> ordini = new LinkedList<>();
+
+        try (Connection connection =ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement= connection.prepareStatement(sqlSelectFattura)){
 
             ResultSet res = preparedStatement.executeQuery();
 
@@ -143,6 +177,43 @@ public class CheckOutDaoDM implements CheckOutDao {
 
             preparedStatement.setDate(1, sqlStartDate);
             preparedStatement.setDate(2, sqlEndDate);
+
+            ResultSet res = preparedStatement.executeQuery();
+
+            while (res.next()){
+                Ordine ordine = new Ordine(res.getInt("num"));
+                ordine.setUtenteId(res.getString("utente_id"));
+                ordine.setCodAdress(res.getInt("cod_address"));
+                ordine.setCodMethod(res.getInt("cod_method"));
+
+                Timestamp timestamp = res.getTimestamp("data");
+                if (timestamp != null) {
+                    Calendar calendar = GregorianCalendar.getInstance();
+                    calendar.setTimeInMillis(timestamp.getTime());
+                    ordine.setData((GregorianCalendar) calendar);
+                }
+                ordini.add(ordine);
+            }
+        }
+        return ordini;
+    }
+
+    public Collection<Ordine> filterAllOrderByDateByUser (java.util.Date startDate, java.util.Date endDate, String userId ) throws SQLException{
+        String sqlSelectFattura = "SELECT * FROM "+ CheckOutDaoDM.TABLE_NAME +
+                " WHERE data>= ? AND data<= ? AND utente_id= ?";
+
+        Collection<Ordine> ordini = new LinkedList<>();
+
+        try (Connection connection =ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement= connection.prepareStatement(sqlSelectFattura)){
+            // Converto i GregorianCalendar in java.sql.Date in modo che sia compatibile
+
+            java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
+            java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
+
+            preparedStatement.setDate(1, sqlStartDate);
+            preparedStatement.setDate(2, sqlEndDate);
+            preparedStatement.setString(3,userId);
 
             ResultSet res = preparedStatement.executeQuery();
 

@@ -52,6 +52,10 @@
         <button class="edit-button" id="viewAddresses" onclick="loadAddresses()">
             <i class="fas fa-map-marker-alt"></i> Indirizzi di spedizione
         </button>
+        <% if (request.getSession().getAttribute("isAdmin")!=null){%>
+        <button class="edit-button" id="AdminOption" onclick="window.location.href='${pageContext.request.contextPath}/admin/AdminOptions.jsp'">
+            <i class="fas fa-cogs"></i> Opzioni Admin        </button>
+        <%}%>
     </div>
     <div class="container profile-container" id="profile-container">
         <h3>Profilo <%= user.getUsername() %></h3>
