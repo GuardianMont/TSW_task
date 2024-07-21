@@ -28,6 +28,9 @@
                 <a href="${pageContext.request.contextPath}/Homepage.jsp">Home</a>
             </li>
             <li>
+                <a href="${pageContext.request.contextPath}/Info.jsp">Info</a>
+            </li>
+            <li>
                 <a href="${pageContext.request.contextPath}/product">Catalogo</a>
                 <ul class="submenu">
                     <li>
@@ -85,6 +88,7 @@
     <div class="burger-menu-container">
         <a href="${pageContext.request.contextPath}/Homepage.jsp">Home</a>
         <a href="${pageContext.request.contextPath}/product">Catalogo</a>
+        <a href="${pageContext.request.contextPath}/Info.jsp">Info</a>
         <a href="${pageContext.request.contextPath}/carrello"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Carrello
             <% if (cart != null && cart.getNumProdottiTot() > 0) { %>(<%= cart.getNumProdottiTot() %>)<% } %></a>
         <a href="${pageContext.request.contextPath}/profileServlet"><i class="fas fa-user" aria-hidden="true"></i> Profilo utente</a>

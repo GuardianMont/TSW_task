@@ -1,6 +1,6 @@
 /* Contenitore dell'ordine */
 .ordine-container {
-    border: 1px solid #c3e6cb; /* Verde chiaro */
+    border: 1px solid #ffefe5;
     padding: 15px;
     margin-bottom: 20px;
     border-radius: 10px;
@@ -10,12 +10,12 @@
 
 /* Informazioni dell'ordine */
 .ordine-info {
-    background-color: #28180b; /* Verde pastello */
+    background-color: #28180b;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
     font-weight: bold;
-    color: #ffefe5; /* Testo verde scuro */
+    color: #ffefe5;
 }
 
 /* Div contenuti nel contenitore dell'ordine */
@@ -65,3 +65,112 @@
     font-size: 18px;
     margin-bottom: 10px;
 }
+
+/* Stile comune per i bottoni */
+.btn {
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 10px 20px; /* Ridotto per avere pulsanti più piccoli */
+    display: inline-block;
+    letter-spacing: 1px;
+    outline: none;
+    position: relative;
+    overflow: hidden; /* Ensures content outside button is hidden */
+    transition: all 0.3s;
+    margin: 5px; /* Aggiunto margine tra i pulsanti */
+}
+
+/* Scarica Fattura */
+.btn-down {
+    position: relative;
+    border-radius: 10px;
+    background-color: #28180b; /* Marrone scuro */
+    color: white;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.btn-down:active {
+    color: #005859;
+}
+
+.btn-down::after {
+    content: '\f019'; /* Codice icona Font Awesome per il download */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 100%; /* Posiziona l'icona fuori dal pulsante */
+    line-height: 1.8;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: large;
+    color: white;
+    transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0; /* Nasconde l'icona inizialmente */
+}
+
+.btn-down:hover {
+    color: transparent; /* Nasconde il testo durante l'hover */
+}
+
+.btn-down:hover::after {
+    top: 0%; /* Porta l'icona al centro del pulsante */
+    opacity: 1; /* Mostra l'icona durante l'hover */
+}
+
+.btn-down span {
+    display: inline-block;
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-down:hover span {
+    transform: translateY(-100%); /* Sposta il testo verso l'alto */
+}
+
+/* Dettaglio Ordine */
+.btn-detail {
+    position: relative;
+    border-radius: 10px;
+    background-color: #28180b; /* Marrone scuro */
+    color: white;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.btn-detail:active {
+    color: #005859;
+}
+
+.btn-detail::after {
+    content: '\f15c'; /* Codice icona Font Awesome per il file-alt */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 100%; /* Posiziona l'icona fuori dal pulsante */
+    left: 50%;
+    line-height: 2.0;
+    transform: translateX(-50%);
+    font-size: large;
+    color: white;
+    transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0; /* Nasconde l'icona inizialmente */
+}
+
+.btn-detail:hover {
+    color: transparent; /* Nasconde il testo durante l'hover */
+}
+
+.btn-detail:hover::after {
+    top: 0%; /* Porta l'icona al centro del pulsante */
+    opacity: 1; /* Mostra l'icona durante l'hover */
+}
+
+.btn-detail span {
+    display: inline-block;
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-detail:hover span {
+    transform: translateY(-100%); /* Sposta il testo verso l'alto */
+}
+

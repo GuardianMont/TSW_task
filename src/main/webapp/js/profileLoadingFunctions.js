@@ -20,9 +20,11 @@ function loadPaymentMethods() {
                             container.textContent = 'Nessun metodo di pagamento disponibile';
                         } else {
                             payMethods.forEach(function(payMethod) {
+                                //censuro la carta di credito lasciando in chiaro solo gli ultimi 4 numeri
+                                var censoredNumCarta = censorCardNumber(payMethod.numCarta);
                                 var div = document.createElement('div');
                                 var innerDiv = document.createElement('div');
-                                innerDiv.textContent = 'Numero carta: ' + payMethod.numCarta +
+                                innerDiv.textContent = 'Numero carta: ' + censoredNumCarta +
                                     '\nData scadenza: ' + payMethod.dataScadenza +
                                     '\nTitolare Carta: ' + payMethod.titolareCarta;
                                 div.appendChild(innerDiv);
@@ -56,6 +58,14 @@ function loadPaymentMethods() {
     var data = 'opzione=show';
     xhr.send(data);
 }
+
+//metodo per censurare la carta di credito
+function censorCardNumber(cardNumber) {
+        return '****-' + cardNumber.slice(-4);
+        //prendo solo gli ultimi 4 numeri
+}
+
+
 
 
 function loadAddresses() {

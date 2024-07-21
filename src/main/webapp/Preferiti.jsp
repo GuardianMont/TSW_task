@@ -51,15 +51,6 @@
 <% } else {%>
 <div class="generale">
     <h1 style="color: #008080"> <img src="uploadFile/favorites_32.png" alt="Favorite Icon"/> La tua selezione di prodotti preferiti <img src="uploadFile/favorites_32.png" alt="Favorite Icon"/> </h1>
-    <div class="sorting-dropdown">
-        <select onchange="window.location.href=this.value" class="select-sorting">
-            <option value="#">Ordina per</option>
-            <option value="product?sort=id">Nuove Aggiunte</option>
-            <option value="product?sort=nome">Ordine alfabetico</option>
-            <option value="product?sort=prezzo">Prezzo (Ascendente)</option>
-            <option value="product?sort=prezzoDec">Prezzo (Decrescente)</option>
-        </select>
-    </div>
 </div>
 <div class="container">
     <%

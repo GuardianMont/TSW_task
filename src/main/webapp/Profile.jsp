@@ -147,7 +147,6 @@
         <div class="order-details">
             <h1>Dettagli Ordine</h1>
             <div class="order-info">
-                <p><strong>Ordine ID:</strong> <span id="ordineId"></span></p>
                 <p><strong>Data Ordine:</strong> <span id="dataOrdine"></span></p>
                 <p><strong>Codice Fattura:</strong> <span id="ordineFattura"></span></p>
             </div>

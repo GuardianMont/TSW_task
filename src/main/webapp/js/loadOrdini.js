@@ -80,18 +80,20 @@ function renderOrders(ordini) {
             //bottone aggiunta per scaricare il pdf
             let buttonFattura = document.createElement("button");
             let buttonDettagli = document.createElement("button");
-            buttonFattura.textContent = 'Scarica Fattura';
+            buttonFattura.classList.add('btn', 'btn-down'); // Aggiungo la classe in modo da poterlo stilizzare
+            buttonFattura.innerHTML = '<span>Scarica Fattura</span> ';
             buttonFattura.addEventListener("click", function () {
                 downloadInvoice(ordine.ordineId);
             });
-            buttonDettagli.textContent = "Dettaglio Ordine"
+            buttonDettagli.classList.add('btn', 'btn-detail'); // Aggiungo la classe per stilizzare
+            buttonDettagli.innerHTML = '<span>Dettaglio Ordine</span> ';
             buttonDettagli.addEventListener("click", function () {
                 detaglioOrder(ordine.ordineId)
             })
 
 
             let address = ordine.address ? ordine.address.via : 'No info';
-            let paymentMethod = ordine.paymentMethod ? ordine.paymentMethod.numCarta : 'No info';
+            let paymentMethod = ordine.paymentMethod ? censorCardNumber(ordine.paymentMethod.numCarta) : 'No info';
             //in pratica se indirizzo o metodo di pagamento per sbaglio non vengono correttamente estratti pongo un No info
 
             let prezzoTotale = ordine.prezzototale.toFixed(2);
@@ -124,6 +126,11 @@ function renderOrders(ordini) {
 
         });
     }
+}
+
+function censorCardNumber(cardNumber) {
+    return '****-' + cardNumber.slice(-4);
+    //prendo solo gli ultimi 4 numeri
 }
 
 function downloadInvoice(orderId) {
@@ -182,7 +189,7 @@ function displayOrderDetails(order) {
     }
 
     if (order.paymentMethod) {
-        const paymentMethod = `${order.paymentMethod.numCarta} - data Scadenza: ${order.paymentMethod.dataScadenza}`;
+        const paymentMethod = `${censorCardNumber(order.paymentMethod.numCarta)} - data Scadenza: ${order.paymentMethod.dataScadenza}`;
         document.getElementById('paymentMethod').textContent = paymentMethod;
     } else {
         document.getElementById('paymentMethod').textContent = 'Metodo di pagamento non disponibile';

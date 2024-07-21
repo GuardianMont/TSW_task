@@ -17,6 +17,7 @@ function toggleFavorite(productId) {
                 if (isAdded) {
                     icon.classList.remove('added');
                     icon.classList.add('not-added');
+                    locatio.reload();
                 } else {
                     showFavoritesNotifica();
                     icon.classList.remove('not-added');
