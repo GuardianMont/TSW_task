@@ -1,13 +1,20 @@
 function RemoveHiddenUsers() {
     document.getElementById('userView').classList.remove('hide'); // Mostra la sezione degli utenti
     document.getElementById('ordiniEffettuati').classList.add('hide'); // Nasconde la sezione degli ordini
+    document.getElementById("orderDetail").classList.add("hide");
 }
 
 function RenderUserOrder() {
     document.getElementById('userView').classList.add('hide'); // Nasconde la sezione degli utenti
     document.getElementById('ordiniEffettuati').classList.remove('hide'); // Mostra la sezione degli ordini
+    document.getElementById("orderDetail").classList.add("hide");//Nasconde la sezione del dettaglio ordini
 }
 
+function UserOrderDetail() {
+    document.getElementById('userView').classList.add('hide'); // Nasconde la sezione degli utenti
+    document.getElementById('ordiniEffettuati').classList.add('hide'); // Nasconde la sezione degli ordini
+    document.getElementById("orderDetail").classList.remove('hide');//Mostra la sezione del dettaglio ordini
+}
 
 function viewUsers() {
     RemoveHiddenUsers();
@@ -189,6 +196,14 @@ function viewOrders() {
 function renderOrders(ordini) {
     const container = document.getElementById("checkOutOrdini");
     container.innerHTML = '';
+
+    if (ordini.length === 0) {
+        const noOrdersMessage = document.createElement('p');
+        noOrdersMessage.textContent = 'Nessun acquisto effettuato da parte di questo utente';
+        container.appendChild(noOrdersMessage);
+        return;
+    }
+
     ordini.forEach(ordine => {
         console.log(ordine);
         const div = document.createElement('div');
@@ -203,6 +218,11 @@ function renderOrders(ordini) {
         buttonFattura.textContent = 'Scarica Fattura';
         buttonFattura.addEventListener("click", function() {
             downloadInvoice(ordine.ordineId);
+        });
+        buttonDettagli.textContent = "Dettaglio Ordine";
+        buttonDettagli.addEventListener("click", function() {
+            console.log("sto mostrando il dettaglio")
+            detaglioOrderUser(ordine.ordineId);
         });
 
         const address = ordine.address ? ordine.address.via : 'No info';
@@ -228,6 +248,7 @@ function renderOrders(ordini) {
 
         div.appendChild(orderInfo);
         div.appendChild(buttonFattura);
+        div.appendChild(buttonDettagli);
         div.appendChild(orderDetails);
         container.appendChild(div);
     });
@@ -258,6 +279,87 @@ function filterOrdersByDate() {
     };
     const data = 'opzione=filterByDate&startDate=' + startDate + '&endDate=' + endDate;
     xhr.send(data);
+}
+
+function detaglioOrderUser(orderId) {
+    UserOrderDetail();
+
+    if (!orderId) {
+        console.error('ID ordine non valido:', orderId);
+        return;
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/TSW_task_war_exploded/DetailOrder'); // Assicurati che il percorso della servlet sia corretto
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response); // Verifica che la risposta JSON contenga i dati corretti
+
+            if (response.success) {
+                displayOrderDetails(response); // Chiamata alla funzione per visualizzare i dettagli
+            } else {
+                console.error('Errore nel caricamento degli ordini:', response.error);
+            }
+        } else {
+            console.error('Richiesta fallita. Status:', xhr.status);
+        }
+    };
+    xhr.onerror = function() {
+        console.error('Richiesta fallita. Errore di rete.');
+    };
+    var data = 'opzione=detail&orderId=' + encodeURIComponent(orderId);
+    xhr.send(data);
+}
+
+
+function displayOrderDetails(order) {
+    // Aggiungi l'ID dell'ordine
+    document.getElementById('ordineFattura').textContent = order.ordineFattura;
+
+    if (order.dataOrdine) {
+        var dataOrdine = new Date(order.dataOrdine);
+        var formattedDate = dataOrdine.toLocaleDateString('it-IT'); // Formattazione data italiana
+        document.getElementById('dataOrdine').textContent = formattedDate;
+    } else {
+        document.getElementById('dataOrdine').textContent = 'Data non disponibile';
+    }
+
+    if (order.address) {
+        const address = `${order.address.via}, ${order.address.numCiv}, ${order.address.citta} (${order.address.provincia}).`;
+        document.getElementById('address').textContent = address;
+    } else {
+        document.getElementById('address').textContent = 'Indirizzo non disponibile';
+    }
+
+    if (order.paymentMethod) {
+        const paymentMethod = `${order.paymentMethod.numCarta} - data Scadenza: ${order.paymentMethod.dataScadenza}`;
+        document.getElementById('paymentMethod').textContent = paymentMethod;
+    } else {
+        document.getElementById('paymentMethod').textContent = 'Metodo di pagamento non disponibile';
+    }
+
+    const cartItemsTable = document.getElementById('cartItems');
+    cartItemsTable.innerHTML = ''; // Svuota la tabella prima di aggiungere nuove righe
+
+    order.cartItems.forEach(item => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${item.idProdotto}</td>
+            <td>${item.nome}</td>
+            <td>${item.iva}%</td>
+            <td>${item.quantity}</td>
+            <td>€${item.prezzoUnitario.toFixed(2)}</td>
+            <td>${item.sconto}%</td>
+            <td>€${(item.quantity * (item.prezzoUnitario - (item.prezzoUnitario * item.sconto / 100))).toFixed(2)}</td>
+             <td><img src="${item.immagine}" alt="${item.nome}"></td>`;
+
+        cartItemsTable.appendChild(row);
+    });
+
+    document.getElementById('prezzoTotale').textContent = `€${order.prezzototale.toFixed(2)}`;
 }
 
 function downloadInvoice(orderId) {
